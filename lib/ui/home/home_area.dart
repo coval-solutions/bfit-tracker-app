@@ -247,9 +247,14 @@ Widget homeArea(user, location) {
                         builder: (BuildContext context, AsyncSnapshot snapshot) {
                           if(snapshot.data == null){
                             return Container(
-                              child: Center(
-                                child: Text("Loading...")
-                              )
+                              child: Padding(
+                                padding: EdgeInsets.only(
+                                  bottom: 18,
+                                ),
+                                child: Center(
+                                  child: CircularProgressIndicator(),
+                                ),
+                              ),
                             );
                           } else {
                             return ListView.separated(
