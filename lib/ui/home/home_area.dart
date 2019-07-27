@@ -178,34 +178,109 @@ Widget homeArea(user, location) {
                 ],
               ),
             ),
-            FutureBuilder(
-              future: GymController.getGyms(location.latitude, location.longitude),
-              builder: (BuildContext context, AsyncSnapshot snapshot){
-                if(snapshot.data == null){
-                  return Container(
-                    child: Center(
-                      child: Text("Loading...")
-                    )
-                  );
-                } else {
-                  return ListView.builder(
-                    shrinkWrap: true,
-                    scrollDirection: Axis.vertical,
-                    physics: NeverScrollableScrollPhysics(),
-                    itemCount: snapshot.data.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return ListTile(
-                        title: Text(snapshot.data[index].name),
-                        onTap: () { },
-                      );
-                    },
-                  );
-                }
-              },
+            Card(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12.0),
+              ),
+              color: Colors.white,
+              child: Column(
+                children: <Widget>[
+                  Row(
+                    children: <Widget>[
+                      Expanded(
+                        child: Container(
+                          padding: EdgeInsets.only(
+                            left: 12,
+                            right: 0,
+                            top: 6,
+                            bottom: 6
+                          ),
+                          child: Align(
+                            alignment: Alignment.topLeft,
+                            child: AutoSizeText(
+                              "Gyms Near By",
+                              maxLines: 1,
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 24,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(
+                          left: 0,
+                          right: 8,
+                          top: 6,
+                          bottom: 6
+                        ),
+                        child: RaisedButton(
+                          padding: EdgeInsets.all(6),
+                          disabledColor: mainTheme.accentColor,
+                          onPressed: null,
+                          child: AutoSizeText(
+                            "View More",
+                            maxLines: 1,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16,
+                            ),
+                          ),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12.0),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  Padding(padding:
+                    EdgeInsets.only(
+                      top: 2,
+                      bottom: 2
+                    ),
+                  ),
+                  Column(
+                    children: <Widget>[
+                      FutureBuilder(
+                        future: GymController.getGyms(location.latitude, location.longitude),
+                        builder: (BuildContext context, AsyncSnapshot snapshot) {
+                          if(snapshot.data == null){
+                            return Container(
+                              child: Center(
+                                child: Text("Loading...")
+                              )
+                            );
+                          } else {
+                            return ListView.separated(
+                              shrinkWrap: true,
+                              scrollDirection: Axis.vertical,
+                              physics: NeverScrollableScrollPhysics(),
+                              itemCount: snapshot.data.length,
+                              itemBuilder: (context, index) {
+                                return ListTile(
+                                  title: AutoSizeText('${snapshot.data[index].name}'),
+                                  subtitle: AutoSizeText('${snapshot.data[index].address}'),
+                                  onTap: () {
+                                    GymController.launchGoogleMaps(snapshot.data[index].lat, snapshot.data[index].lng);
+                                  }
+                                );
+                              },
+                              separatorBuilder: (context, index) {
+                                return Divider(height: 1);
+                              },
+                            );
+                          }
+                        },
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
-          ],
-        ),
+        ],
       ),
     ),
-  );
+  ),
+);
 }
