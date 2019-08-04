@@ -39,7 +39,6 @@ class UserRepository {
 
   Future<User> getUser() async {
     final currentUser = await _firebaseAuth.currentUser();
-    String shortName = currentUser.displayName.split(" ")[0];
-    return User(currentUser.uid, currentUser.email, currentUser.displayName, shortName, User.getImageFromUrl(currentUser.photoUrl));
+    return User(currentUser.uid, currentUser.email, currentUser.displayName, User.getImageFromUrl(currentUser.photoUrl));
   }
 }

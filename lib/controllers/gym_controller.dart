@@ -10,7 +10,7 @@ class GymController {
   static const String API_TYPE_GYM = 'gym';
   static const String BASE_PLACE_ID_GOOGLE_MAPS_URL = 'https://www.google.com/maps/dir/?api=1&destination=';
 
-  static Future<List<Gym>> getGyms(double lat, double long) async{
+  static Future<List<Gym>> getGyms(double lat, double long) async {
     final response = await get("${LocationRepository.GOOGLE_MAPS_API_URL}location=$lat,$long&radius=2500&types=$API_TYPE_GYM&key=${Keys.GOOGLE_MAPS_KEY}");
     
     List<Gym> gyms = List<Gym>();

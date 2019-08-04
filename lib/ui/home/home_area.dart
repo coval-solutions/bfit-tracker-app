@@ -1,11 +1,11 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:bfit_tracker/controllers/gym_controller.dart';
 import 'package:bfit_tracker/theme.dart';
+import 'package:bfit_tracker/ui/custom.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import '../custom.dart';
 
-Widget homeArea(user, location) {
+Widget homeArea(user, gyms) {
   return Scaffold(
     appBar: EmptyAppBar(),
     backgroundColor: mainTheme.backgroundColor,
@@ -38,7 +38,7 @@ Widget homeArea(user, location) {
                           bottom: 6
                         ),
                         child: AutoSizeText(
-                          "Welcome back,\n${user.shortName}!",
+                          "Welcome back,\n${user.getForename()}!",
                           maxLines: 2,
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
@@ -243,7 +243,7 @@ Widget homeArea(user, location) {
                   Column(
                     children: <Widget>[
                       FutureBuilder(
-                        future: GymController.getGyms(location.latitude, location.longitude),
+                        future: gyms,
                         builder: (BuildContext context, AsyncSnapshot snapshot) {
                           if(snapshot.data == null){
                             return Container(
