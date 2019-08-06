@@ -1,11 +1,12 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:bfit_tracker/blocs/authentication/index.dart';
 import 'package:bfit_tracker/controllers/gym_controller.dart';
 import 'package:bfit_tracker/theme.dart';
 import 'package:bfit_tracker/ui/custom.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
-Widget homeArea(user, gyms) {
+Widget homeArea(user, gyms, authenticationBloc) {
   return Scaffold(
     appBar: EmptyAppBar(),
     backgroundColor: mainTheme.backgroundColor,
@@ -27,41 +28,46 @@ Widget homeArea(user, gyms) {
                   borderRadius: BorderRadius.circular(12.0),
                 ),
                 color: mainTheme.accentColor,
-                child: Row(
-                  children: <Widget>[
-                    Expanded(
-                      child: Container(
-                        padding: EdgeInsets.only(
-                          left: 12,
-                          right: 0,
-                          top: 6,
-                          bottom: 6
-                        ),
-                        child: AutoSizeText(
-                          "Welcome back,\n${user.getForename()}!",
-                          maxLines: 2,
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                            fontSize: 24,
+                child: InkWell(
+                  onTap: () {
+                    authenticationBloc.dispatch(LoggedOut());
+                  },
+                  child: Row(
+                    children: <Widget>[
+                      Expanded(
+                        child: Container(
+                          padding: EdgeInsets.only(
+                            left: 12,
+                            right: 0,
+                            top: 6,
+                            bottom: 6
+                          ),
+                          child: AutoSizeText(
+                            "Welcome back,\n${user.getForename()}!",
+                            maxLines: 2,
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                              fontSize: 24,
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(
-                        left: 0,
-                        right: 8,
-                        top: 6,
-                        bottom: 6
-                      ),
-                      child: CircleAvatar(
-                        minRadius: 27.5,
-                        maxRadius: 55.0,
-                        backgroundImage: user.displayPicture,
-                      ),
-                    )
-                  ],
+                      Padding(
+                        padding: EdgeInsets.only(
+                          left: 0,
+                          right: 8,
+                          top: 6,
+                          bottom: 6
+                        ),
+                        child: CircleAvatar(
+                          minRadius: 27.5,
+                          maxRadius: 55.0,
+                          backgroundImage: user.displayPicture,
+                        ),
+                      )
+                    ],
+                  ),
                 ),
               ),
             ),
