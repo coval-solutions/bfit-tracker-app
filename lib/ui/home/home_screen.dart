@@ -1,4 +1,7 @@
 import 'package:bfit_tracker/blocs/bottom_nav_bar/index.dart';
+import 'package:bfit_tracker/controllers/gym_controller.dart';
+import 'package:bfit_tracker/models/course.dart';
+import 'package:bfit_tracker/models/gym.dart';
 import 'package:bfit_tracker/models/user.dart';
 import 'package:bfit_tracker/theme.dart';
 import 'package:bfit_tracker/ui/home/home_area.dart';
@@ -11,26 +14,30 @@ import 'package:geolocator/geolocator.dart';
 class HomeScreen extends StatefulWidget {
   final User user;
   final Position location;
+  final List<Course> courses;
 
-  HomeScreen({Key key, @required this.user, this.location}) : super(key: key);
+  HomeScreen({Key key, @required this.user, this.location, this.courses}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
-    return _HomeScreenState(user, location);
+    return _HomeScreenState(user, location, courses);
   }
 }
 
 class _HomeScreenState extends State<HomeScreen> {
   final User user;
   final Position location;
+  final List<Course> courses;
   HomeScreenBottomNavBarBloc _bottomNavBarBloc;
+  Future<List<Gym>> gyms;
 
-  _HomeScreenState(this.user, this.location);
+  _HomeScreenState(this.user, this.location, this.courses);
 
   @override
   void initState() {
     super.initState();
-    _bottomNavBarBloc = HomeScreenBottomNavBarBloc();
+    this._bottomNavBarBloc = HomeScreenBottomNavBarBloc();
+    this.gyms = GymController.getGyms(this.location.latitude, this.location.longitude);
   }
 
   @override
@@ -86,7 +93,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _homeArea() {
-    return homeArea(user, location);
+    return homeArea(user, gyms);
   }
 
   Widget _targetArea() {
@@ -94,7 +101,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _coursesArea() {
-    return coursesArea();
+    return coursesArea(courses);
   }
 
   Widget _analyticsArea() {
@@ -102,6 +109,6 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _profileArea() {
-    return profileArea();
+    return profileArea(user);
   }
 }

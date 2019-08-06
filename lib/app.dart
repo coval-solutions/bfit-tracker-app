@@ -1,4 +1,5 @@
 import 'package:bfit_tracker/blocs/authentication/index.dart';
+import 'package:bfit_tracker/repos/course_repository.dart';
 import 'package:bfit_tracker/repos/location_repository.dart';
 import 'package:bfit_tracker/repos/user_repository.dart';
 import 'package:bfit_tracker/theme.dart';
@@ -14,6 +15,7 @@ class App extends StatefulWidget {
 class _AppState extends State<App> {
   final UserRepository _userRepository = UserRepository();
   final LocationRepository _locationRepository = LocationRepository();
+  final CourseRepository _courseRepository = CourseRepository();
   AuthenticationBloc _authenticationBloc;
 
   @override
@@ -38,7 +40,7 @@ class _AppState extends State<App> {
             }
 
             if (state is Authenticated) {
-              return HomeScreen(user: state.currentUser, location: state.currentLocation);
+              return HomeScreen(user: state.currentUser, location: state.currentLocation, courses: _courseRepository.courses);
             }
 
             return SplashScreen();
