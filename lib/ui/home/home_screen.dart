@@ -97,7 +97,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _homeArea() {
-    return homeArea(user, gyms, _authenticationBloc);
+    return HomeArea(user, gyms, _authenticationBloc);
   }
 
   Widget _targetArea() {
