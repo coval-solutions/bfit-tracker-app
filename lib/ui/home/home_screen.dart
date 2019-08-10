@@ -1,3 +1,4 @@
+import 'package:bfit_tracker/blocs/authentication/index.dart';
 import 'package:bfit_tracker/blocs/bottom_nav_bar/index.dart';
 import 'package:bfit_tracker/controllers/gym_controller.dart';
 import 'package:bfit_tracker/models/course.dart';
@@ -9,6 +10,7 @@ import 'package:bfit_tracker/ui/home/index.dart';
 import 'package:bfit_tracker/ui/home/targets_area.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator/geolocator.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -29,6 +31,7 @@ class _HomeScreenState extends State<HomeScreen> {
   final Position location;
   final List<Course> courses;
   HomeScreenBottomNavBarBloc _bottomNavBarBloc;
+  AuthenticationBloc _authenticationBloc;
   Future<List<Gym>> gyms;
 
   _HomeScreenState(this.user, this.location, this.courses);
@@ -37,6 +40,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     this._bottomNavBarBloc = HomeScreenBottomNavBarBloc();
+    this._authenticationBloc = BlocProvider.of<AuthenticationBloc>(context);
     this.gyms = GymController.getGyms(this.location.latitude, this.location.longitude);
   }
 
@@ -93,7 +97,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _homeArea() {
-    return homeArea(user, gyms);
+    return HomeArea(user, gyms, _authenticationBloc);
   }
 
   Widget _targetArea() {
