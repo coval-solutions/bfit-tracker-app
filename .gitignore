@@ -1,3 +1,9 @@
+# BFit Custom
+/android/app/google-services.json
+/ios/Runner/GoogleService-Info.plist
+/ios/Runner/Info.plist
+/lib/internal/keys.dart
+
 # Miscellaneous
 *.class
 *.log
