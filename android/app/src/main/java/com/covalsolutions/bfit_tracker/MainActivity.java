@@ -1,4 +1,4 @@
-package com.bfit.bfit_tracker;
+package com.covalsolutions.bfit_tracker;
 
 import android.os.Bundle;
 import io.flutter.app.FlutterActivity;

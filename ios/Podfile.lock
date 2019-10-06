@@ -44,7 +44,7 @@ PODS:
     - GoogleUtilities/Environment (~> 6.0)
     - GoogleUtilities/UserDefaults (~> 6.0)
   - Flutter (1.0.0)
-  - geolocator (5.0.1):
+  - geolocator (5.1.4):
     - Flutter
   - google_api_availability (2.0.1):
     - Flutter
@@ -88,7 +88,7 @@ PODS:
   - GoogleUtilities/UserDefaults (6.1.0):
     - GoogleUtilities/Logger
   - GTMSessionFetcher/Core (1.2.2)
-  - location_permissions (2.0.2):
+  - location_permissions (2.0.3):
     - Flutter
   - nanopb (0.3.901):
     - nanopb/decode (= 0.3.901)
@@ -147,15 +147,15 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   Firebase: 8d77bb33624ae9b62d745d82ec023de5f70f7e4f
   firebase_analytics: b0d7c086f5a50042153fd0441dafef51bde36cd0
-  firebase_auth: 3b8e685dbf2519d315265f3d2283da3fd0711ee3
-  firebase_core: 44f31f51532812598f0f9f4af0caa705b9edfc19
+  firebase_auth: 00d6e1ab6d890cd6d3c624df61702e3a7072d1e3
+  firebase_core: ae55ea92448ec8675d325da4db22cf3b4d58a54d
   FirebaseAnalytics: 629301c2b9925f3537d4093a17a72751ae5b7084
   FirebaseAuth: 4281d6d98a90881e00710fa8d9e37c2ccdfc7d80
   FirebaseAuthInterop: 0ffa57668be100582bb7643d4fcb7615496c41fc
   FirebaseCore: 66bdef3b310a026880e2a5bc8aa586ab62ce4543
   FirebaseInstanceID: 27bed93a59b6685f5c3e0c028a878a764fd75c33
-  Flutter: 58dd7d1b27887414a370fcccb9e645c08ffd7a6a
-  geolocator: f3dd3b5b1761a15a4da00665774c5a8319e657d6
+  Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
+  geolocator: c98cc4a1f2558c11fa5db0fccad80883cde6eb4f
   google_api_availability: 163b30f802e6148c67f092aa4501c90ddd8eec8d
   google_sign_in: 27e70a98b529f0b076d4b19f231b81da28b1750b
   GoogleAppMeasurement: 51d8d9ea48f0ca44484d29cfbdef976fbd4fc336
@@ -163,7 +163,7 @@ SPEC CHECKSUMS:
   GoogleToolboxForMac: b3553629623a3b1bff17f555e736cd5a6d95ad55
   GoogleUtilities: 84df567c76ca84f67b7bb40e769fdd4acc746a10
   GTMSessionFetcher: 61bb0f61a4cb560030f1222021178008a5727a23
-  location_permissions: 67cfaff583afbb027a9f9248196f4b79c40f3cdc
+  location_permissions: 195ff2a1182fa9029ef3f2653156961ee5a1e40b
   nanopb: 2901f78ea1b7b4015c860c2fdd1ea2fee1a18d48
   url_launcher: 0067ddb8f10d36786672aa0722a21717dba3a298
 
