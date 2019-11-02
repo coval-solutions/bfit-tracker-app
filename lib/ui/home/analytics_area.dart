@@ -229,7 +229,11 @@ class _WeekDayCardsState extends State<WeekDayCards> {
                     ) : null,
                     child: FlatButton(
                       color: index == this.daySelectedIndex ? CustomColor.SELECTIVE_YELLOW : Colors.white,
-                      onPressed: () {},
+                      onPressed: () {
+                        setState(() {
+                          this.daySelectedIndex = index;
+                        }); 
+                      },
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12.0),
                       ),
