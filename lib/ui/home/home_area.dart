@@ -230,8 +230,6 @@ class HomeArea extends StatelessWidget {
     ),
   );
   }
-
-  void setState(Null Function() param0) {}
 }
 
 class NearByGymsCard extends StatefulWidget {

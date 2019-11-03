@@ -1,7 +1,9 @@
 import 'package:bfit_tracker/blocs/authentication/index.dart';
 import 'package:bfit_tracker/blocs/bottom_nav_bar/index.dart';
+import 'package:bfit_tracker/controllers/goal_controller.dart';
 import 'package:bfit_tracker/controllers/gym_controller.dart';
 import 'package:bfit_tracker/models/course.dart';
+import 'package:bfit_tracker/models/goal.dart';
 import 'package:bfit_tracker/models/gym.dart';
 import 'package:bfit_tracker/models/user.dart';
 import 'package:bfit_tracker/theme.dart';
@@ -33,6 +35,7 @@ class _HomeScreenState extends State<HomeScreen> {
   HomeScreenBottomNavBarBloc _bottomNavBarBloc;
   AuthenticationBloc _authenticationBloc;
   Future<List<Gym>> gyms;
+  Future<Goal> userGoal;
 
   _HomeScreenState(this.user, this.location, this.courses);
 
@@ -42,6 +45,7 @@ class _HomeScreenState extends State<HomeScreen> {
     this._bottomNavBarBloc = HomeScreenBottomNavBarBloc();
     this._authenticationBloc = BlocProvider.of<AuthenticationBloc>(context);
     this.gyms = GymController.getGyms(this.location.latitude, this.location.longitude);
+    this.userGoal = GoalController.getGoals(this.user);
   }
 
   @override
@@ -113,6 +117,6 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _profileArea() {
-    return profileArea(user);
+    return profileArea(user, userGoal);
   }
 }
