@@ -34,6 +34,7 @@ class HomeArea extends StatelessWidget {
                   right: 12
                 ),
                 child: Card(
+                  elevation: 2,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12.0),
                   ),
@@ -117,6 +118,7 @@ class HomeArea extends StatelessWidget {
                 ),
               ),
               Card(
+                elevation: 2,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12.0),
                 ),
@@ -247,18 +249,11 @@ class NearByGymsCard extends StatefulWidget {
 
 class _NearByGymsCardState extends State<NearByGymsCard> {
   final Future<List<Gym>> gyms;
-  int limit;
-  bool viewMoreButtonEnabled;
+  int limit = 3;
+  bool viewMoreButtonEnabled = true;
   
   _NearByGymsCardState(this.gyms);
-
-  @override
-  void initState() {
-    this.limit = 3;
-    this.viewMoreButtonEnabled = true;
-    super.initState();
-  }
-
+  
   void loadFullList() {
     setState(() {
       this.limit = null;
@@ -269,6 +264,7 @@ class _NearByGymsCardState extends State<NearByGymsCard> {
   @override
   Widget build(BuildContext context) {
     return Card(
+      elevation: 2,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12.0),
       ),

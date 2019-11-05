@@ -100,6 +100,7 @@ Widget profileArea(user) {
               ),
             ),
             Card(
+              elevation: 2,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12.0),
               ),
@@ -166,6 +167,7 @@ Widget profileArea(user) {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Card(
+                  elevation: 2,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12.0),
                   ),
@@ -217,6 +219,7 @@ Widget profileArea(user) {
                   ),
                 ),
                 Card(
+                  elevation: 2,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12.0),
                   ),
@@ -279,6 +282,7 @@ Widget profileArea(user) {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Card(
+                  elevation: 2,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12.0),
                   ),
@@ -330,6 +334,7 @@ Widget profileArea(user) {
                   ),
                 ),
                 Card(
+                  elevation: 2,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12.0),
                   ),
