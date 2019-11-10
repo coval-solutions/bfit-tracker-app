@@ -32,7 +32,6 @@ class _HomeScreenState extends State<HomeScreen> {
   final List<Course> courses;
   HomeScreenBottomNavBarBloc _bottomNavBarBloc;
   AuthenticationBloc _authenticationBloc;
-  Future<List<Gym>> gyms;
 
   _HomeScreenState(this.user, this.location, this.courses);
 
@@ -41,7 +40,6 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     this._bottomNavBarBloc = HomeScreenBottomNavBarBloc();
     this._authenticationBloc = BlocProvider.of<AuthenticationBloc>(context);
-    this.gyms = GymController.getGyms(this.location.latitude, this.location.longitude);
   }
 
   @override
@@ -97,7 +95,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _homeArea() {
-    return HomeArea(user, gyms, _authenticationBloc);
+    return HomeArea();
   }
 
   Widget _targetArea() {
