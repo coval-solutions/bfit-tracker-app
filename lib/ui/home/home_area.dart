@@ -11,8 +11,8 @@ import 'package:bfit_tracker/theme.dart';
 import 'package:bfit_tracker/ui/custom.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:provider/provider.dart';
 
 class HomeArea extends StatelessWidget {
   final User user = UserRepository.getCurrentUser();
@@ -58,6 +58,8 @@ class HomeArea extends StatelessWidget {
 class WelcomeCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final AuthenticationBloc _authenticationBloc = BlocProvider.of<AuthenticationBloc>(context);
+
     return Card(
       elevation: 2,
       shape: RoundedRectangleBorder(
@@ -76,8 +78,8 @@ class WelcomeCard extends StatelessWidget {
           Widget yesButton = FlatButton(
             child: Text('Yes, Sign Out'),
             onPressed:  () {
+              _authenticationBloc.dispatch(LoggedOut());
               Navigator.pop(context);
-              Provider.of<AuthenticationBloc>(context).dispatch(LoggedOut());
             },
           );
 
