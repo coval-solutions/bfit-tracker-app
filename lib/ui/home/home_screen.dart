@@ -1,8 +1,6 @@
 import 'package:bfit_tracker/blocs/authentication/index.dart';
 import 'package:bfit_tracker/blocs/bottom_nav_bar/index.dart';
-import 'package:bfit_tracker/controllers/gym_controller.dart';
 import 'package:bfit_tracker/models/course.dart';
-import 'package:bfit_tracker/models/gym.dart';
 import 'package:bfit_tracker/models/user.dart';
 import 'package:bfit_tracker/theme.dart';
 import 'package:bfit_tracker/ui/home/home_area.dart';
