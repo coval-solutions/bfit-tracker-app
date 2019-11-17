@@ -36,7 +36,7 @@ class AuthenticationBloc
       final isSignedIn = await _userRepository.isSignedIn();
       if (isSignedIn) {
         final currentUser = await _userRepository.getUser();
-        final location = await _locationRepository.getCurrentLocation();
+        final location = await _locationRepository.fetch();
         yield Authenticated(currentUser, location);
       } else {
         await _userRepository.signInWithGoogle();
@@ -49,7 +49,7 @@ class AuthenticationBloc
   }
 
   Stream<AuthenticationState> _mapLoggedInToState() async* {
-    yield Authenticated(await _userRepository.getUser(), await _locationRepository.getCurrentLocation());
+    yield Authenticated(await _userRepository.getUser(), await _locationRepository.fetch());
   }
 
   Stream<AuthenticationState> _mapLoggedOutToState() async* {

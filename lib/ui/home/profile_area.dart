@@ -1,5 +1,8 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:bfit_tracker/models/goal.dart';
+import 'package:bfit_tracker/models/user.dart';
+import 'package:bfit_tracker/repos/goals_repository.dart';
+import 'package:bfit_tracker/repos/user_repository.dart';
 import 'package:bfit_tracker/theme.dart';
 import 'package:bfit_tracker/ui/custom.dart';
 import 'package:flutter/material.dart';
@@ -7,7 +10,69 @@ import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-Widget profileInfo(user) {
+class ProfileArea extends StatefulWidget {
+
+  ProfileArea({Key key}) : super(key: key);
+
+  @override
+  State<StatefulWidget> createState() {
+    return _ProfileAreaState();
+  }
+}
+
+class _ProfileAreaState extends State<ProfileArea> {
+  User user;
+  Future<Goal> _goals;
+  
+  _ProfileAreaState();
+
+  @override
+  void initState() {
+    this.user = UserRepository.getCurrentUser();
+    this._goals = GoalsRepository().getGoals();
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: EmptyAppBar(),
+      backgroundColor: mainTheme.backgroundColor,
+      body: Padding(
+        padding: EdgeInsets.symmetric(
+          vertical: 16,
+          horizontal: 16
+        ),
+        child: Column(
+          children: <Widget>[
+            profileInfo(user),
+            FutureBuilder(
+              future: this._goals,
+              builder: (BuildContext context, AsyncSnapshot<Goal> snapshot) {
+                switch (snapshot.connectionState) {
+                  case ConnectionState.none:
+                    return Center(child: CircularProgressIndicator());
+                  case ConnectionState.waiting:
+                    return Center(child: CircularProgressIndicator());
+                  default:
+                    if (snapshot.hasError) {
+                      return Center(child: Text('Error: ${snapshot.error}'));
+                    } else if (snapshot.data == null) {
+                      return Center(child: CircularProgressIndicator());
+                    } else {
+                      
+                    }
+                }
+              }
+            ),
+          ],
+        ),
+      )
+    );
+  }
+}
+
+Widget profileInfo(User user) {
   return Column(
     children: <Widget>[
       Align(
@@ -35,7 +100,7 @@ Widget profileInfo(user) {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               AutoSizeText(
-                '${user.getName()}',
+                '${user?.getName()}',
                 maxLines: 1,
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
@@ -197,71 +262,5 @@ Widget otherStats(value, text, {unit}) {
           progressColor: CustomColor.MAYA_BLUE,
       ),
     )
-  );
-}
-
-Widget profileArea(user, goals) {
-  return FutureBuilder(
-    future: goals,
-    builder: (BuildContext context, AsyncSnapshot<Goal> snapshot) {
-      switch (snapshot.connectionState) {
-        case ConnectionState.none: return Center(child: CircularProgressIndicator());
-        case ConnectionState.waiting: return Center(child: CircularProgressIndicator());
-        default:
-          if (snapshot.hasError) {
-            return Text('Error: ${snapshot.error}');
-          } else {
-            return Scaffold(
-              appBar: EmptyAppBar(),
-              backgroundColor: mainTheme.backgroundColor,
-              body: SingleChildScrollView(
-                child: Padding(
-                  padding: EdgeInsets.symmetric(
-                    vertical: 16,
-                    horizontal: 16
-                  ),
-                  child: Column(
-                    children: <Widget>[
-                      profileInfo(user),
-                      Padding(
-                        padding: EdgeInsets.symmetric(
-                          vertical: 8,
-                        ),
-                      ),
-                      totalGymTimeStat(snapshot.data.getGym()),
-                      Padding(
-                        padding: EdgeInsets.symmetric(
-                          vertical: 6,
-                        ),
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          otherStats(snapshot.data.getBmi(), 'BMI Goal'),
-                          Spacer(),
-                          otherStats(snapshot.data.getWeight(), 'Weight Goal', unit: 'kg'),
-                        ],
-                      ),
-                      Padding(
-                        padding: EdgeInsets.symmetric(
-                          vertical: 6,
-                        ),
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          otherStats(snapshot.data.getCourses(), 'Course Total'),
-                          Spacer(),
-                          otherStats(snapshot.data.getGym(), 'Gym Goal'),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-              )
-            );
-          }
-      }
-    },
   );
 }
