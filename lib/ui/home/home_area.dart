@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:bfit_tracker/blocs/authentication/index.dart';
 import 'package:bfit_tracker/controllers/gym_controller.dart';
