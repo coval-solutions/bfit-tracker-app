@@ -105,6 +105,6 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _profileArea() {
-    return profileArea(user);
+    return ProfileArea();
   }
 }

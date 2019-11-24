@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:bfit_tracker/blocs/authentication/index.dart';
 import 'package:bfit_tracker/controllers/gym_controller.dart';
@@ -161,7 +159,7 @@ class ArticlesCard extends StatelessWidget {
                     disabledColor: mainTheme.accentColor,
                     onPressed: null,
                     child: AutoSizeText(
-                      "5 min read",
+                      '5 min read',
                       maxLines: 1,
                       style: TextStyle(
                         color: Colors.white,
@@ -198,7 +196,7 @@ class ArticlesCard extends StatelessWidget {
                     Align(
                       alignment: Alignment.topCenter,
                       child: AutoSizeText(
-                        "10 Ways To Stay Motivated At The Gym",
+                        '10 Ways To Stay Motivated At The Gym',
                         maxLines: 2,
                         minFontSize: 16,
                         maxFontSize: 32,
@@ -218,7 +216,7 @@ class ArticlesCard extends StatelessWidget {
                         horizontal: 12,
                       ),
                       child: AutoSizeText(
-                        "Find out the best kept secrets from the one and only Nick Mitchell!",
+                        'Find out the best kept secrets from the one and only Nick Mitchell!',
                         maxLines: 2,
                         minFontSize: 12,
                         maxFontSize: 28,
@@ -234,7 +232,7 @@ class ArticlesCard extends StatelessWidget {
                       child: Align(
                         alignment: Alignment.bottomRight,
                         child: AutoSizeText(
-                          "Dr. Divyesh Vala",
+                          'Dr. Divyesh Vala',
                           maxLines: 1,
                           maxFontSize: 12,
                           style: TextStyle(
@@ -267,26 +265,13 @@ class NearByGymsCard extends StatefulWidget {
 
 class _NearByGymsCardState extends State<NearByGymsCard> {
   Future<List<Gym>> _gyms;
-  ScrollController _scrollController = ScrollController();
-  int _gymsDisplaying = 10;
   
   _NearByGymsCardState();
 
   @override
   void initState() {
     this._gyms = GymsRepository().getGyms();
-    this._scrollController.addListener(() {
-      if (_scrollController.position.pixels >= _scrollController.position.maxScrollExtent) {
-        loadMoreData();
-      }
-    });
     super.initState();
-  }
-
-  loadMoreData() {
-    setState(() {
-      this._gymsDisplaying++;
-    });
   }
 
   @override
@@ -318,61 +303,44 @@ class _NearByGymsCardState extends State<NearByGymsCard> {
             child: FutureBuilder(
               future: this._gyms,
               builder: (BuildContext context, AsyncSnapshot snapshot) {
-                if (snapshot.connectionState == ConnectionState.none
-                || snapshot.connectionState == ConnectionState.waiting
-                || snapshot.data == null
-                ) {
-                  return Container(
-                    child: Padding(
-                      padding: EdgeInsets.only(
-                        bottom: 18,
-                      ),
-                      child: Center(
-                        child: CircularProgressIndicator(),
-                      ),
-                    ),
-                  );
-                } else {
-                  return ListView.separated(
-                    shrinkWrap: true,
-                    controller: _scrollController,
-                    physics: ClampingScrollPhysics(),
-                    itemCount: min(this._gymsDisplaying, snapshot.data.length),
-                    itemBuilder: (context, index) {
-                      if ((index + 1) == this._gymsDisplaying) {
-                        return Container(
-                          child: Padding(
-                            padding: EdgeInsets.only(
-                              bottom: 18,
+                switch (snapshot.connectionState) {
+                  case ConnectionState.none:
+                    return Center(child: CircularProgressIndicator());
+                  case ConnectionState.waiting:
+                    return Center(child: CircularProgressIndicator());
+                  default:
+                    if (snapshot.hasError) {
+                      return Center(child: AutoSizeText('Error: ${snapshot.error}'));
+                    } else if (snapshot.data == null) {
+                      return Center(child: CircularProgressIndicator());
+                    } else {
+                      return ListView.separated(
+                        shrinkWrap: true,
+                        physics: ClampingScrollPhysics(),
+                        itemCount: snapshot.data.length,
+                        itemBuilder: (context, index) {
+                          return ListTile(
+                            title: AutoSizeText(
+                              '${snapshot.data[index].name}',
+                              maxLines: 1,
+                              maxFontSize: 14,
                             ),
-                            child: Center(
-                              child: CircularProgressIndicator(),
+                            subtitle: AutoSizeText(
+                              '${snapshot.data[index].address}',
+                              maxLines: 1,
+                              minFontSize: 8,
+                              maxFontSize: 10,
                             ),
-                          ),
-                        );
-                      } else {
-                        return ListTile(
-                          title: AutoSizeText(
-                            '${snapshot.data[index].name}',
-                            maxLines: 1,
-                            maxFontSize: 14,
-                          ),
-                          subtitle: AutoSizeText(
-                            '${snapshot.data[index].address}',
-                            maxLines: 1,
-                            minFontSize: 8,
-                            maxFontSize: 10,
-                          ),
-                          onTap: () {
-                            GymController.launchGoogleMaps(snapshot.data[index].lat, snapshot.data[index].lng);
-                          }
-                        );
-                      }
-                    },
-                    separatorBuilder: (context, index) {
-                      return Divider(height: 1);
+                            onTap: () {
+                              GymController.launchGoogleMaps(snapshot.data[index].lat, snapshot.data[index].lng);
+                            }
+                          );
+                        },
+                        separatorBuilder: (context, index) {
+                          return Divider(height: 1);
+                        }
+                      );
                     }
-                  );
                 }
               },
             ),
