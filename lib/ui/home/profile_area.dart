@@ -103,7 +103,7 @@ class _ProfileAreaState extends State<ProfileArea> {
                                   child: Container(child: otherStats(snapshot.data.getCourses(), 'Course Total')),
                                 ),
                                 Expanded(
-                                  child: Container(child: otherStats('5032', 'Daily Steps')),
+                                  child: Container(child: otherStats(80, 'Daily Steps', unit: '%')),
                                 ),
                               ],
                             ),                          

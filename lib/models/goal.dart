@@ -1,7 +1,7 @@
 class Goal {
   final double bmi;
   final double weight;
-  final double courses;
+  final int courses;
   final double gym;
 
   Goal({this.bmi, this.weight, this.courses, this.gym});
@@ -10,7 +10,7 @@ class Goal {
     return Goal(
       bmi: data['bmi'] + .0,
       weight: data['weight'] + .0,
-      courses: data['courses'] + .0,
+      courses: data['courses'],
       gym: data['gym'] + .0,
     );
   }
@@ -23,7 +23,7 @@ class Goal {
     return this.weight;
   }
 
-  double getCourses() {
+  int getCourses() {
     return this.courses;
   }
 
