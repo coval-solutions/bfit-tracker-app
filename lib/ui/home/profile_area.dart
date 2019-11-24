@@ -46,21 +46,70 @@ class _ProfileAreaState extends State<ProfileArea> {
         child: Column(
           children: <Widget>[
             profileInfo(user),
+            Padding(
+              padding: EdgeInsets.symmetric(
+                vertical: 8,
+              ),
+            ),
             FutureBuilder(
               future: this._goals,
               builder: (BuildContext context, AsyncSnapshot<Goal> snapshot) {
                 switch (snapshot.connectionState) {
                   case ConnectionState.none:
-                    return Center(child: CircularProgressIndicator());
+                    return Center(
+                      child: CircularProgressIndicator(),
+                    );
                   case ConnectionState.waiting:
-                    return Center(child: CircularProgressIndicator());
+                    return Center(
+                      child: CircularProgressIndicator(),
+                    );
                   default:
                     if (snapshot.hasError) {
-                      return Center(child: Text('Error: ${snapshot.error}'));
+                      return Center(
+                        child: AutoSizeText('Error: ${snapshot.error}'),
+                      );
                     } else if (snapshot.data == null) {
-                      return Center(child: CircularProgressIndicator());
+                      return Center(
+                        child: CircularProgressIndicator(),
+                      );
                     } else {
-                      
+                      return Expanded(
+                        child: noGlowListView(
+                          <Widget>[
+                            totalGymTimeStat(snapshot.data.getGym()),
+                            Padding(
+                              padding: EdgeInsets.symmetric(
+                                vertical: 6,
+                              ),
+                            ),
+                            Row(
+                              children: <Widget>[
+                                Expanded(
+                                  child: Container(child: otherStats(snapshot.data.getBmi(), 'BMI Goal')),
+                                ),
+                                Expanded(
+                                  child: Container(child: otherStats(snapshot.data.getWeight(), 'Weight Goal', unit: 'kg')),
+                                ),
+                              ],
+                            ),
+                            Padding(
+                              padding: EdgeInsets.symmetric(
+                                vertical: 6
+                              ),
+                            ),
+                            Row(
+                              children: <Widget>[
+                                Expanded(
+                                  child: Container(child: otherStats(snapshot.data.getCourses(), 'Course Total')),
+                                ),
+                                Expanded(
+                                  child: Container(child: otherStats(snapshot.data.getGym(), 'Gym Goal')),
+                                ),
+                              ],
+                            ),                          
+                          ],
+                        )
+                      );
                     }
                 }
               }
@@ -78,13 +127,13 @@ Widget profileInfo(User user) {
       Align(
         alignment: Alignment.topCenter,
         child: AutoSizeText(
-          "Your Profile",
+          'Your Profile',
           maxLines: 1,
           style: TextStyle(
             fontWeight: FontWeight.bold,
             color: CustomColor.DIM_GRAY,
-            fontSize: 32,
           ),
+          minFontSize: 26,
         ),
       ),
       Padding(
@@ -105,8 +154,9 @@ Widget profileInfo(User user) {
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   color: CustomColor.DIM_GRAY,
-                  fontSize: 18,
                 ),
+                minFontSize: 16,
+                maxFontSize: 18,
               ),
               Padding(
                 padding: EdgeInsets.only(
@@ -117,12 +167,12 @@ Widget profileInfo(User user) {
               Row(
                 children: <Widget>[
                   AutoSizeText(
-                    "beginner",
+                    'beginner',
                     maxLines: 1,
                     style: TextStyle(
                       color: CustomColor.DIM_GRAY,
-                      fontSize: 12,
                     ),
+                    maxFontSize: 12,
                   ),
                   Padding(
                     padding: EdgeInsets.only(
@@ -144,8 +194,7 @@ Widget profileInfo(User user) {
             ),
           ),
           CircleAvatar(
-            minRadius: 27.5,
-            maxRadius: 55.0,
+            maxRadius: 40,
             backgroundImage: user.displayPicture,
           ),
         ],
