@@ -158,24 +158,23 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
+    - BoringSSL-GRPC
     - Firebase
     - FirebaseAnalytics
     - FirebaseAuth
     - FirebaseAuthInterop
     - FirebaseCore
+    - FirebaseFirestore
     - FirebaseInstanceID
     - GoogleAppMeasurement
     - GoogleSignIn
     - GoogleToolboxForMac
     - GoogleUtilities
-    - GTMSessionFetcher
-    - nanopb
-  trunk:
-    - BoringSSL-GRPC
-    - FirebaseFirestore
     - "gRPC-C++"
     - gRPC-Core
+    - GTMSessionFetcher
     - leveldb-library
+    - nanopb
     - Protobuf
 
 EXTERNAL SOURCES:
