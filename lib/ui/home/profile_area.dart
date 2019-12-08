@@ -40,7 +40,7 @@ class _ProfileAreaState extends State<ProfileArea> {
       backgroundColor: mainTheme.backgroundColor,
       body: Padding(
         padding: EdgeInsets.symmetric(
-          vertical: 16,
+          vertical: 4,
           horizontal: 16
         ),
         child: Column(
@@ -134,12 +134,12 @@ Widget profileInfo(User user) {
             color: CustomColor.DIM_GRAY,
           ),
           minFontSize: 26,
+          maxFontSize: 26,
         ),
       ),
       Padding(
-        padding: EdgeInsets.only(
-          top: 6,
-          bottom: 6,
+        padding: EdgeInsets.symmetric(
+          vertical: 6,
         ),
       ),
       Row(

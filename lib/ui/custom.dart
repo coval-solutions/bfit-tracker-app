@@ -11,15 +11,16 @@ class EmptyAppBar extends StatelessWidget implements PreferredSizeWidget {
 
 Widget noGlowListView(List<Widget> children) {
   return ScrollConfiguration(
-    behavior: __NoGlowingOverscrollIndicator(),
+    behavior: NoGlowingOverscrollIndicator(),
     child: ListView(
       shrinkWrap: true,
       children: children,
+      physics: const AlwaysScrollableScrollPhysics(),
     ),
   );
 }
 
-class __NoGlowingOverscrollIndicator extends ScrollBehavior {
+class NoGlowingOverscrollIndicator extends ScrollBehavior {
   @override
   Widget buildViewportChrome(
       BuildContext context, Widget child, AxisDirection axisDirection) {
