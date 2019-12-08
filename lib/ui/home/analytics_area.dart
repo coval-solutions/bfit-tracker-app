@@ -11,19 +11,21 @@ Widget analyticsArea() {
     body: Padding(
       padding: EdgeInsets.symmetric(
         horizontal: 6,
+        vertical: 4,
       ),
       child: Column(
         children: <Widget>[
           Align(
             alignment: Alignment.topCenter,
             child: AutoSizeText(
-              "Your Analytics",
+              'Your Analytics',
               maxLines: 1,
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 color: CustomColor.DIM_GRAY,
-                fontSize: 32,
               ),
+              minFontSize: 26,
+              maxFontSize: 26,
             ),
           ),
           Padding(
@@ -208,62 +210,65 @@ class _WeekDayCardsState extends State<WeekDayCards> {
           ),
           child: Container(
             height: 64,
-            child: ListView.builder(
-              shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
-              scrollDirection: Axis.horizontal,
-              itemCount: this.days.length,
-              itemBuilder: (BuildContext context, int index) {
-                return Padding(
-                  padding: EdgeInsets.all(8),
-                  child: Container(
-                    width: 60,
-                    decoration: index == this.daySelectedIndex ? BoxDecoration(
-                      boxShadow: [
-                        BoxShadow(
-                          blurRadius: 6,
-                          color: Colors.grey.shade300,
-                          offset: Offset(0, 0.75),
-                        )
-                      ],
-                    ) : null,
-                    child: FlatButton(
-                      color: index == this.daySelectedIndex ? CustomColor.SELECTIVE_YELLOW : Colors.white,
-                      onPressed: () {
-                        setState(() {
-                          this.daySelectedIndex = index;
-                        }); 
-                      },
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12.0),
-                      ),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          AutoSizeText(
-                            days[index].day.toString().padLeft(2, '0'),
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: index == this.daySelectedIndex ? Colors.white : CustomColor.DIM_GRAY,
-                            ),
-                            minFontSize: 18,
-                            maxLines: 1,
-                          ),
-                          AutoSizeText(
-                            Weekdays.values.elementAt(days[index].weekday - 1).toString().split('.').last,
-                            style: TextStyle(
-                              fontWeight: FontWeight.w600,
-                              color: index == this.daySelectedIndex ? Colors.white : CustomColor.DIM_GRAY,
-                            ),
-                            minFontSize: 12,
-                            maxLines: 1,
-                          ),
+            child: ScrollConfiguration(
+              behavior: NoGlowingOverscrollIndicator(),
+              child: ListView.builder(
+                shrinkWrap: true,
+                scrollDirection: Axis.horizontal,
+                physics: const AlwaysScrollableScrollPhysics(),
+                itemCount: this.days.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return Padding(
+                    padding: EdgeInsets.all(8),
+                    child: Container(
+                      width: 60,
+                      decoration: index == this.daySelectedIndex ? BoxDecoration(
+                        boxShadow: [
+                          BoxShadow(
+                            blurRadius: 6,
+                            color: Colors.grey.shade300,
+                            offset: Offset(0, 0.75),
+                          )
                         ],
+                      ) : null,
+                      child: FlatButton(
+                        color: index == this.daySelectedIndex ? CustomColor.SELECTIVE_YELLOW : Colors.white,
+                        onPressed: () {
+                          setState(() {
+                            this.daySelectedIndex = index;
+                          }); 
+                        },
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12.0),
+                        ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            AutoSizeText(
+                              days[index].day.toString().padLeft(2, '0'),
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: index == this.daySelectedIndex ? Colors.white : CustomColor.DIM_GRAY,
+                              ),
+                              minFontSize: 18,
+                              maxLines: 1,
+                            ),
+                            AutoSizeText(
+                              Weekdays.values.elementAt(days[index].weekday - 1).toString().split('.').last,
+                              style: TextStyle(
+                                fontWeight: FontWeight.w600,
+                                color: index == this.daySelectedIndex ? Colors.white : CustomColor.DIM_GRAY,
+                              ),
+                              minFontSize: 12,
+                              maxLines: 1,
+                            ),
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                );
-              },
+                  );
+                },
+              ),
             ),
           ),
         ),
