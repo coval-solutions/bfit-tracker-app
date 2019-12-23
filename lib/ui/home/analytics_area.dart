@@ -199,6 +199,12 @@ class _WeekDayCardsState extends State<WeekDayCards> {
     }
   }
 
+  updateDaySelectedIndex(int index) {
+    setState(() {
+      this.daySelectedIndex = index;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Align(
@@ -218,54 +224,13 @@ class _WeekDayCardsState extends State<WeekDayCards> {
                 physics: const AlwaysScrollableScrollPhysics(),
                 itemCount: this.days.length,
                 itemBuilder: (BuildContext context, int index) {
-                  return Padding(
-                    padding: EdgeInsets.all(8),
-                    child: Container(
-                      width: 60,
-                      decoration: index == this.daySelectedIndex ? BoxDecoration(
-                        boxShadow: [
-                          BoxShadow(
-                            blurRadius: 6,
-                            color: Colors.grey.shade300,
-                            offset: Offset(0, 0.75),
-                          )
-                        ],
-                      ) : null,
-                      child: FlatButton(
-                        color: index == this.daySelectedIndex ? CustomColor.SELECTIVE_YELLOW : Colors.white,
-                        onPressed: () {
-                          setState(() {
-                            this.daySelectedIndex = index;
-                          }); 
-                        },
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12.0),
-                        ),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            AutoSizeText(
-                              days[index].day.toString().padLeft(2, '0'),
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: index == this.daySelectedIndex ? Colors.white : CustomColor.DIM_GRAY,
-                              ),
-                              minFontSize: 18,
-                              maxLines: 1,
-                            ),
-                            AutoSizeText(
-                              Weekdays.values.elementAt(days[index].weekday - 1).toString().split('.').last,
-                              style: TextStyle(
-                                fontWeight: FontWeight.w600,
-                                color: index == this.daySelectedIndex ? Colors.white : CustomColor.DIM_GRAY,
-                              ),
-                              minFontSize: 12,
-                              maxLines: 1,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
+                  return GestureDetector(
+                    child: index == daySelectedIndex ? weekdayCardSelected(index, this.days) : weekdayCard(index, this.days),
+                    onTap: () {
+                      setState(() {
+                        this.daySelectedIndex = index;
+                      });
+                    },
                   );
                 },
               ),
@@ -275,4 +240,97 @@ class _WeekDayCardsState extends State<WeekDayCards> {
       ),
     );
   }
+}
+
+Widget weekdayCard(int index, List<DateTime> days) {
+  return Padding(
+    padding: EdgeInsets.symmetric(
+      horizontal: 4,
+      vertical: 4,
+    ),
+    child: Container(
+      width: 60,
+      child: FlatButton(
+        color: Colors.white,
+        onPressed: null,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12.0),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            AutoSizeText(
+              days[index].day.toString().padLeft(2, '0'),
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: CustomColor.DIM_GRAY,
+              ),
+              minFontSize: 18,
+              maxLines: 1,
+            ),
+            AutoSizeText(
+              Weekdays.values.elementAt(days[index].weekday - 1).toString().split('.').last,
+              style: TextStyle(
+                fontWeight: FontWeight.w600,
+                color: CustomColor.DIM_GRAY,
+              ),
+              minFontSize: 12,
+              maxLines: 1,
+            ),
+          ],
+        ),
+      ),
+    ),
+  );
+}
+
+Widget weekdayCardSelected(int index, List<DateTime> days) {
+  return Padding(
+    padding: EdgeInsets.symmetric(
+      horizontal: 4,
+      vertical: 4,
+    ),
+    child: Container(
+      width: 60,
+      decoration: BoxDecoration(
+        boxShadow: [
+          BoxShadow(
+            blurRadius: 6,
+            color: Colors.grey.shade300,
+            offset: Offset(0, 0.75),
+          )
+        ],
+      ),
+      child: FlatButton(
+        color: CustomColor.SELECTIVE_YELLOW,
+        onPressed: () { },
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12.0),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            AutoSizeText(
+              days[index].day.toString().padLeft(2, '0'),
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+              ),
+              minFontSize: 18,
+              maxLines: 1,
+            ),
+            AutoSizeText(
+              Weekdays.values.elementAt(days[index].weekday - 1).toString().split('.').last,
+              style: TextStyle(
+                fontWeight: FontWeight.w600,
+                color: Colors.white,
+              ),
+              minFontSize: 12,
+              maxLines: 1,
+            ),
+          ],
+        ),
+      ),
+    ),
+  );
 }
