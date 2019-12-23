@@ -155,7 +155,7 @@ class ArticlesCard extends StatelessWidget {
                   top: 2,
                   right: 12,
                   child: ButtonTheme(
-                    minWidth: 64,
+                    minWidth: 68,
                     height: 24,
                     child: RaisedButton(
                       padding: EdgeInsets.all(0),
