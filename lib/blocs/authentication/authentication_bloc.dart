@@ -43,7 +43,6 @@ class AuthenticationBloc
         this.dispatch(AppStarted());
       }
     } catch (error) {
-      print(error);
       yield Unauthenticated();
     }
   }
