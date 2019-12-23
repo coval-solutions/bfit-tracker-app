@@ -34,7 +34,6 @@ class _AppState extends State<App> {
         home: BlocBuilder(
           bloc: _authenticationBloc,
           builder: (BuildContext context, AuthenticationState state) {
-            print(state);
             if (state is Unauthenticated) {
               _authenticationBloc.dispatch(AppStarted());
               return SplashScreen();

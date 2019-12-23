@@ -152,22 +152,26 @@ class ArticlesCard extends StatelessWidget {
                   ),
                 ),
                 Positioned(
-                  top: 4,
+                  top: 2,
                   right: 12,
-                  child: RaisedButton(
-                    padding: EdgeInsets.all(6),
-                    disabledColor: mainTheme.accentColor,
-                    onPressed: null,
-                    child: AutoSizeText(
-                      '5 min read',
-                      maxLines: 1,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 16,
+                  child: ButtonTheme(
+                    minWidth: 64,
+                    height: 24,
+                    child: RaisedButton(
+                      padding: EdgeInsets.all(0),
+                      disabledColor: mainTheme.accentColor,
+                      onPressed: null,
+                      child: AutoSizeText(
+                        '5 min read',
+                        maxLines: 1,
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 8,
+                        ),
                       ),
-                    ),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12.0),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12.0),
+                      ),
                     ),
                   ),
                 ),
