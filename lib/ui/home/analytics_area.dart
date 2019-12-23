@@ -199,12 +199,6 @@ class _WeekDayCardsState extends State<WeekDayCards> {
     }
   }
 
-  updateDaySelectedIndex(int index) {
-    setState(() {
-      this.daySelectedIndex = index;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Align(
