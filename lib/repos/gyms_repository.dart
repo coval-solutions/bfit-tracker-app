@@ -13,11 +13,18 @@ class GymsRepository {
   GymsRepository();
 
   Future<List<Gym>> getGyms() async {
+    Position location = await LocationRepository().getLocation();
+    Position fetchedLocation = await LocationRepository().getLocation(force: true);
+
+    // If the location has changed, let's get new data
+    if (location.latitude != fetchedLocation.latitude || location.longitude != fetchedLocation.longitude) {
+      return await this._fetch(fetchedLocation.latitude, fetchedLocation.longitude);
+    }
+    
     if (GymsRepository._gyms != null && GymsRepository._gyms.length > 0) {
       return GymsRepository._gyms;
     }
 
-    Position location = LocationRepository().getLocation();
     return await this._fetch(location.latitude, location.longitude);
   }
 
