@@ -4,7 +4,6 @@ import 'package:bfit_tracker/repos/location_repository.dart';
 import 'package:bfit_tracker/repos/user_repository.dart';
 import 'package:bfit_tracker/theme.dart';
 import 'package:bfit_tracker/ui/home/index.dart';
-import 'package:bfit_tracker/ui/splash_screen/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -36,14 +35,24 @@ class _AppState extends State<App> {
           builder: (BuildContext context, AuthenticationState state) {
             if (state is Unauthenticated) {
               _authenticationBloc.dispatch(AppStarted());
-              return SplashScreen();
+              return Scaffold(
+                body: Align(
+                  alignment: Alignment.center,
+                  child: CircularProgressIndicator(),
+                ),
+              );
             }
 
             if (state is Authenticated) {
               return HomeScreen(user: state.currentUser, location: state.currentLocation, courses: _courseRepository.courses);
             }
 
-            return SplashScreen();
+            return Scaffold(
+              body: Align(
+                alignment: Alignment.center,
+                child: CircularProgressIndicator(),
+              ),
+            );
           },
         ),
       ),
