@@ -37,3 +37,13 @@ flutter:
     - assets/
     - assets/animations/
     - assets/images/
+
+  fonts:
+    - family: SF UI Text
+      fonts:
+        - asset: assets/fonts/SFUIText-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/SFUIText-Bold.ttf
+          weight: 600
+        - asset: assets/fonts/SFUIText-Semibold.ttf
+          weight: 600

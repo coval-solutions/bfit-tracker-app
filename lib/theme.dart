@@ -4,6 +4,7 @@ final ThemeData mainTheme = new ThemeData(
   primaryColor: Colors.amber[600],
   accentColor: CustomColor.MAYA_BLUE,
   backgroundColor: CustomColor.ALICE_BLUE,
+  fontFamily: 'SF UI Text',
 );
 
 class CustomColor {
