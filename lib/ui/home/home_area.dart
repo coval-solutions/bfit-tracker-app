@@ -76,7 +76,7 @@ class WelcomeCard extends StatelessWidget {
           Widget yesButton = FlatButton(
             child: Text('Yes, Sign Out'),
             onPressed:  () {
-              _authenticationBloc.dispatch(LoggedOut());
+              _authenticationBloc.add(LoggedOut());
               Navigator.pop(context);
             },
           );

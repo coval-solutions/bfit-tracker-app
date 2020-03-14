@@ -40,7 +40,7 @@ class AuthenticationBloc
         yield Authenticated(currentUser, location);
       } else {
         await _userRepository.signInWithGoogle();
-        this.dispatch(AppStarted());
+        this.add(AppStarted());
       }
     } catch (error) {
       yield Unauthenticated();
