@@ -27,7 +27,7 @@ dependencies:
   font_awesome_flutter: ^8.5.0
   flare_flutter: ^1.5.6
   weight_slider: ^1.0.2
-  height_slider: ^1.1.2
+  height_slider: ^1.1.3
   dots_indicator: ^1.0.0
 
 dev_dependencies:

@@ -134,8 +134,11 @@ class _OnboardingScreenFourState extends State<OnboardingScreenFour> {
                   height: this.height,
                   numberLineColor: CustomColor.DIM_GRAY,
                   currentHeightTextColor: CustomColor.DIM_GRAY,
+                  sliderCircleColor: CustomColor.MAYA_BLUE,
                   onChange: (val) => setState(() => this.height = val),
-                  personImagePath: isMaleSelected ? 'assets/images/onboarding/man.svg' : 'assets/images/onboarding/woman.svg',
+                  personImagePath: isMaleSelected
+                      ? 'assets/images/onboarding/man.svg'
+                      : 'assets/images/onboarding/woman.svg',
                 ),
               ),
             ],
