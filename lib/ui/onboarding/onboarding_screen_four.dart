@@ -32,7 +32,7 @@ class _OnboardingScreenFourState extends State<OnboardingScreenFour> {
       appBar: EmptyAppBar(),
       backgroundColor: mainTheme.primaryColor,
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[
           Align(
             alignment: Alignment.center,
@@ -40,7 +40,7 @@ class _OnboardingScreenFourState extends State<OnboardingScreenFour> {
               padding: EdgeInsets.only(left: 14),
               child: AutoSizeText(
                 'About You',
-                minFontSize: 22,
+                minFontSize: 32,
                 maxLines: 1,
                 style: TextStyle(
                   color: Colors.white,
