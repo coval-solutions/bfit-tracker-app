@@ -15,14 +15,13 @@ class OnboardingScreenFour extends StatefulWidget {
 
 class _OnboardingScreenFourState extends State<OnboardingScreenFour> {
   int height = 170;
-  bool isMale;
+  bool isMaleSelected;
   String personImagePath;
 
   @override
   void initState() {
     super.initState();
-    isMale = true;
-    personImagePath = 'assets/images/onboarding/man.svg';
+    isMaleSelected = true;
   }
 
   @override
@@ -52,14 +51,15 @@ class _OnboardingScreenFourState extends State<OnboardingScreenFour> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
               RaisedButton(
-                disabledColor: CustomColor.DIM_GRAY,
-                color: Colors.white,
-                onPressed: isMale ? null : () {
-                  setState(() {
-                    isMale = true;
-                    personImagePath = 'assets/images/onboarding/man.svg';
-                  });
-                },
+                disabledColor: CustomColor.MAYA_BLUE,
+                color: isMaleSelected ? CustomColor.MAYA_BLUE : Colors.white,
+                onPressed: isMaleSelected
+                    ? () {}
+                    : () {
+                        setState(() {
+                          isMaleSelected = true;
+                        });
+                      },
                 elevation: 5,
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30.0)),
@@ -68,24 +68,33 @@ class _OnboardingScreenFourState extends State<OnboardingScreenFour> {
                   constraints:
                       const BoxConstraints(minWidth: 24.0, minHeight: 52.0),
                   alignment: Alignment.center,
-                  child: const AutoSizeText(
-                    'Male',
-                    minFontSize: 20,
-                    style: TextStyle(
-                        color: Colors.black, fontWeight: FontWeight.bold),
-                    textAlign: TextAlign.center,
-                  ),
+                  child: isMaleSelected
+                      ? const AutoSizeText(
+                          'Male',
+                          minFontSize: 20,
+                          style: TextStyle(
+                              color: Colors.white, fontWeight: FontWeight.bold),
+                          textAlign: TextAlign.center,
+                        )
+                      : const AutoSizeText(
+                          'Male',
+                          minFontSize: 20,
+                          style: TextStyle(
+                              color: Colors.black, fontWeight: FontWeight.bold),
+                          textAlign: TextAlign.center,
+                        ),
                 ),
               ),
               RaisedButton(
-                                disabledColor: CustomColor.DIM_GRAY,
-                color: Colors.white,
-                onPressed: isMale ? () {
-                  setState(() {
-                    isMale = false;
-                    personImagePath = 'assets/images/onboarding/woman.svg';
-                  });
-                } : null,
+                disabledColor: CustomColor.MAYA_BLUE,
+                color: isMaleSelected ? Colors.white : CustomColor.MAYA_BLUE,
+                onPressed: isMaleSelected
+                    ? () {
+                        setState(() {
+                          isMaleSelected = false;
+                        });
+                      }
+                    : () {},
                 elevation: 5,
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30.0)),
@@ -94,13 +103,21 @@ class _OnboardingScreenFourState extends State<OnboardingScreenFour> {
                   constraints:
                       const BoxConstraints(minWidth: 24.0, minHeight: 52.0),
                   alignment: Alignment.center,
-                  child: const AutoSizeText(
-                    'Female',
-                    minFontSize: 20,
-                    style: TextStyle(
-                        color: Colors.black, fontWeight: FontWeight.bold),
-                    textAlign: TextAlign.center,
-                  ),
+                  child: isMaleSelected
+                      ? const AutoSizeText(
+                          'Female',
+                          minFontSize: 20,
+                          style: TextStyle(
+                              color: Colors.black, fontWeight: FontWeight.bold),
+                          textAlign: TextAlign.center,
+                        )
+                      : const AutoSizeText(
+                          'Female',
+                          minFontSize: 20,
+                          style: TextStyle(
+                              color: Colors.white, fontWeight: FontWeight.bold),
+                          textAlign: TextAlign.center,
+                        ),
                 ),
               ),
             ],
@@ -118,7 +135,7 @@ class _OnboardingScreenFourState extends State<OnboardingScreenFour> {
                   numberLineColor: CustomColor.DIM_GRAY,
                   currentHeightTextColor: CustomColor.DIM_GRAY,
                   onChange: (val) => setState(() => this.height = val),
-                  personImagePath: this.personImagePath,
+                  personImagePath: isMaleSelected ? 'assets/images/onboarding/man.svg' : 'assets/images/onboarding/woman.svg',
                 ),
               ),
             ],
