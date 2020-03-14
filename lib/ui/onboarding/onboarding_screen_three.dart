@@ -2,6 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:bfit_tracker/theme.dart';
 import 'package:bfit_tracker/ui/custom.dart';
 import 'package:bfit_tracker/ui/onboarding/onboarding_screen_four.dart';
+import 'package:bfit_tracker/ui/onboarding/skip.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -77,21 +78,7 @@ class OnboardingScreenThree extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                GestureDetector(
-                  onTap: () {
-                    {}
-                  },
-                  child: const AutoSizeText(
-                    'Skip',
-                    minFontSize: 14,
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      decoration: TextDecoration.underline,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                ),
+                SkipOnboardingButton(),
                 RaisedButton(
                   onPressed: () {
                     Navigator.push(
