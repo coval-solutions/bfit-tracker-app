@@ -1,15 +1,19 @@
 class UserInfo {
-  final bool onboarded;
+  final int height;
+  final bool isMale;
 
-  UserInfo({this.onboarded});
-
-  bool hasOnboarded() {
-    return this.onboarded;
-  }
+  UserInfo({this.height, this.isMale});
 
   factory UserInfo.fromJson(Map<String, dynamic> data) {
     return UserInfo(
-      onboarded: data['onboarded'],
+      height: data['height'],
+      isMale: data['isMale']
     );
   }
+
+  Map<String, dynamic> toJson() =>
+  {
+    'height': height,
+    'isMale': isMale,
+  }; 
 }

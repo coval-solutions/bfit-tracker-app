@@ -5,7 +5,7 @@ class FirestoreRepository {
     return Firestore.instance.document(collectionDocumentPath).get();
   }
 
-  static Future<DocumentSnapshot> create(String collectionDocumentPath) {
-    return Firestore.instance.document(collectionDocumentPath).get();
+  static Future<void> create(String collectionDocumentPath, Map<String, dynamic> data) {
+    return Firestore.instance.document(collectionDocumentPath).setData(data);
   }
 }

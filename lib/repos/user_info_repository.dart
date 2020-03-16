@@ -22,6 +22,15 @@ class UserInfoRepository {
     return null;
   }
 
+  Future<void> setUserInfo(UserInfo userInfo) async {
+    User user = UserRepository.getCurrentUser();
+    if (user != null) {
+      return this._set(user, userInfo);
+    }
+
+    return null;
+  }
+
   Future<UserInfo> _fetch(User user) async {
     final result = await FirestoreRepository.read("${UserInfoRepository.COLLECTION_NAME}/${user.id}");
     if (result.data == null) {
@@ -33,11 +42,7 @@ class UserInfoRepository {
     return userInfo;
   }
 
-  Future<UserInfo> _set(User user, UserInfoRepository userInfoRepository) async {
-    final result = await FirestoreRepository.read("${UserInfoRepository.COLLECTION_NAME}/${user.id}");
-    final userInfo = UserInfo.fromJson(result.data);
-
-    UserInfoRepository._userInfo = userInfo;
-    return userInfo;
+  Future<void> _set(User user, UserInfo data) async {
+    await FirestoreRepository.create("${UserInfoRepository.COLLECTION_NAME}/${user.id}", data.toJson());
   }
 }

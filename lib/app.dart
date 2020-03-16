@@ -43,19 +43,17 @@ class App extends StatelessWidget {
             return FutureBuilder<UserInfo>(
               future: _userInfoRepository.getUserInfo(),
               builder: (context, snapshot) {
-                print(snapshot);
                 if (snapshot.connectionState == ConnectionState.done) {
                   if (snapshot.data == null) {
                     return OnboardingScreenOne();
                   }
-
-                  return Text("TEST ${snapshot.data}");
                 }
 
                 return HomeScreen(
-                    user: state.currentUser,
-                    location: state.currentLocation,
-                    courses: _courseRepository.courses);
+                  user: state.currentUser,
+                  location: state.currentLocation,
+                  courses: _courseRepository.courses
+                );
               },
             );
           }
