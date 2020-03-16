@@ -14,7 +14,7 @@ class HomeScreen extends StatefulWidget {
   final Position location;
   final List<Course> courses;
 
-  HomeScreen({Key key, @required this.user, this.location, this.courses}) : super(key: key);
+  HomeScreen({Key key, this.user, this.location, this.courses}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {

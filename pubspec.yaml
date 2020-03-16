@@ -4,13 +4,13 @@ version: 1.0.0+1
 
 environment:
   sdk: ">=2.2.0 <3.0.0"
-  flutter: "1.12.13+hotfix.5"
+  flutter: "1.12.13+hotfix.8"
 
 dependencies:
   flutter:
     sdk: flutter
-  equatable: ^0.2.4
-  flutter_bloc: ^0.13.0
+  equatable: ^1.1.0
+  flutter_bloc: ^3.2.0
   firebase_core: ^0.4.0+9
   firebase_analytics: ^5.0.2
   cloud_firestore: ^0.12.9+5
@@ -26,6 +26,9 @@ dependencies:
   percent_indicator: ^2.1.1
   font_awesome_flutter: ^8.5.0
   flare_flutter: ^1.5.6
+  weight_slider: ^1.0.2
+  height_slider: ^1.1.3
+  dots_indicator: ^1.0.0
 
 dev_dependencies:
   flutter_test:
@@ -37,6 +40,7 @@ flutter:
     - assets/
     - assets/animations/
     - assets/images/
+    - assets/images/onboarding/
 
   fonts:
     - family: SF UI Text
