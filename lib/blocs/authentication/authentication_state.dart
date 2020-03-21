@@ -1,29 +1,24 @@
-import 'package:bfit_tracker/models/user.dart';
-import 'package:bfit_tracker/models/user_info.dart';
-import 'package:equatable/equatable.dart';
-import 'package:geolocator/geolocator.dart';
-import 'package:meta/meta.dart';
+part of 'authentication_bloc.dart';
 
-@immutable
 abstract class AuthenticationState extends Equatable {
-  AuthenticationState([List props = const []]) : super();
+  const AuthenticationState();
 
   @override
   List<Object> get props => [];
 }
 
+class Uninitialized extends AuthenticationState {}
+
 class Authenticated extends AuthenticationState {
-  final User currentUser;
-  final UserInfo userInfo;
-  final Position currentLocation;
+  final User _user;
 
-  Authenticated(this.currentUser, this.userInfo, this.currentLocation) : super([currentUser, currentLocation]);
+  const Authenticated(this._user);
 
   @override
-  String toString() => 'Authenticated { email: ${currentUser.email} }';
+  List<Object> get props => [this._user];
+
+  @override
+  String toString() => "Authenticated { uid: ${this._user.getName()} }";
 }
 
-class Unauthenticated extends AuthenticationState {
-  @override
-  String toString() => 'Unauthenticated';
-}
+class Unauthenticated extends AuthenticationState {}

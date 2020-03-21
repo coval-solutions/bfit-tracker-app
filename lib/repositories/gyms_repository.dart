@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:bfit_tracker/internal/keys.dart';
 import 'package:bfit_tracker/models/gym.dart';
-import 'package:bfit_tracker/repos/location_repository.dart';
+import 'package:bfit_tracker/repositories/location_repository.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart';
 

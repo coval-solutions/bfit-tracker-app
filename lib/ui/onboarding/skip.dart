@@ -1,5 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:bfit_tracker/ui/home/index.dart';
+import 'package:bfit_tracker/ui/home/home_screen.dart';
 import 'package:flutter/material.dart';
 
 class SkipOnboardingButton extends StatelessWidget {

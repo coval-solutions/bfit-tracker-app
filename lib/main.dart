@@ -1,10 +1,6 @@
 import 'package:bfit_tracker/app.dart';
 import 'package:bfit_tracker/blocs/authentication/authentication_bloc.dart';
-import 'package:bfit_tracker/blocs/authentication/index.dart';
-import 'package:bfit_tracker/repos/course_repository.dart';
-import 'package:bfit_tracker/repos/location_repository.dart';
-import 'package:bfit_tracker/repos/user_info_repository.dart';
-import 'package:bfit_tracker/repos/user_repository.dart';
+import 'package:bfit_tracker/repositories/user_repository.dart';
 import 'package:bfit_tracker/simple_bloc_delegate.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -13,18 +9,12 @@ void main() {
   WidgetsFlutterBinding.ensureInitialized();
   BlocSupervisor.delegate = SimpleBlocDelegate();
   final UserRepository userRepository = UserRepository();
-  final UserInfoRepository userInfoRepository = UserInfoRepository();
-  final CourseRepository courseRepository = CourseRepository();
-  final LocationRepository locationRepository = LocationRepository();
 
   runApp(
     BlocProvider(
-      create: (context) => AuthenticationBloc(
-          userRepository: userRepository,
-          userInfoRepository: userInfoRepository,
-          locationRepository: locationRepository)
+      create: (context) => AuthenticationBloc(userRepository: userRepository)
         ..add(AppStarted()),
-      child: App(userRepository: userRepository, userInfoRepository: userInfoRepository, courseRepository: courseRepository),
+      child: App(userRepository: userRepository),
     ),
   );
 }

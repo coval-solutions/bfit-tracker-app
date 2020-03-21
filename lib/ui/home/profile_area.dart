@@ -1,8 +1,8 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:bfit_tracker/models/goal.dart';
 import 'package:bfit_tracker/models/user.dart';
-import 'package:bfit_tracker/repos/goals_repository.dart';
-import 'package:bfit_tracker/repos/user_repository.dart';
+import 'package:bfit_tracker/repositories/goals_repository.dart';
+import 'package:bfit_tracker/repositories/user_repository.dart';
 import 'package:bfit_tracker/theme.dart';
 import 'package:bfit_tracker/ui/custom.dart';
 import 'package:flutter/material.dart';

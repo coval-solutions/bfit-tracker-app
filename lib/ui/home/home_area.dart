@@ -1,10 +1,9 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:bfit_tracker/blocs/authentication/index.dart';
+import 'package:bfit_tracker/blocs/authentication/authentication_bloc.dart';
 import 'package:bfit_tracker/controllers/gym_controller.dart';
 import 'package:bfit_tracker/models/gym.dart';
 import 'package:bfit_tracker/models/user.dart';
-import 'package:bfit_tracker/repos/gyms_repository.dart';
-import 'package:bfit_tracker/repos/user_repository.dart';
+import 'package:bfit_tracker/repositories/user_repository.dart';
 import 'package:bfit_tracker/theme.dart';
 import 'package:bfit_tracker/ui/custom.dart';
 import 'package:flutter/cupertino.dart';

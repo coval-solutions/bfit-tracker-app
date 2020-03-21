@@ -1,30 +1,19 @@
+import 'package:bfit_tracker/blocs/authentication/authentication_bloc.dart';
+import 'package:bfit_tracker/models/user.dart';
 import 'package:bfit_tracker/models/user_info.dart';
-import 'package:bfit_tracker/repos/course_repository.dart';
-import 'package:bfit_tracker/repos/user_info_repository.dart';
-import 'package:bfit_tracker/repos/user_repository.dart';
-import 'package:bfit_tracker/ui/home/index.dart';
-import 'package:bfit_tracker/ui/onboarding/onboarding_screen_one.dart';
+import 'package:bfit_tracker/repositories/user_repository.dart';
+import 'package:bfit_tracker/services/firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'blocs/authentication/index.dart';
-
 class App extends StatelessWidget {
   final UserRepository _userRepository;
-  final UserInfoRepository _userInfoRepository;
-  final CourseRepository _courseRepository;
 
   App(
       {Key key,
-      @required UserRepository userRepository,
-      @required UserInfoRepository userInfoRepository,
-      @required CourseRepository courseRepository})
-      : assert(userRepository != null &&
-            userInfoRepository != null &&
-            courseRepository != null),
-        _userRepository = userRepository,
-        _userInfoRepository = userInfoRepository,
-        _courseRepository = courseRepository,
+      @required UserRepository userRepository})
+      : assert(userRepository != null),
+        this._userRepository = userRepository,
         super(key: key);
 
   @override
@@ -32,6 +21,7 @@ class App extends StatelessWidget {
     return MaterialApp(
       home: BlocBuilder<AuthenticationBloc, AuthenticationState>(
         builder: (context, state) {
+          print(state.props);
           if (state is Unauthenticated) {
             return Scaffold(
               body: Align(
@@ -40,22 +30,55 @@ class App extends StatelessWidget {
               ),
             );
           } else if (state is Authenticated) {
-            return FutureBuilder<UserInfo>(
-              future: _userInfoRepository.getUserInfo(),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.done) {
-                  if (snapshot.data == null) {
-                    return OnboardingScreenOne();
+            final User user = state.props[0];
+            return StreamBuilder<UserInfo>(
+              stream: FirestoreService(user).userInfo,
+              builder: (BuildContext context, AsyncSnapshot snapshot) {
+                print(snapshot);
+                if (snapshot.connectionState != ConnectionState.active) {
+                  return Scaffold(
+                    body: Align(
+                      alignment: Alignment.center,
+                      child: CircularProgressIndicator(),
+                    ),
+                  );
+                } else {
+                  print(snapshot.hasData);
+                  if (snapshot.hasData) {
+                    print(snapshot.data);
+                    return Scaffold(
+                      body: Align(
+                        alignment: Alignment.center,
+                        child: CircularProgressIndicator(),
+                      ),
+                    );
+                  } else {
+                    return Scaffold(
+                      body: Align(
+                        alignment: Alignment.center,
+                        child: CircularProgressIndicator(),
+                      ),
+                    );
                   }
                 }
-
-                return HomeScreen(
-                  user: state.currentUser,
-                  location: state.currentLocation,
-                  courses: _courseRepository.courses
-                );
               },
             );
+            // return FutureBuilder<UserInfo>(
+            //   future: _userInfoRepository.getUserInfo(),
+            //   builder: (context, snapshot) {
+            //     if (snapshot.connectionState == ConnectionState.done) {
+            //       if (snapshot.data == null) {
+            //         return OnboardingScreenOne();
+            //       }
+            //     }
+
+            //     return HomeScreen(
+            //       user: state.currentUser,
+            //       location: state.currentLocation,
+            //       courses: _courseRepository.courses
+            //     );
+            //   },
+            // );
           }
 
           return Scaffold(

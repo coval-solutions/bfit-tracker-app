@@ -1,13 +1,15 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class UserInfo {
   final int height;
   final bool isMale;
 
   UserInfo({this.height, this.isMale});
 
-  factory UserInfo.fromJson(Map<String, dynamic> data) {
+  UserInfo fromSnapshot(DocumentSnapshot snapshot) {
     return UserInfo(
-      height: data['height'],
-      isMale: data['isMale']
+      height: snapshot.data['height'],
+      isMale: snapshot.data['isMale']
     );
   }
 
@@ -15,5 +17,5 @@ class UserInfo {
   {
     'height': height,
     'isMale': isMale,
-  }; 
+  };
 }

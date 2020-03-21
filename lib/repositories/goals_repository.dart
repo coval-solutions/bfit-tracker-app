@@ -1,7 +1,6 @@
 import 'package:bfit_tracker/models/goal.dart';
 import 'package:bfit_tracker/models/user.dart';
-import 'package:bfit_tracker/repos/firestore_repository.dart';
-import 'package:bfit_tracker/repos/user_repository.dart';
+import 'package:bfit_tracker/repositories/user_repository.dart';
 
 class GoalsRepository {
   static const String COLLECTION_NAME = 'goals';

@@ -1,7 +1,6 @@
 import 'package:bfit_tracker/models/user.dart';
 import 'package:bfit_tracker/models/user_info.dart';
-import 'package:bfit_tracker/repos/firestore_repository.dart';
-import 'package:bfit_tracker/repos/user_repository.dart';
+import 'package:bfit_tracker/repositories/user_repository.dart';
 
 class UserInfoRepository {
   static const String COLLECTION_NAME = 'UserInfo';

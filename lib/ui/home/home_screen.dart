@@ -1,9 +1,8 @@
-import 'package:bfit_tracker/blocs/bottom_nav_bar/index.dart';
+import 'package:bfit_tracker/blocs/bottom_nav_bar/home_screen_bottom_nav_bar_bloc.dart';
 import 'package:bfit_tracker/models/course.dart';
 import 'package:bfit_tracker/models/user.dart';
 import 'package:bfit_tracker/theme.dart';
 import 'package:bfit_tracker/ui/home/home_area.dart';
-import 'package:bfit_tracker/ui/home/index.dart';
 import 'package:bfit_tracker/ui/home/targets_area.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';

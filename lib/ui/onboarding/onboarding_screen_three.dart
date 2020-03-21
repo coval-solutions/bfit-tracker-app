@@ -80,7 +80,7 @@ class OnboardingScreenThree extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 SkipOnboardingButton(),
-                NextOnboardingButton(onboardingScreenWidget: OnboardingScreenFour(), replaceNavigation: true)
+                //NextOnboardingButton(onboardingScreenWidget: OnboardingScreenFour(), replaceNavigation: true)
               ],
             ),
           )
