@@ -245,7 +245,7 @@ PODS:
     - GoogleUtilities/Environment (~> 6.4)
     - GoogleUtilities/UserDefaults (~> 6.4)
   - Flutter (1.0.0)
-  - geolocator (5.2.1):
+  - geolocator (5.3.0):
     - Flutter
   - google_api_availability (2.0.3):
     - Flutter
@@ -416,7 +416,7 @@ SPEC CHECKSUMS:
   FirebaseFirestore: 52120e2833f804a874ba1a9f59aab864a8ae2286
   FirebaseInstanceID: ce993a3c3670a8f5d47ce371ac5d143c560608c5
   Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
-  geolocator: a048cc412bf350b17d671d170f151b0c9fb8f098
+  geolocator: 7cdcf71180b80913b3cd84ab715d3b5365b378af
   google_api_availability: 526574c9a5a0ae541e18c65f98e47afc11f53c8b
   google_sign_in: decaf71f56e22fb1dc179de062177ae6df415716
   google_sign_in_web: 52deb24929ac0992baff65c57956031c44ed44c3

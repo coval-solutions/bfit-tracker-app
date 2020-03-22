@@ -1,31 +1,18 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:bfit_tracker/theme.dart';
 import 'package:flutter/material.dart';
+import 'package:transformer_page_view/transformer_page_view.dart';
 
 class NextOnboardingButton extends StatelessWidget {
-  final dynamic onboardingScreenWidget;
-  final bool replaceNavigation;
+  final TransformerPageView transformerPageView;
 
-  const NextOnboardingButton(
-      {Key key, @required this.onboardingScreenWidget, this.replaceNavigation})
-      : super(key: key);
+  NextOnboardingButton(this.transformerPageView);
 
   @override
   Widget build(BuildContext context) {
     return RaisedButton(
       onPressed: () {
-        if (this.replaceNavigation == null || this.replaceNavigation == false) {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => this.onboardingScreenWidget),
-          );
-        } else {
-          Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(
-                  builder: (BuildContext context) => this.onboardingScreenWidget));
-        }
+        transformerPageView.controller.next();
       },
       elevation: 5,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
