@@ -150,16 +150,21 @@ class OnboardingScreenState extends State<OnboardingScreen> {
                           activeColor: Colors.white,
                         ),
                       ),
-                      SizedBox(
-                        height: 42,
-                      ),
+                      Spacer(),
                       Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 38),
+                        padding: EdgeInsets.only(
+                          bottom: 32,
+                        ),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
-                            SkipOnboardingButton(),
-                            NextOnboardingButton(transformerPageView)
+                            Padding(
+                              padding: EdgeInsets.only(
+                                left: 20,
+                              ),
+                              child: SkipOnboardingButton(),
+                            ),
+                            NextOnboardingButton(transformerPageView),
                           ],
                         ),
                       ),

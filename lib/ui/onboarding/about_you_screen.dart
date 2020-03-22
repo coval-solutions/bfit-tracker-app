@@ -153,7 +153,9 @@ class _AboutYouScreenState extends State<AboutYouScreen> {
             ),
           ),
           Padding(
-            padding: EdgeInsets.only(left: 100, right: 100),
+            padding: EdgeInsets.symmetric(
+              horizontal: 100,
+            ),
             child: RaisedButton(
               onPressed: () {
                 final UserInfo userInfo = UserInfo(
