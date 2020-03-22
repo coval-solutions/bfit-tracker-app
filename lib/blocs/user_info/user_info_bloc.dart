@@ -30,6 +30,8 @@ class UserInfoBloc
   ) async* {
     if (event is LoadUserInfo) {
       yield* _mapLoadingToState();
+    } else if (event is CreateUserInfo) {
+      yield* _mapCreateToState(event);
     }
   }
 
@@ -40,6 +42,10 @@ class UserInfoBloc
     } catch (_) {
       yield UserInfoNotLoaded();
     }
+  }
+
+  Stream<UserInfoState> _mapCreateToState(CreateUserInfo event) async* {
+    _userInfoRepository.create(this._user, event._userInfo);
   }
   
   @override

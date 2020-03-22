@@ -22,7 +22,7 @@ class App extends StatelessWidget {
             stream: state.props.first,
             builder: (BuildContext context, AsyncSnapshot snapshot) {
               if (snapshot.hasData && snapshot.data is UserInfo) {
-                return splashScreenLoading();
+                return CircularProgressIndicator();
               } else {
                 // No data found, let's onboard the user
                 return onboardingScreen();

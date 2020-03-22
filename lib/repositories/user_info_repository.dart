@@ -12,9 +12,13 @@ class UserInfoRepository {
         .map(UserInfo().fromSnapshot);
   }
 
-  // Future<void> update(User user, UserInfo userInfo) {
-  //   return COLLECTION
-  //       .document(user.getUid())
-  //       .updateData(update.toEntity().toDocument());
-  // }
+  Future<void> create(User user, UserInfo userInfo) async {
+    return await _userInfoCollection.document(user.getUid()).setData(userInfo.toDocument());
+  }
+
+  Future<void> update(User user, UserInfo userInfo) async {
+    return await  _userInfoCollection
+        .document(user.getUid())
+        .updateData(userInfo.toDocument());
+  }
 }

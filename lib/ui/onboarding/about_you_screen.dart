@@ -1,9 +1,11 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:bfit_tracker/blocs/user_info/user_info_bloc.dart';
+import 'package:bfit_tracker/models/user_info.dart';
 import 'package:bfit_tracker/theme.dart';
 import 'package:bfit_tracker/ui/onboarding/onboarding_screen.dart';
-import 'package:bfit_tracker/ui/onboarding/skip.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:height_slider/height_slider.dart';
 
@@ -20,6 +22,9 @@ class _AboutYouScreenState extends State<AboutYouScreen> {
 
   @override
   Widget build(BuildContext context) {
+    //ignore: close_sinks
+    final userInfoBloc = BlocProvider.of<UserInfoBloc>(context);
+
     return Material(
       color: mainTheme.primaryColor,
       textStyle: TextStyle(color: Colors.white),
@@ -151,18 +156,13 @@ class _AboutYouScreenState extends State<AboutYouScreen> {
             padding: EdgeInsets.only(left: 100, right: 100),
             child: RaisedButton(
               onPressed: () {
-                // UserInfoRepository().setUserInfo(
-                //   UserInfo(height: this.height, isMale: this.isMaleSelected)
-                // ).then((result) {
-                //   Navigator.pushReplacement(
-                //       context,
-                //       MaterialPageRoute(
-                //           builder: (BuildContext context) => HomeScreen()));
-                // }).catchError((error) {
-                //   // TODO: add crashanalytics shit
-                //   print(error);
-                //   SystemNavigator.pop();
-                // });
+                final UserInfo userInfo = UserInfo(
+                  height: this.height,
+                  isMale: this.isMaleSelected,
+                );
+                print(userInfoBloc.state.props.first);
+
+                userInfoBloc.add(CreateUserInfo(userInfo));
               },
               elevation: 5,
               shape: RoundedRectangleBorder(

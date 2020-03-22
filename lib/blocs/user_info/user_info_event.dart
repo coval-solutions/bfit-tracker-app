@@ -9,4 +9,17 @@ abstract class UserInfoEvent extends Equatable {
 
 class LoadUserInfo extends UserInfoEvent {}
 
+class CreateUserInfo extends UserInfoEvent {
+  final UserInfo _userInfo;
+
+  CreateUserInfo(this._userInfo);
+
+  @override
+  List<Object> get props => [this._userInfo];
+
+  @override
+  String toString() => "CreateUserInfo { userInfo: ${this._userInfo} }";
+}
+
+
 class UpdateUserInfo extends UserInfoEvent {}
