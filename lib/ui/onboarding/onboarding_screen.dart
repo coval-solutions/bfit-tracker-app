@@ -162,7 +162,7 @@ class OnboardingScreenState extends State<OnboardingScreen> {
                               padding: EdgeInsets.only(
                                 left: 20,
                               ),
-                              child: SkipOnboardingButton(),
+                              child: SkipOnboardingButton(transformerPageView),
                             ),
                             NextOnboardingButton(transformerPageView),
                           ],

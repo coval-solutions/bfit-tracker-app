@@ -1,21 +1,19 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:bfit_tracker/ui/home/home_screen.dart';
+import 'package:bfit_tracker/ui/onboarding/onboarding_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:transformer_page_view/transformer_page_view.dart';
 
 class SkipOnboardingButton extends StatelessWidget {
-  const SkipOnboardingButton({Key key}) : super(key: key);
+  final TransformerPageView transformerPageView;
+
+  SkipOnboardingButton(this.transformerPageView);
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      // onTap: () {
-      //   {
-      //     Navigator.pushReplacement(
-      //         context,
-      //         MaterialPageRoute(
-      //             builder: (BuildContext context) => HomeScreen()));
-      //   }
-      // },
+      onTap: () {
+        transformerPageView.controller.move(OnboardingScreenState.NUM_OF_PAGES - 1);
+      },
       child: const AutoSizeText(
         'Skip',
         minFontSize: 14,
