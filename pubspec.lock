@@ -197,7 +197,7 @@ packages:
       name: geolocator
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "5.2.1"
+    version: "5.3.0"
   google_api_availability:
     dependency: transitive
     description:
@@ -211,7 +211,7 @@ packages:
       name: google_sign_in
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "4.1.4"
+    version: "4.2.0"
   google_sign_in_platform_interface:
     dependency: transitive
     description:

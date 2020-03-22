@@ -25,6 +25,7 @@ class AuthenticationBloc
   Stream<AuthenticationState> mapEventToState(
     AuthenticationEvent event,
   ) async* {
+    print(event);
     if (event is AppStarted) {
       yield* _mapAppStartedToState();
     } else if (event is LoggedIn) {
@@ -65,5 +66,10 @@ class AuthenticationBloc
         ? User(firebaseUser.uid, firebaseUser.email, firebaseUser.displayName,
             User.getImageFromUrl(firebaseUser.photoUrl))
         : null;
+  }
+
+  @override
+  Future<void> close() {
+    return super.close();
   }
 }

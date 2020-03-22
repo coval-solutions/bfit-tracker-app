@@ -8,14 +8,14 @@ class SkipOnboardingButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        {
-          Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(
-                  builder: (BuildContext context) => HomeScreen()));
-        }
-      },
+      // onTap: () {
+      //   {
+      //     Navigator.pushReplacement(
+      //         context,
+      //         MaterialPageRoute(
+      //             builder: (BuildContext context) => HomeScreen()));
+      //   }
+      // },
       child: const AutoSizeText(
         'Skip',
         minFontSize: 14,

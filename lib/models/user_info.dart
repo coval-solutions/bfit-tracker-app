@@ -13,7 +13,7 @@ class UserInfo {
     );
   }
 
-  Map<String, dynamic> toJson() =>
+  Map<String, Object> toDocument() =>
   {
     'height': height,
     'isMale': isMale,
