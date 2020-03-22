@@ -97,13 +97,16 @@ class OnboardingScreenState extends State<OnboardingScreen> {
                         ],
                       ),
                       ParallaxContainer(
-                        child: AutoSizeText(
-                          this.titleText[info.index],
-                          minFontSize: 24,
-                          maxLines: 1,
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 12),
+                          child: AutoSizeText(
+                            this.titleText[info.index],
+                            minFontSize: 24,
+                            maxLines: 2,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
                         position: info.position,
@@ -114,15 +117,18 @@ class OnboardingScreenState extends State<OnboardingScreen> {
                         height: 42,
                       ),
                       ParallaxContainer(
-                        child: AutoSizeText(
-                          this.subtitleText[info.index],
-                          minFontSize: 16,
-                          maxFontSize: 18,
-                          maxLines: 2,
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.w600,
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 12),
+                          child: AutoSizeText(
+                            this.subtitleText[info.index],
+                            minFontSize: 16,
+                            maxFontSize: 18,
+                            maxLines: 3,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w600,
+                            ),
                           ),
                         ),
                         position: info.position,

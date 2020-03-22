@@ -160,8 +160,7 @@ class _AboutYouScreenState extends State<AboutYouScreen> {
                   height: this.height,
                   isMale: this.isMaleSelected,
                 );
-                print(userInfoBloc.state.props.first);
-
+                
                 userInfoBloc.add(CreateUserInfo(userInfo));
               },
               elevation: 5,
