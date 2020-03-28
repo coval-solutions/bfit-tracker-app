@@ -1,5 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:bfit_tracker/blocs/authentication/authentication_bloc.dart';
+import 'package:bfit_tracker/blocs/gym/gym_bloc.dart';
+import 'package:bfit_tracker/blocs/location/location_bloc.dart';
 import 'package:bfit_tracker/controllers/gym_controller.dart';
 import 'package:bfit_tracker/models/gym.dart';
 import 'package:bfit_tracker/models/user.dart';
@@ -13,8 +15,9 @@ import 'package:flutter_svg/svg.dart';
 class HomeArea extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Material(
-        child: Padding(
+    return Scaffold(
+        appBar: EmptyAppBar(),
+        body: Padding(
           padding: EdgeInsets.symmetric(
             horizontal: 12,
           ),
@@ -35,9 +38,9 @@ class HomeArea extends StatelessWidget {
                   vertical: 6,
                 ),
               ),
-              // Expanded(
-              //   child: NearByGymsCard(),
-              // ),
+              Expanded(
+                child: NearByGymsCard(),
+              ),
             ],
           ),
         ));
@@ -51,82 +54,74 @@ class WelcomeCard extends StatelessWidget {
     final AuthenticationBloc _authenticationBloc =
         BlocProvider.of<AuthenticationBloc>(context);
 
+    final User user = _authenticationBloc.state.props.first;
+
     return Card(
       elevation: 2,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12.0),
       ),
       color: mainTheme.accentColor,
-      child: StreamBuilder<User>(
-          stream: _authenticationBloc.state.props.first,
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              return InkWell(
-                onTap: () {
-                  Widget cancelButton = FlatButton(
-                    child: Text('Cancel'),
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                  );
+      child: InkWell(
+        onTap: () {
+          Widget cancelButton = FlatButton(
+            child: Text('Cancel'),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          );
 
-                  Widget yesButton = FlatButton(
-                    child: Text('Yes, Sign Out'),
-                    onPressed: () {
-                      _authenticationBloc.add(LoggedOut());
-                      Navigator.pop(context);
-                    },
-                  );
+          Widget yesButton = FlatButton(
+            child: Text('Yes, Sign Out'),
+            onPressed: () {
+              _authenticationBloc.add(LoggedOut());
+              Navigator.pop(context);
+            },
+          );
 
-                  AlertDialog alert = AlertDialog(
-                    title: Text('Confirm Sign Out'),
-                    content: Text("Are you sure you would like to sign out?"),
-                    actions: [
-                      cancelButton,
-                      yesButton,
-                    ],
-                  );
+          AlertDialog alert = AlertDialog(
+            title: Text('Confirm Sign Out'),
+            content: Text("Are you sure you would like to sign out?"),
+            actions: [
+              cancelButton,
+              yesButton,
+            ],
+          );
 
-                  showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return alert;
-                    },
-                  );
-                },
-                child: Padding(
-                  padding: EdgeInsets.symmetric(
-                    vertical: 6,
-                    horizontal: 8,
-                  ),
-                  child: Row(
-                    children: <Widget>[
-                      Expanded(
-                        child: AutoSizeText(
-                          "Welcome back,\n${snapshot.data.getForename()}!",
-                          maxLines: 2,
-                          maxFontSize: 24,
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                            fontSize: 22,
-                          ),
-                        ),
-                      ),
-                      CircleAvatar(
-                        backgroundImage: snapshot.data.getDisplayPicture(),
-                        maxRadius: 40,
-                      ),
-                    ],
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return alert;
+            },
+          );
+        },
+        child: Padding(
+          padding: EdgeInsets.symmetric(
+            vertical: 6,
+            horizontal: 8,
+          ),
+          child: Row(
+            children: <Widget>[
+              Expanded(
+                child: AutoSizeText(
+                  "Welcome back,\n${user.getForename()}!",
+                  maxLines: 2,
+                  maxFontSize: 24,
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                    fontSize: 22,
                   ),
                 ),
-              );
-            } else {
-              return Center(
-                child: CircularProgressIndicator(),
-              );
-            }
-          }),
+              ),
+              CircleAvatar(
+                backgroundImage: user.getDisplayPicture(),
+                maxRadius: 40,
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }
@@ -270,13 +265,8 @@ class NearByGymsCard extends StatefulWidget {
 }
 
 class _NearByGymsCardState extends State<NearByGymsCard> {
-  Future<List<Gym>> _gyms;
-
-  _NearByGymsCardState();
-
   @override
   void initState() {
-    this._gyms = null; //GymsRepository().getGyms();
     super.initState();
   }
 
@@ -306,49 +296,66 @@ class _NearByGymsCardState extends State<NearByGymsCard> {
             ),
           ),
           Expanded(
-            child: FutureBuilder(
-              future: this._gyms,
-              builder: (BuildContext context, AsyncSnapshot snapshot) {
-                switch (snapshot.connectionState) {
-                  case ConnectionState.none:
-                    return Center(child: CircularProgressIndicator());
-                  case ConnectionState.waiting:
-                    return Center(child: CircularProgressIndicator());
-                  default:
-                    if (snapshot.hasError) {
-                      return Center(
-                          child: AutoSizeText('Error: ${snapshot.error}'));
-                    } else if (snapshot.data == null) {
-                      return Center(child: CircularProgressIndicator());
-                    } else {
-                      return ListView.separated(
-                          shrinkWrap: true,
-                          physics: ClampingScrollPhysics(),
-                          itemCount: snapshot.data.length,
-                          itemBuilder: (context, index) {
-                            return ListTile(
-                                title: AutoSizeText(
-                                  '${snapshot.data[index].name}',
-                                  maxLines: 1,
-                                  maxFontSize: 14,
-                                ),
-                                subtitle: AutoSizeText(
-                                  '${snapshot.data[index].address}',
-                                  maxLines: 1,
-                                  minFontSize: 8,
-                                  maxFontSize: 10,
-                                ),
-                                onTap: () {
-                                  GymController.launchGoogleMaps(
-                                      snapshot.data[index].lat,
-                                      snapshot.data[index].lng);
-                                });
-                          },
-                          separatorBuilder: (context, index) {
-                            return Divider(height: 1);
-                          });
-                    }
+            child: BlocConsumer<LocationBloc, LocationState>(
+              listener: (BuildContext context, state) {},
+              builder: (BuildContext context, state) {
+                if (!(state is Located)) {
+                  return Center(child: CircularProgressIndicator());
                 }
+                return BlocConsumer<GymBloc, GymState>(
+                  listener: (BuildContext context, state) {},
+                  builder: (BuildContext context, state) {
+                    if (!(state is GymLoaded)) {
+                      return CircularProgressIndicator();
+                    }
+
+                    return FutureBuilder<List<Gym>>(
+                      future: context.bloc<GymBloc>().state.props.first,
+                      builder: (BuildContext context, AsyncSnapshot snapshot) {
+                        switch (snapshot.connectionState) {
+                          case ConnectionState.none:
+                          case ConnectionState.waiting:
+                            return Center(child: CircularProgressIndicator());
+                          default:
+                            if (snapshot.hasError) {
+                              return Center(
+                                  child:
+                                      AutoSizeText('Error: ${snapshot.error}'));
+                            } else if (snapshot.data == null) {
+                              return Center(child: CircularProgressIndicator());
+                            } else {
+                              return ListView.separated(
+                                  shrinkWrap: true,
+                                  physics: ClampingScrollPhysics(),
+                                  itemCount: snapshot.data.length,
+                                  itemBuilder: (context, index) {
+                                    return ListTile(
+                                        title: AutoSizeText(
+                                          '${snapshot.data[index].name}',
+                                          maxLines: 1,
+                                          maxFontSize: 14,
+                                        ),
+                                        subtitle: AutoSizeText(
+                                          '${snapshot.data[index].address}',
+                                          maxLines: 1,
+                                          minFontSize: 8,
+                                          maxFontSize: 10,
+                                        ),
+                                        onTap: () {
+                                          GymController.launchGoogleMaps(
+                                              snapshot.data[index].lat,
+                                              snapshot.data[index].lng);
+                                        });
+                                  },
+                                  separatorBuilder: (context, index) {
+                                    return Divider(height: 1);
+                                  });
+                            }
+                        }
+                      },
+                    );
+                  },
+                );
               },
             ),
           )

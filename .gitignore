@@ -2,7 +2,7 @@
 /android/app/google-services.json
 /ios/Flutter/flutter_export_environment.sh
 /ios/Runner/GoogleService-Info.plist
-/lib/internal/keys.dart
+.env
 
 # Miscellaneous
 *.class

@@ -18,6 +18,7 @@ dependencies:
   firebase_auth: ^0.11.1
   flare_flutter: ^1.5.6
   flutter_bloc: ^3.2.0
+  flutter_dotenv: ^2.1.0
   flutter_svg: ^0.15.0
   font_awesome_flutter: ^8.5.0
   geolocator: '^5.0.0'
@@ -36,6 +37,7 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   assets:
+    - .env
     - assets/
     - assets/animations/
     - assets/images/
