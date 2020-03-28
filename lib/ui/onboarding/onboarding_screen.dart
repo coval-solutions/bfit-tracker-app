@@ -204,7 +204,7 @@ class OnboardingScreenState extends State<OnboardingScreen> {
       left: 18,
       child: Container(
           padding: EdgeInsets.all(10),
-          child: SkipOnboardingButton(transformerPageView)),
+          child: SkipOnboardingButton()),
     );
   }
 }
