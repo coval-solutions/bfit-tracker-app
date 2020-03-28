@@ -25,7 +25,6 @@ class AuthenticationBloc
   Stream<AuthenticationState> mapEventToState(
     AuthenticationEvent event,
   ) async* {
-    print(event);
     if (event is AppStarted) {
       yield* _mapAppStartedToState();
     } else if (event is LoggedIn) {
@@ -43,7 +42,8 @@ class AuthenticationBloc
         final User user = this._userFromFirebaseUser(firebaseUser);
         yield Authenticated(user);
       } else {
-        yield Unauthenticated();
+        this._userRepository.signInWithGoogle();
+        this._mapAppStartedToState();
       }
     } catch (_) {
       yield Unauthenticated();

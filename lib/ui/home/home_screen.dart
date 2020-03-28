@@ -1,5 +1,8 @@
 import 'package:bfit_tracker/blocs/bottom_nav_bar/home_screen_bottom_nav_bar_bloc.dart';
 import 'package:bfit_tracker/theme.dart';
+import 'package:bfit_tracker/ui/home/analytics_area.dart';
+import 'package:bfit_tracker/ui/home/home_area.dart';
+import 'package:bfit_tracker/ui/home/targets_area.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 
@@ -38,20 +41,20 @@ class _HomeScreenState extends State<HomeScreen> {
         stream: _bottomNavBarBloc.itemStream,
         initialData: _bottomNavBarBloc.defaultItem,
         builder: (BuildContext context, AsyncSnapshot<HomeScreenBottomNavBarItems> snapshot) {
-          // switch (snapshot.data) {
-          //   case HomeScreenBottomNavBarItems.HOME:
-          //     return _homeArea();
-          //   case HomeScreenBottomNavBarItems.TARGETS:
-          //     return _targetArea();
-          //   case HomeScreenBottomNavBarItems.COURSES:
-          //     return _coursesArea();
-          //   case HomeScreenBottomNavBarItems.ANALYTICS:
-          //     return _analyticsArea();
-          //   case HomeScreenBottomNavBarItems.PROFILE:
-          //     return _profileArea();
-          //   default:
-          //     return _homeArea();
-          // }
+          switch (snapshot.data) {
+            case HomeScreenBottomNavBarItems.HOME:
+              return _homeArea();
+            case HomeScreenBottomNavBarItems.TARGETS:
+              return _targetArea();
+            case HomeScreenBottomNavBarItems.COURSES:
+              return _coursesArea();
+            case HomeScreenBottomNavBarItems.ANALYTICS:
+              return _analyticsArea();
+            case HomeScreenBottomNavBarItems.PROFILE:
+              return _profileArea();
+            default:
+              return _homeArea();
+          }
         },
       ),
       bottomNavigationBar: StreamBuilder(
@@ -76,23 +79,25 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  // Widget _homeArea() {
-  //   return HomeArea();
-  // }
+  Widget _homeArea() {
+    return HomeArea();
+  }
 
-  // Widget _targetArea() {
-  //   return targetsArea();
-  // }
+  Widget _targetArea() {
+    return targetsArea();
+  }
 
-  // Widget _coursesArea() {
-  //   return coursesArea(courses);
-  // }
+  Widget _coursesArea() {
+    return CircularProgressIndicator();
+    // return coursesArea(courses);
+  }
 
-  // Widget _analyticsArea() {
-  //   return analyticsArea();
-  // }
+  Widget _analyticsArea() {
+    return analyticsArea();
+  }
 
-  // Widget _profileArea() {
-  //   return ProfileArea();
-  // }
+  Widget _profileArea() {
+    return CircularProgressIndicator();
+    // return ProfileArea();
+  }
 }

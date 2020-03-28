@@ -23,4 +23,8 @@ class User {
   String getForename() {
     return _displayName.split(" ")[0];
   }
+
+  NetworkImage getDisplayPicture() {
+    return _displayPicture;
+  }
 }

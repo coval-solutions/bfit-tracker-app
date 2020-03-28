@@ -2,6 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:bfit_tracker/blocs/user_info/user_info_bloc.dart';
 import 'package:bfit_tracker/models/user_info.dart';
 import 'package:bfit_tracker/theme.dart';
+import 'package:bfit_tracker/ui/custom.dart';
 import 'package:bfit_tracker/ui/onboarding/onboarding_screen.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
@@ -25,10 +26,10 @@ class _AboutYouScreenState extends State<AboutYouScreen> {
     //ignore: close_sinks
     final userInfoBloc = BlocProvider.of<UserInfoBloc>(context);
 
-    return Material(
-      color: mainTheme.primaryColor,
-      textStyle: TextStyle(color: Colors.white),
-      child: Column(
+    return Scaffold(
+      appBar: EmptyAppBar(),
+      backgroundColor: mainTheme.primaryColor,
+      body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[
           Align(
@@ -140,8 +141,8 @@ class _AboutYouScreenState extends State<AboutYouScreen> {
             ],
           ),
           DotsIndicator(
-            dotsCount: OnboardingScreenState.NUM_OF_PAGES,
-            position: OnboardingScreenState.NUM_OF_PAGES.toDouble() - 1,
+            dotsCount: OnboardingScreenState.NUM_OF_PAGES + 1,
+            position: (OnboardingScreenState.NUM_OF_PAGES + 1).toDouble() - 1,
             decorator: DotsDecorator(
               spacing: EdgeInsets.only(right: 3),
               shape: CircleBorder(
@@ -162,7 +163,7 @@ class _AboutYouScreenState extends State<AboutYouScreen> {
                   height: this.height,
                   isMale: this.isMaleSelected,
                 );
-                
+
                 userInfoBloc.add(CreateUserInfo(userInfo));
               },
               elevation: 5,
