@@ -173,8 +173,6 @@ PODS:
     - Firebase/Core
     - Firebase/Firestore (~> 6.0)
     - Flutter
-  - Firebase/Analytics (6.14.0):
-    - Firebase/Core
   - Firebase/Auth (6.14.0):
     - Firebase/CoreOnly
     - FirebaseAuth (~> 6.4.1)
@@ -186,10 +184,6 @@ PODS:
   - Firebase/Firestore (6.14.0):
     - Firebase/CoreOnly
     - FirebaseFirestore (~> 1.8.2)
-  - firebase_analytics (0.0.1):
-    - Firebase/Analytics (~> 6.0)
-    - Firebase/Core
-    - Flutter
   - firebase_auth (0.0.1):
     - Firebase/Auth (~> 6.0)
     - Firebase/Core
@@ -245,7 +239,7 @@ PODS:
     - GoogleUtilities/Environment (~> 6.4)
     - GoogleUtilities/UserDefaults (~> 6.4)
   - Flutter (1.0.0)
-  - geolocator (5.2.1):
+  - geolocator (5.3.0):
     - Flutter
   - google_api_availability (2.0.3):
     - Flutter
@@ -327,7 +321,6 @@ PODS:
 
 DEPENDENCIES:
   - cloud_firestore (from `.symlinks/plugins/cloud_firestore/ios`)
-  - firebase_analytics (from `.symlinks/plugins/firebase_analytics/ios`)
   - firebase_auth (from `.symlinks/plugins/firebase_auth/ios`)
   - firebase_core (from `.symlinks/plugins/firebase_core/ios`)
   - firebase_core_web (from `.symlinks/plugins/firebase_core_web/ios`)
@@ -370,8 +363,6 @@ SPEC REPOS:
 EXTERNAL SOURCES:
   cloud_firestore:
     :path: ".symlinks/plugins/cloud_firestore/ios"
-  firebase_analytics:
-    :path: ".symlinks/plugins/firebase_analytics/ios"
   firebase_auth:
     :path: ".symlinks/plugins/firebase_auth/ios"
   firebase_core:
@@ -403,7 +394,6 @@ SPEC CHECKSUMS:
   BoringSSL-GRPC: db8764df3204ccea016e1c8dd15d9a9ad63ff318
   cloud_firestore: 10fd4a09ebffc33efd64708106e2e7de701fe9ae
   Firebase: 0219bb4782eb1406f1b9b0628a2e625484ce910d
-  firebase_analytics: dacdcfc524d722fff13dcff942f0dfa47e6be567
   firebase_auth: 00d6e1ab6d890cd6d3c624df61702e3a7072d1e3
   firebase_core: 0d8be0e0d14c4902953aeb5ac5d7316d1fe4b978
   firebase_core_web: d501d8b946b60c8af265428ce483b0fff5ad52d1
@@ -416,7 +406,7 @@ SPEC CHECKSUMS:
   FirebaseFirestore: 52120e2833f804a874ba1a9f59aab864a8ae2286
   FirebaseInstanceID: ce993a3c3670a8f5d47ce371ac5d143c560608c5
   Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
-  geolocator: a048cc412bf350b17d671d170f151b0c9fb8f098
+  geolocator: 7cdcf71180b80913b3cd84ab715d3b5365b378af
   google_api_availability: 526574c9a5a0ae541e18c65f98e47afc11f53c8b
   google_sign_in: decaf71f56e22fb1dc179de062177ae6df415716
   google_sign_in_web: 52deb24929ac0992baff65c57956031c44ed44c3

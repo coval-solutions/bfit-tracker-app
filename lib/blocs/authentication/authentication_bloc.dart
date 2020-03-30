@@ -1,28 +1,25 @@
-import 'package:bfit_tracker/repos/location_repository.dart';
-import 'package:bfit_tracker/repos/user_info_repository.dart';
-import 'package:bfit_tracker/repos/user_repository.dart';
+import 'dart:async';
+
+import 'package:bfit_tracker/models/user.dart';
+import 'package:bfit_tracker/repositories/user_repository.dart';
 import 'package:bloc/bloc.dart';
+import 'package:equatable/equatable.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:meta/meta.dart';
 
-import 'index.dart';
+part 'authentication_event.dart';
+part 'authentication_state.dart';
 
 class AuthenticationBloc
     extends Bloc<AuthenticationEvent, AuthenticationState> {
   final UserRepository _userRepository;
-  final UserInfoRepository _userInfoRepository;
-  final LocationRepository _locationRepository;
 
-  AuthenticationBloc(
-      {@required UserRepository userRepository,
-      @required UserInfoRepository userInfoRepository,
-      @required LocationRepository locationRepository})
-      : assert(userRepository != null, locationRepository != null),
-        _userRepository = userRepository,
-        _userInfoRepository = userInfoRepository,
-        _locationRepository = locationRepository;
+  AuthenticationBloc({@required UserRepository userRepository})
+      : assert(userRepository != null),
+        _userRepository = userRepository;
 
   @override
-  AuthenticationState get initialState => Unauthenticated();
+  AuthenticationState get initialState => Uninitialized();
 
   @override
   Stream<AuthenticationState> mapEventToState(
@@ -41,27 +38,38 @@ class AuthenticationBloc
     try {
       final isSignedIn = await _userRepository.isSignedIn();
       if (isSignedIn) {
-        final currentUser = await _userRepository.getUser();
-        final userInfo = await _userInfoRepository.getUserInfo();
-        final location = await _locationRepository.getLocation(force: true);
-        yield Authenticated(currentUser, userInfo, location);
+        final FirebaseUser firebaseUser = await _userRepository.getUser();
+        final User user = this._userFromFirebaseUser(firebaseUser);
+        yield Authenticated(user);
       } else {
-        await _userRepository.signInWithGoogle();
-        this.add(AppStarted());
+        this._userRepository.signInWithGoogle();
+        this._mapAppStartedToState();
       }
-    } catch (error) {
+    } catch (_) {
       yield Unauthenticated();
     }
   }
 
   Stream<AuthenticationState> _mapLoggedInToState() async* {
-    yield Authenticated(await _userRepository.getUser(),
-        await _userInfoRepository.getUserInfo(),
-        await _locationRepository.getLocation(force: false));
+    final FirebaseUser firebaseUser = await _userRepository.getUser();
+    final User user = this._userFromFirebaseUser(firebaseUser);
+    yield Authenticated(user);
   }
 
   Stream<AuthenticationState> _mapLoggedOutToState() async* {
     yield Unauthenticated();
     _userRepository.signOut();
+  }
+
+  User _userFromFirebaseUser(FirebaseUser firebaseUser) {
+    return firebaseUser != null
+        ? User(firebaseUser.uid, firebaseUser.email, firebaseUser.displayName,
+            User.getImageFromUrl(firebaseUser.photoUrl))
+        : null;
+  }
+
+  @override
+  Future<void> close() {
+    return super.close();
   }
 }

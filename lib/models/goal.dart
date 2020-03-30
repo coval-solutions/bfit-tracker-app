@@ -6,7 +6,7 @@ class Goal {
 
   Goal({this.bmi, this.weight, this.courses, this.gym});
 
-  factory Goal.fromJson(Map<String, dynamic> data) {
+  factory Goal.fromJson(Map<dynamic, dynamic> data) {
     return Goal(
       bmi: data['bmi'] + .0,
       weight: data['weight'] + .0,
@@ -14,6 +14,14 @@ class Goal {
       gym: data['gym'] + .0,
     );
   }
+
+  Map<String, Object> toDocument() =>
+  {
+    'bmi': bmi,
+    'weight': weight,
+    'courses': courses,
+    'gym': gym
+  };
 
   double getBmi() {
     return this.bmi;
