@@ -1,5 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:bfit_tracker/blocs/user_info/user_info_bloc.dart';
+import 'package:bfit_tracker/models/goal.dart';
 import 'package:bfit_tracker/models/user_info.dart';
 import 'package:bfit_tracker/theme.dart';
 import 'package:bfit_tracker/ui/custom.dart';
@@ -162,9 +163,18 @@ class _AboutYouScreenState extends State<AboutYouScreen> {
                 final UserInfo userInfo = UserInfo(
                   height: this.height,
                   isMale: this.isMaleSelected,
+                  goals: Goal(
+                    bmi: 24,
+                    weight: 72,
+                    courses: 45,
+                    gym: 100
+                  )
                 );
 
                 userInfoBloc.add(CreateUserInfo(userInfo));
+
+                // Pop back to App, either go to Home or Onboarding
+                Navigator.pop(context);
               },
               elevation: 5,
               shape: RoundedRectangleBorder(

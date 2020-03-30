@@ -17,7 +17,7 @@ class UserInfoRepository {
   }
 
   Future<void> update(User user, UserInfo userInfo) async {
-    return await  _userInfoCollection
+    return await _userInfoCollection
         .document(user.getUid())
         .updateData(userInfo.toDocument());
   }

@@ -7,7 +7,7 @@ class SkipOnboardingButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.pushReplacement(
+        Navigator.push(
           context,
           PageRouteBuilder(
             pageBuilder: (context, animation, secondaryAnimation) =>

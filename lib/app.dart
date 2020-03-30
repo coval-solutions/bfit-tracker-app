@@ -13,51 +13,30 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     final AuthenticationState authenticatedState =
         BlocProvider.of<AuthenticationBloc>(context).state;
-    if (!(authenticatedState is Authenticated)) {
-      return splashScreenLoading();
-    } else {
-      return BlocBuilder<UserInfoBloc, UserInfoState>(
-          builder: (BuildContext context, UserInfoState state) {
-        if (state is UserInfoLoaded) {
-          return StreamBuilder(
-            stream: state.props.first,
-            builder: (BuildContext context, AsyncSnapshot snapshot) {
-              if (snapshot.hasData && snapshot.data is UserInfo) {
-                return homeScreen();
+    return MaterialApp(
+      theme: mainTheme,
+      debugShowCheckedModeBanner: false,
+      home: (!(authenticatedState is Authenticated))
+          ? SplashScreenLoading()
+          : BlocBuilder<UserInfoBloc, UserInfoState>(
+              builder: (BuildContext context, UserInfoState state) {
+              print(state);
+              if (state is UserInfoLoaded) {
+                return StreamBuilder(
+                  stream: state.props.first,
+                  builder: (BuildContext context, AsyncSnapshot snapshot) {
+                    if (snapshot.hasData && snapshot.data is UserInfo) {
+                      return HomeScreen();
+                    } else {
+                      // No data found, let's onboard the user
+                      return OnboardingScreen();
+                    }
+                  },
+                );
               } else {
-                // No data found, let's onboard the user
-                return onboardingScreen();
+                return SplashScreenLoading();
               }
-            },
-          );
-        } else {
-          return splashScreenLoading();
-        }
-      });
-    }
-  }
-
-  Widget homeScreen() {
-    return MaterialApp(
-      theme: mainTheme,
-      debugShowCheckedModeBanner: false,
-      home: HomeScreen(),
-    );
-  }
-
-  Widget onboardingScreen() {
-    return MaterialApp(
-      theme: mainTheme,
-      debugShowCheckedModeBanner: false,
-      home: OnboardingScreen(),
-    );
-  }
-
-  Widget splashScreenLoading() {
-    return MaterialApp(
-      theme: mainTheme,
-      debugShowCheckedModeBanner: false,
-      home: SplashScreenLoading(),
+            }),
     );
   }
 }

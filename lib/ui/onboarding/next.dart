@@ -17,7 +17,7 @@ class NextOnboardingButton extends StatelessWidget {
         if (transformerPageView.pageController.hasClients) {
           if (transformerPageView.pageController.page.toInt() >=
               OnboardingScreenState.NUM_OF_PAGES - 1) {
-            Navigator.pushReplacement(
+            Navigator.push(
               context,
               PageRouteBuilder(
                 pageBuilder: (context, animation, secondaryAnimation) =>
