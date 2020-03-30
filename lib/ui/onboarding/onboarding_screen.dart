@@ -72,111 +72,113 @@ class OnboardingScreenState extends State<OnboardingScreen> {
       body: Stack(
         children: <Widget>[
           transformerPageView = TransformerPageView(
-              pageSnapping: true,
-              loop: false,
-              pageController: _pageController,
-              transformer: PageTransformerBuilder(
-                  builder: (Widget child, TransformInfo info) {
-                return Material(
-                  color: mainTheme.primaryColor,
-                  textStyle: TextStyle(color: Colors.white),
-                  child: Container(
-                    child: Padding(
-                      padding: EdgeInsets.all(18.0),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: <Widget>[
-                          Stack(
-                            children: <Widget>[
-                              ParallaxContainer(
-                                child: SvgPicture.asset(
-                                  this.background[info.index],
-                                  fit: BoxFit.contain,
-                                ),
-                                position: info.position,
-                                translationFactor: 200.0,
+            pageSnapping: true,
+            loop: false,
+            pageController: _pageController,
+            physics: NeverScrollableScrollPhysics(),
+            itemCount: NUM_OF_PAGES,
+            transformer: PageTransformerBuilder(
+                builder: (Widget child, TransformInfo info) {
+              return Material(
+                color: mainTheme.primaryColor,
+                textStyle: TextStyle(color: Colors.white),
+                child: Container(
+                  child: Padding(
+                    padding: EdgeInsets.all(18.0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        Stack(
+                          children: <Widget>[
+                            ParallaxContainer(
+                              child: SvgPicture.asset(
+                                this.background[info.index],
+                                fit: BoxFit.contain,
                               ),
-                              Padding(
-                                padding: EdgeInsets.only(
-                                  top: 24,
-                                ),
-                                child: Align(
-                                  alignment: Alignment.bottomCenter,
-                                  child: ParallaxContainer(
-                                    child: SvgPicture.asset(
-                                      this.images[info.index],
-                                      fit: BoxFit.scaleDown,
-                                      height: MediaQuery.of(context).size.width,
-                                    ),
-                                    position: info.position,
-                                    translationFactor: 800.0,
+                              position: info.position,
+                              translationFactor: 200.0,
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(
+                                top: 24,
+                              ),
+                              child: Align(
+                                alignment: Alignment.bottomCenter,
+                                child: ParallaxContainer(
+                                  child: SvgPicture.asset(
+                                    this.images[info.index],
+                                    fit: BoxFit.scaleDown,
+                                    height: MediaQuery.of(context).size.width,
                                   ),
-                                ),
-                              )
-                            ],
-                          ),
-                          ParallaxContainer(
-                            child: Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 12),
-                              child: AutoSizeText(
-                                this.titleText[info.index],
-                                minFontSize: 24,
-                                maxLines: 2,
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
+                                  position: info.position,
+                                  translationFactor: 800.0,
                                 ),
                               ),
-                            ),
-                            position: info.position,
-                            opacityFactor: .8,
-                            translationFactor: 400.0,
-                          ),
-                          SizedBox(
-                            height: 42,
-                          ),
-                          ParallaxContainer(
-                            child: Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 12),
-                              child: AutoSizeText(
-                                this.subtitleText[info.index],
-                                minFontSize: 16,
-                                maxFontSize: 18,
-                                maxLines: 3,
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
-                            ),
-                            position: info.position,
-                            translationFactor: 300.0,
-                          ),
-                          SizedBox(
-                            height: 42,
-                          ),
-                          DotsIndicator(
-                            dotsCount: NUM_OF_PAGES + 1,
-                            position: info.index.toDouble(),
-                            decorator: DotsDecorator(
-                              spacing: EdgeInsets.only(right: 3),
-                              shape: CircleBorder(
-                                  side: BorderSide(
+                            )
+                          ],
+                        ),
+                        ParallaxContainer(
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 12),
+                            child: AutoSizeText(
+                              this.titleText[info.index],
+                              minFontSize: 24,
+                              maxLines: 2,
+                              style: TextStyle(
                                 color: Colors.white,
-                              )),
-                              color: CustomColor.SELECTIVE_YELLOW,
-                              activeColor: Colors.white,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                           ),
-                        ],
-                      ),
+                          position: info.position,
+                          opacityFactor: .8,
+                          translationFactor: 400.0,
+                        ),
+                        SizedBox(
+                          height: 42,
+                        ),
+                        ParallaxContainer(
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 12),
+                            child: AutoSizeText(
+                              this.subtitleText[info.index],
+                              minFontSize: 16,
+                              maxFontSize: 18,
+                              maxLines: 3,
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ),
+                          position: info.position,
+                          translationFactor: 300.0,
+                        ),
+                        SizedBox(
+                          height: 42,
+                        ),
+                        DotsIndicator(
+                          dotsCount: NUM_OF_PAGES + 1,
+                          position: info.index.toDouble(),
+                          decorator: DotsDecorator(
+                            spacing: EdgeInsets.only(right: 3),
+                            shape: CircleBorder(
+                                side: BorderSide(
+                              color: Colors.white,
+                            )),
+                            color: CustomColor.SELECTIVE_YELLOW,
+                            activeColor: Colors.white,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                );
-              }),
-              itemCount: NUM_OF_PAGES),
+                ),
+              );
+            }),
+          ),
           nextButton(transformerPageView),
           skipButton(transformerPageView)
         ],
@@ -202,9 +204,8 @@ class OnboardingScreenState extends State<OnboardingScreen> {
     return Positioned(
       bottom: 42,
       left: 18,
-      child: Container(
-          padding: EdgeInsets.all(10),
-          child: SkipOnboardingButton()),
+      child:
+          Container(padding: EdgeInsets.all(10), child: SkipOnboardingButton()),
     );
   }
 }
