@@ -1,8 +1,10 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:bfit_tracker/blocs/fitness_data/fitness_data_bloc.dart';
 import 'package:bfit_tracker/enums/weekdays.dart';
 import 'package:bfit_tracker/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:bfit_tracker/ui/custom.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:health/health.dart';
 
 Widget analyticsArea() {
@@ -51,9 +53,7 @@ class StatCards extends StatefulWidget {
   StatCards({Key key}) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() {
-    return _StatCardsState();
-  }
+  _StatCardsState createState() => _StatCardsState();
 }
 
 class _StatCardsState extends State<StatCards> {
@@ -86,123 +86,110 @@ class _StatCardsState extends State<StatCards> {
     },
   };
 
-  void _getHealthDataPoints() async {
-    List<HealthDataType> types = [
-      HealthDataType.WEIGHT,
-      HealthDataType.HEIGHT,
-      HealthDataType.STEPS,
-    ];
-
-    DateTime startDate = DateTime.utc(2001, 01, 01);
-    DateTime endDate = DateTime.now();
-
-    List<HealthDataPoint> healthDataList = List<HealthDataPoint>();
-
-    Future.delayed(Duration(seconds: 2), () async {
-      bool isAuthorized = await Health.requestAuthorization();
-      if (isAuthorized) {
-        for (HealthDataType type in types) {
-          /// Calls to 'Health.getHealthDataFromType' must be wrapped in a try catch block.
-          try {
-            List<HealthDataPoint> healthData =
-                await Health.getHealthDataFromType(startDate, endDate, type);
-            healthDataList.addAll(healthData);
-          } catch (exception) {
-            print(exception.toString());
-          }
-        }
-      }
-
-      /// Do something with the health data list
-      for (var healthData in healthDataList) {
-        print(healthData.dataType + ' - ' + healthData.value.toString());
-      }
-    });
-  }
-
-  _StatCardsState();
-
   @override
   Widget build(BuildContext context) {
-    _getHealthDataPoints();
-    return Container(
-      height: 190,
-      child: ListView.builder(
-          shrinkWrap: true,
-          scrollDirection: Axis.horizontal,
-          itemCount: this.stats.length,
-          itemBuilder: (BuildContext context, int index) {
-            String key = this.stats.keys.elementAt(index);
-            var values = this.stats.values.elementAt(index);
-            return Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: 6,
-              ),
-              child: Container(
-                width: 166,
-                child: Card(
-                  elevation: 2,
-                  color: this.colors[index % colors.length],
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12.0),
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Padding(
-                        padding: EdgeInsets.only(
-                          top: 40,
-                          left: 14,
-                        ),
-                        child: AutoSizeText(
-                          key,
-                          minFontSize: 22,
-                          maxLines: 1,
-                          style: TextStyle(
-                            fontWeight: FontWeight.w400,
-                            color: Colors.white,
+    // final FitnessDataState fitnessDataState =
+    //     BlocProvider.of<FitnessDataBloc>(context).state;
+
+    // print(fitnessDataState);
+    // if (fitnessDataState.props.isEmpty) {
+    //   return Center(
+    //     child: CircularProgressIndicator(),
+    //   );
+    // }
+
+    return BlocConsumer<FitnessDataBloc, FitnessDataState>(
+      listener: (BuildContext context, FitnessDataState state) {},
+      builder: (BuildContext context, FitnessDataState state) {
+        if (!(state is FitnessDataLoaded)) {
+          return Center(child: CircularProgressIndicator());
+        }
+
+        return FutureBuilder<List<HealthDataPoint>>(
+          future: state.props.first,
+          builder: (context, snapshot) {
+            return Container(
+              height: 190,
+              child: ListView.builder(
+                  shrinkWrap: true,
+                  scrollDirection: Axis.horizontal,
+                  itemCount: this.stats.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    String key = this.stats.keys.elementAt(index);
+                    var values = this.stats.values.elementAt(index);
+                    return Padding(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 6,
+                      ),
+                      child: Container(
+                        width: 166,
+                        child: Card(
+                          elevation: 2,
+                          color: this.colors[index % colors.length],
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12.0),
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Padding(
+                                padding: EdgeInsets.only(
+                                  top: 40,
+                                  left: 14,
+                                ),
+                                child: AutoSizeText(
+                                  key,
+                                  minFontSize: 22,
+                                  maxLines: 1,
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w400,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.symmetric(
+                                  vertical: 34,
+                                ),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.only(
+                                  left: 14,
+                                ),
+                                child: AutoSizeText.rich(
+                                    TextSpan(
+                                      text: values['value'].toString(),
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.white,
+                                        fontSize: 20,
+                                      ),
+                                      children: <TextSpan>[
+                                        TextSpan(
+                                          text: values['unit'] != null
+                                              ? values['unit'].toString()
+                                              : '',
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.white,
+                                            fontSize: 10,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    maxLines: 1),
+                              ),
+                            ],
                           ),
                         ),
                       ),
-                      Padding(
-                        padding: EdgeInsets.symmetric(
-                          vertical: 34,
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(
-                          left: 14,
-                        ),
-                        child: AutoSizeText.rich(
-                            TextSpan(
-                              text: values['value'].toString(),
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white,
-                                fontSize: 20,
-                              ),
-                              children: <TextSpan>[
-                                TextSpan(
-                                  text: values['unit'] != null
-                                      ? values['unit'].toString()
-                                      : '',
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white,
-                                    fontSize: 10,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            maxLines: 1),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
+                    );
+                  }),
             );
-          }),
+          }
+        );
+      },
     );
   }
 }
