@@ -82,30 +82,28 @@ class _StatCardsState extends State<StatCards> {
                         unit: Stats.HEART_RATE_UNIT,
                       ),
                       StatCard(
-                        title: Stats.STEPS_NAME,
-                        value: snapshot.data.steps.toString(),
-                        unit: Stats.STEPS_UNIT,
-                        color: CustomColor.MAYA_BLUE
-                      ),
+                          title: Stats.STEPS_NAME,
+                          value: snapshot.data.steps.toString(),
+                          unit: Stats.STEPS_UNIT,
+                          color: CustomColor.MAYA_BLUE),
                       StatCard(
                         title: Stats.WORKOUTS_COMPLETE_NAME,
                         value: '30',
                       ),
                       StatCard(
-                        title: Stats.BLOOD_PRESSURE_NAME,
-                        value: "${snapshot.data.bloodPressureSystolic}/${snapshot.data.bloodPressureDiastolic}",
-                        color: CustomColor.MAYA_BLUE
-                      ),
+                          title: Stats.BLOOD_PRESSURE_NAME,
+                          value:
+                              "${snapshot.data.bloodPressureSystolic}/${snapshot.data.bloodPressureDiastolic}",
+                          color: CustomColor.MAYA_BLUE),
                       StatCard(
                         title: Stats.BIOTIN_LEVELS_NAME,
                         value: '73.2',
                         unit: Stats.BIOTIN_LEVELS_UNIT,
                       ),
                       StatCard(
-                        title: Stats.RESPIRATORY_RATE_NAME,
-                        value: '30p/60s',
-                        color: CustomColor.MAYA_BLUE
-                      ),
+                          title: Stats.RESPIRATORY_RATE_NAME,
+                          value: '30p/60s',
+                          color: CustomColor.MAYA_BLUE),
                     ],
                   ),
                 );
@@ -211,7 +209,9 @@ class WeekDayCards extends StatefulWidget {
 }
 
 class _WeekDayCardsState extends State<WeekDayCards> {
-  final DateTime today = DateTime.now();
+  final DateTime _today = DateTime.now();
+  //ignore: close_sinks
+  FitnessDataBloc _fitnessDataBloc;
 
   List<DateTime> days = new List<DateTime>();
   int daySelectedIndex;
@@ -221,10 +221,11 @@ class _WeekDayCardsState extends State<WeekDayCards> {
   @override
   void initState() {
     super.initState();
+    this._fitnessDataBloc = BlocProvider.of<FitnessDataBloc>(context);
 
-    this.days.add(today);
+    this.days.add(_today);
 
-    DateTime dateTime = today;
+    DateTime dateTime = _today;
     for (int i = 0; i < 4; i++) {
       dateTime = dateTime.subtract(Duration(days: 1));
       this.days.add(dateTime);
@@ -237,6 +238,10 @@ class _WeekDayCardsState extends State<WeekDayCards> {
     setState(() {
       this.daySelectedIndex = index;
     });
+
+    DateTime dateTimeSelected = this.days[index];
+    this._fitnessDataBloc.add(LoadFitnessData(DateTime.utc(
+        dateTimeSelected.year, dateTimeSelected.month, dateTimeSelected.day)));
   }
 
   @override
@@ -264,9 +269,7 @@ class _WeekDayCardsState extends State<WeekDayCards> {
                         ? weekdayCardSelected(index, this.days)
                         : weekdayCard(index, this.days),
                     onTap: () {
-                      setState(() {
-                        this.daySelectedIndex = index;
-                      });
+                      updateDaySelectedIndex(index);
                     },
                   );
                 },
