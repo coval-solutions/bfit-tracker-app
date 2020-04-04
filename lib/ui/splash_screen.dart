@@ -9,8 +9,12 @@ class SplashScreenLoading extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: mainTheme.primaryColor,
-      body: Center(
-        child: SvgPicture.asset('assets/images/rounded_logo_bf.svg'),
+      body: Padding(
+        padding: const EdgeInsets.all(24.0),
+        child: SvgPicture.asset(
+            'assets/images/rounded_logo_bf.svg',
+            fit: BoxFit.cover,
+          ),
       ),
     );
   }

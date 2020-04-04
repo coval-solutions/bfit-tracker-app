@@ -23,6 +23,7 @@ Future<void> main() async {
   final LocationRepository locationRepository = LocationRepository();
   final GymRepository gymRepository = GymRepository();
   final FitnessDataRepository fitnessDataRepository = FitnessDataRepository();
+  final DateTime now = DateTime.now();
 
   runApp(
     MultiBlocProvider(
@@ -51,7 +52,7 @@ Future<void> main() async {
         BlocProvider<FitnessDataBloc>(
           create: (BuildContext context) => FitnessDataBloc(
             fitnessDataRepository: fitnessDataRepository,
-          )..add(LoadFitnessData()),
+          )..add(LoadFitnessData(DateTime.utc(now.year, now.month, now.day))),
         ),
       ],
       child: BlocBuilder<AuthenticationBloc, AuthenticationState>(

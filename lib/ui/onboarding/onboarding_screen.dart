@@ -84,7 +84,7 @@ class OnboardingScreenState extends State<OnboardingScreen> {
                 textStyle: TextStyle(color: Colors.white),
                 child: Container(
                   child: Padding(
-                    padding: EdgeInsets.all(18.0),
+                    padding: const EdgeInsets.all(18.0),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -100,7 +100,7 @@ class OnboardingScreenState extends State<OnboardingScreen> {
                               translationFactor: 200.0,
                             ),
                             Padding(
-                              padding: EdgeInsets.only(
+                              padding: const EdgeInsets.only(
                                 top: 24,
                               ),
                               child: Align(
@@ -120,7 +120,7 @@ class OnboardingScreenState extends State<OnboardingScreen> {
                         ),
                         ParallaxContainer(
                           child: Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 12),
+                            padding: const EdgeInsets.symmetric(horizontal: 12),
                             child: AutoSizeText(
                               this.titleText[info.index],
                               minFontSize: 24,
@@ -140,7 +140,7 @@ class OnboardingScreenState extends State<OnboardingScreen> {
                         ),
                         ParallaxContainer(
                           child: Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 12),
+                            padding: const EdgeInsets.symmetric(horizontal: 12),
                             child: AutoSizeText(
                               this.subtitleText[info.index],
                               minFontSize: 16,
@@ -195,7 +195,7 @@ class OnboardingScreenState extends State<OnboardingScreen> {
             maxWidth: 164,
             maxHeight: 64,
           ),
-          padding: EdgeInsets.all(10),
+          padding: const EdgeInsets.all(10),
           child: NextOnboardingButton(transformerPageView)),
     );
   }
@@ -205,7 +205,7 @@ class OnboardingScreenState extends State<OnboardingScreen> {
       bottom: 42,
       left: 18,
       child:
-          Container(padding: EdgeInsets.all(10), child: SkipOnboardingButton()),
+          Container(padding: const EdgeInsets.all(10), child: SkipOnboardingButton()),
     );
   }
 }

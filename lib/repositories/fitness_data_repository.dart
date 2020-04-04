@@ -1,23 +1,24 @@
+import 'package:bfit_tracker/models/stats.dart';
 import 'package:health/health.dart';
 
 class FitnessDataRepository {
   static const List<HealthDataType> HEALTH_DATA_TYPES = [
-    HealthDataType.WEIGHT,
-    HealthDataType.HEIGHT,
+    HealthDataType.HEART_RATE,
     HealthDataType.STEPS,
+    HealthDataType.BLOOD_PRESSURE_SYSTOLIC,
+    HealthDataType.BLOOD_PRESSURE_DIASTOLIC,
   ];
 
-  Future<List<HealthDataPoint>> retrieve() async {
+  Future<Stats> retrieve(DateTime startDateTime) async {
     bool isAuthorized = await Health.requestAuthorization();
     if (isAuthorized) {
-      DateTime now = DateTime.now();
-      DateTime yesterday = now.subtract(Duration(days: 1));
-      DateTime startDate = DateTime.utc(yesterday.year, yesterday.month, yesterday.day);
+      DateTime startDate = DateTime.utc(startDateTime.year, startDateTime.month, startDateTime.day);
+      DateTime endDate = DateTime.utc(startDate.year, startDate.month, startDate.day, 23, 59, 59);
       List<HealthDataPoint> healthDataList = List<HealthDataPoint>();
       for (HealthDataType type in HEALTH_DATA_TYPES) {
         try {
           List<HealthDataPoint> healthData =
-              await Health.getHealthDataFromType(startDate, now, type);
+              await Health.getHealthDataFromType(startDate, endDate, type);
           healthDataList.addAll(healthData);
         } catch (exception) {
           // TODO: report this to Crashlytics
@@ -25,9 +26,7 @@ class FitnessDataRepository {
         }
       }
 
-      print('LIST: ');
-      print(healthDataList);
-      return healthDataList;
+      return Stats().fromSnapshot(healthDataList);
     }
 
     return null;

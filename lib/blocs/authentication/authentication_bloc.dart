@@ -42,8 +42,8 @@ class AuthenticationBloc
         final User user = this._userFromFirebaseUser(firebaseUser);
         yield Authenticated(user);
       } else {
-        this._userRepository.signInWithGoogle();
-        this._mapAppStartedToState();
+        await this._userRepository.signInWithGoogle();
+        this.add(LoggedIn());
       }
     } catch (_) {
       yield Unauthenticated();

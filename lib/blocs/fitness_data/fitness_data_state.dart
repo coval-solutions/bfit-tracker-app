@@ -10,15 +10,15 @@ abstract class FitnessDataState extends Equatable {
 class FitnessDataNotLoaded extends FitnessDataState {}
 
 class FitnessDataLoaded extends FitnessDataState {
-  final Future<List<HealthDataPoint>> _fitnessData;
+  final Future<Stats> _stats;
 
-  const FitnessDataLoaded(this._fitnessData);
-
-  @override
-  List<Object> get props => [this._fitnessData];
+  const FitnessDataLoaded(this._stats);
 
   @override
-  String toString() => "FitnessDataLoaded { fitnessData: ${this._fitnessData} }";
+  List<Object> get props => [this._stats];
+
+  @override
+  String toString() => "FitnessDataLoaded { stats: ${this._stats} }";
 }
 
 class FitnessDataLoading extends FitnessDataState {}

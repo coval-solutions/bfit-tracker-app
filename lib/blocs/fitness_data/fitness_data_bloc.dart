@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:bfit_tracker/models/stats.dart';
 import 'package:bfit_tracker/models/user_info.dart';
 import 'package:bfit_tracker/repositories/fitness_data_repository.dart';
 import 'package:bloc/bloc.dart';
@@ -11,7 +12,8 @@ import 'package:meta/meta.dart';
 part 'fitness_data_event.dart';
 part 'fitness_data_state.dart';
 
-class FitnessDataBloc extends Bloc<FitnessDataEvent, FitnessDataState> {
+class FitnessDataBloc
+    extends Bloc<FitnessDataEvent, FitnessDataState> {
   final FitnessDataRepository _fitnessDataRepository;
 
   FitnessDataBloc({@required FitnessDataRepository fitnessDataRepository})
@@ -26,19 +28,19 @@ class FitnessDataBloc extends Bloc<FitnessDataEvent, FitnessDataState> {
     FitnessDataEvent event,
   ) async* {
     if (event is LoadFitnessData) {
-      yield* _mapLoadingToState();
+      yield* _mapLoadingToState(event);
     }
   }
 
-  Stream<FitnessDataState> _mapLoadingToState() async* {
+  Stream<FitnessDataState> _mapLoadingToState(LoadFitnessData event) async* {
     try {
-      final fitnessData = _fitnessDataRepository.retrieve();
+      final fitnessData = _fitnessDataRepository.retrieve(event._startDateTime);
       yield FitnessDataLoaded(fitnessData);
     } catch (_) {
       yield FitnessDataNotLoaded();
     }
   }
-
+  
   @override
   Future<void> close() {
     return super.close();

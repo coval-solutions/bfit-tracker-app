@@ -7,8 +7,29 @@ import 'package:bfit_tracker/ui/onboarding/onboarding_screen.dart';
 import 'package:bfit_tracker/ui/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:health/health.dart';
 
-class App extends StatelessWidget {
+class App extends StatefulWidget {
+  @override
+  _AppState createState() => _AppState();
+}
+
+class _AppState extends State<App> {
+  bool _haveHealthPermission = false;
+
+  @override
+  void initState() {
+    super.initState();
+    this._checkHealthPermissions();
+  }
+
+  Future<void> _checkHealthPermissions() async {
+    bool isAuthorized = await Health.requestAuthorization();
+    setState(() {
+      _haveHealthPermission = isAuthorized;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final AuthenticationState authenticatedState =
@@ -20,17 +41,32 @@ class App extends StatelessWidget {
           ? SplashScreenLoading()
           : BlocBuilder<UserInfoBloc, UserInfoState>(
               builder: (BuildContext context, UserInfoState state) {
-              print(state);
               if (state is UserInfoLoaded) {
                 return StreamBuilder(
                   stream: state.props.first,
                   builder: (BuildContext context, AsyncSnapshot snapshot) {
-                    if (snapshot.hasData && snapshot.data is UserInfo) {
-                      return HomeScreen();
-                    } else {
-                      // No data found, let's onboard the user
-                      return OnboardingScreen();
+                    if (snapshot.connectionState == ConnectionState.none ||
+                        snapshot.connectionState == ConnectionState.waiting) {
+                      return Stack(
+                        children: <Widget>[
+                          SplashScreenLoading(),
+                          Center(
+                            child: CircularProgressIndicator(),
+                          ),
+                        ],
+                      );
                     }
+
+                    if (this._haveHealthPermission) {
+                      if (snapshot.hasData && snapshot.data is UserInfo) {
+                        return HomeScreen();
+                      } else {
+                        // No data found, let's onboard the user
+                        return OnboardingScreen();
+                      }
+                    }
+
+                    return SplashScreenLoading();
                   },
                 );
               } else {

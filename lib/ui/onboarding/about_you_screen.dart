@@ -155,7 +155,7 @@ class _AboutYouScreenState extends State<AboutYouScreen> {
             ),
           ),
           Padding(
-            padding: EdgeInsets.symmetric(
+            padding: const EdgeInsets.symmetric(
               horizontal: 100,
             ),
             child: RaisedButton(
@@ -179,7 +179,7 @@ class _AboutYouScreenState extends State<AboutYouScreen> {
               elevation: 5,
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(30.0)),
-              padding: EdgeInsets.all(0.0),
+              padding: const EdgeInsets.all(0.0),
               child: Ink(
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
