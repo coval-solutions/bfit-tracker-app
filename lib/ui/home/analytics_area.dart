@@ -59,8 +59,7 @@ class StatCards extends StatefulWidget {
 class _StatCardsState extends State<StatCards> {
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<FitnessDataBloc, FitnessDataState>(
-      listener: (BuildContext context, FitnessDataState state) {},
+    return BlocBuilder<FitnessDataBloc, FitnessDataState>(
       builder: (BuildContext context, FitnessDataState state) {
         if (!(state is FitnessDataLoaded)) {
           return Center(child: CircularProgressIndicator());

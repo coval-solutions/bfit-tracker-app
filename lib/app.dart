@@ -20,7 +20,6 @@ class _AppState extends State<App> {
   @override
   void initState() {
     super.initState();
-    this._checkHealthPermissions();
   }
 
   Future<void> _checkHealthPermissions() async {
@@ -39,7 +38,10 @@ class _AppState extends State<App> {
       debugShowCheckedModeBanner: false,
       home: (!(authenticatedState is Authenticated))
           ? SplashScreenLoading()
-          : BlocBuilder<UserInfoBloc, UserInfoState>(
+          : BlocConsumer<UserInfoBloc, UserInfoState>(
+              listener: (BuildContext context, UserInfoState state) {
+                this._checkHealthPermissions();
+              },
               builder: (BuildContext context, UserInfoState state) {
               if (state is UserInfoLoaded) {
                 return StreamBuilder(
