@@ -14,6 +14,7 @@ class StatCards extends StatefulWidget {
 }
 
 class _StatCardsState extends State<StatCards> {
+  final List<Color> colors = [CustomColor.SELECTIVE_YELLOW, CustomColor.MAYA_BLUE];
   FitnessDataBloc fitnessDataBloc;
 
   Future<void> _refresh() {
@@ -51,47 +52,54 @@ class _StatCardsState extends State<StatCards> {
                     physics: const AlwaysScrollableScrollPhysics(),
                     itemCount: 1,
                     itemBuilder: (BuildContext context, int index) {
+                      List<Map<Map<String, String>, String>> statsList = snapshot.data.toArray();
                       return Container(
                         height: 190,
-                        child: ListView(
+                        child: ListView.builder(
+                          itemCount: statsList.length,
                           scrollDirection: Axis.horizontal,
-                          children: <Widget>[
-                            if (snapshot.data.heartRate > 0) 
-                              _StatCard(
-                                title: Stats.HEART_RATE_NAME,
-                                value: snapshot.data.heartRate.toString(),
-                                unit: Stats.HEART_RATE_UNIT,
-                              ),
-                            _StatCard(
-                              title: Stats.STEPS_NAME,
-                              value: snapshot.data.steps.toInt().toString(),
-                              unit: Stats.STEPS_UNIT,
-                              color: CustomColor.MAYA_BLUE,
-                            ),
-                            _StatCard(
-                              title: Stats.WORKOUTS_COMPLETE_NAME,
-                              value: '30',
-                            ),
-                            if (snapshot.data.bloodPressureSystolic > 0 && snapshot.data.bloodPressureDiastolic > 0) 
-                              _StatCard(
-                                title: Stats.BLOOD_PRESSURE_NAME,
-                                value:
-                                    "${snapshot.data.bloodPressureSystolic.toInt()}/${snapshot.data.bloodPressureDiastolic.toInt()}",
-                                color: CustomColor.MAYA_BLUE,
-                              ),
-                            if (snapshot.data.bodyTemperature > 0) 
-                              _StatCard(
-                                title: Stats.BODY_TEMPERATURE_NAME,
-                                value: snapshot.data.bodyTemperature.toString(),
-                                unit: Stats.CELSIUS_UNIT,
-                              ),
-                            _StatCard(
-                              title: Stats.ACTIVE_ENERGY_BURNED_RATE_NAME,
-                              value: snapshot.data.activeEnergyBurned.toString(),
-                              color: CustomColor.MAYA_BLUE,
-                              unit: Stats.CALORIES_UNIT,
-                            ),
-                          ],
+                          itemBuilder: (BuildContext context, int index) {
+                            return _StatCard(
+                              title: statsList[index].keys.first.keys.first,
+                              value: statsList[index].values.first,
+                              unit: statsList[index].keys.first.values.first,
+                              color: this.colors[index % this.colors.length],
+                            );
+                          },
+                          // children: <Widget>[
+                          //   if (snapshot.data.heartRate > 0) 
+                          //     _StatCard(
+                          //       title: Stats.HEART_RATE_NAME,
+                          //       value: snapshot.data.heartRate.toString(),
+                          //       unit: Stats.HEART_RATE_UNIT,
+                          //     ),
+                          //   _StatCard(
+                          //     title: Stats.STEPS_NAME,
+                          //     value: snapshot.data.steps.toInt().toString(),
+                          //     unit: Stats.STEPS_UNIT,
+                          //   ),
+                          //   _StatCard(
+                          //     title: Stats.WORKOUTS_COMPLETE_NAME,
+                          //     value: '30',
+                          //   ),
+                          //   if (snapshot.data.bloodPressureSystolic > 0 && snapshot.data.bloodPressureDiastolic > 0) 
+                          //     _StatCard(
+                          //       title: Stats.BLOOD_PRESSURE_NAME,
+                          //       value:
+                          //           "${snapshot.data.bloodPressureSystolic.toInt()}/${snapshot.data.bloodPressureDiastolic.toInt()}",
+                          //     ),
+                          //   //if (snapshot.data.bodyTemperature > 0) 
+                          //     _StatCard(
+                          //       title: Stats.BODY_TEMPERATURE_NAME,
+                          //       value: snapshot.data.bodyTemperature.toString(),
+                          //       unit: Stats.CELSIUS_UNIT,
+                          //     ),
+                          //   _StatCard(
+                          //     title: Stats.ACTIVE_ENERGY_BURNED_RATE_NAME,
+                          //     value: snapshot.data.activeEnergyBurned.toString(),
+                          //     unit: Stats.CALORIES_UNIT,
+                          //   ),
+                          // ],
                         ),
                       );
                     },

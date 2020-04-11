@@ -13,13 +13,12 @@ class Stats {
   static const String CELSIUS_UNIT = '°C';
   static const String CALORIES_UNIT = 'cal';
 
-  double steps = 0;
   double heartRate = 0;
+  double steps = 0;
   double workoutsComplete = 0;
   double bloodPressureSystolic = 0;
   double bloodPressureDiastolic = 0;
   double bodyTemperature = 0;
-  double respiratoryRate = 0;
   double activeEnergyBurned = 0;
 
   Stats();
@@ -27,11 +26,11 @@ class Stats {
   Stats fromSnapshot(List<HealthDataPoint> data) {
     for (HealthDataPoint healthDataPoint in data) {
       switch (healthDataPoint.dataType) {
-        case 'HEART_RATE':
-          this.heartRate = healthDataPoint.value;
-          break;
         case 'STEPS':
           this.steps += healthDataPoint.value;
+          break;
+        case 'HEART_RATE':
+          this.heartRate = healthDataPoint.value;
           break;
         case 'BLOOD_PRESSURE_SYSTOLIC':
           this.bloodPressureSystolic = healthDataPoint.value;
@@ -49,5 +48,46 @@ class Stats {
     }
 
     return this;
+  }
+
+  List<Map<Map<String, String>, String>> toArray() {
+    List<Map<Map<String, String>, String>> array = new List();
+    if (this.heartRate > 0) {
+      Map<String, String> nameAndUnitMap = { HEART_RATE_NAME: HEART_RATE_UNIT };
+      Map<Map<String, String>, String> nameUnitAndValueMap = { nameAndUnitMap: this.heartRate.toString() };
+      array.add(nameUnitAndValueMap);
+    }
+
+    if (this.steps > 0) {
+      Map<String, String> nameAndUnitMap = { STEPS_NAME: STEPS_UNIT };
+      Map<Map<String, String>, String> nameUnitAndValueMap = { nameAndUnitMap: this.steps.toString() };
+      array.add(nameUnitAndValueMap);
+    }
+
+    if (this.workoutsComplete > 0) {
+      Map<String, String> nameAndUnitMap = { WORKOUTS_COMPLETE_NAME: '' };
+      Map<Map<String, String>, String> nameUnitAndValueMap = { nameAndUnitMap: this.workoutsComplete.toString() };
+      array.add(nameUnitAndValueMap);
+    }
+
+    if (this.bloodPressureSystolic > 0 && bloodPressureDiastolic > 0) {
+      Map<String, String> nameAndUnitMap = { BLOOD_PRESSURE_NAME: '' };
+      Map<Map<String, String>, String> nameUnitAndValueMap = { nameAndUnitMap: "${bloodPressureSystolic.toInt()}/${bloodPressureDiastolic.toInt()}" };
+      array.add(nameUnitAndValueMap);
+    }
+
+    if (this.bodyTemperature > 0) {
+      Map<String, String> nameAndUnitMap = { BODY_TEMPERATURE_NAME: CELSIUS_UNIT };
+      Map<Map<String, String>, String> nameUnitAndValueMap = { nameAndUnitMap: this.bodyTemperature.toString() };
+      array.add(nameUnitAndValueMap);
+    }
+
+    // We wanna always display activeEnergyBurned
+    Map<String, String> nameAndUnitMap = { ACTIVE_ENERGY_BURNED_RATE_NAME: CALORIES_UNIT };
+    Map<Map<String, String>, String> nameUnitAndValueMap = { nameAndUnitMap: this.activeEnergyBurned.toString() };
+    array.add(nameUnitAndValueMap);
+
+    return array;
+    
   }
 }
