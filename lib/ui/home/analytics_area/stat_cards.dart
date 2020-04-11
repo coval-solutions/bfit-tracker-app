@@ -86,9 +86,10 @@ class _StatCardsState extends State<StatCards> {
                                 unit: Stats.CELSIUS_UNIT,
                               ),
                             _StatCard(
-                              title: Stats.RESPIRATORY_RATE_NAME,
-                              value: '30/60',
+                              title: Stats.ACTIVE_ENERGY_BURNED_RATE_NAME,
+                              value: snapshot.data.activeEnergyBurned.toString(),
                               color: CustomColor.MAYA_BLUE,
+                              unit: Stats.CALORIES_UNIT,
                             ),
                           ],
                         ),
@@ -139,6 +140,7 @@ class _StatCard extends StatelessWidget {
                 padding: const EdgeInsets.only(
                   top: 40,
                   left: 14,
+                  right: 14
                 ),
                 child: AutoSizeText(
                   this.title,
