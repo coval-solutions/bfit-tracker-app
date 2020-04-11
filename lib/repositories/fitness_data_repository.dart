@@ -7,7 +7,8 @@ class FitnessDataRepository {
     HealthDataType.STEPS,
     HealthDataType.BLOOD_PRESSURE_SYSTOLIC,
     HealthDataType.BLOOD_PRESSURE_DIASTOLIC,
-    HealthDataType.BODY_TEMPERATURE
+    HealthDataType.BODY_TEMPERATURE,
+    HealthDataType.ACTIVE_ENERGY_BURNED
   ];
 
   Future<Stats> retrieve(DateTime startDateTime) async {
