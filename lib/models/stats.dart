@@ -84,7 +84,7 @@ class Stats {
 
     // We wanna always display activeEnergyBurned
     Map<String, String> nameAndUnitMap = { ACTIVE_ENERGY_BURNED_RATE_NAME: CALORIES_UNIT };
-    Map<Map<String, String>, String> nameUnitAndValueMap = { nameAndUnitMap: this.activeEnergyBurned.toString() };
+    Map<Map<String, String>, String> nameUnitAndValueMap = { nameAndUnitMap: this.activeEnergyBurned.toStringAsFixed(1) };
     array.add(nameUnitAndValueMap);
 
     return array;

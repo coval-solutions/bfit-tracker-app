@@ -4,7 +4,6 @@ import 'package:bfit_tracker/models/stats.dart';
 import 'package:bfit_tracker/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:health/health.dart';
 
 class StatCards extends StatefulWidget {
   StatCards({Key key}) : super(key: key);
@@ -66,40 +65,6 @@ class _StatCardsState extends State<StatCards> {
                               color: this.colors[index % this.colors.length],
                             );
                           },
-                          // children: <Widget>[
-                          //   if (snapshot.data.heartRate > 0) 
-                          //     _StatCard(
-                          //       title: Stats.HEART_RATE_NAME,
-                          //       value: snapshot.data.heartRate.toString(),
-                          //       unit: Stats.HEART_RATE_UNIT,
-                          //     ),
-                          //   _StatCard(
-                          //     title: Stats.STEPS_NAME,
-                          //     value: snapshot.data.steps.toInt().toString(),
-                          //     unit: Stats.STEPS_UNIT,
-                          //   ),
-                          //   _StatCard(
-                          //     title: Stats.WORKOUTS_COMPLETE_NAME,
-                          //     value: '30',
-                          //   ),
-                          //   if (snapshot.data.bloodPressureSystolic > 0 && snapshot.data.bloodPressureDiastolic > 0) 
-                          //     _StatCard(
-                          //       title: Stats.BLOOD_PRESSURE_NAME,
-                          //       value:
-                          //           "${snapshot.data.bloodPressureSystolic.toInt()}/${snapshot.data.bloodPressureDiastolic.toInt()}",
-                          //     ),
-                          //   //if (snapshot.data.bodyTemperature > 0) 
-                          //     _StatCard(
-                          //       title: Stats.BODY_TEMPERATURE_NAME,
-                          //       value: snapshot.data.bodyTemperature.toString(),
-                          //       unit: Stats.CELSIUS_UNIT,
-                          //     ),
-                          //   _StatCard(
-                          //     title: Stats.ACTIVE_ENERGY_BURNED_RATE_NAME,
-                          //     value: snapshot.data.activeEnergyBurned.toString(),
-                          //     unit: Stats.CALORIES_UNIT,
-                          //   ),
-                          // ],
                         ),
                       );
                     },
