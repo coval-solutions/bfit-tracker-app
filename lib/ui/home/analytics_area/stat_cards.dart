@@ -13,6 +13,24 @@ class StatCards extends StatefulWidget {
 }
 
 class _StatCardsState extends State<StatCards> {
+  FitnessDataBloc fitnessDataBloc;
+
+  Future<void> _refresh() {
+    if (fitnessDataBloc == null) {
+      fitnessDataBloc = BlocProvider.of<FitnessDataBloc>(context);
+      this._refresh();
+    }
+
+    fitnessDataBloc.add(LoadFitnessData(fitnessDataBloc.state.props.last));
+    return Future.value();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    fitnessDataBloc.close();
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<FitnessDataBloc, FitnessDataState>(
@@ -25,41 +43,53 @@ class _StatCardsState extends State<StatCards> {
             future: state.props.first,
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.done) {
-                return Container(
-                  height: 190,
-                  child: ListView(
+                return RefreshIndicator(
+                  onRefresh: this._refresh,
+                  child: ListView.builder(
                     shrinkWrap: true,
-                    scrollDirection: Axis.horizontal,
-                    children: <Widget>[
-                      _StatCard(
-                        title: Stats.HEART_RATE_NAME,
-                        value: snapshot.data.heartRate.toString(),
-                        unit: Stats.HEART_RATE_UNIT,
-                      ),
-                      _StatCard(
-                          title: Stats.STEPS_NAME,
-                          value: snapshot.data.steps.toString(),
-                          unit: Stats.STEPS_UNIT,
-                          color: CustomColor.MAYA_BLUE),
-                      _StatCard(
-                        title: Stats.WORKOUTS_COMPLETE_NAME,
-                        value: '30',
-                      ),
-                      _StatCard(
-                          title: Stats.BLOOD_PRESSURE_NAME,
-                          value:
-                              "${snapshot.data.bloodPressureSystolic}/${snapshot.data.bloodPressureDiastolic}",
-                          color: CustomColor.MAYA_BLUE),
-                      _StatCard(
-                        title: Stats.BIOTIN_LEVELS_NAME,
-                        value: '73.2',
-                        unit: Stats.BIOTIN_LEVELS_UNIT,
-                      ),
-                      _StatCard(
-                          title: Stats.RESPIRATORY_RATE_NAME,
-                          value: '30p/60s',
-                          color: CustomColor.MAYA_BLUE),
-                    ],
+                    physics: const AlwaysScrollableScrollPhysics(),
+                    itemCount: 1,
+                    itemBuilder: (BuildContext context, int index) {
+                      return Container(
+                        height: 190,
+                        child: ListView(
+                          scrollDirection: Axis.horizontal,
+                          children: <Widget>[
+                            _StatCard(
+                              title: Stats.HEART_RATE_NAME,
+                              value: snapshot.data.heartRate.toString(),
+                              unit: Stats.HEART_RATE_UNIT,
+                            ),
+                            _StatCard(
+                              title: Stats.STEPS_NAME,
+                              value: snapshot.data.steps.toString(),
+                              unit: Stats.STEPS_UNIT,
+                              color: CustomColor.MAYA_BLUE,
+                            ),
+                            _StatCard(
+                              title: Stats.WORKOUTS_COMPLETE_NAME,
+                              value: '30',
+                            ),
+                            _StatCard(
+                              title: Stats.BLOOD_PRESSURE_NAME,
+                              value:
+                                  "${snapshot.data.bloodPressureSystolic}/${snapshot.data.bloodPressureDiastolic}",
+                              color: CustomColor.MAYA_BLUE,
+                            ),
+                            _StatCard(
+                              title: Stats.BIOTIN_LEVELS_NAME,
+                              value: '73.2',
+                              unit: Stats.BIOTIN_LEVELS_UNIT,
+                            ),
+                            _StatCard(
+                              title: Stats.RESPIRATORY_RATE_NAME,
+                              value: '30/60',
+                              color: CustomColor.MAYA_BLUE,
+                            ),
+                          ],
+                        ),
+                      );
+                    },
                   ),
                 );
               }

@@ -1,12 +1,10 @@
 import 'dart:async';
 
 import 'package:bfit_tracker/models/stats.dart';
-import 'package:bfit_tracker/models/user_info.dart';
 import 'package:bfit_tracker/repositories/fitness_data_repository.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:health/health.dart';
 import 'package:meta/meta.dart';
 
 part 'fitness_data_event.dart';
@@ -35,7 +33,7 @@ class FitnessDataBloc
   Stream<FitnessDataState> _mapLoadingToState(LoadFitnessData event) async* {
     try {
       final fitnessData = _fitnessDataRepository.retrieve(event._startDateTime);
-      yield FitnessDataLoaded(fitnessData);
+      yield FitnessDataLoaded(fitnessData, event._startDateTime);
     } catch (_) {
       yield FitnessDataNotLoaded();
     }
