@@ -1,6 +1,6 @@
 import 'package:bfit_tracker/blocs/bottom_nav_bar/home_screen_bottom_nav_bar_bloc.dart';
 import 'package:bfit_tracker/theme.dart';
-import 'package:bfit_tracker/ui/home/analytics_area.dart';
+import 'package:bfit_tracker/ui/home/analytics_area/analytics_area.dart';
 import 'package:bfit_tracker/ui/home/home_area.dart';
 import 'package:bfit_tracker/ui/home/targets_area.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
@@ -93,7 +93,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _analyticsArea() {
-    return analyticsArea();
+    return AnalyticsArea();
   }
 
   Widget _profileArea() {
