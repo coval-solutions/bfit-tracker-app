@@ -12,13 +12,13 @@ class Stats {
   static const String STEPS_UNIT = 'steps';
   static const String BIOTIN_LEVELS_UNIT = '%';
 
-  int steps = 0;
-  int heartRate = 0;
-  int workoutsComplete = 0;
-  int bloodPressureSystolic = 0;
-  int bloodPressureDiastolic = 0;
-  int biotinLevels = 0;
-  int respiratoryRate = 0;
+  double steps = 0;
+  double heartRate = 0;
+  double workoutsComplete = 0;
+  double bloodPressureSystolic = 0;
+  double bloodPressureDiastolic = 0;
+  double biotinLevels = 0;
+  double respiratoryRate = 0;
 
   Stats();
 
