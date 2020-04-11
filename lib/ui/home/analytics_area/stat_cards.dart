@@ -4,6 +4,7 @@ import 'package:bfit_tracker/models/stats.dart';
 import 'package:bfit_tracker/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:health/health.dart';
 
 class StatCards extends StatefulWidget {
   StatCards({Key key}) : super(key: key);
@@ -55,14 +56,15 @@ class _StatCardsState extends State<StatCards> {
                         child: ListView(
                           scrollDirection: Axis.horizontal,
                           children: <Widget>[
-                            _StatCard(
-                              title: Stats.HEART_RATE_NAME,
-                              value: snapshot.data.heartRate.toString(),
-                              unit: Stats.HEART_RATE_UNIT,
-                            ),
+                            if (snapshot.data.heartRate > 0) 
+                              _StatCard(
+                                title: Stats.HEART_RATE_NAME,
+                                value: snapshot.data.heartRate.toString(),
+                                unit: Stats.HEART_RATE_UNIT,
+                              ),
                             _StatCard(
                               title: Stats.STEPS_NAME,
-                              value: snapshot.data.steps.toString(),
+                              value: snapshot.data.steps.toInt().toString(),
                               unit: Stats.STEPS_UNIT,
                               color: CustomColor.MAYA_BLUE,
                             ),
@@ -70,17 +72,19 @@ class _StatCardsState extends State<StatCards> {
                               title: Stats.WORKOUTS_COMPLETE_NAME,
                               value: '30',
                             ),
-                            _StatCard(
-                              title: Stats.BLOOD_PRESSURE_NAME,
-                              value:
-                                  "${snapshot.data.bloodPressureSystolic}/${snapshot.data.bloodPressureDiastolic}",
-                              color: CustomColor.MAYA_BLUE,
-                            ),
-                            _StatCard(
-                              title: Stats.BIOTIN_LEVELS_NAME,
-                              value: '73.2',
-                              unit: Stats.BIOTIN_LEVELS_UNIT,
-                            ),
+                            if (snapshot.data.bloodPressureSystolic > 0 && snapshot.data.bloodPressureDiastolic > 0) 
+                              _StatCard(
+                                title: Stats.BLOOD_PRESSURE_NAME,
+                                value:
+                                    "${snapshot.data.bloodPressureSystolic.toInt()}/${snapshot.data.bloodPressureDiastolic.toInt()}",
+                                color: CustomColor.MAYA_BLUE,
+                              ),
+                            if (snapshot.data.bodyTemperature > 0) 
+                              _StatCard(
+                                title: Stats.BODY_TEMPERATURE_NAME,
+                                value: snapshot.data.bodyTemperature.toString(),
+                                unit: Stats.CELSIUS_UNIT,
+                              ),
                             _StatCard(
                               title: Stats.RESPIRATORY_RATE_NAME,
                               value: '30/60',
