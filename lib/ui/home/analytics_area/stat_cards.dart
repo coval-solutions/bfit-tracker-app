@@ -116,14 +116,11 @@ class _StatCard extends StatelessWidget {
                   ),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                  vertical: 34,
-                ),
-              ),
+              Spacer(),
               Padding(
                 padding: const EdgeInsets.only(
                   left: 14,
+                  bottom: 14,
                 ),
                 child: AutoSizeText.rich(
                     TextSpan(
