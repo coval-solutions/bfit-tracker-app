@@ -1,5 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:bfit_tracker/theme.dart';
+import 'package:bfit_tracker/ui/home/analytics_area/graph.dart';
 import 'package:bfit_tracker/ui/home/analytics_area/stat_cards.dart';
 import 'package:bfit_tracker/ui/home/analytics_area/weekdays_list.dart';
 import 'package:flutter/material.dart';
@@ -50,6 +51,8 @@ class _AnalyticsAreaState extends State<AnalyticsArea> {
             ),
           ),
           StatCards(),
+          Spacer(),
+          LineChartSample2(),
         ],
       ),
     ),

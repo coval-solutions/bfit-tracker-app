@@ -17,6 +17,7 @@ dependencies:
   dots_indicator: ^1.0.0
   equatable: ^1.1.0
   firebase_auth: ^0.11.1
+  fl_chart: ^0.9.0
   flare_flutter: ^1.5.6
   flutter_bloc: ^3.2.0
   flutter_dotenv: ^2.1.0
