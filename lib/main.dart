@@ -10,6 +10,7 @@ import 'package:bfit_tracker/repositories/location_repository.dart';
 import 'package:bfit_tracker/repositories/user_info_repository.dart';
 import 'package:bfit_tracker/repositories/user_repository.dart';
 import 'package:bfit_tracker/simple_bloc_delegate.dart';
+import 'package:device_info/device_info.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';

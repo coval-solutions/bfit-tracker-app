@@ -1,4 +1,5 @@
 import 'package:bfit_tracker/models/stats.dart';
+import 'package:bfit_tracker/utils.dart';
 import 'package:health/health.dart';
 
 class FitnessDataRepository {
@@ -14,21 +15,27 @@ class FitnessDataRepository {
   Future<Stats> retrieve(DateTime startDateTime) async {
     bool isAuthorized = await Health.requestAuthorization();
     if (isAuthorized) {
-      DateTime startDate = DateTime.utc(startDateTime.year, startDateTime.month, startDateTime.day);
-      DateTime endDate = DateTime.utc(startDate.year, startDate.month, startDate.day, 23, 59, 59);
       List<HealthDataPoint> healthDataList = List<HealthDataPoint>();
-      for (HealthDataType type in HEALTH_DATA_TYPES) {
-        try {
-          List<HealthDataPoint> healthData =
-              await Health.getHealthDataFromType(startDate, endDate, type);
-          healthDataList.addAll(healthData);
-        } catch (exception) {
-          // TODO: report this to Crashlytics
-          print(exception.toString());
+
+      bool isPhysicalDevice = await Utils.isPhysicalDevice;
+      if (!isPhysicalDevice) {
+        healthDataList.addAll(List<HealthDataPoint>());
+      } else {
+        DateTime startDate = DateTime.utc(startDateTime.year, startDateTime.month, startDateTime.day);
+        DateTime endDate = DateTime.utc(startDate.year, startDate.month, startDate.day, 23, 59, 59);
+        for (HealthDataType type in HEALTH_DATA_TYPES) {
+          try {
+            List<HealthDataPoint> healthData =
+                await Health.getHealthDataFromType(startDate, endDate, type);
+            healthDataList.addAll(healthData);
+          } catch (exception) {
+            // TODO: report this to Crashlytics
+            print(exception.toString());
+          }
         }
       }
 
-      return Stats().fromSnapshot(healthDataList);
+      return Stats().fromSnapshot(healthDataList, getFakeData: !isPhysicalDevice);
     }
 
     return null;

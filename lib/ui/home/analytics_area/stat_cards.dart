@@ -29,7 +29,9 @@ class _StatCardsState extends State<StatCards> {
   @override
   void dispose() {
     super.dispose();
-    fitnessDataBloc.close();
+    if (fitnessDataBloc == null) {
+      fitnessDataBloc.close();
+    }
   }
 
   @override
@@ -117,7 +119,7 @@ class _StatCard extends StatelessWidget {
                 ),
                 child: AutoSizeText(
                   this.title,
-                  minFontSize: 22,
+                  minFontSize: 20,
                   maxLines: 2,
                   style: TextStyle(
                     fontWeight: FontWeight.w400,

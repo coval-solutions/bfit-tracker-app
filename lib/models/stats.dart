@@ -1,8 +1,9 @@
+import 'package:bfit_tracker/utils.dart';
 import 'package:health/health.dart';
 
 class Stats {
-  static const String HEART_RATE_NAME = 'Heart Rate';
-  static const String STEPS_NAME = 'Steps Taken';
+  static const String HEART_RATE_NAME = 'Heart\nRate';
+  static const String STEPS_NAME = 'Steps\nTaken';
   static const String WORKOUTS_COMPLETE_NAME = 'Workouts Complete';
   static const String BLOOD_PRESSURE_NAME = 'Blood Pressure';
   static const String BODY_TEMPERATURE_NAME = 'Body Temperature';
@@ -23,7 +24,17 @@ class Stats {
 
   Stats();
 
-  Stats fromSnapshot(List<HealthDataPoint> data) {
+  Stats fromSnapshot(List<HealthDataPoint> data, { bool getFakeData = false }) {
+    if (getFakeData) {
+      heartRate = Utils.doubleInRange(60, 100);
+      steps = Utils.doubleInRange(1000, 5000);
+      bloodPressureSystolic = Utils.doubleInRange(110, 150);
+      bloodPressureDiastolic = Utils.doubleInRange(70, 90);
+      bodyTemperature = Utils.doubleInRange(33, 40);
+
+      return this;
+    }
+
     for (HealthDataPoint healthDataPoint in data) {
       switch (healthDataPoint.dataType) {
         case 'STEPS':
@@ -54,13 +65,13 @@ class Stats {
     List<Map<Map<String, String>, String>> array = new List();
     if (this.heartRate > 0) {
       Map<String, String> nameAndUnitMap = { HEART_RATE_NAME: HEART_RATE_UNIT };
-      Map<Map<String, String>, String> nameUnitAndValueMap = { nameAndUnitMap: this.heartRate.toString() };
+      Map<Map<String, String>, String> nameUnitAndValueMap = { nameAndUnitMap: this.heartRate.round().toString() };
       array.add(nameUnitAndValueMap);
     }
 
     if (this.steps > 0) {
       Map<String, String> nameAndUnitMap = { STEPS_NAME: STEPS_UNIT };
-      Map<Map<String, String>, String> nameUnitAndValueMap = { nameAndUnitMap: this.steps.toString() };
+      Map<Map<String, String>, String> nameUnitAndValueMap = { nameAndUnitMap: this.steps.round().toString() };
       array.add(nameUnitAndValueMap);
     }
 
@@ -78,7 +89,7 @@ class Stats {
 
     if (this.bodyTemperature > 0) {
       Map<String, String> nameAndUnitMap = { BODY_TEMPERATURE_NAME: CELSIUS_UNIT };
-      Map<Map<String, String>, String> nameUnitAndValueMap = { nameAndUnitMap: this.bodyTemperature.toString() };
+      Map<Map<String, String>, String> nameUnitAndValueMap = { nameAndUnitMap: this.bodyTemperature.toStringAsFixed(2) };
       array.add(nameUnitAndValueMap);
     }
 

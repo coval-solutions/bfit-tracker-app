@@ -13,6 +13,7 @@ dependencies:
   bloc: ^3.0.0
   cloud_firestore: ^0.12.9+5
   curved_navigation_bar: ^0.1.2
+  device_info: ^0.4.2+1
   dots_indicator: ^1.0.0
   equatable: ^1.1.0
   firebase_auth: ^0.11.1
