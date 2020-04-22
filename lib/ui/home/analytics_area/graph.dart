@@ -8,9 +8,9 @@ class LineChartSample2 extends StatefulWidget {
 }
 
 class _LineChartSample2State extends State<LineChartSample2> {
-  List<Color> gradientColors = [
-    CustomColor.MAYA_BLUE,
-    CustomColor.SELECTIVE_YELLOW
+  List<Color> colors = [
+    CustomColor.MAYA_BLUE.withOpacity(0.3),
+    CustomColor.SELECTIVE_YELLOW.withOpacity(0.8),
   ];
 
   bool showAvg = false;
@@ -81,9 +81,10 @@ class _LineChartSample2State extends State<LineChartSample2> {
             FlSpot(5, 100),
           ],
           isCurved: true,
-          colors: gradientColors,
-          gradientFrom: const Offset(1, 0),
-          gradientTo: const Offset(0, 1),
+          //colors: [CustomColor.MAYA_BLUE],
+          colors: [colors.last],
+          // gradientFrom: Offset(0, 0),
+          // gradientTo: Offset(0, 0.5),
           barWidth: 5,
           isStrokeCapRound: true,
           dotData: FlDotData(
@@ -91,7 +92,7 @@ class _LineChartSample2State extends State<LineChartSample2> {
           ),
           belowBarData: BarAreaData(
             show: true,
-            colors: gradientColors.map((color) => color.withOpacity(0.5)).toList(),
+            colors: [colors.first],
           ),
         ),
       ],
