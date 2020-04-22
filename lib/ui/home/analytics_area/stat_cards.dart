@@ -45,7 +45,7 @@ class _StatCardsState extends State<StatCards> {
         return FutureBuilder<Stats>(
             future: state.props.first,
             builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.done) {
+              if (snapshot.connectionState == ConnectionState.done && snapshot.data != null) {
                 return RefreshIndicator(
                   onRefresh: this._refresh,
                   child: ListView.builder(
@@ -53,11 +53,11 @@ class _StatCardsState extends State<StatCards> {
                     physics: const AlwaysScrollableScrollPhysics(),
                     itemCount: 1,
                     itemBuilder: (BuildContext context, int index) {
-                      List<Map<Map<String, String>, String>> statsList = snapshot.data.toArray();
+                      List<Map<Map<String, String>, String>> statsList = snapshot.data?.toArray();
                       return Container(
                         height: 190,
                         child: ListView.builder(
-                          itemCount: statsList.length,
+                          itemCount: statsList?.length,
                           scrollDirection: Axis.horizontal,
                           itemBuilder: (BuildContext context, int index) {
                             return _StatCard(
