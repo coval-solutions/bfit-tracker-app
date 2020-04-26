@@ -28,7 +28,8 @@ class _LineChartSample2State extends State<LineChartSample2> {
                 ),
                 color: Colors.white),
             child: Padding(
-              padding: const EdgeInsets.only(right: 18.0, left: 12.0, top: 24, bottom: 12),
+              padding: const EdgeInsets.only(
+                  right: 18.0, left: 12.0, top: 24, bottom: 12),
               child: LineChart(
                 mainData(),
               ),
@@ -47,7 +48,9 @@ class _LineChartSample2State extends State<LineChartSample2> {
             child: Text(
               'avg',
               style: TextStyle(
-                  fontSize: 12, color: showAvg ? Colors.white.withOpacity(0.5) : Colors.white),
+                  fontSize: 12,
+                  color:
+                      showAvg ? Colors.white.withOpacity(0.5) : Colors.white),
             ),
           ),
         ),

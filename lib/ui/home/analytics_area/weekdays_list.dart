@@ -5,6 +5,7 @@ import 'package:bfit_tracker/theme.dart';
 import 'package:bfit_tracker/ui/custom.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:jiffy/jiffy.dart';
 
 class WeekDayList extends StatefulWidget {
   WeekDayList({Key key}) : super(key: key);
@@ -16,11 +17,10 @@ class WeekDayList extends StatefulWidget {
 }
 
 class _WeekDayListState extends State<WeekDayList> {
-  final DateTime _today = DateTime.now();
+  DateTime _today;
   FitnessDataBloc _fitnessDataBloc;
 
   List<DateTime> days = new List<DateTime>();
-  int daySelectedIndex;
 
   _WeekDayListState();
 
@@ -29,31 +29,20 @@ class _WeekDayListState extends State<WeekDayList> {
     super.initState();
     this._fitnessDataBloc = BlocProvider.of<FitnessDataBloc>(context);
 
+    this._today = Jiffy().startOf(Units.DAY);
     this.days.add(_today);
 
-    DateTime dateTime = _today;
+    DateTime dateTime = this._today;
     for (int i = 0; i < 4; i++) {
       dateTime = dateTime.subtract(Duration(days: 1));
       this.days.add(dateTime);
     }
-
-    daySelectedIndex = 0;
-  }
-  
-  @override
-  void dispose() {
-    super.dispose();
-    _fitnessDataBloc.close();
   }
 
-  updateDaySelectedIndex(int index) {
-    setState(() {
-      this.daySelectedIndex = index;
-    });
-
-    DateTime dateTimeSelected = this.days[index];
-    this._fitnessDataBloc.add(LoadFitnessData(DateTime.utc(
-        dateTimeSelected.year, dateTimeSelected.month, dateTimeSelected.day)));
+  updateDateSelected(DateTime dateTimeSelected) {
+    if (this._fitnessDataBloc != null) {
+      this._fitnessDataBloc.add(SetDateSelected(dateTimeSelected));
+    }
   }
 
   @override
@@ -76,14 +65,21 @@ class _WeekDayListState extends State<WeekDayList> {
                 physics: const AlwaysScrollableScrollPhysics(),
                 itemCount: this.days.length,
                 itemBuilder: (BuildContext context, int index) {
-                  return GestureDetector(
-                    child: index == daySelectedIndex
-                        ? weekdayCardSelected(index, this.days)
-                        : weekdayCard(index, this.days),
-                    onTap: () {
-                      updateDaySelectedIndex(index);
-                    },
-                  );
+                  return BlocConsumer<FitnessDataBloc, FitnessDataState>(
+                      listener: (context, state) {},
+                      builder: (BuildContext context, FitnessDataState state) {
+                        if (state is FitnessDataLoaded) {
+                          return GestureDetector(
+                            child: index == this.days.indexOf(state.props.last)
+                                ? weekdayCardSelected(index, this.days)
+                                : weekdayCard(index, this.days),
+                            onTap: () {
+                              updateDateSelected(this.days[index]);
+                            },
+                          );
+                        }
+                        return Center(child: CircularProgressIndicator());
+                      });
                 },
               ),
             ),

@@ -1,9 +1,11 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:bfit_tracker/blocs/fitness_data/fitness_data_bloc.dart';
-import 'package:bfit_tracker/models/stats.dart';
+import 'package:bfit_tracker/models/fitness_stat.dart';
 import 'package:bfit_tracker/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:health/health.dart';
+import 'package:jiffy/jiffy.dart';
 
 class StatCards extends StatefulWidget {
   StatCards({Key key}) : super(key: key);
@@ -13,8 +15,13 @@ class StatCards extends StatefulWidget {
 }
 
 class _StatCardsState extends State<StatCards> {
-  final List<Color> colors = [CustomColor.SELECTIVE_YELLOW, CustomColor.MAYA_BLUE];
   FitnessDataBloc fitnessDataBloc;
+
+  @override
+  void initState() {
+    super.initState();
+    fitnessDataBloc = BlocProvider.of<FitnessDataBloc>(context);
+  }
 
   Future<void> _refresh() {
     if (fitnessDataBloc == null) {
@@ -22,16 +29,8 @@ class _StatCardsState extends State<StatCards> {
       this._refresh();
     }
 
-    fitnessDataBloc.add(LoadFitnessData(fitnessDataBloc.state.props.last));
+    fitnessDataBloc.add(LoadFitnessData());
     return Future.value();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    if (fitnessDataBloc == null) {
-      fitnessDataBloc.close();
-    }
   }
 
   @override
@@ -42,10 +41,13 @@ class _StatCardsState extends State<StatCards> {
           return Center(child: CircularProgressIndicator());
         }
 
-        return FutureBuilder<Stats>(
+        return FutureBuilder<Map<HealthDataType, Map>>(
             future: state.props.first,
             builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.done && snapshot.data != null) {
+              if (snapshot.connectionState == ConnectionState.done &&
+                  snapshot.data != null) {
+                String dateSelected =
+                    fitnessDataBloc.state.props.last.toString();
                 return RefreshIndicator(
                   onRefresh: this._refresh,
                   child: ListView.builder(
@@ -53,19 +55,30 @@ class _StatCardsState extends State<StatCards> {
                     physics: const AlwaysScrollableScrollPhysics(),
                     itemCount: 1,
                     itemBuilder: (BuildContext context, int index) {
-                      List<Map<Map<String, String>, String>> statsList = snapshot.data?.toArray();
+                      var data = snapshot.data.entries;
+                      bool useBlue = true;
                       return Container(
                         height: 190,
                         child: ListView.builder(
-                          itemCount: statsList?.length,
+                          itemCount: data.length,
                           scrollDirection: Axis.horizontal,
                           itemBuilder: (BuildContext context, int index) {
-                            return _StatCard(
-                              title: statsList[index].keys.first.keys.first,
-                              value: statsList[index].values.first,
-                              unit: statsList[index].keys.first.values.first,
-                              color: this.colors[index % this.colors.length],
-                            );
+                            var fitnessStats = data.elementAt(index).value;
+                            if (fitnessStats.containsKey(dateSelected)) {
+                              useBlue = !useBlue;
+                              FitnessStat fitnessStat =
+                                  fitnessStats[dateSelected];
+                              return _StatCard(
+                                title: fitnessStat.getHumanReadableType(),
+                                value: fitnessStat.value.toString(),
+                                unit: fitnessStat.getUnits(),
+                                color: useBlue
+                                    ? CustomColor.MAYA_BLUE
+                                    : CustomColor.SELECTIVE_YELLOW,
+                              );
+                            }
+
+                            return Container();
                           },
                         ),
                       );
@@ -112,11 +125,7 @@ class _StatCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Padding(
-                padding: const EdgeInsets.only(
-                  top: 40,
-                  left: 14,
-                  right: 14
-                ),
+                padding: const EdgeInsets.only(top: 40, left: 14, right: 14),
                 child: AutoSizeText(
                   this.title,
                   minFontSize: 20,

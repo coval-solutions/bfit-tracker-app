@@ -1,6 +1,7 @@
-import 'package:bfit_tracker/models/stats.dart';
+import 'package:bfit_tracker/models/fitness_stat.dart';
 import 'package:bfit_tracker/utils.dart';
 import 'package:health/health.dart';
+import 'package:jiffy/jiffy.dart';
 
 class FitnessDataRepository {
   static const List<HealthDataType> HEALTH_DATA_TYPES = [
@@ -12,32 +13,67 @@ class FitnessDataRepository {
     HealthDataType.ACTIVE_ENERGY_BURNED
   ];
 
-  Future<Stats> retrieve(DateTime startDateTime) async {
+  Future<Map<HealthDataType, Map>> retrieve(DateTime startDateTime) async {
+    Map<HealthDataType, Map> fitnessStats = Map<HealthDataType, Map>();
     bool isAuthorized = await Health.requestAuthorization();
     if (isAuthorized) {
-      List<HealthDataPoint> healthDataList = List<HealthDataPoint>();
+      //bool isPhysicalDevice = await Utils.isPhysicalDevice;
 
-      bool isPhysicalDevice = await Utils.isPhysicalDevice;
-      if (!isPhysicalDevice) {
-        healthDataList.addAll(List<HealthDataPoint>());
-      } else {
-        DateTime startDate = DateTime.utc(startDateTime.year, startDateTime.month, startDateTime.day);
-        DateTime endDate = DateTime.utc(startDate.year, startDate.month, startDate.day, 23, 59, 59);
-        for (HealthDataType type in HEALTH_DATA_TYPES) {
-          try {
-            List<HealthDataPoint> healthData =
-                await Health.getHealthDataFromType(startDate, endDate, type);
-            healthDataList.addAll(healthData);
-          } catch (exception) {
-            // TODO: report this to Crashlytics
-            print(exception.toString());
+      for (HealthDataType type in HEALTH_DATA_TYPES) {
+        try {
+          List<HealthDataPoint> healthData = await Health.getHealthDataFromType(
+              startDateTime, DateTime.now(), type);
+
+          DateTime currentDateFrom;
+          double value = 0.0;
+          int count = 0;
+          Map<String, FitnessStat> fitnessStatsForDates =
+              Map<String, FitnessStat>();
+          for (HealthDataPoint healthDataPoint in healthData) {
+            DateTime dateFrom =
+                Jiffy.unix(healthDataPoint.dateFrom).startOf(Units.DAY);
+
+            // Initalise currentDateFrom (occurs only once)
+            if (currentDateFrom == null) {
+              currentDateFrom = dateFrom;
+            }
+
+            // Ensure the today's (i.e. the last in the list) stats get added too
+            if ((currentDateFrom != null &&
+                    currentDateFrom.millisecondsSinceEpoch !=
+                        dateFrom.millisecondsSinceEpoch) ||
+                count == healthData.length - 1) {
+              fitnessStatsForDates.addAll({
+                currentDateFrom.toString(): FitnessStat(
+                    value: double.parse(value.toStringAsFixed(1)),
+                    dateTime: currentDateFrom,
+                    type: type)
+              });
+
+              value = 0.0;
+              currentDateFrom = dateFrom;
+            }
+
+            switch (healthDataPoint.dataType) {
+              case 'STEPS':
+                value += healthDataPoint.value;
+                break;
+              default:
+                value = healthDataPoint.value;
+                break;
+            }
+
+            count++;
           }
+
+          fitnessStats.addAll({type: fitnessStatsForDates});
+        } catch (exception) {
+          // TODO: report this to Crashlytics
+          print(exception.toString());
         }
       }
-
-      return Stats().fromSnapshot(healthDataList, getFakeData: !isPhysicalDevice);
     }
 
-    return null;
+    return fitnessStats;
   }
 }

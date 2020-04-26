@@ -10,16 +10,20 @@ abstract class FitnessDataState extends Equatable {
 class FitnessDataNotLoaded extends FitnessDataState {}
 
 class FitnessDataLoaded extends FitnessDataState {
-  final Future<Stats> _stats;
-  final DateTime _startDateTime;
+  final Future<Map<HealthDataType, Map>> _stats;
+  final DateTime _dateSelected;
 
-  const FitnessDataLoaded(this._stats, this._startDateTime);
+  const FitnessDataLoaded(stats, dateSelected)
+      : assert(stats != null && dateSelected != null),
+        _stats = stats,
+        _dateSelected = dateSelected;
 
   @override
-  List<Object> get props => [this._stats, _startDateTime];
+  List<Object> get props => [this._stats, this._dateSelected];
 
   @override
-  String toString() => "FitnessDataLoaded { stats: ${this._stats}, startTime: ${this._startDateTime} }";
+  String toString() =>
+      "FitnessDataLoaded { stats: ${this._stats} dateSelected: ${this._dateSelected} }";
 }
 
 class FitnessDataLoading extends FitnessDataState {}

@@ -8,13 +8,29 @@ abstract class FitnessDataEvent extends Equatable {
 }
 
 class LoadFitnessData extends FitnessDataEvent {
-  final DateTime _startDateTime;
+  final DateTime startDateTime;
 
-  LoadFitnessData(this._startDateTime);
+  LoadFitnessData({DateTime startDateTime})
+      : startDateTime = startDateTime ??
+            Jiffy().startOf(Units.DAY).subtract(const Duration(days: 4));
 
   @override
-  List<Object> get props => [this._startDateTime];
+  List<Object> get props => [this.startDateTime];
 
   @override
-  String toString() => "LoadFitnessData { startDateTime: ${this._startDateTime} }";
+  String toString() =>
+      "LoadFitnessData { startDateTime: ${this.startDateTime} }";
+}
+
+class SetDateSelected extends FitnessDataEvent {
+  final DateTime _dateSelected;
+
+  SetDateSelected(dateSelected) : _dateSelected = dateSelected;
+
+  @override
+  List<Object> get props => [this._dateSelected];
+
+  @override
+  String toString() =>
+      "SetDateSelected { dateSelected: ${this._dateSelected} }";
 }
