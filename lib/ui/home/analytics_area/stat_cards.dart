@@ -5,7 +5,6 @@ import 'package:bfit_tracker/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:health/health.dart';
-import 'package:jiffy/jiffy.dart';
 
 class StatCards extends StatefulWidget {
   StatCards({Key key}) : super(key: key);
@@ -35,64 +34,54 @@ class _StatCardsState extends State<StatCards> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<FitnessDataBloc, FitnessDataState>(
-      builder: (BuildContext context, FitnessDataState state) {
-        if (!(state is FitnessDataLoaded)) {
-          return Center(child: CircularProgressIndicator());
-        }
+    return FutureBuilder<Map<HealthDataType, Map>>(
+        future: this.fitnessDataBloc.state.props.first,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.done &&
+              snapshot.data != null) {
+            String dateSelected = fitnessDataBloc.state.props.last.toString();
+            return RefreshIndicator(
+              onRefresh: this._refresh,
+              child: ListView.builder(
+                shrinkWrap: true,
+                physics: const AlwaysScrollableScrollPhysics(),
+                itemCount: 1,
+                itemBuilder: (BuildContext context, int index) {
+                  var data = snapshot.data.entries;
+                  bool useBlue = true;
+                  return Container(
+                    height: 190,
+                    child: ListView.builder(
+                      itemCount: data.length,
+                      scrollDirection: Axis.horizontal,
+                      itemBuilder: (BuildContext context, int index) {
+                        var fitnessStats = data.elementAt(index).value;
+                        if (fitnessStats.containsKey(dateSelected)) {
+                          useBlue = !useBlue;
+                          FitnessStat fitnessStat = fitnessStats[dateSelected];
+                          return _StatCard(
+                            title: fitnessStat.getHumanReadableType(),
+                            value: fitnessStat.value.toString(),
+                            unit: fitnessStat.getUnits(),
+                            color: useBlue
+                                ? CustomColor.MAYA_BLUE
+                                : CustomColor.SELECTIVE_YELLOW,
+                          );
+                        }
 
-        return FutureBuilder<Map<HealthDataType, Map>>(
-            future: state.props.first,
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.done &&
-                  snapshot.data != null) {
-                String dateSelected =
-                    fitnessDataBloc.state.props.last.toString();
-                return RefreshIndicator(
-                  onRefresh: this._refresh,
-                  child: ListView.builder(
-                    shrinkWrap: true,
-                    physics: const AlwaysScrollableScrollPhysics(),
-                    itemCount: 1,
-                    itemBuilder: (BuildContext context, int index) {
-                      var data = snapshot.data.entries;
-                      bool useBlue = true;
-                      return Container(
-                        height: 190,
-                        child: ListView.builder(
-                          itemCount: data.length,
-                          scrollDirection: Axis.horizontal,
-                          itemBuilder: (BuildContext context, int index) {
-                            var fitnessStats = data.elementAt(index).value;
-                            if (fitnessStats.containsKey(dateSelected)) {
-                              useBlue = !useBlue;
-                              FitnessStat fitnessStat =
-                                  fitnessStats[dateSelected];
-                              return _StatCard(
-                                title: fitnessStat.getHumanReadableType(),
-                                value: fitnessStat.value.toString(),
-                                unit: fitnessStat.getUnits(),
-                                color: useBlue
-                                    ? CustomColor.MAYA_BLUE
-                                    : CustomColor.SELECTIVE_YELLOW,
-                              );
-                            }
+                        return Container();
+                      },
+                    ),
+                  );
+                },
+              ),
+            );
+          }
 
-                            return Container();
-                          },
-                        ),
-                      );
-                    },
-                  ),
-                );
-              }
-
-              return Center(
-                child: CircularProgressIndicator(),
-              );
-            });
-      },
-    );
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        });
   }
 }
 

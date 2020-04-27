@@ -43,8 +43,14 @@ class FitnessDataRepository {
                     currentDateFrom.millisecondsSinceEpoch !=
                         dateFrom.millisecondsSinceEpoch) ||
                 count == healthData.length - 1) {
-              // Add the last data point to the value variable
-              double finalValue = value + healthDataPoint.value;
+              // Add/set the last data point to the value variable
+              double finalValue;
+              if (type == HealthDataType.STEPS) {
+                finalValue = value + healthDataPoint.value;
+              } else {
+                finalValue = value;
+              }
+
               fitnessStatsForDates.addAll({
                 currentDateFrom.toString(): FitnessStat(
                     value: double.parse(finalValue.toStringAsFixed(1)),

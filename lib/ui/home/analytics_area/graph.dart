@@ -1,8 +1,14 @@
+import 'package:bfit_tracker/models/fitness_stat.dart';
 import 'package:bfit_tracker/theme.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:health/health.dart';
 
 class LineChartSample2 extends StatefulWidget {
+  final Map<HealthDataType, Map> data;
+
+  const LineChartSample2({Key key, this.data}) : super(key: key);
+
   @override
   _LineChartSample2State createState() => _LineChartSample2State();
 }
@@ -17,6 +23,18 @@ class _LineChartSample2State extends State<LineChartSample2> {
 
   @override
   Widget build(BuildContext context) {
+    var rawStepsData = widget.data.entries
+        .where((item) => item.key == HealthDataType.STEPS)
+        .first
+        .value
+        .values
+        .toList();
+
+    List<FlSpot> flSpots = List<FlSpot>();
+    rawStepsData.asMap().forEach((i, value) {
+      flSpots.add(FlSpot(i.toDouble(), value.value));
+    });
+
     return Stack(
       children: <Widget>[
         AspectRatio(
@@ -31,7 +49,7 @@ class _LineChartSample2State extends State<LineChartSample2> {
               padding: const EdgeInsets.only(
                   right: 18.0, left: 12.0, top: 24, bottom: 12),
               child: LineChart(
-                mainData(),
+                mainData(flSpots),
               ),
             ),
           ),
@@ -58,7 +76,7 @@ class _LineChartSample2State extends State<LineChartSample2> {
     );
   }
 
-  LineChartData mainData() {
+  LineChartData mainData(List<FlSpot> spots) {
     return LineChartData(
       gridData: FlGridData(
         show: true,
@@ -70,24 +88,12 @@ class _LineChartSample2State extends State<LineChartSample2> {
       ),
       borderData: FlBorderData(show: false),
       minX: 0,
-      maxX: 5,
       minY: 0,
-      maxY: 634,
       lineBarsData: [
         LineChartBarData(
-          spots: [
-            FlSpot(0, 323),
-            FlSpot(1, 523),
-            FlSpot(2, 254),
-            FlSpot(3, 123),
-            FlSpot(4, 634),
-            FlSpot(5, 100),
-          ],
+          spots: spots,
           isCurved: true,
-          //colors: [CustomColor.MAYA_BLUE],
           colors: [colors.last],
-          // gradientFrom: Offset(0, 0),
-          // gradientTo: Offset(0, 0.5),
           barWidth: 5,
           isStrokeCapRound: true,
           dotData: FlDotData(
