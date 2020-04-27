@@ -56,7 +56,6 @@ class _StatCardsState extends State<StatCards> {
                       scrollDirection: Axis.horizontal,
                       itemBuilder: (BuildContext context, int index) {
                         var fitnessStats = data.elementAt(index).value;
-                        useBlue = !useBlue;
                         if (fitnessStats.containsKey(dateSelected)) {
                           FitnessStat fitnessStat = fitnessStats[dateSelected];
                           if (fitnessStat.type ==
@@ -74,6 +73,7 @@ class _StatCardsState extends State<StatCards> {
                                         (item) => item.key == dateSelected)
                                     .value;
 
+                            useBlue = !useBlue;
                             return _StatCard(
                               title: fitnessStat.getHumanReadableType(),
                               value:
@@ -99,6 +99,7 @@ class _StatCardsState extends State<StatCards> {
                             );
                           }
 
+                          useBlue = !useBlue;
                           return _StatCard(
                             title: fitnessStat.getHumanReadableType(),
                             value: fitnessStat.value.toString(),
