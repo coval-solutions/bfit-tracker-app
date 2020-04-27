@@ -44,12 +44,7 @@ class FitnessDataRepository {
                         dateFrom.millisecondsSinceEpoch) ||
                 count == healthData.length - 1) {
               // Add/set the last data point to the value variable
-              double finalValue;
-              if (type == HealthDataType.STEPS) {
-                finalValue = value + healthDataPoint.value;
-              } else {
-                finalValue = value;
-              }
+              double finalValue = value + healthDataPoint.value;
 
               fitnessStatsForDates.addAll({
                 currentDateFrom.toString(): FitnessStat(
@@ -64,6 +59,9 @@ class FitnessDataRepository {
 
             switch (healthDataPoint.dataType) {
               case 'STEPS':
+                value += healthDataPoint.value;
+                break;
+              case 'ACTIVE_ENERGY_BURNED':
                 value += healthDataPoint.value;
                 break;
               default:

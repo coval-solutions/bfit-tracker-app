@@ -48,7 +48,7 @@ class _StatCardsState extends State<StatCards> {
                 itemCount: 1,
                 itemBuilder: (BuildContext context, int index) {
                   var data = snapshot.data.entries;
-                  bool useBlue = true;
+                  bool useBlue = false;
                   return Container(
                     height: 190,
                     child: ListView.builder(
@@ -56,9 +56,49 @@ class _StatCardsState extends State<StatCards> {
                       scrollDirection: Axis.horizontal,
                       itemBuilder: (BuildContext context, int index) {
                         var fitnessStats = data.elementAt(index).value;
+                        useBlue = !useBlue;
                         if (fitnessStats.containsKey(dateSelected)) {
-                          useBlue = !useBlue;
                           FitnessStat fitnessStat = fitnessStats[dateSelected];
+                          if (fitnessStat.type ==
+                              HealthDataType.BLOOD_PRESSURE_SYSTOLIC) {
+                            Map<String, FitnessStat> bloodPressureDiastolicMap =
+                                data
+                                    .firstWhere((type) =>
+                                        type.key ==
+                                        HealthDataType.BLOOD_PRESSURE_DIASTOLIC)
+                                    .value;
+
+                            FitnessStat bloodPressureDiastolic =
+                                bloodPressureDiastolicMap.entries
+                                    .firstWhere(
+                                        (item) => item.key == dateSelected)
+                                    .value;
+
+                            return _StatCard(
+                              title: fitnessStat.getHumanReadableType(),
+                              value:
+                                  "${fitnessStat.value.toStringAsFixed(0)}/${bloodPressureDiastolic.value.toStringAsFixed(0)}",
+                              unit: fitnessStat.getUnits(),
+                              color: useBlue
+                                  ? CustomColor.MAYA_BLUE
+                                  : CustomColor.SELECTIVE_YELLOW,
+                            );
+                          } else if (fitnessStat.type ==
+                              HealthDataType.BLOOD_PRESSURE_DIASTOLIC) {
+                            return Container();
+                          }
+
+                          if (fitnessStat.type == HealthDataType.STEPS) {
+                            return _StatCard(
+                              title: fitnessStat.getHumanReadableType(),
+                              value: fitnessStat.value.toStringAsFixed(0),
+                              unit: fitnessStat.getUnits(),
+                              color: useBlue
+                                  ? CustomColor.MAYA_BLUE
+                                  : CustomColor.SELECTIVE_YELLOW,
+                            );
+                          }
+
                           return _StatCard(
                             title: fitnessStat.getHumanReadableType(),
                             value: fitnessStat.value.toString(),
