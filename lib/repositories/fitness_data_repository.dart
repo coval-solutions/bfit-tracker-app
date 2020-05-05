@@ -1,3 +1,4 @@
+import 'package:bfit_tracker/blocs/fitness_data/fitness_data_bloc.dart';
 import 'package:bfit_tracker/models/fitness_stat.dart';
 import 'package:bfit_tracker/utils.dart';
 import 'package:health/health.dart';
@@ -17,7 +18,10 @@ class FitnessDataRepository {
     Map<HealthDataType, Map> fitnessStats = Map<HealthDataType, Map>();
     bool isAuthorized = await Health.requestAuthorization();
     if (isAuthorized) {
-      //bool isPhysicalDevice = await Utils.isPhysicalDevice;
+      bool isPhysicalDevice = await Utils.isPhysicalDevice;
+      if (!isPhysicalDevice) {
+        return this._getFakeData();
+      }
 
       for (HealthDataType type in HEALTH_DATA_TYPES) {
         try {
@@ -78,6 +82,46 @@ class FitnessDataRepository {
           print(exception.toString());
         }
       }
+    }
+
+    return fitnessStats;
+  }
+
+  Map<HealthDataType, Map> _getFakeData() {
+    List<DateTime> dateTimes = List<DateTime>();
+    DateTime dateTime = Jiffy().startOf(Units.DAY).subtract(Duration(days: FitnessDataBloc.numOfDaysInThePast));
+    dateTimes.add(dateTime);
+    for (int i = 0; i < 4; i++) {
+      dateTime = dateTime.add(Duration(days: 1));
+      dateTimes.add(dateTime);
+    }
+
+    Map<HealthDataType, Map> fitnessStats = Map<HealthDataType, Map>();
+    for (HealthDataType type in HEALTH_DATA_TYPES) {
+      Map<String, FitnessStat> fitnessStatsForDates = Map<String, FitnessStat>();
+      for (DateTime dateTime in dateTimes) {
+        double value = 0.0;
+        switch (type) {
+          case HealthDataType.STEPS:
+            value = Utils.doubleInRange(1500, 25000);
+            break;
+          case HealthDataType.ACTIVE_ENERGY_BURNED:
+            value = Utils.doubleInRange(150, 3250);
+            break;
+          default:
+            value = Utils.doubleInRange(60, 120);
+            break;
+        }
+
+        fitnessStatsForDates.addAll({
+          dateTime.toString(): FitnessStat(
+              value: double.parse(value.toStringAsFixed(1)),
+              dateTime: dateTime,
+              type: type)
+        });
+      }
+
+      fitnessStats.addAll({type: fitnessStatsForDates});
     }
 
     return fitnessStats;

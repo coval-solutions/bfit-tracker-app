@@ -12,7 +12,7 @@ class LoadFitnessData extends FitnessDataEvent {
 
   LoadFitnessData({DateTime startDateTime})
       : startDateTime = startDateTime ??
-            Jiffy().startOf(Units.DAY).subtract(const Duration(days: 4));
+            Jiffy().startOf(Units.DAY).subtract(Duration(days: FitnessDataBloc.numOfDaysInThePast));
 
   @override
   List<Object> get props => [this.startDateTime];

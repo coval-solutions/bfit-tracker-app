@@ -14,6 +14,7 @@ part 'fitness_data_state.dart';
 
 class FitnessDataBloc extends Bloc<FitnessDataEvent, FitnessDataState> {
   final FitnessDataRepository _fitnessDataRepository;
+  static int numOfDaysInThePast = 4;
 
   FitnessDataBloc({@required FitnessDataRepository fitnessDataRepository})
       : assert(fitnessDataRepository != null),

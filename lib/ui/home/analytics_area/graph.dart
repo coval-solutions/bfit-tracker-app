@@ -31,8 +31,12 @@ class _LineChartSample2State extends State<LineChartSample2> {
 
     List<FlSpot> flSpots = List<FlSpot>();
     rawStepsData.asMap().forEach((i, value) {
-      flSpots.add(FlSpot(i.toDouble(), value.value));
+      flSpots.add(FlSpot(i.toDouble(), value.value.floorToDouble()));
     });
+
+    if (rawStepsData.isEmpty) {
+      return Container();
+    }
 
     return Stack(
       children: <Widget>[
