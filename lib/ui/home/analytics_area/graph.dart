@@ -24,7 +24,8 @@ class _LineChartSample2State extends State<LineChartSample2> {
   @override
   Widget build(BuildContext context) {
     var rawStepsData = widget.data.entries
-      .where((item) => item.key == HealthDataType.STEPS);
+      .where((item) => item.key == HealthDataType.STEPS)
+      .toList();
 
     List<FlSpot> flSpots = List<FlSpot>();
     double maxSteps = 0;
@@ -41,7 +42,7 @@ class _LineChartSample2State extends State<LineChartSample2> {
       return Container();
     }
 
-    List<String> dateTimes = widget.data.entries.first.value.keys.toList();
+    List<String> dateTimes = rawStepsData.first.value.keys.toList();
 
     return AspectRatio(
       aspectRatio: 1.7,
@@ -89,7 +90,6 @@ class _LineChartSample2State extends State<LineChartSample2> {
   }
 
   LineChartData mainData(List<FlSpot> spots, double maxSteps, List<String> dates) {
-    print(maxSteps);
     return LineChartData(
       lineTouchData: LineTouchData(
         touchTooltipData: LineTouchTooltipData(

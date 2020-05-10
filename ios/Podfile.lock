@@ -405,7 +405,7 @@ SPEC CHECKSUMS:
   AppAuth: 73574f3013a1e65b9601a3ddc8b3158cce68c09d
   BoringSSL-GRPC: db8764df3204ccea016e1c8dd15d9a9ad63ff318
   cloud_firestore: 10fd4a09ebffc33efd64708106e2e7de701fe9ae
-  device_info: cbf09d2ec12aa7110e0b09fabe54b5bd6c8efe74
+  device_info: d7d233b645a32c40dfdc212de5cf646ca482f175
   Firebase: f378c80340dd41c0ad0914af740c021eb282a04b
   firebase_auth: 00d6e1ab6d890cd6d3c624df61702e3a7072d1e3
   firebase_core: 0d8be0e0d14c4902953aeb5ac5d7316d1fe4b978
@@ -421,7 +421,7 @@ SPEC CHECKSUMS:
   Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
   geolocator: 460cc8e850b616f8c0e90944c86517d91ccbb686
   google_api_availability: 15fa42a8cd83c0a6738507ffe6e87096f12abcb8
-  google_sign_in: f32920a589fdf4ab2918ec6dc5e5b0d5b8040ff5
+  google_sign_in: 6bd214b9c154f881422f5fe27b66aaa7bbd580cc
   google_sign_in_web: 52deb24929ac0992baff65c57956031c44ed44c3
   GoogleAppMeasurement: 6e68a94d0eaeb1d73ef6b0ed4f7334e29d63ae29
   GoogleDataTransport: b29a21d813e906014ca16c00897827e40e4a24ab
@@ -437,10 +437,10 @@ SPEC CHECKSUMS:
   location_permissions: 4a49d4e5bec5b653643e551ab77963cc99bb0e4a
   nanopb: 18003b5e52dab79db540fe93fe9579f399bd1ccd
   PromisesObjC: c119f3cd559f50b7ae681fa59dc1acd19173b7e6
-  url_launcher: a1c0cc845906122c4784c542523d8cacbded5626
+  url_launcher: 6fef411d543ceb26efce54b05a0a40bfd74cbbef
   url_launcher_macos: fd7894421cd39320dce5f292fc99ea9270b2a313
   url_launcher_web: e5527357f037c87560776e36436bf2b0288b965c
 
 PODFILE CHECKSUM: 2f7e4c6b578514f774d6836d2a9aac941a11e0b7
 
-COCOAPODS: 1.9.0
+COCOAPODS: 1.9.1
