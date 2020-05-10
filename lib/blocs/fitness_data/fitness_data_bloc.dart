@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:bfit_tracker/models/fitness_stat.dart';
 import 'package:bfit_tracker/repositories/fitness_data_repository.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';

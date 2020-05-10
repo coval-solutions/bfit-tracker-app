@@ -89,6 +89,7 @@ class _StatCardsState extends State<StatCards> {
                           }
 
                           if (fitnessStat.type == HealthDataType.STEPS) {
+                            useBlue = !useBlue;
                             return _StatCard(
                               title: fitnessStat.getHumanReadableType(),
                               value: fitnessStat.value.toStringAsFixed(0),
