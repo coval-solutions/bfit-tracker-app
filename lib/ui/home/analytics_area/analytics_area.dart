@@ -35,7 +35,7 @@ class _AnalyticsAreaState extends State<AnalyticsArea> {
               }
 
               return FutureBuilder<Map<HealthDataType, Map>>(
-                  future: context.bloc<FitnessDataBloc>().state.props.first,
+                  future: state.props.first,
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.done &&
                         snapshot.data != null) {

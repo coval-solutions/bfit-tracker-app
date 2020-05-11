@@ -167,7 +167,8 @@ class _AboutYouScreenState extends State<AboutYouScreen> {
                     bmi: 24,
                     weight: 72,
                     courses: 45,
-                    gym: 100
+                    gym: 100,
+                    steps: 10000,
                   )
                 );
 

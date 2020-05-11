@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:bfit_tracker/theme.dart';
 import 'package:flutter/material.dart';
@@ -67,7 +69,7 @@ Widget otherStats(value, text, {unit}) {
           animation: true,
           radius: 120.0,
           lineWidth: 6,
-          percent: value / 100,
+          percent: min(1, value / 100),
           circularStrokeCap: CircularStrokeCap.round,
           center: Column(
             mainAxisAlignment: MainAxisAlignment.center,

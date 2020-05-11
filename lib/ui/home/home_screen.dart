@@ -1,5 +1,4 @@
 import 'package:bfit_tracker/blocs/bottom_nav_bar/home_screen_bottom_nav_bar_bloc.dart';
-import 'package:bfit_tracker/blocs/user_info/user_info_bloc.dart';
 import 'package:bfit_tracker/models/user_info.dart';
 import 'package:bfit_tracker/theme.dart';
 import 'package:bfit_tracker/ui/home/analytics_area/analytics_area.dart';

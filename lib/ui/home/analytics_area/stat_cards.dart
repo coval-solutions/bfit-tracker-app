@@ -28,7 +28,10 @@ class _StatCardsState extends State<StatCards> {
       this._refresh();
     }
 
-    fitnessDataBloc.add(LoadFitnessData());
+    if (!(fitnessDataBloc.state is FitnessDataLoaded)) {
+      fitnessDataBloc.add(LoadFitnessData());
+    }
+
     return Future.value();
   }
 
