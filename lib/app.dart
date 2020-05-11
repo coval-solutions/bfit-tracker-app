@@ -40,9 +40,8 @@ class _AppState extends State<App> {
           ? SplashScreenLoading()
           : BlocConsumer<UserInfoBloc, UserInfoState>(
               listener: (BuildContext context, UserInfoState state) {
-                this._checkHealthPermissions();
-              },
-              builder: (BuildContext context, UserInfoState state) {
+              this._checkHealthPermissions();
+            }, builder: (BuildContext context, UserInfoState state) {
               if (state is UserInfoLoaded) {
                 return StreamBuilder(
                   stream: state.props.first,
@@ -61,7 +60,7 @@ class _AppState extends State<App> {
 
                     if (this._haveHealthPermission) {
                       if (snapshot.hasData && snapshot.data is UserInfo) {
-                        return HomeScreen();
+                        return HomeScreen(userInfo: snapshot.data);
                       } else {
                         // No data found, let's onboard the user
                         return OnboardingScreen();
