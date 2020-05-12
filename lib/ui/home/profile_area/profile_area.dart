@@ -33,7 +33,6 @@ class _ProfileAreaState extends State<ProfileArea> {
   void dispose() {
     super.dispose();
     _authenticationBloc.close();
-    _fitnessDataBloc.close();
   }
 
   Future<void> _refresh() {
@@ -55,22 +54,25 @@ class _ProfileAreaState extends State<ProfileArea> {
       appBar: EmptyAppBar(),
       backgroundColor: mainTheme.backgroundColor,
       body: BlocConsumer<FitnessDataBloc, FitnessDataState>(
-        listener: (BuildContext context, state) {  },
+        listener: (BuildContext context, state) {},
         builder: (context, snapshot) {
           if (!(snapshot is FitnessDataLoaded)) {
             return Center(child: CircularProgressIndicator());
           }
-          
+
           return FutureBuilder<Map<HealthDataType, Map>>(
               future: _fitnessDataBloc.state.props.first,
               builder: (context, snapshot) {
-                if (snapshot.connectionState != ConnectionState.done || snapshot.data == null) {
+                if (snapshot.connectionState != ConnectionState.done ||
+                    snapshot.data == null) {
                   return Center(child: CircularProgressIndicator());
                 }
 
-                var stepsData = snapshot.data.entries.where((item) => item.key == HealthDataType.STEPS);
+                var stepsData = snapshot.data.entries
+                    .where((item) => item.key == HealthDataType.STEPS);
                 double todaysSteps = stepsData.first.value.values.last.value;
-                double stepsPercent = (todaysSteps / widget._userInfo.goals.getSteps()) * 100;
+                double stepsPercent =
+                    (todaysSteps / widget._userInfo.goals.getSteps()) * 100;
                 return Padding(
                   padding: EdgeInsets.symmetric(vertical: 4, horizontal: 16),
                   child: Column(
@@ -84,7 +86,8 @@ class _ProfileAreaState extends State<ProfileArea> {
                       Expanded(
                         child: noGlowListView(
                           <Widget>[
-                            totalGymTimeStat(widget._userInfo.goals.getGym() / 100),
+                            totalGymTimeStat(
+                                widget._userInfo.goals.getGym() / 100),
                             Padding(
                               padding: EdgeInsets.symmetric(
                                 vertical: 6,
@@ -120,8 +123,9 @@ class _ProfileAreaState extends State<ProfileArea> {
                                 ),
                                 Expanded(
                                   child: Container(
-                                      child:
-                                          otherStats(stepsPercent, 'Daily Steps', unit: '%')),
+                                      child: otherStats(
+                                          stepsPercent, 'Daily Steps',
+                                          unit: '%')),
                                 ),
                               ],
                             ),

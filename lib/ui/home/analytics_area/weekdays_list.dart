@@ -8,7 +8,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:jiffy/jiffy.dart';
 
 class WeekDayList extends StatefulWidget {
-  
   WeekDayList({Key key}) : super(key: key);
 
   @override
@@ -32,7 +31,7 @@ class _WeekDayListState extends State<WeekDayList> {
     this.days.add(_today);
 
     DateTime dateTime = this._today;
-    for (int i = 0; i < 4; i++) {
+    for (int i = 0; i < FitnessDataBloc.numOfDaysInThePast; i++) {
       dateTime = dateTime.subtract(Duration(days: 1));
       this.days.add(dateTime);
     }
