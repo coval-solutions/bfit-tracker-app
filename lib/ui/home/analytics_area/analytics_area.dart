@@ -1,9 +1,9 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:bfit_tracker/blocs/fitness_data/fitness_data_bloc.dart';
 import 'package:bfit_tracker/theme.dart';
-import 'package:bfit_tracker/ui/home/analytics_area/graph.dart';
 import 'package:bfit_tracker/ui/home/analytics_area/stat_cards.dart';
 import 'package:bfit_tracker/ui/home/analytics_area/weekdays_list.dart';
+import 'package:bfit_tracker/ui/home/analytics_area/weekly_steps_graph.dart';
 import 'package:flutter/material.dart';
 import 'package:bfit_tracker/ui/custom.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -66,7 +66,7 @@ class _AnalyticsAreaState extends State<AnalyticsArea> {
                         ),
                         StatCards(),
                         Spacer(),
-                        LineChartSample2(data: snapshot.data)
+                        WeeklyStepsGraph(data: snapshot.data)
                       ]);
                     } else {
                       return Center(child: CircularProgressIndicator());

@@ -6,16 +6,16 @@ import 'package:flutter/material.dart';
 import 'package:health/health.dart';
 import 'package:jiffy/jiffy.dart';
 
-class LineChartSample2 extends StatefulWidget {
+class WeeklyStepsGraph extends StatefulWidget {
   final Map<HealthDataType, Map> data;
 
-  const LineChartSample2({Key key, this.data}) : super(key: key);
+  const WeeklyStepsGraph({Key key, this.data}) : super(key: key);
 
   @override
-  _LineChartSample2State createState() => _LineChartSample2State();
+  _WeeklyStepsGraphState createState() => _WeeklyStepsGraphState();
 }
 
-class _LineChartSample2State extends State<LineChartSample2> {
+class _WeeklyStepsGraphState extends State<WeeklyStepsGraph> {
   List<Color> colors = [
     CustomColor.MAYA_BLUE.withOpacity(0.3),
     CustomColor.SELECTIVE_YELLOW.withOpacity(0.8),
@@ -24,8 +24,8 @@ class _LineChartSample2State extends State<LineChartSample2> {
   @override
   Widget build(BuildContext context) {
     var rawStepsData = widget.data.entries
-      .where((item) => item.key == HealthDataType.STEPS)
-      .toList();
+        .where((item) => item.key == HealthDataType.STEPS)
+        .toList();
 
     List<FlSpot> flSpots = List<FlSpot>();
     double maxSteps = 0;
@@ -62,8 +62,7 @@ class _LineChartSample2State extends State<LineChartSample2> {
                 AutoSizeText(
                   'Weekly Steps',
                   minFontSize: 22,
-                  style: TextStyle(
-                    color: CustomColor.DIM_GRAY),
+                  style: TextStyle(color: CustomColor.DIM_GRAY),
                   textAlign: TextAlign.center,
                 ),
                 SizedBox(
@@ -89,15 +88,15 @@ class _LineChartSample2State extends State<LineChartSample2> {
     );
   }
 
-  LineChartData mainData(List<FlSpot> spots, double maxSteps, List<String> dates) {
+  LineChartData mainData(
+      List<FlSpot> spots, double maxSteps, List<String> dates) {
     return LineChartData(
       lineTouchData: LineTouchData(
-        touchTooltipData: LineTouchTooltipData(
-          tooltipBgColor: CustomColor.MAYA_BLUE.withOpacity(0.3),
-          getTooltipItems: customLineTooltipItem,
-          tooltipPadding: EdgeInsets.all(4),
-        )
-      ),
+          touchTooltipData: LineTouchTooltipData(
+        tooltipBgColor: CustomColor.MAYA_BLUE.withOpacity(0.3),
+        getTooltipItems: customLineTooltipItem,
+        tooltipPadding: EdgeInsets.all(4),
+      )),
       gridData: FlGridData(
         show: true,
         drawVerticalLine: false,
@@ -107,15 +106,19 @@ class _LineChartSample2State extends State<LineChartSample2> {
         show: true,
         bottomTitles: SideTitles(
           showTitles: true,
-          textStyle:
-              const TextStyle(color: CustomColor.DIM_GRAY, fontWeight: FontWeight.bold, fontSize: 12),
+          textStyle: const TextStyle(
+              color: CustomColor.DIM_GRAY,
+              fontWeight: FontWeight.bold,
+              fontSize: 12),
           getTitles: (value) {
-            return Jiffy(dates[value.toInt()]).E; 
+            return Jiffy(dates[value.toInt()]).E;
           },
           margin: 8,
         ),
         leftTitles: SideTitles(
-          interval: (maxSteps / (FitnessDataBloc.numOfDaysInThePast + 1)).round().toDouble(),
+          interval: (maxSteps / (FitnessDataBloc.numOfDaysInThePast + 1))
+              .round()
+              .toDouble(),
           showTitles: true,
           textStyle: const TextStyle(
             color: CustomColor.DIM_GRAY,
