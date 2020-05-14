@@ -86,8 +86,8 @@ class _ProfileAreaState extends State<ProfileArea> {
                       Expanded(
                         child: noGlowListView(
                           <Widget>[
-                            totalGymTimeStat(
-                                widget._userInfo.goals.getGym() / 100),
+                            totalGymTimeStat(widget._userInfo.gymTime /
+                                widget._userInfo.goals.getGym()),
                             Padding(
                               padding: EdgeInsets.symmetric(
                                 vertical: 6,
