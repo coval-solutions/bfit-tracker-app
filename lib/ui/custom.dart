@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class EmptyAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return Container();
   }
+
   @override
   Size get preferredSize => Size(0.0, 12.0);
 }
@@ -25,5 +27,13 @@ class NoGlowingOverscrollIndicator extends ScrollBehavior {
   Widget buildViewportChrome(
       BuildContext context, Widget child, AxisDirection axisDirection) {
     return child;
+  }
+}
+
+/// Mathematics used specifically by Coval Solutions Ltd
+class CovalMath {
+  static String compact(value) {
+    NumberFormat _compact = NumberFormat.compact();
+    return _compact.format(value);
   }
 }

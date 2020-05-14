@@ -28,6 +28,7 @@ dependencies:
   health: ^1.0.2
   height_slider: ^1.2.0
   http: ^0.12.1
+  intl: ^0.16.1
   jiffy: ^3.0.1
   meta: ^1.1.8
   percent_indicator: ^2.1.3

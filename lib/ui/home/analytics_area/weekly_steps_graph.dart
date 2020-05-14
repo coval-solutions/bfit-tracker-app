@@ -128,7 +128,7 @@ class _WeeklyStepsGraphState extends State<WeeklyStepsGraph> {
           getTitles: (value) {
             return value.toStringAsFixed(0).toString();
           },
-          reservedSize: 30,
+          reservedSize: 32,
           margin: 8,
         ),
       ),
