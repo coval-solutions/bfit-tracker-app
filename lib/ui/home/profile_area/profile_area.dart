@@ -20,6 +20,7 @@ class ProfileArea extends StatefulWidget {
 
 class _ProfileAreaState extends State<ProfileArea> {
   AuthenticationBloc _authenticationBloc;
+  //ignore: close_sinks
   FitnessDataBloc _fitnessDataBloc;
 
   @override
@@ -33,19 +34,6 @@ class _ProfileAreaState extends State<ProfileArea> {
   void dispose() {
     super.dispose();
     _authenticationBloc.close();
-  }
-
-  Future<void> _refresh() {
-    if (_fitnessDataBloc == null) {
-      _fitnessDataBloc = BlocProvider.of<FitnessDataBloc>(context);
-      this._refresh();
-    }
-
-    if (!(_fitnessDataBloc.state is FitnessDataLoaded)) {
-      _fitnessDataBloc.add(LoadFitnessData());
-    }
-
-    return Future.value();
   }
 
   @override
