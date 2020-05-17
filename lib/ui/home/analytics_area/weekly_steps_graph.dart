@@ -1,15 +1,17 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:bfit_tracker/blocs/fitness_data/fitness_data_bloc.dart';
+import 'package:bfit_tracker/models/fitness_stat.dart';
 import 'package:bfit_tracker/theme.dart';
+import 'package:bfit_tracker/ui/custom.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:health/health.dart';
 import 'package:jiffy/jiffy.dart';
 
 class WeeklyStepsGraph extends StatefulWidget {
-  final Map<HealthDataType, Map> data;
+  final Map data;
 
-  const WeeklyStepsGraph({Key key, this.data}) : super(key: key);
+  const WeeklyStepsGraph({Key key, @required this.data}) : super(key: key);
 
   @override
   _WeeklyStepsGraphState createState() => _WeeklyStepsGraphState();
@@ -23,26 +25,19 @@ class _WeeklyStepsGraphState extends State<WeeklyStepsGraph> {
 
   @override
   Widget build(BuildContext context) {
-    var rawStepsData = widget.data.entries
-        .where((item) => item.key == HealthDataType.STEPS)
-        .toList();
-
     List<FlSpot> flSpots = List<FlSpot>();
+    double index = 0.0;
     double maxSteps = 0;
-    rawStepsData.first.value.values.toList().asMap().forEach((i, value) {
-      value = value.value.round().toDouble();
+    widget.data.forEach((key, value) {
+      FitnessStat fitnessStat = value;
+      value = fitnessStat.value.roundToDouble();
       if (value > maxSteps) {
         maxSteps = value;
       }
 
-      flSpots.add(FlSpot(i.toDouble(), value));
+      flSpots.add(FlSpot(index, value));
+      index++;
     });
-
-    if (rawStepsData.isEmpty) {
-      return Container();
-    }
-
-    List<String> dateTimes = rawStepsData.first.value.keys.toList();
 
     return AspectRatio(
       aspectRatio: 1.7,
@@ -75,7 +70,7 @@ class _WeeklyStepsGraphState extends State<WeeklyStepsGraph> {
                       vertical: 8,
                     ),
                     child: LineChart(
-                      mainData(flSpots, maxSteps, dateTimes),
+                      mainData(flSpots, maxSteps, widget.data.keys.toList()),
                       swapAnimationDuration: const Duration(milliseconds: 250),
                     ),
                   ),
@@ -89,7 +84,7 @@ class _WeeklyStepsGraphState extends State<WeeklyStepsGraph> {
   }
 
   LineChartData mainData(
-      List<FlSpot> spots, double maxSteps, List<String> dates) {
+      List<FlSpot> spots, double maxSteps, List<DateTime> dates) {
     return LineChartData(
       lineTouchData: LineTouchData(
           touchTooltipData: LineTouchTooltipData(
@@ -126,9 +121,9 @@ class _WeeklyStepsGraphState extends State<WeeklyStepsGraph> {
             fontSize: 12,
           ),
           getTitles: (value) {
-            return value.toStringAsFixed(0).toString();
+            return CovalMath.compact(value);
           },
-          reservedSize: 32,
+          reservedSize: 30,
           margin: 8,
         ),
       ),

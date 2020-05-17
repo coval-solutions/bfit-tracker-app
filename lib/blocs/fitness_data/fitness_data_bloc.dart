@@ -38,7 +38,11 @@ class FitnessDataBloc extends Bloc<FitnessDataEvent, FitnessDataState> {
   Stream<FitnessDataState> _mapLoadingToState(LoadFitnessData event) async* {
     try {
       final fitnessData = _fitnessDataRepository.retrieve(event.startDateTime);
-      yield FitnessDataLoaded(fitnessData, Jiffy().startOf(Units.DAY));
+      if (this.state.props.isEmpty) {
+        yield FitnessDataLoaded(fitnessData, Jiffy().startOf(Units.DAY));
+      } else {
+        yield FitnessDataLoaded(fitnessData, this.state.props.last);
+      }
     } catch (_) {
       yield FitnessDataNotLoaded();
     }

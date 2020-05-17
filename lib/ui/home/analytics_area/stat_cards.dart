@@ -7,139 +7,87 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:health/health.dart';
 
-class StatCards extends StatefulWidget {
-  StatCards({Key key}) : super(key: key);
+class StatsCardList extends StatefulWidget {
+  final Map<HealthDataType, Map> data;
+
+  const StatsCardList({Key key, @required this.data}) : super(key: key);
 
   @override
-  _StatCardsState createState() => _StatCardsState();
+  _StatsCardListState createState() => _StatsCardListState();
 }
 
-class _StatCardsState extends State<StatCards> {
+class _StatsCardListState extends State<StatsCardList> {
+  //ignore: close_sinks
   FitnessDataBloc fitnessDataBloc;
+  List<FitnessStat> fitnessStats;
+  List<Color> colors;
 
   @override
   void initState() {
     super.initState();
+    colors = [CustomColor.SELECTIVE_YELLOW, CustomColor.MAYA_BLUE];
     fitnessDataBloc = BlocProvider.of<FitnessDataBloc>(context);
   }
 
-  Future<void> _refresh() {
-    if (fitnessDataBloc == null) {
-      fitnessDataBloc = BlocProvider.of<FitnessDataBloc>(context);
-      this._refresh();
-    }
+  void setFitnessDataForDate(DateTime dateTime) {
+    List<FitnessStat> fitnessData = List<FitnessStat>();
+    widget.data.entries.forEach((element) {
+      try {
+        var healthTypeForDate = element.value.entries
+            .firstWhere((element) => element.key == dateTime);
 
-    if (!(fitnessDataBloc.state is FitnessDataLoaded)) {
-      fitnessDataBloc.add(LoadFitnessData());
-    }
+        if (healthTypeForDate != null) {
+          fitnessData.add(healthTypeForDate.value);
+        }
+      } catch (error) {}
+    });
 
-    return Future.value();
+    setState(() {
+      this.fitnessStats = fitnessData;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<Map<HealthDataType, Map>>(
-        future: this.fitnessDataBloc.state.props.first,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.done &&
-              snapshot.data != null) {
-            String dateSelected = fitnessDataBloc.state.props.last.toString();
-            return RefreshIndicator(
-              onRefresh: this._refresh,
-              child: ListView.builder(
-                shrinkWrap: true,
-                physics: const AlwaysScrollableScrollPhysics(),
-                itemCount: 1,
-                itemBuilder: (BuildContext context, int index) {
-                  var data = snapshot.data.entries;
-                  bool useBlue = false;
-                  return Container(
-                    height: 190,
-                    child: ListView.builder(
-                      itemCount: data.length,
-                      scrollDirection: Axis.horizontal,
-                      itemBuilder: (BuildContext context, int index) {
-                        var fitnessStats = data.elementAt(index).value;
-                        if (fitnessStats.containsKey(dateSelected)) {
-                          FitnessStat fitnessStat = fitnessStats[dateSelected];
-                          if (fitnessStat.type ==
-                              HealthDataType.BLOOD_PRESSURE_SYSTOLIC) {
-                            Map<String, FitnessStat> bloodPressureDiastolicMap =
-                                data
-                                    .firstWhere((type) =>
-                                        type.key ==
-                                        HealthDataType.BLOOD_PRESSURE_DIASTOLIC)
-                                    .value;
+    if (widget.data == null) {
+      return Center(child: CircularProgressIndicator());
+    }
 
-                            FitnessStat bloodPressureDiastolic =
-                                bloodPressureDiastolicMap.entries
-                                    .firstWhere(
-                                        (item) => item.key == dateSelected)
-                                    .value;
+    if (fitnessDataBloc != null) {
+      this.setFitnessDataForDate(fitnessDataBloc.state.props.last);
+    }
 
-                            useBlue = !useBlue;
-                            return _StatCard(
-                              title: fitnessStat.getHumanReadableType(),
-                              value:
-                                  "${fitnessStat.value.toStringAsFixed(0)}/${bloodPressureDiastolic.value.toStringAsFixed(0)}",
-                              unit: fitnessStat.getUnits(),
-                              color: useBlue
-                                  ? CustomColor.MAYA_BLUE
-                                  : CustomColor.SELECTIVE_YELLOW,
-                            );
-                          } else if (fitnessStat.type ==
-                              HealthDataType.BLOOD_PRESSURE_DIASTOLIC) {
-                            return Container();
-                          }
-
-                          if (fitnessStat.type == HealthDataType.STEPS) {
-                            useBlue = !useBlue;
-                            return _StatCard(
-                              title: fitnessStat.getHumanReadableType(),
-                              value: CovalMath.compact(fitnessStat.value),
-                              unit: fitnessStat.getUnits(),
-                              color: useBlue
-                                  ? CustomColor.MAYA_BLUE
-                                  : CustomColor.SELECTIVE_YELLOW,
-                            );
-                          }
-
-                          useBlue = !useBlue;
-                          return _StatCard(
-                            title: fitnessStat.getHumanReadableType(),
-                            value: fitnessStat.value.toString(),
-                            unit: fitnessStat.getUnits(),
-                            color: useBlue
-                                ? CustomColor.MAYA_BLUE
-                                : CustomColor.SELECTIVE_YELLOW,
-                          );
-                        }
-
-                        return Container();
-                      },
-                    ),
-                  );
-                },
-              ),
-            );
-          }
-
-          return Center(
-            child: CircularProgressIndicator(),
-          );
-        });
+    return ListView.builder(
+      shrinkWrap: true,
+      physics: const AlwaysScrollableScrollPhysics(),
+      itemCount: 1,
+      itemBuilder: (BuildContext context, int index) {
+        return Container(
+          height: 190,
+          child: ListView.builder(
+            itemCount: fitnessStats != null ? fitnessStats.length : 0,
+            scrollDirection: Axis.horizontal,
+            itemBuilder: (BuildContext context, int index) {
+              return StatCard(
+                  fitnessStat: fitnessStats[index],
+                  color: this.colors[index % this.colors.length]);
+            },
+          ),
+        );
+      },
+    );
   }
 }
 
-class _StatCard extends StatelessWidget {
-  const _StatCard(
-      {Key key, this.title = '', this.value = '', this.unit = '', this.color})
-      : super(key: key);
-
-  final String title;
-  final String value;
-  final String unit;
+class StatCard extends StatelessWidget {
+  final FitnessStat fitnessStat;
   final Color color;
+
+  const StatCard(
+      {Key key,
+      @required this.fitnessStat,
+      this.color = CustomColor.SELECTIVE_YELLOW})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -162,7 +110,7 @@ class _StatCard extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(top: 40, left: 14, right: 14),
                 child: AutoSizeText(
-                  this.title,
+                  this.fitnessStat.getHumanReadableType(),
                   minFontSize: 20,
                   maxLines: 2,
                   style: TextStyle(
@@ -179,7 +127,9 @@ class _StatCard extends StatelessWidget {
                 ),
                 child: AutoSizeText.rich(
                     TextSpan(
-                      text: this.value,
+                      text: fitnessStat.type == HealthDataType.STEPS
+                          ? CovalMath.compact(this.fitnessStat.value)
+                          : this.fitnessStat.value.toString(),
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
@@ -187,7 +137,7 @@ class _StatCard extends StatelessWidget {
                       ),
                       children: <TextSpan>[
                         TextSpan(
-                          text: this.unit,
+                          text: this.fitnessStat.getUnits(),
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: Colors.white,

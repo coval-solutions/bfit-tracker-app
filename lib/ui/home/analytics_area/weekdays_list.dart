@@ -5,41 +5,35 @@ import 'package:bfit_tracker/theme.dart';
 import 'package:bfit_tracker/ui/custom.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:jiffy/jiffy.dart';
 
 class WeekDayList extends StatefulWidget {
-  WeekDayList({Key key}) : super(key: key);
+  final List<DateTime> days;
+
+  WeekDayList({Key key, @required this.days}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
-    return _WeekDayListState();
+    return _WeekDayListState(days: this.days.reversed.toList());
   }
 }
 
 class _WeekDayListState extends State<WeekDayList> {
-  DateTime _today;
+  //ignore: close_sinks
+  FitnessDataBloc fitnessDataBloc;
+  List<DateTime> days;
 
-  List<DateTime> days = new List<DateTime>();
-
-  _WeekDayListState();
+  _WeekDayListState({Key key, @required this.days});
 
   @override
   void initState() {
     super.initState();
-
-    this._today = Jiffy().startOf(Units.DAY);
-    this.days.add(_today);
-
-    DateTime dateTime = this._today;
-    for (int i = 0; i < FitnessDataBloc.numOfDaysInThePast; i++) {
-      dateTime = dateTime.subtract(Duration(days: 1));
-      this.days.add(dateTime);
-    }
+    setState(() {
+      fitnessDataBloc = BlocProvider.of<FitnessDataBloc>(context);
+    });
   }
 
   updateDateSelected(DateTime dateTimeSelected) {
-    BlocProvider.of<FitnessDataBloc>(context)
-        .add(SetDateSelected(dateTimeSelected));
+    fitnessDataBloc.add(SetDateSelected(dateTimeSelected));
   }
 
   @override
@@ -64,11 +58,7 @@ class _WeekDayListState extends State<WeekDayList> {
                 itemBuilder: (BuildContext context, int index) {
                   return GestureDetector(
                     child: index ==
-                            this.days.indexOf(
-                                BlocProvider.of<FitnessDataBloc>(context)
-                                    .state
-                                    .props
-                                    .last)
+                            this.days.indexOf(fitnessDataBloc.state.props.last)
                         ? weekdayCardSelected(index, this.days)
                         : weekdayCard(index, this.days),
                     onTap: () {

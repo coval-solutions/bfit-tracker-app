@@ -14,8 +14,26 @@ class FitnessDataRepository {
     HealthDataType.ACTIVE_ENERGY_BURNED
   ];
 
+  static const List<HealthDataType> HEALTH_DATA_TYPES_REQUIRE_INCREMENTING = [
+    HealthDataType.STEPS,
+    HealthDataType.ACTIVE_ENERGY_BURNED,
+  ];
+
+  static List<DateTime> getDateTimes() {
+    List<DateTime> dateTimes = List<DateTime>();
+    DateTime dateTime = Jiffy()
+        .startOf(Units.DAY)
+        .subtract(Duration(days: FitnessDataBloc.numOfDaysInThePast));
+    dateTimes.add(dateTime);
+    for (int i = 0; i < FitnessDataBloc.numOfDaysInThePast; i++) {
+      dateTime = dateTime.add(Duration(days: 1));
+      dateTimes.add(dateTime);
+    }
+
+    return dateTimes;
+  }
+
   Future<Map<HealthDataType, Map>> retrieve(DateTime startDateTime) async {
-    Map<HealthDataType, Map> fitnessStats = Map<HealthDataType, Map>();
     bool isAuthorized = await Health.requestAuthorization();
     if (isAuthorized) {
       bool isPhysicalDevice = await Utils.isPhysicalDevice;
@@ -23,82 +41,87 @@ class FitnessDataRepository {
         return this._getFakeData();
       }
 
+      List<DateTime> dateTimes = getDateTimes();
+      Map<HealthDataType, Map<DateTime, FitnessStat>> fitnessData =
+          Map<HealthDataType, Map<DateTime, FitnessStat>>();
       for (HealthDataType type in HEALTH_DATA_TYPES) {
         try {
-          List<HealthDataPoint> healthData = await Health.getHealthDataFromType(
-              startDateTime, DateTime.now(), type);
+          DateTime startDate = dateTimes.first;
+          DateTime endDate = DateTime.now();
+          List<HealthDataPoint> healthData =
+              await Health.getHealthDataFromType(startDate, endDate, type);
 
-          DateTime currentDateFrom;
-          double value = 0.0;
-          int count = 0;
-          Map<String, FitnessStat> fitnessStatsForDates =
-              Map<String, FitnessStat>();
-          for (HealthDataPoint healthDataPoint in healthData) {
-            DateTime dateFrom =
-                Jiffy.unix(healthDataPoint.dateFrom).startOf(Units.DAY);
+          Map<DateTime, FitnessStat> fitnessDataForTypeAndDate =
+              Map<DateTime, FitnessStat>();
+          for (DateTime dateTime in dateTimes) {
+            int epochStart = dateTime.millisecondsSinceEpoch;
+            int epochEnd =
+                Jiffy(dateTime).endOf(Units.DAY).millisecondsSinceEpoch;
+            List<HealthDataPoint> healthDataPoints = healthData
+                .where((element) =>
+                    element.dateFrom >= epochStart &&
+                    element.dateFrom <= epochEnd)
+                .toList();
 
-            // Initalise currentDateFrom (occurs only once)
-            if (currentDateFrom == null) {
-              currentDateFrom = dateFrom;
+            if (healthDataPoints.isEmpty) {
+              if (type != HealthDataType.STEPS) {
+                break;
+              }
+
+              // If we have no steps for a certain day
+              // lets create a data point and set the
+              // value to zero then, instead of
+              // having no data point at all
+              healthDataPoints.add(HealthDataPoint(
+                  0, 'COUNT', epochStart, epochEnd, type.toString(), 'BFIT'));
             }
 
-            // Ensure the today's (i.e. the last in the list) stats get added too
-            if ((currentDateFrom != null &&
-                    currentDateFrom.millisecondsSinceEpoch !=
-                        dateFrom.millisecondsSinceEpoch) ||
-                count == healthData.length - 1) {
-              // Add/set the last data point to the value variable
-              double finalValue = value + healthDataPoint.value;
+            double value = 0.0;
+            healthDataPoints.forEach((element) {
+              if (HEALTH_DATA_TYPES_REQUIRE_INCREMENTING.contains(type)) {
+                // We need to be sum this type
+                value += element.value;
+              } else {
+                if (element.value > value) {
+                  value = element.value;
+                }
+              }
+            });
 
-              fitnessStatsForDates.addAll({
-                currentDateFrom.toString(): FitnessStat(
-                    value: double.parse(finalValue.toStringAsFixed(1)),
-                    dateTime: currentDateFrom,
-                    type: type)
-              });
-
-              value = 0.0;
-              currentDateFrom = dateFrom;
-            }
-
-            switch (healthDataPoint.dataType) {
-              case 'STEPS':
-                value += healthDataPoint.value;
-                break;
-              case 'ACTIVE_ENERGY_BURNED':
-                value += healthDataPoint.value;
-                break;
-              default:
-                value = healthDataPoint.value;
-                break;
-            }
-
-            count++;
+            fitnessDataForTypeAndDate.addAll({
+              dateTime: FitnessStat(
+                  value: double.parse(value.toStringAsFixed(1)),
+                  dateTime: dateTime,
+                  type: type)
+            });
           }
 
-          fitnessStats.addAll({type: fitnessStatsForDates});
+          fitnessData.addAll({type: fitnessDataForTypeAndDate});
         } catch (exception) {
           // TODO: report this to Crashlytics
           print(exception.toString());
         }
       }
+
+      return fitnessData;
     }
 
-    return fitnessStats;
+    return null;
   }
 
   Map<HealthDataType, Map> _getFakeData() {
-    List<DateTime> dateTimes = List<DateTime>();
-    DateTime dateTime = Jiffy().startOf(Units.DAY).subtract(Duration(days: FitnessDataBloc.numOfDaysInThePast));
-    dateTimes.add(dateTime);
-    for (int i = 0; i < 4; i++) {
-      dateTime = dateTime.add(Duration(days: 1));
-      dateTimes.add(dateTime);
-    }
+    List<DateTime> dateTimes = getDateTimes();
 
     Map<HealthDataType, Map> fitnessStats = Map<HealthDataType, Map>();
     for (HealthDataType type in HEALTH_DATA_TYPES) {
-      Map<String, FitnessStat> fitnessStatsForDates = Map<String, FitnessStat>();
+      if (type == HealthDataType.BLOOD_PRESSURE_DIASTOLIC) {
+        // In order to avoid Blood Pressure appearing twice
+        // in the UI
+        continue;
+      }
+
+      Map<String, FitnessStat> fitnessStatsForDates =
+          Map<String, FitnessStat>();
       for (DateTime dateTime in dateTimes) {
         double value = 0.0;
         switch (type) {
