@@ -65,7 +65,7 @@ class FitnessDataRepository {
 
             if (healthDataPoints.isEmpty) {
               if (type != HealthDataType.STEPS) {
-                break;
+                continue;
               }
 
               // If we have no steps for a certain day

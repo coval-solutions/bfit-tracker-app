@@ -127,9 +127,7 @@ class StatCard extends StatelessWidget {
                 ),
                 child: AutoSizeText.rich(
                     TextSpan(
-                      text: fitnessStat.type == HealthDataType.STEPS
-                          ? CovalMath.compact(this.fitnessStat.value)
-                          : this.fitnessStat.value.toString(),
+                      text: this.fitnessStat.getHumanReadableValue(),
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
