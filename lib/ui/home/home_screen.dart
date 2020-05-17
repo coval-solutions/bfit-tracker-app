@@ -67,7 +67,6 @@ class _HomeScreenState extends State<HomeScreen> {
         initialData: _bottomNavBarBloc.defaultItem,
         builder: (BuildContext context,
             AsyncSnapshot<HomeScreenBottomNavBarItems> snapshot) {
-          print(MediaQuery.of(context).padding.bottom);
           return CurvedNavigationBar(
             height: min(72, 52 + MediaQuery.of(context).padding.bottom),
             backgroundColor: mainTheme.accentColor,

@@ -2,6 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:bfit_tracker/blocs/courses/courses_bloc.dart';
 import 'package:bfit_tracker/models/course.dart';
 import 'package:bfit_tracker/theme.dart';
+import 'package:bfit_tracker/ui/course_detail.dart';
 import 'package:bfit_tracker/ui/custom.dart';
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +17,6 @@ Widget coursesArea() {
   return BlocConsumer<CoursesBloc, CoursesState>(
     listener: (BuildContext context, CoursesState state) {},
     builder: (BuildContext context, CoursesState state) {
-      print(state.props);
       if (!(state is CoursesDataLoaded) && state.props.isEmpty) {
         return Center(child: CircularProgressIndicator());
       }
@@ -56,8 +56,14 @@ Widget coursesArea() {
                     padding: const EdgeInsets.all(8.0),
                     itemCount: snapshot.data.length,
                     itemBuilder: (BuildContext context, int index) {
-                      return courseCard(
-                          colors[index % colors.length], snapshot.data[index]);
+                      return GestureDetector(
+                        onTap: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => CourseDetail()));
+                        },
+                        child: courseCard(colors[index % colors.length],
+                            snapshot.data[index]),
+                      );
                     },
                   ),
                 ],
@@ -116,7 +122,7 @@ Widget courseCard(Color backgroundColor, Course course) {
         ),
         SizedBox(
           height: 128,
-          child: FlareActor('assets/animations/tonded_courses.flr',
+          child: FlareActor('assets/animations/${course.animationFilename}',
               alignment: Alignment.center, animation: 'active'),
         ),
       ],
