@@ -70,7 +70,7 @@ class _AnalyticsAreaState extends State<AnalyticsArea> {
           }
         }, builder: (BuildContext context, FitnessDataState state) {
           if (!(state is FitnessDataLoaded) || this.fitnessData == null) {
-            if (this.fitnessData == null) {
+            if (this.fitnessData == null && state.props.isNotEmpty) {
               this.getFitnessData(state.props.first);
             }
 
@@ -106,7 +106,7 @@ class _AnalyticsAreaState extends State<AnalyticsArea> {
               ),
               StatsCardList(data: this.fitnessData),
               Spacer(),
-              WeeklyStepsGraph(data: getStepsData(this.fitnessData))
+              WeeklyStepsGraph(data: getStepsData(this.fitnessData)),
             ]),
           );
         }),

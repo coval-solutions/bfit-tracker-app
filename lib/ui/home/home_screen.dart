@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:bfit_tracker/blocs/bottom_nav_bar/home_screen_bottom_nav_bar_bloc.dart';
 import 'package:bfit_tracker/models/user_info.dart';
 import 'package:bfit_tracker/theme.dart';
@@ -41,7 +43,8 @@ class _HomeScreenState extends State<HomeScreen> {
       body: StreamBuilder<HomeScreenBottomNavBarItems>(
         stream: _bottomNavBarBloc.itemStream,
         initialData: _bottomNavBarBloc.defaultItem,
-        builder: (BuildContext context, AsyncSnapshot<HomeScreenBottomNavBarItems> snapshot) {
+        builder: (BuildContext context,
+            AsyncSnapshot<HomeScreenBottomNavBarItems> snapshot) {
           switch (snapshot.data) {
             case HomeScreenBottomNavBarItems.HOME:
               return _homeArea();
@@ -61,8 +64,11 @@ class _HomeScreenState extends State<HomeScreen> {
       bottomNavigationBar: StreamBuilder(
         stream: _bottomNavBarBloc.itemStream,
         initialData: _bottomNavBarBloc.defaultItem,
-          builder: (BuildContext context, AsyncSnapshot<HomeScreenBottomNavBarItems> snapshot) {
+        builder: (BuildContext context,
+            AsyncSnapshot<HomeScreenBottomNavBarItems> snapshot) {
+          print(MediaQuery.of(context).padding.bottom);
           return CurvedNavigationBar(
+            height: min(72, 52 + MediaQuery.of(context).padding.bottom),
             backgroundColor: mainTheme.accentColor,
             items: <Widget>[
               Icon(Icons.home, size: 30),
