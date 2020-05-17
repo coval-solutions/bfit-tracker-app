@@ -95,7 +95,7 @@ Widget courseCard(Color backgroundColor, Course course) {
           right: 10,
           child: AutoSizeText.rich(
               TextSpan(
-                text: '0',
+                text: course.minutes.toString(),
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   color: Colors.white,
