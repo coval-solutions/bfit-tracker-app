@@ -18,14 +18,14 @@ class HomeArea extends StatelessWidget {
     return Scaffold(
         appBar: EmptyAppBar(),
         body: Padding(
-          padding: EdgeInsets.symmetric(
+          padding: const EdgeInsets.symmetric(
             horizontal: 12,
           ),
           child: Column(
             children: <Widget>[
               WelcomeCard(),
               Padding(
-                padding: EdgeInsets.symmetric(
+                padding: const EdgeInsets.symmetric(
                   vertical: 6,
                 ),
               ),
@@ -34,7 +34,7 @@ class HomeArea extends StatelessWidget {
                 child: ArticlesCard(),
               ),
               Padding(
-                padding: EdgeInsets.symmetric(
+                padding: const EdgeInsets.symmetric(
                   vertical: 6,
                 ),
               ),
@@ -96,7 +96,7 @@ class WelcomeCard extends StatelessWidget {
           );
         },
         child: Padding(
-          padding: EdgeInsets.symmetric(
+          padding: const EdgeInsets.symmetric(
             vertical: 6,
             horizontal: 8,
           ),
@@ -143,7 +143,7 @@ class ArticlesCard extends StatelessWidget {
                 Align(
                   alignment: Alignment.center,
                   child: Padding(
-                    padding: EdgeInsets.all(12),
+                    padding: const EdgeInsets.all(12),
                     child: SvgPicture.asset(
                       'assets/images/undraw_healthy_habit.svg',
                     ),
@@ -156,7 +156,7 @@ class ArticlesCard extends StatelessWidget {
                     minWidth: 68,
                     height: 24,
                     child: RaisedButton(
-                      padding: EdgeInsets.all(0),
+                      padding: const EdgeInsets.all(0),
                       disabledColor: mainTheme.accentColor,
                       onPressed: null,
                       child: AutoSizeText(
@@ -189,7 +189,7 @@ class ArticlesCard extends StatelessWidget {
                 ),
               ),
               child: Padding(
-                padding: EdgeInsets.symmetric(
+                padding: const EdgeInsets.symmetric(
                   vertical: 6,
                 ),
                 child: Column(
@@ -209,12 +209,12 @@ class ArticlesCard extends StatelessWidget {
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsets.symmetric(
+                      padding: const EdgeInsets.symmetric(
                         vertical: 3,
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsets.symmetric(
+                      padding: const EdgeInsets.symmetric(
                         horizontal: 12,
                       ),
                       child: AutoSizeText(
@@ -228,7 +228,7 @@ class ArticlesCard extends StatelessWidget {
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsets.only(
+                      padding: const EdgeInsets.only(
                         right: 16,
                       ),
                       child: Align(
@@ -281,7 +281,7 @@ class _NearByGymsCardState extends State<NearByGymsCard> {
       child: Column(
         children: <Widget>[
           Padding(
-            padding: EdgeInsets.symmetric(
+            padding: const EdgeInsets.symmetric(
               vertical: 12,
             ),
             child: Container(

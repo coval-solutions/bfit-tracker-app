@@ -1,14 +1,20 @@
+import 'dart:math';
+
 import 'package:bfit_tracker/blocs/bottom_nav_bar/home_screen_bottom_nav_bar_bloc.dart';
+import 'package:bfit_tracker/models/user_info.dart';
 import 'package:bfit_tracker/theme.dart';
-import 'package:bfit_tracker/ui/home/analytics_area.dart';
+import 'package:bfit_tracker/ui/home/analytics_area/analytics_area.dart';
+import 'package:bfit_tracker/ui/home/courses_area.dart';
 import 'package:bfit_tracker/ui/home/home_area.dart';
+import 'package:bfit_tracker/ui/home/profile_area/profile_area.dart';
 import 'package:bfit_tracker/ui/home/targets_area.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {
+  final UserInfo userInfo;
 
-  HomeScreen({Key key}) : super(key: key);
+  HomeScreen({Key key, this.userInfo}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -18,8 +24,6 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   HomeScreenBottomNavBarBloc _bottomNavBarBloc;
-
-  _HomeScreenState();
 
   @override
   void initState() {
@@ -40,7 +44,8 @@ class _HomeScreenState extends State<HomeScreen> {
       body: StreamBuilder<HomeScreenBottomNavBarItems>(
         stream: _bottomNavBarBloc.itemStream,
         initialData: _bottomNavBarBloc.defaultItem,
-        builder: (BuildContext context, AsyncSnapshot<HomeScreenBottomNavBarItems> snapshot) {
+        builder: (BuildContext context,
+            AsyncSnapshot<HomeScreenBottomNavBarItems> snapshot) {
           switch (snapshot.data) {
             case HomeScreenBottomNavBarItems.HOME:
               return _homeArea();
@@ -60,8 +65,11 @@ class _HomeScreenState extends State<HomeScreen> {
       bottomNavigationBar: StreamBuilder(
         stream: _bottomNavBarBloc.itemStream,
         initialData: _bottomNavBarBloc.defaultItem,
-          builder: (BuildContext context, AsyncSnapshot<HomeScreenBottomNavBarItems> snapshot) {
+        builder: (BuildContext context,
+            AsyncSnapshot<HomeScreenBottomNavBarItems> snapshot) {
+          print(MediaQuery.of(context).padding.bottom);
           return CurvedNavigationBar(
+            height: min(72, 52 + MediaQuery.of(context).padding.bottom),
             backgroundColor: mainTheme.accentColor,
             items: <Widget>[
               Icon(Icons.home, size: 30),
@@ -88,16 +96,14 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _coursesArea() {
-    return CircularProgressIndicator();
-    // return coursesArea(courses);
+    return coursesArea();
   }
 
   Widget _analyticsArea() {
-    return analyticsArea();
+    return AnalyticsArea();
   }
 
   Widget _profileArea() {
-    return CircularProgressIndicator();
-    // return ProfileArea();
+    return ProfileArea(widget.userInfo);
   }
 }

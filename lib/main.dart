@@ -1,8 +1,12 @@
 import 'package:bfit_tracker/app.dart';
 import 'package:bfit_tracker/blocs/authentication/authentication_bloc.dart';
+import 'package:bfit_tracker/blocs/courses/courses_bloc.dart';
+import 'package:bfit_tracker/blocs/fitness_data/fitness_data_bloc.dart';
 import 'package:bfit_tracker/blocs/gym/gym_bloc.dart';
 import 'package:bfit_tracker/blocs/location/location_bloc.dart';
 import 'package:bfit_tracker/blocs/user_info/user_info_bloc.dart';
+import 'package:bfit_tracker/repositories/course_repository.dart';
+import 'package:bfit_tracker/repositories/fitness_data_repository.dart';
 import 'package:bfit_tracker/repositories/gym_repository.dart';
 import 'package:bfit_tracker/repositories/location_repository.dart';
 import 'package:bfit_tracker/repositories/user_info_repository.dart';
@@ -20,6 +24,8 @@ Future<void> main() async {
   final UserInfoRepository userInfoRepository = UserInfoRepository();
   final LocationRepository locationRepository = LocationRepository();
   final GymRepository gymRepository = GymRepository();
+  final FitnessDataRepository fitnessDataRepository = FitnessDataRepository();
+  final CourseRepository courseRepository = CourseRepository();
 
   runApp(
     MultiBlocProvider(
@@ -44,6 +50,16 @@ Future<void> main() async {
             position: context.bloc<LocationBloc>().state.props.first,
             gymRepository: gymRepository,
           )..add(LoadGym()),
+        ),
+        BlocProvider<FitnessDataBloc>(
+          create: (BuildContext context) => FitnessDataBloc(
+            fitnessDataRepository: fitnessDataRepository,
+          )..add(LoadFitnessData()),
+        ),
+        BlocProvider<CoursesBloc>(
+          create: (BuildContext context) => CoursesBloc(
+            courseRepository: courseRepository,
+          )..add(LoadCoursesData()),
         ),
       ],
       child: BlocBuilder<AuthenticationBloc, AuthenticationState>(

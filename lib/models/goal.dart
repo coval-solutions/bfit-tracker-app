@@ -3,8 +3,9 @@ class Goal {
   final double weight;
   final int courses;
   final double gym;
+  final double steps;
 
-  Goal({this.bmi, this.weight, this.courses, this.gym});
+  Goal({this.bmi, this.weight, this.courses, this.gym, this.steps});
 
   factory Goal.fromJson(Map<dynamic, dynamic> data) {
     return Goal(
@@ -12,6 +13,7 @@ class Goal {
       weight: data['weight'] + .0,
       courses: data['courses'],
       gym: data['gym'] + .0,
+      steps: data['steps'] ?? 10000,
     );
   }
 
@@ -20,7 +22,8 @@ class Goal {
     'bmi': bmi,
     'weight': weight,
     'courses': courses,
-    'gym': gym
+    'gym': gym,
+    'steps': steps,
   };
 
   double getBmi() {
@@ -37,5 +40,9 @@ class Goal {
 
   double getGym() {
     return this.gym;
+  }
+
+  double getSteps() {
+    return this.steps;
   }
 }

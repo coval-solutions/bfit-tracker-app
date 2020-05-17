@@ -1,20 +1,16 @@
 import 'package:bfit_tracker/models/course.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class CourseRepository {
-  List<Course> courses;
+  final _courseCollection = Firestore.instance.collection('Courses');
 
-  CourseRepository({List<Course> courses}) {
-    this.courses = courses ?? generateCourses();
-  }
+  Future<List<Course>> retrieve() async {
+    List<Course> courses = List<Course>();
+    final QuerySnapshot result = await _courseCollection.getDocuments();
+    result.documents.forEach((document) {
+      courses.add(Course().fromSnapshot(document));
+    });
 
-  List<Course> generateCourses() {
-    List<Course> courses = [
-      Course(name: 'Toned', minutes: 120),
-      Course(name: 'Tummy', minutes: 60),
-      Course(name: 'Crazy', minutes: 30),
-      Course(name: 'Triple', minutes: 120),
-    ];
-    
     return courses;
   }
 }
