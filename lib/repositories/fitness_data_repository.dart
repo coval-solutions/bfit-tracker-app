@@ -90,7 +90,7 @@ class FitnessDataRepository {
 
             fitnessDataForTypeAndDate.addAll({
               dateTime: FitnessStat(
-                  value: double.parse(value.toStringAsFixed(1)),
+                  value: value.toStringAsFixed(1),
                   dateTime: dateTime,
                   type: type)
             });
@@ -102,6 +102,33 @@ class FitnessDataRepository {
           print(exception.toString());
         }
       }
+
+      // We need to combine both BLOOD_PRESSURE_SYSTOLIC and BLOOD_PRESSURE_DIASTOLIC
+      try {
+        // Get all the BLOOD_PRESSURE_DIASTOLIC FitnessStats objs
+        // we should have the same amount as BLOOD_PRESSURE_SYSTOLIC
+        List<FitnessStat> bloodPressureDiatolics = fitnessData.entries
+            .firstWhere((element) =>
+                element.key == HealthDataType.BLOOD_PRESSURE_DIASTOLIC)
+            .value
+            .values
+            .toList();
+
+        fitnessData.entries
+            .firstWhere((element) =>
+                element.key == HealthDataType.BLOOD_PRESSURE_SYSTOLIC)
+            .value
+            .values
+            .forEach((element) {
+          element.value = double.parse(element.value).toStringAsFixed(0) +
+              '/' +
+              double.parse(bloodPressureDiatolics.first.value)
+                  .toStringAsFixed(0);
+          bloodPressureDiatolics.remove(bloodPressureDiatolics.first);
+        });
+
+        fitnessData.remove(HealthDataType.BLOOD_PRESSURE_DIASTOLIC);
+      } catch (error) {}
 
       return fitnessData;
     }
@@ -138,9 +165,7 @@ class FitnessDataRepository {
 
         fitnessStatsForDates.addAll({
           dateTime.toString(): FitnessStat(
-              value: double.parse(value.toStringAsFixed(1)),
-              dateTime: dateTime,
-              type: type)
+              value: value.toStringAsFixed(1), dateTime: dateTime, type: type)
         });
       }
 

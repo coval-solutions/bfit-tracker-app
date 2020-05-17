@@ -5,7 +5,6 @@ import 'package:bfit_tracker/theme.dart';
 import 'package:bfit_tracker/ui/custom.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:health/health.dart';
 import 'package:jiffy/jiffy.dart';
 
 class WeeklyStepsGraph extends StatefulWidget {
@@ -30,7 +29,7 @@ class _WeeklyStepsGraphState extends State<WeeklyStepsGraph> {
     double maxSteps = 0;
     widget.data.forEach((key, value) {
       FitnessStat fitnessStat = value;
-      value = fitnessStat.value.roundToDouble();
+      value = double.parse(fitnessStat.value);
       if (value > maxSteps) {
         maxSteps = value;
       }

@@ -3,20 +3,20 @@ import 'package:bfit_tracker/ui/custom.dart';
 import 'package:health/health.dart';
 
 class FitnessStat {
-  final double value;
-  final DateTime dateTime;
-  final HealthDataType type;
+  String value;
+  DateTime dateTime;
+  HealthDataType type;
 
   FitnessStat({this.value, this.dateTime, this.type});
 
   String getHumanReadableValue() {
     switch (this.type) {
       case HealthDataType.HEART_RATE:
-        return this.value.toStringAsFixed(0);
+        return double.parse(this.value).toStringAsFixed(0);
       case HealthDataType.STEPS:
-        return CovalMath.compact(this.value);
+        return CovalMath.compact(double.parse(this.value));
       default:
-        return this.value.toStringAsFixed(1);
+        return this.value;
     }
   }
 
