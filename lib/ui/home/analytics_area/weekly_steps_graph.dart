@@ -60,7 +60,7 @@ class _WeeklyStepsGraphState extends State<WeeklyStepsGraph> {
                   textAlign: TextAlign.center,
                 ),
                 SizedBox(
-                  height: 12,
+                  height: 36,
                 ),
                 Expanded(
                   child: Padding(

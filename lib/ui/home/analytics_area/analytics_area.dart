@@ -70,6 +70,10 @@ class _AnalyticsAreaState extends State<AnalyticsArea> {
           }
         }, builder: (BuildContext context, FitnessDataState state) {
           if (!(state is FitnessDataLoaded) || this.fitnessData == null) {
+            if (this.fitnessData == null) {
+              this.getFitnessData(state.props.first);
+            }
+
             return Center(child: CircularProgressIndicator());
           }
 

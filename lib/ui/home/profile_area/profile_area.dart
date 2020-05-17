@@ -58,7 +58,8 @@ class _ProfileAreaState extends State<ProfileArea> {
 
                 var stepsData = snapshot.data.entries
                     .where((item) => item.key == HealthDataType.STEPS);
-                double todaysSteps = stepsData.first.value.values.last.value;
+                double todaysSteps =
+                    double.parse(stepsData.first.value.values.last.value);
                 double stepsPercent =
                     (todaysSteps / widget._userInfo.goals.getSteps()) * 100;
                 return Padding(

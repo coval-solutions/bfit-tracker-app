@@ -141,14 +141,8 @@ class FitnessDataRepository {
 
     Map<HealthDataType, Map> fitnessStats = Map<HealthDataType, Map>();
     for (HealthDataType type in HEALTH_DATA_TYPES) {
-      if (type == HealthDataType.BLOOD_PRESSURE_DIASTOLIC) {
-        // In order to avoid Blood Pressure appearing twice
-        // in the UI
-        continue;
-      }
-
-      Map<String, FitnessStat> fitnessStatsForDates =
-          Map<String, FitnessStat>();
+      Map<DateTime, FitnessStat> fitnessStatsForDates =
+          Map<DateTime, FitnessStat>();
       for (DateTime dateTime in dateTimes) {
         double value = 0.0;
         switch (type) {
@@ -164,13 +158,39 @@ class FitnessDataRepository {
         }
 
         fitnessStatsForDates.addAll({
-          dateTime.toString(): FitnessStat(
+          dateTime: FitnessStat(
               value: value.toStringAsFixed(1), dateTime: dateTime, type: type)
         });
       }
 
       fitnessStats.addAll({type: fitnessStatsForDates});
     }
+
+    // We need to combine both BLOOD_PRESSURE_SYSTOLIC and BLOOD_PRESSURE_DIASTOLIC
+    try {
+      // Get all the BLOOD_PRESSURE_DIASTOLIC FitnessStats objs
+      // we should have the same amount as BLOOD_PRESSURE_SYSTOLIC
+      List<FitnessStat> bloodPressureDiatolics = fitnessStats.entries
+          .firstWhere((element) =>
+              element.key == HealthDataType.BLOOD_PRESSURE_DIASTOLIC)
+          .value
+          .values
+          .toList();
+
+      fitnessStats.entries
+          .firstWhere((element) =>
+              element.key == HealthDataType.BLOOD_PRESSURE_SYSTOLIC)
+          .value
+          .values
+          .forEach((element) {
+        element.value = double.parse(element.value).toStringAsFixed(0) +
+            '/' +
+            double.parse(bloodPressureDiatolics.first.value).toStringAsFixed(0);
+        bloodPressureDiatolics.remove(bloodPressureDiatolics.first);
+      });
+
+      fitnessStats.remove(HealthDataType.BLOOD_PRESSURE_DIASTOLIC);
+    } catch (error) {}
 
     return fitnessStats;
   }
