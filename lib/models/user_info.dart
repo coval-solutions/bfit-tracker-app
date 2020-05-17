@@ -10,7 +10,6 @@ class UserInfo {
   UserInfo({this.height, this.isMale, this.gymTime, this.goals});
 
   UserInfo fromSnapshot(DocumentSnapshot snapshot) {
-    print(snapshot.data);
     return UserInfo(
         height: snapshot.data['height'] ?? 175,
         isMale: snapshot.data['isMale'] ?? false,
