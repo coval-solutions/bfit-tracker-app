@@ -115,7 +115,7 @@ Widget courseCard(Color backgroundColor, Course course) {
               maxLines: 1),
         ),
         SizedBox(
-          height: 100,
+          height: 128,
           child: FlareActor('assets/animations/tonded_courses.flr',
               alignment: Alignment.center, animation: 'active'),
         ),
