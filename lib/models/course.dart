@@ -14,4 +14,8 @@ class Course {
       animationFilename: snapshot.data['filename'] ?? null,
     );
   }
+
+  String getHumanReadableName() {
+    return this.name.replaceAll(' ', '\n');
+  }
 }
