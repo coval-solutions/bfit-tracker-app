@@ -1,10 +1,11 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:bfit_tracker/models/course.dart';
 import 'package:bfit_tracker/theme.dart';
+import 'package:bfit_tracker/ui/custom.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class CourseDetails extends StatelessWidget {
+class CourseDetails extends StatefulWidget {
   final Course course;
   final Function callback;
 
@@ -12,7 +13,25 @@ class CourseDetails extends StatelessWidget {
       : super(key: key);
 
   @override
+  _CourseDetailsState createState() => _CourseDetailsState();
+}
+
+class _CourseDetailsState extends State<CourseDetails>
+    with TickerProviderStateMixin {
+  AnimationController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      vsync: this,
+      duration: Duration(seconds: 1),
+    );
+  }
+
+  @override
   Widget build(BuildContext context) {
+    _controller.forward();
     return Scaffold(
       backgroundColor: mainTheme.backgroundColor,
       body: Column(
@@ -38,7 +57,7 @@ class CourseDetails extends StatelessWidget {
                           ),
                           image: DecorationImage(
                               image: NetworkImage(
-                                this.course.courseDetail.getImageUrl(),
+                                this.widget.course.courseDetail.getImageUrl(),
                               ),
                               fit: BoxFit.cover)),
                     ),
@@ -47,8 +66,8 @@ class CourseDetails extends StatelessWidget {
                       bottom: 18,
                       child: GestureDetector(
                         onTap: () {
-                          if (this.callback != null) {
-                            this.callback();
+                          if (this.widget.callback != null) {
+                            this.widget.callback();
                           }
                         },
                         child: Row(
@@ -61,7 +80,7 @@ class CourseDetails extends StatelessWidget {
                               ),
                               SizedBox(width: 6),
                               AutoSizeText(
-                                course.getHumanReadableName(),
+                                widget.course.getHumanReadableName(),
                                 minFontSize: 28,
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold,
@@ -77,6 +96,16 @@ class CourseDetails extends StatelessWidget {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
+                        AnimatedCount(
+                          animation: StepTween(begin: 0, end: 111)
+                              .animate(this._controller),
+                          textStyle: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: mainTheme.accentColor,
+                            fontSize: 28,
+                            letterSpacing: 8,
+                          ),
+                        ),
                         AutoSizeText.rich(
                             TextSpan(
                               text: '111',

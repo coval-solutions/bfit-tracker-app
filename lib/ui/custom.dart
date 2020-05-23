@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -27,6 +28,23 @@ class NoGlowingOverscrollIndicator extends ScrollBehavior {
   Widget buildViewportChrome(
       BuildContext context, Widget child, AxisDirection axisDirection) {
     return child;
+  }
+}
+
+class AnimatedCount extends AnimatedWidget {
+  final Animation<int> animation;
+  final TextStyle textStyle;
+
+  const AnimatedCount(
+      {@required this.animation, @required this.textStyle, Key key})
+      : super(key: key, listenable: animation);
+
+  @override
+  build(BuildContext context) {
+    return AutoSizeText(
+      animation.value.toString(),
+      style: textStyle,
+    );
   }
 }
 
