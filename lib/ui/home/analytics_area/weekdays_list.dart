@@ -2,7 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:bfit_tracker/blocs/fitness_data/fitness_data_bloc.dart';
 import 'package:bfit_tracker/enums/weekdays.dart';
 import 'package:bfit_tracker/theme.dart';
-import 'package:bfit_tracker/ui/custom.dart';
+import 'package:bfit_tracker/ui/coval-solutions/no_glow_listview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

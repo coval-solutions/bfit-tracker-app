@@ -1,6 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:bfit_tracker/theme.dart';
-import 'package:bfit_tracker/ui/custom.dart';
+import 'package:bfit_tracker/ui/coval-solutions/empty_app_bar.dart';
 import 'package:bfit_tracker/ui/onboarding/about_you_screen.dart';
 import 'package:bfit_tracker/ui/onboarding/next.dart';
 import 'package:bfit_tracker/ui/onboarding/skip.dart';
@@ -204,8 +204,8 @@ class OnboardingScreenState extends State<OnboardingScreen> {
     return Positioned(
       bottom: 42,
       left: 18,
-      child:
-          Container(padding: const EdgeInsets.all(10), child: SkipOnboardingButton()),
+      child: Container(
+          padding: const EdgeInsets.all(10), child: SkipOnboardingButton()),
     );
   }
 }
