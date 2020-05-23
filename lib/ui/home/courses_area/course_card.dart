@@ -56,8 +56,7 @@ class _CourseCardState extends State<CourseCard>
         onTap: () {
           if (widget.course.courseDetail != null) {
             Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) =>
-                    CourseDetails(courseDetail: widget.course.courseDetail)));
+                builder: (context) => CourseDetails(course: widget.course)));
           }
         },
         child: Card(
