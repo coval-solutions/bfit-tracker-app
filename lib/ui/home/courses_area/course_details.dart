@@ -97,10 +97,8 @@ class _CourseDetailsState extends State<CourseDetails>
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
                         AnimatedCount(
-                          animation: StepTween(
-                                  begin: 1,
-                                  end: widget.course.courseDetail.mins)
-                              .animate(this._controller),
+                          count: widget.course.courseDetail.mins,
+                          animationController: this._controller,
                           textStyle: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: mainTheme.accentColor,
@@ -110,10 +108,8 @@ class _CourseDetailsState extends State<CourseDetails>
                           units: 'mins',
                         ),
                         AnimatedCount(
-                          animation: StepTween(
-                                  begin: 1,
-                                  end: widget.course.courseDetail.weeks)
-                              .animate(this._controller),
+                          count: widget.course.courseDetail.weeks,
+                          animationController: this._controller,
                           textStyle: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: mainTheme.accentColor,
@@ -123,10 +119,8 @@ class _CourseDetailsState extends State<CourseDetails>
                           units: 'weeks',
                         ),
                         AnimatedCount(
-                          animation: StepTween(
-                                  begin: 1,
-                                  end: widget.course.courseDetail.workouts)
-                              .animate(this._controller),
+                          count: widget.course.courseDetail.workouts,
+                          animationController: this._controller,
                           textStyle: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: mainTheme.accentColor,
