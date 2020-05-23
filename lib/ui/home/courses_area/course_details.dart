@@ -48,8 +48,11 @@ class CourseDetails extends StatelessWidget {
                         child: Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
-                              SvgPicture.asset(
-                                  'assets/images/left-pointing-arrow.svg'),
+                              Padding(
+                                padding: const EdgeInsets.only(top: 6.0),
+                                child: SvgPicture.asset(
+                                    'assets/images/left-pointing-arrow.svg'),
+                              ),
                               SizedBox(width: 6),
                               AutoSizeText(
                                 course.getHumanReadableName(),
