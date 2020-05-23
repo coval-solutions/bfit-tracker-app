@@ -6,8 +6,10 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 class CourseDetails extends StatelessWidget {
   final Course course;
+  final Function callback;
 
-  const CourseDetails({@required this.course, Key key}) : super(key: key);
+  const CourseDetails({@required this.course, this.callback, Key key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +46,11 @@ class CourseDetails extends StatelessWidget {
                       left: 4,
                       bottom: 18,
                       child: GestureDetector(
-                        onTap: () => Navigator.of(context).pop(),
+                        onTap: () {
+                          if (this.callback != null) {
+                            this.callback();
+                          }
+                        },
                         child: Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
