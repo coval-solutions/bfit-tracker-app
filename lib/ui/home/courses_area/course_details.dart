@@ -25,7 +25,7 @@ class _CourseDetailsState extends State<CourseDetails>
     super.initState();
     _controller = AnimationController(
       vsync: this,
-      duration: Duration(seconds: 1),
+      duration: Duration(seconds: 3),
     );
   }
 
@@ -97,7 +97,9 @@ class _CourseDetailsState extends State<CourseDetails>
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
                         AnimatedCount(
-                          animation: StepTween(begin: 0, end: 111)
+                          animation: StepTween(
+                                  begin: 1,
+                                  end: widget.course.courseDetail.mins)
                               .animate(this._controller),
                           textStyle: TextStyle(
                             fontWeight: FontWeight.bold,
@@ -105,73 +107,34 @@ class _CourseDetailsState extends State<CourseDetails>
                             fontSize: 28,
                             letterSpacing: 8,
                           ),
+                          units: 'mins',
                         ),
-                        AutoSizeText.rich(
-                            TextSpan(
-                              text: '111',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: mainTheme.accentColor,
-                                fontSize: 28,
-                                letterSpacing: 8,
-                              ),
-                              children: <TextSpan>[
-                                TextSpan(
-                                  text: 'mins',
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.normal,
-                                    color: CustomColor.DIM_GRAY,
-                                    fontSize: 16,
-                                    letterSpacing: 1,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            maxLines: 1),
-                        AutoSizeText.rich(
-                            TextSpan(
-                              text: '11',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: mainTheme.accentColor,
-                                fontSize: 28,
-                                letterSpacing: 8,
-                              ),
-                              children: <TextSpan>[
-                                TextSpan(
-                                  text: 'weeks',
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.normal,
-                                    color: CustomColor.DIM_GRAY,
-                                    fontSize: 16,
-                                    letterSpacing: 1,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            maxLines: 1),
-                        AutoSizeText.rich(
-                            TextSpan(
-                              text: '11',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: mainTheme.accentColor,
-                                fontSize: 28,
-                                letterSpacing: 8,
-                              ),
-                              children: <TextSpan>[
-                                TextSpan(
-                                  text: 'workouts',
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.normal,
-                                    color: CustomColor.DIM_GRAY,
-                                    fontSize: 16,
-                                    letterSpacing: 1,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            maxLines: 1),
+                        AnimatedCount(
+                          animation: StepTween(
+                                  begin: 1,
+                                  end: widget.course.courseDetail.weeks)
+                              .animate(this._controller),
+                          textStyle: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: mainTheme.accentColor,
+                            fontSize: 28,
+                            letterSpacing: 8,
+                          ),
+                          units: 'weeks',
+                        ),
+                        AnimatedCount(
+                          animation: StepTween(
+                                  begin: 1,
+                                  end: widget.course.courseDetail.workouts)
+                              .animate(this._controller),
+                          textStyle: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: mainTheme.accentColor,
+                            fontSize: 28,
+                            letterSpacing: 8,
+                          ),
+                          units: 'workouts',
+                        ),
                       ],
                     )),
               ],
