@@ -49,8 +49,8 @@ class _AboutYouScreenState extends State<AboutYouScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
               RaisedButton(
-                disabledColor: CustomColor.MAYA_BLUE,
-                color: isMaleSelected ? CustomColor.MAYA_BLUE : Colors.white,
+                disabledColor: mainTheme.accentColor,
+                color: isMaleSelected ? mainTheme.accentColor : Colors.white,
                 onPressed: isMaleSelected
                     ? () {}
                     : () {
@@ -84,8 +84,7 @@ class _AboutYouScreenState extends State<AboutYouScreen> {
                 ),
               ),
               RaisedButton(
-                disabledColor: CustomColor.MAYA_BLUE,
-                color: isMaleSelected ? Colors.white : CustomColor.MAYA_BLUE,
+                color: isMaleSelected ? Colors.white : mainTheme.disabledColor,
                 onPressed: isMaleSelected
                     ? () {
                         setState(() {
@@ -132,7 +131,7 @@ class _AboutYouScreenState extends State<AboutYouScreen> {
                   height: this.height,
                   numberLineColor: CustomColor.DIM_GRAY,
                   currentHeightTextColor: CustomColor.DIM_GRAY,
-                  sliderCircleColor: CustomColor.MAYA_BLUE,
+                  sliderCircleColor: mainTheme.accentColor,
                   onChange: (val) => setState(() => this.height = val),
                   personImagePath: isMaleSelected
                       ? 'assets/images/onboarding/man.svg'
@@ -161,16 +160,15 @@ class _AboutYouScreenState extends State<AboutYouScreen> {
             child: RaisedButton(
               onPressed: () {
                 final UserInfo userInfo = UserInfo(
-                  height: this.height,
-                  isMale: this.isMaleSelected,
-                  goals: Goal(
-                    bmi: 24,
-                    weight: 72,
-                    courses: 45,
-                    gym: 100,
-                    steps: 10000,
-                  )
-                );
+                    height: this.height,
+                    isMale: this.isMaleSelected,
+                    goals: Goal(
+                      bmi: 24,
+                      weight: 72,
+                      courses: 45,
+                      gym: 100,
+                      steps: 10000,
+                    ));
 
                 userInfoBloc.add(CreateUserInfo(userInfo));
 

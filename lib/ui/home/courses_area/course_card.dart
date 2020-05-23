@@ -1,6 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:bfit_tracker/models/course.dart';
-import 'package:bfit_tracker/ui/home/courses_area/course_detail.dart';
+import 'package:bfit_tracker/ui/home/courses_area/course_details.dart';
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 
@@ -54,8 +54,11 @@ class _CourseCardState extends State<CourseCard>
       position: _offsetAnimation,
       child: GestureDetector(
         onTap: () {
-          Navigator.of(context)
-              .push(MaterialPageRoute(builder: (context) => CourseDetail()));
+          if (widget.course.courseDetail != null) {
+            Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) =>
+                    CourseDetails(courseDetail: widget.course.courseDetail)));
+          }
         },
         child: Card(
           color: widget.color,

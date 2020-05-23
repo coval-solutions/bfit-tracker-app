@@ -60,7 +60,7 @@ Widget totalGymTimeStat(gymTime) {
 Widget otherStats(value, text, {unit}) {
   double value100 = (value / 100);
   bool overMax = value100 > 1;
-  
+
   return Card(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12.0),
@@ -112,8 +112,10 @@ Widget otherStats(value, text, {unit}) {
               ),
             ],
           ),
-          backgroundColor: overMax ? CustomColor.MAYA_BLUE : CustomColor.LAVENDER,
-          progressColor: overMax ? CustomColor.SELECTIVE_YELLOW : CustomColor.MAYA_BLUE,
+          backgroundColor:
+              overMax ? mainTheme.accentColor : CustomColor.LAVENDER,
+          progressColor:
+              overMax ? mainTheme.primaryColor : mainTheme.accentColor,
         ),
       ));
 }

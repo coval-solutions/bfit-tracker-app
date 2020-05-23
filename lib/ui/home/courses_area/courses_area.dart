@@ -15,10 +15,7 @@ class CoursesArea extends StatefulWidget {
 }
 
 class _CoursesAreaState extends State<CoursesArea> {
-  final List<Color> colors = [
-    CustomColor.SELECTIVE_YELLOW,
-    CustomColor.MAYA_BLUE
-  ];
+  final List<Color> colors = [mainTheme.primaryColor, mainTheme.accentColor];
 
   @override
   Widget build(BuildContext context) {
@@ -36,6 +33,11 @@ class _CoursesAreaState extends State<CoursesArea> {
             if ((snapshot.connectionState == ConnectionState.none ||
                     snapshot.connectionState == ConnectionState.waiting) ||
                 snapshot.data == null) {
+              if (snapshot.hasError) {
+                // TODO: Add Crashlytics
+                print(snapshot.error);
+              }
+
               return Center(child: CircularProgressIndicator());
             }
 

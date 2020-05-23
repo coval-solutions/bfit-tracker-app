@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 
-final ThemeData mainTheme = new ThemeData(
+final ThemeData mainTheme = ThemeData(
   primaryColor: CustomColor.SELECTIVE_YELLOW,
   accentColor: CustomColor.MAYA_BLUE,
   backgroundColor: CustomColor.ALICE_BLUE,
+  disabledColor: CustomColor.MAYA_BLUE,
   fontFamily: 'SF UI Text',
   visualDensity: VisualDensity.adaptivePlatformDensity,
 );
