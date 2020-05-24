@@ -69,7 +69,16 @@ class _AnimatedCounterState extends State<AnimatedCounter>
 
   Animation<int> createAnimation(
       int number, AnimationController animationController) {
-    return StepTween(begin: 0, end: number).animate(animationController);
+    return IntTween(begin: 0, end: number).animate(
+      CurvedAnimation(
+        parent: animationController,
+        curve: Interval(
+          0,
+          0.2,
+          curve: Curves.ease,
+        ),
+      ),
+    );
   }
 
   AnimationController createAnimationController(int number) {
