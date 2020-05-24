@@ -5,6 +5,7 @@ final ThemeData mainTheme = ThemeData(
   accentColor: CustomColor.MAYA_BLUE,
   backgroundColor: CustomColor.ALICE_BLUE,
   disabledColor: CustomColor.MAYA_BLUE,
+  buttonColor: CustomColor.SELECTIVE_YELLOW,
   fontFamily: 'SF UI Text',
   visualDensity: VisualDensity.adaptivePlatformDensity,
 );

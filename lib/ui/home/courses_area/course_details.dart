@@ -19,37 +19,13 @@ class CourseDetails extends StatefulWidget {
 
 class _CourseDetailsState extends State<CourseDetails>
     with TickerProviderStateMixin {
-  // List<AnimationController> _controllers;
-  // List<AnimatedCount> _animatedCounts;
+  AnimationController animationController;
 
   @override
   void initState() {
     super.initState();
-    // widget.course.courseDetail.mins.toString().split('').forEach((ch) {
-    //   AnimationController controller = AnimationController(
-    //     vsync: this,
-    //     duration: Duration(seconds: int.parse(ch)),
-    //   );
-
-    //   _animatedCounts.add(
-    //     TextSpan(
-    //       text: '',
-    //       children: <TextSpan>[
-    //         TextSpan(
-    //           text: ch,
-    //           style: TextStyle(
-    //             fontWeight: FontWeight.normal,
-    //             color: CustomColor.DIM_GRAY,
-    //             fontSize: 16,
-    //             letterSpacing: 1,
-    //           ),
-    //         ),
-    //       ],
-    //     ),
-    //   );
-
-    //   _controllers.add(controller);
-    // });
+    animationController =
+        AnimationController(vsync: this, duration: Duration(milliseconds: 500));
   }
 
   TextStyle counterTextStyle = TextStyle(
@@ -67,7 +43,8 @@ class _CourseDetailsState extends State<CourseDetails>
 
   @override
   Widget build(BuildContext context) {
-    //_controller.forward();
+    animationController.forward();
+
     return Scaffold(
       backgroundColor: mainTheme.backgroundColor,
       body: Column(
@@ -147,54 +124,32 @@ class _CourseDetailsState extends State<CourseDetails>
                             textStyle: counterTextStyle,
                             unitText: 'workouts',
                             unitTextStyle: counterUnitTextStyle),
-                        // AutoSizeText.rich(
-                        //   TextSpan(
-                        //     text: '',
-                        //     children: <TextSpan>[
-                        //       TextSpan(
-                        //         text:
-                        //             widget.course.courseDetail.mins.toString(),
-                        //       )
-                        //     ],
-                        //   ),
-                        // ),
-                        //AnimatedCounter(),
-                        // AnimatedCount(
-                        //   count: widget.course.courseDetail.mins,
-                        //   animationController: this._controller,
-                        //   textStyle: TextStyle(
-                        //     fontWeight: FontWeight.bold,
-                        //     color: mainTheme.accentColor,
-                        //     fontSize: 28,
-                        //     letterSpacing: 8,
-                        //   ),
-                        //   units: 'mins',
-                        // ),
-                        // AnimatedCount(
-                        //   count: widget.course.courseDetail.weeks,
-                        //   animationController: this._controller,
-                        //   textStyle: TextStyle(
-                        //     fontWeight: FontWeight.bold,
-                        //     color: mainTheme.accentColor,
-                        //     fontSize: 28,
-                        //     letterSpacing: 8,
-                        //   ),
-                        //   units: 'weeks',
-                        // ),
-                        // AnimatedCount(
-                        //   count: widget.course.courseDetail.workouts,
-                        //   animationController: this._controller,
-                        //   textStyle: TextStyle(
-                        //     fontWeight: FontWeight.bold,
-                        //     color: mainTheme.accentColor,
-                        //     fontSize: 28,
-                        //     letterSpacing: 8,
-                        //   ),
-                        //   units: 'workouts',
-                        // ),
                       ],
                     )),
               ],
+            ),
+          ),
+          Spacer(),
+          SlideTransition(
+            position:
+                Tween<Offset>(begin: const Offset(-1, 0), end: Offset.zero)
+                    .animate(animationController),
+            child: Padding(
+              padding: EdgeInsets.only(bottom: 24),
+              child: RaisedButton(
+                elevation: 2,
+                onPressed: () {},
+                child: AutoSizeText(
+                  'Start Now',
+                  maxLines: 1,
+                  style: TextStyle(
+                      color: Colors.white, fontWeight: FontWeight.w600),
+                  minFontSize: 20,
+                ),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(6.0),
+                ),
+              ),
             ),
           ),
         ],
