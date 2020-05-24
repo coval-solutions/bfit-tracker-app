@@ -2,7 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:bfit_tracker/blocs/courses/courses_bloc.dart';
 import 'package:bfit_tracker/models/course.dart';
 import 'package:bfit_tracker/theme.dart';
-import 'package:bfit_tracker/ui/coval-solutions/empty_app_bar.dart';
+import 'package:bfit_tracker/ui/coval_solutions/empty_app_bar.dart';
 import 'package:bfit_tracker/ui/home/courses_area/course_card.dart';
 import 'package:bfit_tracker/ui/home/courses_area/course_details.dart';
 import 'package:flutter/material.dart';

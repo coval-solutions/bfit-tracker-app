@@ -1,6 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:bfit_tracker/theme.dart';
-import 'package:bfit_tracker/ui/coval-solutions/empty_app_bar.dart';
+import 'package:bfit_tracker/ui/coval_solutions/empty_app_bar.dart';
 import 'package:bfit_tracker/ui/onboarding/about_you_screen.dart';
 import 'package:bfit_tracker/ui/onboarding/next.dart';
 import 'package:bfit_tracker/ui/onboarding/skip.dart';

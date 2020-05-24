@@ -6,7 +6,7 @@ import 'package:bfit_tracker/controllers/gym_controller.dart';
 import 'package:bfit_tracker/models/gym.dart';
 import 'package:bfit_tracker/models/user.dart';
 import 'package:bfit_tracker/theme.dart';
-import 'package:bfit_tracker/ui/coval-solutions/empty_app_bar.dart';
+import 'package:bfit_tracker/ui/coval_solutions/empty_app_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

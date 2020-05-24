@@ -1,6 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:bfit_tracker/models/course.dart';
 import 'package:bfit_tracker/theme.dart';
+import 'package:bfit_tracker/ui/coval_solutions/animated_counter.dart';
 import 'package:bfit_tracker/ui/custom.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -18,20 +19,55 @@ class CourseDetails extends StatefulWidget {
 
 class _CourseDetailsState extends State<CourseDetails>
     with TickerProviderStateMixin {
-  AnimationController _controller;
+  // List<AnimationController> _controllers;
+  // List<AnimatedCount> _animatedCounts;
 
   @override
   void initState() {
     super.initState();
-    _controller = AnimationController(
-      vsync: this,
-      duration: Duration(seconds: 3),
-    );
+    // widget.course.courseDetail.mins.toString().split('').forEach((ch) {
+    //   AnimationController controller = AnimationController(
+    //     vsync: this,
+    //     duration: Duration(seconds: int.parse(ch)),
+    //   );
+
+    //   _animatedCounts.add(
+    //     TextSpan(
+    //       text: '',
+    //       children: <TextSpan>[
+    //         TextSpan(
+    //           text: ch,
+    //           style: TextStyle(
+    //             fontWeight: FontWeight.normal,
+    //             color: CustomColor.DIM_GRAY,
+    //             fontSize: 16,
+    //             letterSpacing: 1,
+    //           ),
+    //         ),
+    //       ],
+    //     ),
+    //   );
+
+    //   _controllers.add(controller);
+    // });
   }
+
+  TextStyle counterTextStyle = TextStyle(
+    fontWeight: FontWeight.bold,
+    color: mainTheme.accentColor,
+    fontSize: 28,
+    letterSpacing: 4,
+  );
+
+  TextStyle counterUnitTextStyle = TextStyle(
+    fontWeight: FontWeight.normal,
+    color: CustomColor.DIM_GRAY,
+    fontSize: 16,
+  );
 
   @override
   Widget build(BuildContext context) {
-    _controller.forward();
+    //_controller.forward();
     return Scaffold(
       backgroundColor: mainTheme.backgroundColor,
       body: Column(
@@ -96,39 +132,66 @@ class _CourseDetailsState extends State<CourseDetails>
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
-                        AnimatedCount(
-                          count: widget.course.courseDetail.mins,
-                          animationController: this._controller,
-                          textStyle: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: mainTheme.accentColor,
-                            fontSize: 28,
-                            letterSpacing: 8,
-                          ),
-                          units: 'mins',
-                        ),
-                        AnimatedCount(
-                          count: widget.course.courseDetail.weeks,
-                          animationController: this._controller,
-                          textStyle: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: mainTheme.accentColor,
-                            fontSize: 28,
-                            letterSpacing: 8,
-                          ),
-                          units: 'weeks',
-                        ),
-                        AnimatedCount(
-                          count: widget.course.courseDetail.workouts,
-                          animationController: this._controller,
-                          textStyle: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: mainTheme.accentColor,
-                            fontSize: 28,
-                            letterSpacing: 8,
-                          ),
-                          units: 'workouts',
-                        ),
+                        AnimatedCounter(
+                            count: widget.course.courseDetail.mins,
+                            textStyle: counterTextStyle,
+                            unitText: 'mins',
+                            unitTextStyle: counterUnitTextStyle),
+                        AnimatedCounter(
+                            count: widget.course.courseDetail.weeks,
+                            textStyle: counterTextStyle,
+                            unitText: 'weeks',
+                            unitTextStyle: counterUnitTextStyle),
+                        AnimatedCounter(
+                            count: widget.course.courseDetail.workouts,
+                            textStyle: counterTextStyle,
+                            unitText: 'workouts',
+                            unitTextStyle: counterUnitTextStyle),
+                        // AutoSizeText.rich(
+                        //   TextSpan(
+                        //     text: '',
+                        //     children: <TextSpan>[
+                        //       TextSpan(
+                        //         text:
+                        //             widget.course.courseDetail.mins.toString(),
+                        //       )
+                        //     ],
+                        //   ),
+                        // ),
+                        //AnimatedCounter(),
+                        // AnimatedCount(
+                        //   count: widget.course.courseDetail.mins,
+                        //   animationController: this._controller,
+                        //   textStyle: TextStyle(
+                        //     fontWeight: FontWeight.bold,
+                        //     color: mainTheme.accentColor,
+                        //     fontSize: 28,
+                        //     letterSpacing: 8,
+                        //   ),
+                        //   units: 'mins',
+                        // ),
+                        // AnimatedCount(
+                        //   count: widget.course.courseDetail.weeks,
+                        //   animationController: this._controller,
+                        //   textStyle: TextStyle(
+                        //     fontWeight: FontWeight.bold,
+                        //     color: mainTheme.accentColor,
+                        //     fontSize: 28,
+                        //     letterSpacing: 8,
+                        //   ),
+                        //   units: 'weeks',
+                        // ),
+                        // AnimatedCount(
+                        //   count: widget.course.courseDetail.workouts,
+                        //   animationController: this._controller,
+                        //   textStyle: TextStyle(
+                        //     fontWeight: FontWeight.bold,
+                        //     color: mainTheme.accentColor,
+                        //     fontSize: 28,
+                        //     letterSpacing: 8,
+                        //   ),
+                        //   units: 'workouts',
+                        // ),
                       ],
                     )),
               ],
