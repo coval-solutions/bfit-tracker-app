@@ -6,13 +6,21 @@ class AnimatedCounter extends StatefulWidget {
   final TextStyle textStyle;
   final String unitText;
   final TextStyle unitTextStyle;
+  final double textMaxFontSize;
+  final double minTextFontSize;
+  final double unitMaxFontSize;
+  final double unitMinFontSize;
 
   AnimatedCounter(
       {Key key,
       @required this.count,
       this.textStyle,
+      this.minTextFontSize = 20.0,
+      this.textMaxFontSize = 28.0,
       this.unitText,
-      this.unitTextStyle})
+      this.unitTextStyle,
+      this.unitMinFontSize = 12.0,
+      this.unitMaxFontSize = 16.0})
       : super(key: key);
 
   @override
@@ -60,11 +68,20 @@ class _AnimatedCounterState extends State<AnimatedCounter>
           animation: animations.last,
           textStyle: widget.textStyle,
           unitText: widget.unitText,
-          unitTextStyle: widget.unitTextStyle);
+          unitTextStyle: widget.unitTextStyle,
+          maxTextFontSize: widget.textMaxFontSize,
+          unitMaxFontSize: widget.unitMaxFontSize,
+          minTextFontSize: widget.minTextFontSize,
+          unitMinFontSize: widget.unitMinFontSize);
     }
 
     return _AnimatedCount(
-        animation: animations.last, textStyle: widget.textStyle);
+        animation: animations.last,
+        textStyle: widget.textStyle,
+        maxTextFontSize: widget.textMaxFontSize,
+        unitMaxFontSize: widget.unitMaxFontSize,
+        minTextFontSize: widget.minTextFontSize,
+        unitMinFontSize: widget.unitMinFontSize);
   }
 
   Animation<int> createAnimation(
@@ -107,12 +124,20 @@ class _AnimatedCounterState extends State<AnimatedCounter>
 class _AnimatedCount extends AnimatedWidget {
   final Animation<int> animation;
   final TextStyle textStyle;
+  final double minTextFontSize;
+  final double maxTextFontSize;
   final String unitText;
   final TextStyle unitTextStyle;
+  final double unitMinFontSize;
+  final double unitMaxFontSize;
 
   const _AnimatedCount(
       {@required this.animation,
       @required this.textStyle,
+      @required this.maxTextFontSize,
+      @required this.unitMaxFontSize,
+      @required this.minTextFontSize,
+      @required this.unitMinFontSize,
       this.unitText,
       this.unitTextStyle,
       Key key})
@@ -121,32 +146,32 @@ class _AnimatedCount extends AnimatedWidget {
   @override
   Widget build(BuildContext context) {
     if (unitText != null && unitText.isNotEmpty) {
-      return AutoSizeText.rich(
-        TextSpan(
-          text: '',
-          style: textStyle,
-          children: <TextSpan>[
-            TextSpan(
-              text: animation.value.toString(),
-            ),
+      return Row(
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: <Widget>[
+          AutoSizeText.rich(
+            TextSpan(text: animation.value.toString(), style: this.textStyle),
+            minFontSize: this.minTextFontSize,
+            maxFontSize: this.maxTextFontSize,
+          ),
+          AutoSizeText.rich(
             TextSpan(
                 text: this.unitText,
                 style: this.unitTextStyle ?? this.textStyle),
-          ],
-        ),
+            minFontSize: this.unitMinFontSize,
+            maxFontSize: this.unitMaxFontSize,
+          ),
+        ],
       );
     }
 
     return AutoSizeText.rich(
       TextSpan(
-        text: '',
+        text: animation.value.toString(),
         style: textStyle,
-        children: <TextSpan>[
-          TextSpan(
-            text: animation.value.toString(),
-          ),
-        ],
       ),
+      minFontSize: this.minTextFontSize,
+      maxFontSize: this.maxTextFontSize,
     );
   }
 }

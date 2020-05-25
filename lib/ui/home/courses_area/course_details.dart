@@ -31,14 +31,12 @@ class _CourseDetailsState extends State<CourseDetails>
   TextStyle counterTextStyle = TextStyle(
     fontWeight: FontWeight.bold,
     color: mainTheme.accentColor,
-    fontSize: 28,
     letterSpacing: 4,
   );
 
   TextStyle counterUnitTextStyle = TextStyle(
     fontWeight: FontWeight.normal,
     color: CustomColor.DIM_GRAY,
-    fontSize: 16,
   );
 
   @override
@@ -136,18 +134,21 @@ class _CourseDetailsState extends State<CourseDetails>
                     .animate(animationController),
             child: Padding(
               padding: EdgeInsets.only(bottom: 24),
-              child: RaisedButton(
-                elevation: 2,
-                onPressed: () {},
-                child: AutoSizeText(
-                  'Start Now',
-                  maxLines: 1,
-                  style: TextStyle(
-                      color: Colors.white, fontWeight: FontWeight.w600),
-                  minFontSize: 20,
-                ),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(6.0),
+              child: Container(
+                width: MediaQuery.of(context).size.width * 0.66,
+                child: RaisedButton(
+                  elevation: 2,
+                  onPressed: () {},
+                  child: AutoSizeText(
+                    'Start Now',
+                    maxLines: 1,
+                    style: TextStyle(
+                        color: Colors.white, fontWeight: FontWeight.w600),
+                    minFontSize: 20,
+                  ),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(6.0),
+                  ),
                 ),
               ),
             ),

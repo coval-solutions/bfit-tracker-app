@@ -70,8 +70,9 @@ class _CoursesAreaState extends State<CoursesArea> {
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           color: CustomColor.DIM_GRAY,
-                          fontSize: 32,
                         ),
+                        minFontSize: 26,
+                        maxFontSize: 26,
                       ),
                     ),
                     ListView.builder(
