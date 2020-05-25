@@ -3,6 +3,7 @@ import 'package:bfit_tracker/blocs/fitness_data/fitness_data_bloc.dart';
 import 'package:bfit_tracker/enums/weekdays.dart';
 import 'package:bfit_tracker/theme.dart';
 import 'package:bfit_tracker/ui/coval_solutions/no_glow_listview.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -128,7 +129,6 @@ Widget weekdayCardSelected(int index, List<DateTime> days) {
       vertical: 4,
     ),
     child: Container(
-      width: 60,
       decoration: BoxDecoration(
         boxShadow: [
           BoxShadow(
@@ -138,12 +138,11 @@ Widget weekdayCardSelected(int index, List<DateTime> days) {
           )
         ],
       ),
-      child: FlatButton(
-        color: CustomColor.SELECTIVE_YELLOW,
+      child: CupertinoButton(
+        padding: EdgeInsets.symmetric(vertical: 6),
+        color: mainTheme.buttonColor,
+        minSize: 60,
         onPressed: () {},
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12.0),
-        ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[

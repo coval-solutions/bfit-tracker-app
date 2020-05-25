@@ -2,7 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:bfit_tracker/models/course.dart';
 import 'package:bfit_tracker/theme.dart';
 import 'package:bfit_tracker/ui/coval_solutions/animated_counter.dart';
-import 'package:bfit_tracker/ui/custom.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -134,21 +134,15 @@ class _CourseDetailsState extends State<CourseDetails>
                     .animate(animationController),
             child: Padding(
               padding: EdgeInsets.only(bottom: 24),
-              child: Container(
-                width: MediaQuery.of(context).size.width * 0.66,
-                child: RaisedButton(
-                  elevation: 2,
-                  onPressed: () {},
-                  child: AutoSizeText(
-                    'Start Now',
-                    maxLines: 1,
-                    style: TextStyle(
-                        color: Colors.white, fontWeight: FontWeight.w600),
-                    minFontSize: 20,
-                  ),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(6.0),
-                  ),
+              child: CupertinoButton(
+                color: mainTheme.buttonColor,
+                onPressed: () {},
+                child: AutoSizeText(
+                  'Start Now',
+                  maxLines: 1,
+                  style: TextStyle(
+                      color: Colors.white, fontWeight: FontWeight.w600),
+                  minFontSize: 20,
                 ),
               ),
             ),

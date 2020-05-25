@@ -91,8 +91,8 @@ class _AnimatedCounterState extends State<AnimatedCounter>
         parent: animationController,
         curve: Interval(
           0,
-          0.2,
-          curve: Curves.ease,
+          0.6,
+          curve: Curves.fastOutSlowIn,
         ),
       ),
     );

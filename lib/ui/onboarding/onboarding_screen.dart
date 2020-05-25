@@ -8,6 +8,7 @@ import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:transformer_page_view/transformer_page_view.dart';
 
 class OnboardingScreen extends StatefulWidget {
@@ -99,23 +100,18 @@ class OnboardingScreenState extends State<OnboardingScreen> {
                               position: info.position,
                               translationFactor: 200.0,
                             ),
-                            Padding(
-                              padding: const EdgeInsets.only(
-                                top: 24,
-                              ),
-                              child: Align(
-                                alignment: Alignment.bottomCenter,
-                                child: ParallaxContainer(
-                                  child: SvgPicture.asset(
-                                    this.images[info.index],
-                                    fit: BoxFit.scaleDown,
-                                    height: MediaQuery.of(context).size.width,
-                                  ),
-                                  position: info.position,
-                                  translationFactor: 800.0,
+                            Align(
+                              alignment: Alignment.bottomCenter,
+                              child: ParallaxContainer(
+                                child: SvgPicture.asset(
+                                  this.images[info.index],
+                                  fit: BoxFit.scaleDown,
+                                  height: MediaQuery.of(context).size.width,
                                 ),
+                                position: info.position,
+                                translationFactor: 800.0,
                               ),
-                            )
+                            ),
                           ],
                         ),
                         ParallaxContainer(
@@ -136,7 +132,7 @@ class OnboardingScreenState extends State<OnboardingScreen> {
                           translationFactor: 400.0,
                         ),
                         SizedBox(
-                          height: 42,
+                          height: 16,
                         ),
                         ParallaxContainer(
                           child: Padding(
@@ -157,21 +153,9 @@ class OnboardingScreenState extends State<OnboardingScreen> {
                           translationFactor: 300.0,
                         ),
                         SizedBox(
-                          height: 42,
+                          height: 32,
                         ),
-                        DotsIndicator(
-                          dotsCount: NUM_OF_PAGES + 1,
-                          position: info.index.toDouble(),
-                          decorator: DotsDecorator(
-                            spacing: EdgeInsets.only(right: 3),
-                            shape: CircleBorder(
-                                side: BorderSide(
-                              color: Colors.white,
-                            )),
-                            color: CustomColor.SELECTIVE_YELLOW,
-                            activeColor: Colors.white,
-                          ),
-                        ),
+                        dotsIndicator(transformerPageView),
                       ],
                     ),
                   ),
@@ -179,33 +163,64 @@ class OnboardingScreenState extends State<OnboardingScreen> {
               );
             }),
           ),
-          nextButton(transformerPageView),
-          skipButton(transformerPageView)
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Padding(
+              padding: const EdgeInsets.only(bottom: 8.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  skipButton(),
+                  nextButton(transformerPageView),
+                ],
+              ),
+            ),
+          ),
         ],
       ),
     );
   }
 
   Widget nextButton(TransformerPageView transformerPageView) {
-    return Positioned(
-      bottom: 28,
-      right: 14,
-      child: Container(
-          constraints: BoxConstraints(
-            maxWidth: 164,
-            maxHeight: 64,
-          ),
-          padding: const EdgeInsets.all(10),
-          child: NextOnboardingButton(transformerPageView)),
+    return Container(
+      constraints: BoxConstraints(
+        maxWidth: 164,
+        maxHeight: 64,
+      ),
+      padding: const EdgeInsets.all(10),
+      child: NextOnboardingButton(transformerPageView),
     );
   }
 
-  Widget skipButton(TransformerPageView transformerPageView) {
-    return Positioned(
-      bottom: 42,
-      left: 18,
-      child: Container(
-          padding: const EdgeInsets.all(10), child: SkipOnboardingButton()),
+  Widget skipButton() {
+    return Container(
+      constraints: BoxConstraints(
+        maxWidth: 164,
+        maxHeight: 64,
+      ),
+      padding: const EdgeInsets.all(16),
+      child: SkipOnboardingButton(),
+    );
+  }
+
+  Widget dotsIndicator(TransformerPageView transformerPageView) {
+    double currentPage = 0;
+    if (transformerPageView.pageController.hasClients) {
+      currentPage = transformerPageView.pageController.page;
+    }
+
+    return DotsIndicator(
+      dotsCount: NUM_OF_PAGES + 1,
+      position: currentPage,
+      decorator: DotsDecorator(
+        spacing: EdgeInsets.only(right: 3),
+        shape: CircleBorder(
+            side: BorderSide(
+          color: Colors.white,
+        )),
+        color: mainTheme.primaryColor,
+        activeColor: Colors.white,
+      ),
     );
   }
 }
