@@ -153,7 +153,7 @@ class OnboardingScreenState extends State<OnboardingScreen> {
                           translationFactor: 300.0,
                         ),
                         SizedBox(
-                          height: 32,
+                          height: 28,
                         ),
                         dotsIndicator(transformerPageView),
                       ],
@@ -166,7 +166,7 @@ class OnboardingScreenState extends State<OnboardingScreen> {
           Align(
             alignment: Alignment.bottomCenter,
             child: Padding(
-              padding: const EdgeInsets.only(bottom: 8.0),
+              padding: const EdgeInsets.only(bottom: 16.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
