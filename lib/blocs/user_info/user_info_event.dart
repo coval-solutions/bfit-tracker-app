@@ -21,5 +21,4 @@ class CreateUserInfo extends UserInfoEvent {
   String toString() => "CreateUserInfo { userInfo: ${this._userInfo} }";
 }
 
-
 class UpdateUserInfo extends UserInfoEvent {}

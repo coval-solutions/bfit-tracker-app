@@ -27,4 +27,8 @@ class User {
   NetworkImage getDisplayPicture() {
     return _displayPicture;
   }
+
+  String getEmail() {
+    return _email;
+  }
 }

@@ -11,12 +11,12 @@ import 'package:meta/meta.dart';
 part 'user_info_event.dart';
 part 'user_info_state.dart';
 
-class UserInfoBloc
-    extends Bloc<UserInfoEvent, UserInfoState> {
+class UserInfoBloc extends Bloc<UserInfoEvent, UserInfoState> {
   final User _user;
   final UserInfoRepository _userInfoRepository;
 
-  UserInfoBloc({@required User user, @required UserInfoRepository userInfoRepository})
+  UserInfoBloc(
+      {@required User user, @required UserInfoRepository userInfoRepository})
       : assert(user != null && userInfoRepository != null),
         _user = user,
         _userInfoRepository = userInfoRepository;
@@ -47,7 +47,7 @@ class UserInfoBloc
   Stream<UserInfoState> _mapCreateToState(CreateUserInfo event) async* {
     _userInfoRepository.create(this._user, event._userInfo);
   }
-  
+
   @override
   Future<void> close() {
     return super.close();

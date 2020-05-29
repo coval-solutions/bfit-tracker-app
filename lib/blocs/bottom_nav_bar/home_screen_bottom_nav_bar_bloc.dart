@@ -4,11 +4,12 @@ enum HomeScreenBottomNavBarItems { HOME, TARGETS, COURSES, ANALYTICS, PROFILE }
 
 class HomeScreenBottomNavBarBloc {
   final StreamController<HomeScreenBottomNavBarItems> _navBarController =
-    StreamController<HomeScreenBottomNavBarItems>.broadcast();
+      StreamController<HomeScreenBottomNavBarItems>.broadcast();
 
   HomeScreenBottomNavBarItems defaultItem = HomeScreenBottomNavBarItems.HOME;
 
-  Stream<HomeScreenBottomNavBarItems> get itemStream => _navBarController.stream;
+  Stream<HomeScreenBottomNavBarItems> get itemStream =>
+      _navBarController.stream;
 
   void pickItem(int i) {
     switch (i) {

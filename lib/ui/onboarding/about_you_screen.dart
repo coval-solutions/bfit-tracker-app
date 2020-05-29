@@ -161,16 +161,15 @@ class _AboutYouScreenState extends State<AboutYouScreen> {
             child: RaisedButton(
               onPressed: () {
                 final UserInfo userInfo = UserInfo(
-                  height: this.height,
-                  isMale: this.isMaleSelected,
-                  goals: Goal(
-                    bmi: 24,
-                    weight: 72,
-                    courses: 45,
-                    gym: 100,
-                    steps: 10000,
-                  )
-                );
+                    height: this.height,
+                    isMale: this.isMaleSelected,
+                    goals: Goal(
+                      bmi: 24,
+                      weight: 72,
+                      courses: 45,
+                      gym: 100,
+                      steps: 10000,
+                    ));
 
                 userInfoBloc.add(CreateUserInfo(userInfo));
 

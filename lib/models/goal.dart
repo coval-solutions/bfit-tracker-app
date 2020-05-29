@@ -17,14 +17,13 @@ class Goal {
     );
   }
 
-  Map<String, Object> toDocument() =>
-  {
-    'bmi': bmi,
-    'weight': weight,
-    'courses': courses,
-    'gym': gym,
-    'steps': steps,
-  };
+  Map<String, Object> toDocument() => {
+        'bmi': bmi,
+        'weight': weight,
+        'courses': courses,
+        'gym': gym,
+        'steps': steps,
+      };
 
   double getBmi() {
     return this.bmi;

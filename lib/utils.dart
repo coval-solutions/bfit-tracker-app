@@ -18,6 +18,6 @@ class Utils {
     }
   }
 
-  static double doubleInRange(int start, int end) => 
-    random.nextDouble() * (end - start) + start;
+  static double doubleInRange(int start, int end) =>
+      random.nextDouble() * (end - start) + start;
 }

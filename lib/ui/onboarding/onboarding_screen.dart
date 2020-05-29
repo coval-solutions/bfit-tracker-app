@@ -204,8 +204,8 @@ class OnboardingScreenState extends State<OnboardingScreen> {
     return Positioned(
       bottom: 42,
       left: 18,
-      child:
-          Container(padding: const EdgeInsets.all(10), child: SkipOnboardingButton()),
+      child: Container(
+          padding: const EdgeInsets.all(10), child: SkipOnboardingButton()),
     );
   }
 }

@@ -2,7 +2,7 @@ class Gym {
   final String name;
   final String address;
   final double lat;
-  final double lng; 
+  final double lng;
 
   Gym({this.name, this.address, this.lat, this.lng});
 
