@@ -47,13 +47,10 @@ workflows:
         #!/bin/sh
           echo Running post-clone script...
           echo Decoding Android Firebase json
-          echo "$ANDROID_FIREBASE_JSON"
           echo "$ANDROID_FIREBASE_JSON" | base64 --decode > "$FCI_BUILD_DIR"/android/app/google-services.json
           echo Decoding iOS Firebase json
-          echo "$IOS_FIREBASE_JSON"
           echo "$IOS_FIREBASE_JSON" | base64 --decode > "$FCI_BUILD_DIR"/ios/Runner/GoogleService-Info.plist
           echo Decoding .env
-          echo "$ENV"
           echo "$ENV" | base64 --decode > "$FCI_BUILD_DIR"/.env
       - cd . && flutter packages pub get
       - cd . && flutter analyze
