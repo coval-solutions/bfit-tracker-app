@@ -41,14 +41,10 @@ workflows:
         echo "flutter.sdk=$HOME/programs/flutter" > "$FCI_BUILD_DIR/android/local.properties"
       - |
         #!/bin/sh
-        echo $ANDROID_FIREBASE_JSON | base64 --decode \
-        > $FCI_BUILD_DIR/android/app/google-services.json
-
-        echo $IOS_FIREBASE_JSON | base64 --decode \
-        > $FCI_BUILD_DIR/ios/Runner/GoogleService-Info.plist
-
-        echo $ENV | base64 --decode \
-        > $FCI_BUILD_DIR/.env
+          echo Running post-clone script...
+          echo $ANDROID_FIREBASE_JSON | base64 --decode > $FCI_BUILD_DIR/android/app/google-services.json
+          echo $IOS_FIREBASE_JSON | base64 --decode > $FCI_BUILD_DIR/ios/Runner/GoogleService-Info.plist
+          echo $ENV | base64 --decode > $FCI_BUILD_DIR/.env
       - cd . && flutter packages pub get
       - cd . && flutter analyze
       - cd . && flutter build apk --debug
@@ -62,7 +58,6 @@ workflows:
       - /tmp/xcodebuild_logs/*.log
       - flutter_drive.log
     publishing:
-      email:
-        recipients:
-          - diogo.costa@covalsolutions.com
-          - divyesh.vala@covalsolutions.com
+      slack:
+        channel: "#builds"
+        notify_on_build_start: true
