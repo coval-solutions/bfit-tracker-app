@@ -2,6 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:bfit_tracker/models/course.dart';
 import 'package:bfit_tracker/theme.dart';
 import 'package:bfit_tracker/ui/coval_solutions/animated_counter.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -61,16 +62,21 @@ class _CourseDetailsState extends State<CourseDetails>
                     Container(
                       width: MediaQuery.of(context).size.width,
                       height: MediaQuery.of(context).size.height * 0.6,
-                      decoration: BoxDecoration(
-                          borderRadius: new BorderRadius.only(
-                            bottomLeft: const Radius.circular(10.0),
-                            bottomRight: const Radius.circular(10.0),
-                          ),
-                          image: DecorationImage(
-                              image: NetworkImage(
-                                this.widget.course.courseDetail.getImageUrl(),
+                      child: CachedNetworkImage(
+                        placeholder: (context, url) =>
+                            Center(child: CircularProgressIndicator()),
+                        errorWidget: (context, url, error) => Icon(Icons.error),
+                        imageUrl: this.widget.course.courseDetail.getImageUrl(),
+                        imageBuilder: (context, imageProvider) => Container(
+                          decoration: BoxDecoration(
+                              borderRadius: new BorderRadius.only(
+                                bottomLeft: const Radius.circular(10.0),
+                                bottomRight: const Radius.circular(10.0),
                               ),
-                              fit: BoxFit.cover)),
+                              image: DecorationImage(
+                                  image: imageProvider, fit: BoxFit.cover)),
+                        ),
+                      ),
                     ),
                     Positioned(
                       left: 4,
