@@ -1,14 +1,21 @@
 import 'dart:async';
 
-enum HomeScreenBottomNavBarItems { HOME, TARGETS, COURSES, ANALYTICS, PROFILE }
+enum HomeScreenBottomNavBarItems {
+  HOME,
+  NUTRITION,
+  COURSES,
+  ANALYTICS,
+  PROFILE
+}
 
 class HomeScreenBottomNavBarBloc {
   final StreamController<HomeScreenBottomNavBarItems> _navBarController =
-    StreamController<HomeScreenBottomNavBarItems>.broadcast();
+      StreamController<HomeScreenBottomNavBarItems>.broadcast();
 
   HomeScreenBottomNavBarItems defaultItem = HomeScreenBottomNavBarItems.HOME;
 
-  Stream<HomeScreenBottomNavBarItems> get itemStream => _navBarController.stream;
+  Stream<HomeScreenBottomNavBarItems> get itemStream =>
+      _navBarController.stream;
 
   void pickItem(int i) {
     switch (i) {
@@ -16,7 +23,7 @@ class HomeScreenBottomNavBarBloc {
         _navBarController.sink.add(HomeScreenBottomNavBarItems.HOME);
         break;
       case 1:
-        _navBarController.sink.add(HomeScreenBottomNavBarItems.TARGETS);
+        _navBarController.sink.add(HomeScreenBottomNavBarItems.NUTRITION);
         break;
       case 2:
         _navBarController.sink.add(HomeScreenBottomNavBarItems.COURSES);
