@@ -12,9 +12,9 @@ class SplashScreenLoading extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.all(24.0),
         child: SvgPicture.asset(
-            'assets/images/rounded_logo_bf.svg',
-            fit: BoxFit.cover,
-          ),
+          'assets/images/rounded_logo_bf.svg',
+          fit: BoxFit.cover,
+        ),
       ),
     );
   }

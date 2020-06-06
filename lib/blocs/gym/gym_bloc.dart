@@ -10,8 +10,7 @@ import 'package:meta/meta.dart';
 part 'gym_event.dart';
 part 'gym_state.dart';
 
-class GymBloc
-    extends Bloc<GymEvent, GymState> {
+class GymBloc extends Bloc<GymEvent, GymState> {
   final Position _position;
   final GymRepository _gymRepository;
 

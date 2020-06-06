@@ -9,8 +9,7 @@ import 'package:meta/meta.dart';
 part 'location_event.dart';
 part 'location_state.dart';
 
-class LocationBloc
-    extends Bloc<LocationEvent, LocationState> {
+class LocationBloc extends Bloc<LocationEvent, LocationState> {
   final LocationRepository _locationRepository;
 
   LocationBloc({@required LocationRepository locationRepository})

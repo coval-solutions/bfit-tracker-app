@@ -13,7 +13,9 @@ class UserInfoRepository {
   }
 
   Future<void> create(User user, UserInfo userInfo) async {
-    return await _userInfoCollection.document(user.getUid()).setData(userInfo.toDocument());
+    return await _userInfoCollection
+        .document(user.getUid())
+        .setData(userInfo.toDocument());
   }
 
   Future<void> update(User user, UserInfo userInfo) async {
