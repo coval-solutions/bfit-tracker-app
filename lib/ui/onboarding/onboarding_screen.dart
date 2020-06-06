@@ -8,7 +8,6 @@ import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:transformer_page_view/transformer_page_view.dart';
 
 class OnboardingScreen extends StatefulWidget {
