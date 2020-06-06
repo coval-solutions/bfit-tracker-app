@@ -1,5 +1,5 @@
 import 'package:bfit_tracker/enums/fitness_stat_types.dart';
-import 'package:bfit_tracker/ui/custom.dart';
+import 'package:bfit_tracker/utils/coval_math.dart';
 import 'package:health/health.dart';
 
 class FitnessStat {

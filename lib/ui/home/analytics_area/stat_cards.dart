@@ -24,7 +24,7 @@ class _StatsCardListState extends State<StatsCardList> {
   @override
   void initState() {
     super.initState();
-    colors = [CustomColor.SELECTIVE_YELLOW, CustomColor.MAYA_BLUE];
+    colors = [mainTheme.primaryColor, mainTheme.accentColor];
     fitnessDataBloc = BlocProvider.of<FitnessDataBloc>(context);
   }
 

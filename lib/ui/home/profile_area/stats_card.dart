@@ -113,9 +113,9 @@ Widget otherStats(value, text, {unit}) {
             ],
           ),
           backgroundColor:
-              overMax ? CustomColor.MAYA_BLUE : CustomColor.LAVENDER,
+              overMax ? mainTheme.accentColor : CustomColor.LAVENDER,
           progressColor:
-              overMax ? CustomColor.SELECTIVE_YELLOW : CustomColor.MAYA_BLUE,
+              overMax ? mainTheme.primaryColor : mainTheme.accentColor,
         ),
       ));
 }

@@ -2,7 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:bfit_tracker/blocs/fitness_data/fitness_data_bloc.dart';
 import 'package:bfit_tracker/models/fitness_stat.dart';
 import 'package:bfit_tracker/theme.dart';
-import 'package:bfit_tracker/ui/custom.dart';
+import 'package:bfit_tracker/utils/coval_math.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:jiffy/jiffy.dart';
@@ -18,8 +18,8 @@ class WeeklyStepsGraph extends StatefulWidget {
 
 class _WeeklyStepsGraphState extends State<WeeklyStepsGraph> {
   List<Color> colors = [
-    CustomColor.MAYA_BLUE.withOpacity(0.3),
-    CustomColor.SELECTIVE_YELLOW.withOpacity(0.8),
+    mainTheme.accentColor.withOpacity(0.3),
+    mainTheme.primaryColor.withOpacity(0.8),
   ];
 
   @override
@@ -87,7 +87,7 @@ class _WeeklyStepsGraphState extends State<WeeklyStepsGraph> {
     return LineChartData(
       lineTouchData: LineTouchData(
           touchTooltipData: LineTouchTooltipData(
-        tooltipBgColor: CustomColor.MAYA_BLUE.withOpacity(0.3),
+        tooltipBgColor: mainTheme.accentColor.withOpacity(0.3),
         getTooltipItems: customLineTooltipItem,
         tooltipPadding: EdgeInsets.all(4),
       )),

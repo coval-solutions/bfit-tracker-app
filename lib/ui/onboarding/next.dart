@@ -13,6 +13,9 @@ class NextOnboardingButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RaisedButton(
+      highlightElevation: 12,
+      splashColor: Colors.transparent,
+      highlightColor: Colors.transparent,
       onPressed: () {
         if (transformerPageView.pageController.hasClients) {
           if (transformerPageView.pageController.page.toInt() >=
@@ -45,12 +48,12 @@ class NextOnboardingButton extends StatelessWidget {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
       padding: const EdgeInsets.all(0.0),
       child: Ink(
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             colors: <Color>[
-              CustomColor.MAYA_BLUE,
+              mainTheme.accentColor,
               Color(0xFF9BD8FF),
             ],
           ),

@@ -4,13 +4,14 @@ version: 1.0.0+1
 
 environment:
   sdk: ">=2.6.0 <3.0.0"
-  flutter: "1.17.0"
+  flutter: "1.17.2"
 
 dependencies:
   flutter:
     sdk: flutter
   auto_size_text: ^2.1.0
   bloc: ^4.0.0
+  cached_network_image: ^2.2.0+1
   cloud_firestore: ^0.13.5
   curved_navigation_bar: ^0.3.2
   device_info: ^0.4.2+3

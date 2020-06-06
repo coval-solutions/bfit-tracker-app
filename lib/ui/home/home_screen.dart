@@ -4,10 +4,10 @@ import 'package:bfit_tracker/blocs/bottom_nav_bar/home_screen_bottom_nav_bar_blo
 import 'package:bfit_tracker/models/user_info.dart';
 import 'package:bfit_tracker/theme.dart';
 import 'package:bfit_tracker/ui/home/analytics_area/analytics_area.dart';
-import 'package:bfit_tracker/ui/home/courses_area.dart';
-import 'package:bfit_tracker/ui/home/home_area.dart';
+import 'package:bfit_tracker/ui/home/courses_area/courses_area.dart';
+import 'package:bfit_tracker/ui/home/home_area/home_area.dart';
+import 'package:bfit_tracker/ui/home/nutrition_area/nutrition_area.dart';
 import 'package:bfit_tracker/ui/home/profile_area/profile_area.dart';
-import 'package:bfit_tracker/ui/home/targets_area.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 
@@ -49,8 +49,8 @@ class _HomeScreenState extends State<HomeScreen> {
           switch (snapshot.data) {
             case HomeScreenBottomNavBarItems.HOME:
               return _homeArea();
-            case HomeScreenBottomNavBarItems.TARGETS:
-              return _targetArea();
+            case HomeScreenBottomNavBarItems.NUTRITION:
+              return _nutritionArea();
             case HomeScreenBottomNavBarItems.COURSES:
               return _coursesArea();
             case HomeScreenBottomNavBarItems.ANALYTICS:
@@ -72,8 +72,8 @@ class _HomeScreenState extends State<HomeScreen> {
             backgroundColor: mainTheme.accentColor,
             items: <Widget>[
               Icon(Icons.home, size: 30),
-              Icon(Icons.gps_fixed, size: 30),
-              Icon(Icons.lightbulb_outline, size: 30),
+              Icon(Icons.local_dining, size: 30),
+              Icon(Icons.fitness_center, size: 30),
               Icon(Icons.show_chart, size: 30),
               Icon(Icons.person, size: 30),
             ],
@@ -90,12 +90,12 @@ class _HomeScreenState extends State<HomeScreen> {
     return HomeArea();
   }
 
-  Widget _targetArea() {
-    return targetsArea();
+  Widget _nutritionArea() {
+    return NutritionArea();
   }
 
   Widget _coursesArea() {
-    return coursesArea();
+    return CoursesArea();
   }
 
   Widget _analyticsArea() {

@@ -1,6 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:bfit_tracker/theme.dart';
-import 'package:bfit_tracker/ui/custom.dart';
+import 'package:bfit_tracker/ui/coval_solutions/empty_app_bar.dart';
 import 'package:bfit_tracker/ui/onboarding/about_you_screen.dart';
 import 'package:bfit_tracker/ui/onboarding/next.dart';
 import 'package:bfit_tracker/ui/onboarding/skip.dart';
@@ -99,23 +99,18 @@ class OnboardingScreenState extends State<OnboardingScreen> {
                               position: info.position,
                               translationFactor: 200.0,
                             ),
-                            Padding(
-                              padding: const EdgeInsets.only(
-                                top: 24,
-                              ),
-                              child: Align(
-                                alignment: Alignment.bottomCenter,
-                                child: ParallaxContainer(
-                                  child: SvgPicture.asset(
-                                    this.images[info.index],
-                                    fit: BoxFit.scaleDown,
-                                    height: MediaQuery.of(context).size.width,
-                                  ),
-                                  position: info.position,
-                                  translationFactor: 800.0,
+                            Align(
+                              alignment: Alignment.bottomCenter,
+                              child: ParallaxContainer(
+                                child: SvgPicture.asset(
+                                  this.images[info.index],
+                                  fit: BoxFit.scaleDown,
+                                  height: MediaQuery.of(context).size.width,
                                 ),
+                                position: info.position,
+                                translationFactor: 800.0,
                               ),
-                            )
+                            ),
                           ],
                         ),
                         ParallaxContainer(
@@ -136,7 +131,7 @@ class OnboardingScreenState extends State<OnboardingScreen> {
                           translationFactor: 400.0,
                         ),
                         SizedBox(
-                          height: 42,
+                          height: 16,
                         ),
                         ParallaxContainer(
                           child: Padding(
@@ -157,21 +152,9 @@ class OnboardingScreenState extends State<OnboardingScreen> {
                           translationFactor: 300.0,
                         ),
                         SizedBox(
-                          height: 42,
+                          height: 28,
                         ),
-                        DotsIndicator(
-                          dotsCount: NUM_OF_PAGES + 1,
-                          position: info.index.toDouble(),
-                          decorator: DotsDecorator(
-                            spacing: EdgeInsets.only(right: 3),
-                            shape: CircleBorder(
-                                side: BorderSide(
-                              color: Colors.white,
-                            )),
-                            color: CustomColor.SELECTIVE_YELLOW,
-                            activeColor: Colors.white,
-                          ),
-                        ),
+                        dotsIndicator(transformerPageView),
                       ],
                     ),
                   ),
@@ -179,33 +162,65 @@ class OnboardingScreenState extends State<OnboardingScreen> {
               );
             }),
           ),
-          nextButton(transformerPageView),
-          skipButton(transformerPageView)
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Padding(
+              padding: EdgeInsets.only(
+                  bottom: 16.0 + MediaQuery.of(context).padding.bottom),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  skipButton(),
+                  nextButton(transformerPageView),
+                ],
+              ),
+            ),
+          ),
         ],
       ),
     );
   }
 
   Widget nextButton(TransformerPageView transformerPageView) {
-    return Positioned(
-      bottom: 28,
-      right: 14,
-      child: Container(
-          constraints: BoxConstraints(
-            maxWidth: 164,
-            maxHeight: 64,
-          ),
-          padding: const EdgeInsets.all(10),
-          child: NextOnboardingButton(transformerPageView)),
+    return Container(
+      constraints: BoxConstraints(
+        maxWidth: 164,
+        maxHeight: 64,
+      ),
+      padding: const EdgeInsets.all(10),
+      child: NextOnboardingButton(transformerPageView),
     );
   }
 
-  Widget skipButton(TransformerPageView transformerPageView) {
-    return Positioned(
-      bottom: 42,
-      left: 18,
-      child: Container(
-          padding: const EdgeInsets.all(10), child: SkipOnboardingButton()),
+  Widget skipButton() {
+    return Container(
+      constraints: BoxConstraints(
+        maxWidth: 164,
+        maxHeight: 64,
+      ),
+      padding: const EdgeInsets.all(16),
+      child: SkipOnboardingButton(),
+    );
+  }
+
+  Widget dotsIndicator(TransformerPageView transformerPageView) {
+    double currentPage = 0;
+    if (transformerPageView.pageController.hasClients) {
+      currentPage = transformerPageView.pageController.page;
+    }
+
+    return DotsIndicator(
+      dotsCount: NUM_OF_PAGES + 1,
+      position: currentPage,
+      decorator: DotsDecorator(
+        spacing: EdgeInsets.only(right: 3),
+        shape: CircleBorder(
+            side: BorderSide(
+          color: Colors.white,
+        )),
+        color: mainTheme.primaryColor,
+        activeColor: Colors.white,
+      ),
     );
   }
 }
