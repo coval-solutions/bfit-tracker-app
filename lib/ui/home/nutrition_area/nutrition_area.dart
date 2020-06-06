@@ -16,6 +16,11 @@ class _NutritionAreaState extends State<NutritionArea> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: EmptyAppBar(),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+        child: Icon(Icons.camera_alt),
+        backgroundColor: Colors.white,
+      ),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 12),
@@ -54,9 +59,44 @@ class _NutritionAreaState extends State<NutritionArea> {
               ),
               NutrientCard(
                   nutrient: 'Fat',
-                  value: 0,
+                  value: 178,
                   unit: 'g',
                   color: mainTheme.primaryColor),
+              NutrientCard(
+                  nutrient: 'Sugar',
+                  value: 36,
+                  unit: 'g',
+                  color: mainTheme.accentColor),
+              NutrientCard(
+                  nutrient: 'Protein',
+                  value: 490,
+                  unit: 'g',
+                  color: mainTheme.primaryColor),
+              NutrientCard(
+                  nutrient: 'Carbohydrates',
+                  value: 540,
+                  unit: 'g',
+                  color: mainTheme.accentColor),
+              NutrientCard(
+                  nutrient: 'Calcium',
+                  value: 480,
+                  unit: 'mg',
+                  color: mainTheme.primaryColor),
+              NutrientCard(
+                  nutrient: 'Fibre',
+                  value: 640,
+                  unit: 'g',
+                  color: mainTheme.accentColor),
+              NutrientCard(
+                  nutrient: 'Iron',
+                  value: 480,
+                  unit: 'mg',
+                  color: mainTheme.primaryColor),
+              NutrientCard(
+                  nutrient: 'Potassium',
+                  value: 180,
+                  unit: 'g',
+                  color: mainTheme.accentColor),
             ],
           ),
         ),
