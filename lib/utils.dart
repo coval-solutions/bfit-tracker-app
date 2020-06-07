@@ -1,7 +1,7 @@
+import 'dart:io' show Platform;
 import 'dart:math';
 
 import 'package:device_info/device_info.dart';
-import 'dart:io' show Platform;
 
 class Utils {
   static final Random random = Random();
@@ -20,4 +20,6 @@ class Utils {
 
   static double doubleInRange(int start, int end) =>
       random.nextDouble() * (end - start) + start;
+
+  static String locale() => Platform.localeName;
 }

@@ -71,7 +71,7 @@ class _NutritionAreaState extends State<NutritionArea> {
               itemBuilder: (BuildContext context, int index) {
                 return NutrientCard(
                     nutrientsEnum: widget.nutrientsEnums[index],
-                    value: CovalMath.doubleInRange(50, 350).toInt(),
+                    value: CovalMath.doubleInRange(50, 2500).toInt(),
                     color: widget.colors[(index % widget.colors.length)]);
               },
             )

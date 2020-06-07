@@ -1,6 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:bfit_tracker/enums/nutrients.dart';
 import 'package:bfit_tracker/ui/home/nutrition_area/nutrient_dialog.dart';
+import 'package:bfit_tracker/utils/coval_math.dart';
 import 'package:flutter/material.dart';
 
 class NutrientCard extends StatelessWidget {
@@ -53,7 +54,7 @@ class NutrientCard extends StatelessWidget {
               ),
               child: AutoSizeText.rich(
                 TextSpan(
-                  text: this.value?.toString() ?? '0',
+                  text: CovalMath.decimal(this.value ?? 0).toString(),
                   style: TextStyle(
                     fontWeight: FontWeight.w600,
                     color: Colors.white,
