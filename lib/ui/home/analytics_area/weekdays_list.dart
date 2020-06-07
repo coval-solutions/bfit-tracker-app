@@ -103,7 +103,7 @@ Widget weekdayCard(int index, List<DateTime> days) {
               maxLines: 1,
             ),
             AutoSizeText(
-              Weekdays.values
+              WeekdaysEnum.values
                   .elementAt(days[index].weekday - 1)
                   .toString()
                   .split('.')
@@ -156,7 +156,7 @@ Widget weekdayCardSelected(int index, List<DateTime> days) {
               maxLines: 1,
             ),
             AutoSizeText(
-              Weekdays.values
+              WeekdaysEnum.values
                   .elementAt(days[index].weekday - 1)
                   .toString()
                   .split('.')

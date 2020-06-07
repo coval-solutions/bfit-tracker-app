@@ -1,6 +1,8 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:bfit_tracker/enums/nutrients.dart';
 import 'package:bfit_tracker/theme.dart';
 import 'package:bfit_tracker/ui/coval_solutions/empty_app_bar.dart';
+import 'package:bfit_tracker/ui/coval_solutions/no_glow_listview.dart';
 import 'package:bfit_tracker/ui/home/nutrition_area/nutrient_card.dart';
 import 'package:flutter/material.dart';
 
@@ -21,84 +23,86 @@ class _NutritionAreaState extends State<NutritionArea> {
         child: Icon(Icons.camera_alt),
         backgroundColor: Colors.white,
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 12),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              Align(
-                alignment: Alignment.topCenter,
-                child: AutoSizeText(
-                  'Nutrition Tracker',
-                  maxLines: 1,
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: CustomColor.DIM_GRAY,
-                  ),
-                  minFontSize: 26,
-                  maxFontSize: 26,
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 12),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            Align(
+              alignment: Alignment.topCenter,
+              child: AutoSizeText(
+                'Nutrition Tracker',
+                maxLines: 1,
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: CustomColor.DIM_GRAY,
                 ),
+                minFontSize: 26,
+                maxFontSize: 26,
               ),
-              Align(
-                alignment: Alignment.topCenter,
-                child: AutoSizeText(
-                  'Weekly',
-                  maxLines: 1,
-                  style: TextStyle(
-                    fontWeight: FontWeight.normal,
-                    color: CustomColor.DIM_GRAY,
-                    fontStyle: FontStyle.italic,
-                  ),
-                  minFontSize: 18,
-                  maxFontSize: 18,
+            ),
+            Align(
+              alignment: Alignment.topCenter,
+              child: AutoSizeText(
+                'Weekly',
+                maxLines: 1,
+                style: TextStyle(
+                  fontWeight: FontWeight.normal,
+                  color: CustomColor.DIM_GRAY,
+                  fontStyle: FontStyle.italic,
                 ),
+                minFontSize: 18,
+                maxFontSize: 18,
               ),
-              Padding(
-                padding: EdgeInsets.only(top: 30),
-              ),
-              NutrientCard(
-                  nutrient: 'Fat',
-                  value: 178,
-                  unit: 'g',
-                  color: mainTheme.primaryColor),
-              NutrientCard(
-                  nutrient: 'Sugar',
-                  value: 36,
-                  unit: 'g',
-                  color: mainTheme.accentColor),
-              NutrientCard(
-                  nutrient: 'Protein',
-                  value: 490,
-                  unit: 'g',
-                  color: mainTheme.primaryColor),
-              NutrientCard(
-                  nutrient: 'Carbohydrates',
-                  value: 540,
-                  unit: 'g',
-                  color: mainTheme.accentColor),
-              NutrientCard(
-                  nutrient: 'Calcium',
-                  value: 480,
-                  unit: 'mg',
-                  color: mainTheme.primaryColor),
-              NutrientCard(
-                  nutrient: 'Fibre',
-                  value: 640,
-                  unit: 'g',
-                  color: mainTheme.accentColor),
-              NutrientCard(
-                  nutrient: 'Iron',
-                  value: 480,
-                  unit: 'mg',
-                  color: mainTheme.primaryColor),
-              NutrientCard(
-                  nutrient: 'Potassium',
-                  value: 180,
-                  unit: 'g',
-                  color: mainTheme.accentColor),
-            ],
-          ),
+            ),
+            Padding(
+              padding: EdgeInsets.only(top: 30),
+            ),
+            noGlowListView(
+              [
+                NutrientCard(
+                    nutrient: NutrientsEnum.FAT.name,
+                    value: 178,
+                    unit: NutrientsEnum.FAT.units,
+                    color: mainTheme.primaryColor),
+                NutrientCard(
+                    nutrient: NutrientsEnum.SUGAR.name,
+                    value: 36,
+                    unit: NutrientsEnum.SUGAR.units,
+                    color: mainTheme.accentColor),
+                NutrientCard(
+                    nutrient: NutrientsEnum.PROTEIN.name,
+                    value: 490,
+                    unit: NutrientsEnum.PROTEIN.units,
+                    color: mainTheme.primaryColor),
+                NutrientCard(
+                    nutrient: NutrientsEnum.CARBOHYDRATES.name,
+                    value: 540,
+                    unit: NutrientsEnum.CARBOHYDRATES.units,
+                    color: mainTheme.accentColor),
+                NutrientCard(
+                    nutrient: NutrientsEnum.CALCIUM.name,
+                    value: 480,
+                    unit: NutrientsEnum.CALCIUM.units,
+                    color: mainTheme.primaryColor),
+                NutrientCard(
+                    nutrient: NutrientsEnum.FIBRE.name,
+                    value: 640,
+                    unit: NutrientsEnum.FIBRE.units,
+                    color: mainTheme.accentColor),
+                NutrientCard(
+                    nutrient: NutrientsEnum.IRON.name,
+                    value: 480,
+                    unit: NutrientsEnum.IRON.units,
+                    color: mainTheme.primaryColor),
+                NutrientCard(
+                    nutrient: NutrientsEnum.POTASSIUM.name,
+                    value: 180,
+                    unit: NutrientsEnum.POTASSIUM.units,
+                    color: mainTheme.accentColor),
+              ],
+            ),
+          ],
         ),
       ),
     );
