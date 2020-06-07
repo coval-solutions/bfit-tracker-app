@@ -2,11 +2,17 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:bfit_tracker/enums/nutrients.dart';
 import 'package:bfit_tracker/theme.dart';
 import 'package:bfit_tracker/ui/coval_solutions/empty_app_bar.dart';
-import 'package:bfit_tracker/ui/coval_solutions/no_glow_listview.dart';
 import 'package:bfit_tracker/ui/home/nutrition_area/nutrient_card.dart';
+import 'package:bfit_tracker/utils/coval_math.dart';
 import 'package:flutter/material.dart';
 
 class NutritionArea extends StatefulWidget {
+  final List<NutrientsEnum> nutrientsEnums = NutrientsEnum.values;
+  final List<Color> colors = [
+    mainTheme.primaryColor,
+    mainTheme.accentColor,
+  ];
+
   NutritionArea({Key key}) : super(key: key);
 
   @override
@@ -58,50 +64,17 @@ class _NutritionAreaState extends State<NutritionArea> {
             Padding(
               padding: EdgeInsets.only(top: 30),
             ),
-            noGlowListView(
-              [
-                NutrientCard(
-                    nutrient: NutrientsEnum.FAT.name,
-                    value: 178,
-                    unit: NutrientsEnum.FAT.units,
-                    color: mainTheme.primaryColor),
-                NutrientCard(
-                    nutrient: NutrientsEnum.SUGAR.name,
-                    value: 36,
-                    unit: NutrientsEnum.SUGAR.units,
-                    color: mainTheme.accentColor),
-                NutrientCard(
-                    nutrient: NutrientsEnum.PROTEIN.name,
-                    value: 490,
-                    unit: NutrientsEnum.PROTEIN.units,
-                    color: mainTheme.primaryColor),
-                NutrientCard(
-                    nutrient: NutrientsEnum.CARBOHYDRATES.name,
-                    value: 540,
-                    unit: NutrientsEnum.CARBOHYDRATES.units,
-                    color: mainTheme.accentColor),
-                NutrientCard(
-                    nutrient: NutrientsEnum.CALCIUM.name,
-                    value: 480,
-                    unit: NutrientsEnum.CALCIUM.units,
-                    color: mainTheme.primaryColor),
-                NutrientCard(
-                    nutrient: NutrientsEnum.FIBRE.name,
-                    value: 640,
-                    unit: NutrientsEnum.FIBRE.units,
-                    color: mainTheme.accentColor),
-                NutrientCard(
-                    nutrient: NutrientsEnum.IRON.name,
-                    value: 480,
-                    unit: NutrientsEnum.IRON.units,
-                    color: mainTheme.primaryColor),
-                NutrientCard(
-                    nutrient: NutrientsEnum.POTASSIUM.name,
-                    value: 180,
-                    unit: NutrientsEnum.POTASSIUM.units,
-                    color: mainTheme.accentColor),
-              ],
-            ),
+            ListView.builder(
+              shrinkWrap: true,
+              physics: const AlwaysScrollableScrollPhysics(),
+              itemCount: widget.nutrientsEnums.length,
+              itemBuilder: (BuildContext context, int index) {
+                return NutrientCard(
+                    nutrientsEnum: widget.nutrientsEnums[index],
+                    value: CovalMath.doubleInRange(50, 350).toInt(),
+                    color: widget.colors[(index % widget.colors.length)]);
+              },
+            )
           ],
         ),
       ),
