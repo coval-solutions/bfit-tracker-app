@@ -2,9 +2,11 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:bfit_tracker/enums/nutrients.dart';
 import 'package:bfit_tracker/theme.dart';
 import 'package:bfit_tracker/ui/coval_solutions/empty_app_bar.dart';
+import 'package:bfit_tracker/ui/coval_solutions/no_glow_listview.dart';
 import 'package:bfit_tracker/ui/home/nutrition_area/nutrient_card.dart';
 import 'package:bfit_tracker/utils/coval_math.dart';
 import 'package:flutter/material.dart';
+import 'package:nutrition/nutrition.dart';
 
 class NutritionArea extends StatefulWidget {
   final List<NutrientsEnum> nutrientsEnums = NutrientsEnum.values;
@@ -21,11 +23,25 @@ class NutritionArea extends StatefulWidget {
 
 class _NutritionAreaState extends State<NutritionArea> {
   @override
+  void initState() {
+    super.initState();
+    // Nutrition.getData.then((result) {
+    //   String test = '';
+    //   print(result);
+    // });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: EmptyAppBar(),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          // Nutrition.getData.then((result) {
+          //   String test = '';
+          //   print(result);
+          // });
+        },
         child: Icon(Icons.camera_alt),
         backgroundColor: Colors.white,
       ),
@@ -64,17 +80,22 @@ class _NutritionAreaState extends State<NutritionArea> {
             Padding(
               padding: EdgeInsets.only(top: 30),
             ),
-            ListView.builder(
-              shrinkWrap: true,
-              physics: const AlwaysScrollableScrollPhysics(),
-              itemCount: widget.nutrientsEnums.length,
-              itemBuilder: (BuildContext context, int index) {
-                return NutrientCard(
-                    nutrientsEnum: widget.nutrientsEnums[index],
-                    value: CovalMath.doubleInRange(50, 2500).toInt(),
-                    color: widget.colors[(index % widget.colors.length)]);
-              },
-            )
+            Flexible(
+              child: ScrollConfiguration(
+                behavior: NoGlowingOverscrollIndicator(),
+                child: ListView.builder(
+                  shrinkWrap: true,
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  itemCount: widget.nutrientsEnums.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return NutrientCard(
+                        nutrientsEnum: widget.nutrientsEnums[index],
+                        value: CovalMath.doubleInRange(50, 2500).toInt(),
+                        color: widget.colors[(index % widget.colors.length)]);
+                  },
+                ),
+              ),
+            ),
           ],
         ),
       ),

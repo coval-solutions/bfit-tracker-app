@@ -8,6 +8,7 @@ import 'package:bfit_tracker/ui/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:health/health.dart';
+import 'package:nutrition/nutrition.dart';
 
 class App extends StatefulWidget {
   @override
@@ -16,6 +17,7 @@ class App extends StatefulWidget {
 
 class _AppState extends State<App> {
   bool _haveHealthPermission = false;
+  bool _haveNutritionPermission = false;
 
   @override
   void initState() {
@@ -26,6 +28,13 @@ class _AppState extends State<App> {
     bool isAuthorized = await Health.requestAuthorization();
     setState(() {
       _haveHealthPermission = isAuthorized;
+    });
+  }
+
+  Future<void> _checkNutritionPermissions() async {
+    bool isAuthorized = await Nutrition.requestPermission();
+    setState(() {
+      _haveNutritionPermission = isAuthorized;
     });
   }
 
@@ -41,6 +50,7 @@ class _AppState extends State<App> {
           : BlocConsumer<UserInfoBloc, UserInfoState>(
               listener: (BuildContext context, UserInfoState state) {
               this._checkHealthPermissions();
+              this._checkNutritionPermissions();
             }, builder: (BuildContext context, UserInfoState state) {
               if (state is UserInfoLoaded) {
                 return StreamBuilder(
@@ -59,11 +69,13 @@ class _AppState extends State<App> {
                     }
 
                     if (this._haveHealthPermission) {
-                      if (snapshot.hasData && snapshot.data is UserInfo) {
-                        return HomeScreen(userInfo: snapshot.data);
-                      } else {
-                        // No data found, let's onboard the user
-                        return OnboardingScreen();
+                      if (this._haveNutritionPermission) {
+                        if (snapshot.hasData && snapshot.data is UserInfo) {
+                          return HomeScreen(userInfo: snapshot.data);
+                        } else {
+                          // No data found, let's onboard the user
+                          return OnboardingScreen();
+                        }
                       }
                     }
 
