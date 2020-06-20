@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 
 class NutrientCard extends StatelessWidget {
   final NutrientsEnum nutrientsEnum;
-  final int value;
+  final double value;
   final Color color;
 
   const NutrientCard({Key key, this.nutrientsEnum, this.value, this.color})

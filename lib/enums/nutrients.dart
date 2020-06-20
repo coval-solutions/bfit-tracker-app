@@ -9,6 +9,10 @@ enum NutrientsEnum {
   FIBRE,
   IRON,
   POTASSIUM,
+  VITAMIN_A,
+  VITAMIN_C,
+  SODIUM,
+  CHOLESTEROL,
 }
 
 extension NutrientsEnumExtension on NutrientsEnum {
@@ -30,13 +34,14 @@ extension NutrientsEnumExtension on NutrientsEnum {
   String get units {
     switch (this) {
       case NutrientsEnum.CALCIUM:
-        return 'mg';
-        break;
       case NutrientsEnum.IRON:
+      case NutrientsEnum.POTASSIUM:
+      case NutrientsEnum.SODIUM:
+      case NutrientsEnum.CHOLESTEROL:
         return 'mg';
         break;
-      case NutrientsEnum.POTASSIUM:
-        return 'mg';
+      case NutrientsEnum.VITAMIN_A:
+        return 'IV';
         break;
       default:
         return 'g';
@@ -53,5 +58,22 @@ extension NutrientsEnumExtension on NutrientsEnum {
         return '';
         break;
     }
+  }
+
+  static Map<String, NutrientsEnum> map() {
+    return {
+      'total_carbs': NutrientsEnum.CARBOHYDRATES,
+      'total_fat': NutrientsEnum.FAT,
+      'fiber': NutrientsEnum.FIBRE,
+      'calcium': NutrientsEnum.CALCIUM,
+      'potassium': NutrientsEnum.POTASSIUM,
+      'vitamin_a': NutrientsEnum.VITAMIN_A,
+      'vitamin_c': NutrientsEnum.VITAMIN_C,
+      'sodium': NutrientsEnum.SODIUM,
+      'protein': NutrientsEnum.PROTEIN,
+      'iron': NutrientsEnum.IRON,
+      'cholesterol': NutrientsEnum.CHOLESTEROL,
+      'sugar': NutrientsEnum.SUGAR,
+    };
   }
 }
