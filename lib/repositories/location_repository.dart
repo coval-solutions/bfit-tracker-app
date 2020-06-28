@@ -1,12 +1,18 @@
-import 'package:flutter/services.dart';
 import 'package:geolocator/geolocator.dart';
 
 class LocationRepository {
-  Future<Position> retrieve() async {
-    Position location = await Geolocator()
-        .getCurrentPosition(desiredAccuracy: LocationAccuracy.high)
-        .catchError((error) => SystemNavigator.pop());
+  static Geolocator geolocator = Geolocator();
 
-    return location;
+  Future<Position> retrieve() async {
+    try {
+      Position location = await geolocator.getCurrentPosition(
+          desiredAccuracy: LocationAccuracy.high);
+
+      return location;
+    } catch (err) {
+      // We want to throw the error so that
+      // the bloc will deal with the exception
+      throw err;
+    }
   }
 }

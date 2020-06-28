@@ -33,6 +33,8 @@ class FitnessDataRepository {
     return dateTimes;
   }
 
+  Map<HealthDataType, Map<DateTime, FitnessStat>> fitnessData =
+      Map<HealthDataType, Map<DateTime, FitnessStat>>();
   Future<Map<HealthDataType, Map>> retrieve(DateTime startDateTime) async {
     bool isAuthorized = await Health.requestAuthorization();
     if (isAuthorized) {
@@ -42,8 +44,6 @@ class FitnessDataRepository {
       }
 
       List<DateTime> dateTimes = getDateTimes();
-      Map<HealthDataType, Map<DateTime, FitnessStat>> fitnessData =
-          Map<HealthDataType, Map<DateTime, FitnessStat>>();
       for (HealthDataType type in HEALTH_DATA_TYPES) {
         try {
           DateTime startDate = dateTimes.first;
@@ -133,7 +133,7 @@ class FitnessDataRepository {
       return fitnessData;
     }
 
-    return null;
+    return fitnessData;
   }
 
   Map<HealthDataType, Map> _getFakeData() {

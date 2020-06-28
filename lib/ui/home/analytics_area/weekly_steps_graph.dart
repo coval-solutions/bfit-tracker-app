@@ -27,16 +27,18 @@ class _WeeklyStepsGraphState extends State<WeeklyStepsGraph> {
     List<FlSpot> flSpots = List<FlSpot>();
     double index = 0.0;
     double maxSteps = 0;
-    widget.data.forEach((key, value) {
-      FitnessStat fitnessStat = value;
-      value = double.parse(fitnessStat.value);
-      if (value > maxSteps) {
-        maxSteps = value;
-      }
+    if (widget.data != null && widget.data.isNotEmpty) {
+      widget.data.forEach((key, value) {
+        FitnessStat fitnessStat = value;
+        value = double.parse(fitnessStat.value);
+        if (value > maxSteps) {
+          maxSteps = value;
+        }
 
-      flSpots.add(FlSpot(index, value));
-      index++;
-    });
+        flSpots.add(FlSpot(index, value));
+        index++;
+      });
+    }
 
     return AspectRatio(
       aspectRatio: 1.7,
@@ -84,6 +86,10 @@ class _WeeklyStepsGraphState extends State<WeeklyStepsGraph> {
 
   LineChartData mainData(
       List<FlSpot> spots, double maxSteps, List<DateTime> dates) {
+    double interval = (maxSteps / (FitnessDataBloc.numOfDaysInThePast + 1))
+        .round()
+        .toDouble();
+
     return LineChartData(
       lineTouchData: LineTouchData(
           touchTooltipData: LineTouchTooltipData(
@@ -110,9 +116,7 @@ class _WeeklyStepsGraphState extends State<WeeklyStepsGraph> {
           margin: 8,
         ),
         leftTitles: SideTitles(
-          interval: (maxSteps / (FitnessDataBloc.numOfDaysInThePast + 1))
-              .round()
-              .toDouble(),
+          interval: interval < 1 ? null : interval,
           showTitles: true,
           textStyle: const TextStyle(
             color: CustomColor.DIM_GRAY,
