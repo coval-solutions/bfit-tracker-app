@@ -8,6 +8,7 @@ import 'package:bfit_tracker/ui/coval_solutions/no_glow_listview.dart';
 import 'package:bfit_tracker/ui/home/nutrition_area/nutrient_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/svg.dart';
 
 class NutritionArea extends StatefulWidget {
   final List<NutrientsEnum> nutrientsEnums = NutrientsEnum.values;
@@ -49,7 +50,10 @@ class _NutritionAreaState extends State<NutritionArea> {
       appBar: EmptyAppBar(),
       floatingActionButton: FloatingActionButton(
         onPressed: () {},
-        child: Icon(Icons.camera_alt),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: SvgPicture.asset('assets/images/barcode.svg'),
+        ),
         backgroundColor: Colors.white,
       ),
       body: RefreshIndicator(
