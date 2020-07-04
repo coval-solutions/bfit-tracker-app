@@ -1,4 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:barcode_scan/barcode_scan.dart';
 import 'package:bfit_tracker/blocs/nutrition_data/nutrition_data_bloc.dart';
 import 'package:bfit_tracker/enums/nutrients.dart';
 import 'package:bfit_tracker/models/nutrient_stat.dart';
@@ -9,6 +10,7 @@ import 'package:bfit_tracker/ui/home/nutrition_area/nutrient_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:openfoodfacts/openfoodfacts.dart';
 
 class NutritionArea extends StatefulWidget {
   final List<NutrientsEnum> nutrientsEnums = NutrientsEnum.values;
@@ -44,12 +46,36 @@ class _NutritionAreaState extends State<NutritionArea> {
     return Future.value();
   }
 
+  Future<void> scanBarcode() async {
+    var result = await BarcodeScanner.scan();
+    if (result.rawContent == null || result.rawContent.isEmpty) {
+      return;
+    }
+
+    ProductQueryConfiguration configuration = ProductQueryConfiguration(
+        result.rawContent,
+        language: OpenFoodFactsLanguage.ENGLISH,
+        fields: [ProductField.NUTRIMENTS]);
+    ProductResult result2 = await OpenFoodAPIClient.getProduct(configuration);
+
+    if (result2.status == 1) {
+      var nutriments = result2.product.nutriments;
+      return result2.product;
+    } else {
+      return;
+    }
+
+    print(result.type);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: EmptyAppBar(),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          scanBarcode();
+        },
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: SvgPicture.asset('assets/images/barcode.svg'),
