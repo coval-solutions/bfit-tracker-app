@@ -48,13 +48,18 @@ dialogContent(NutrientsEnum nutrientsEnum, BuildContext buildContext) {
             children: <Widget>[
               Stack(
                 children: <Widget>[
-                  Align(
-                    alignment: Alignment.topLeft,
-                    child: Padding(
-                      padding: const EdgeInsets.only(top: 28, left: 16),
-                      child: SvgPicture.asset(
-                        'assets/images/left-pointing-arrow.svg',
-                        color: CustomColor.DIM_GRAY,
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.of(buildContext).pop();
+                    },
+                    child: Align(
+                      alignment: Alignment.topLeft,
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 28, left: 16),
+                        child: SvgPicture.asset(
+                          'assets/images/left-pointing-arrow.svg',
+                          color: CustomColor.DIM_GRAY,
+                        ),
                       ),
                     ),
                   ),
