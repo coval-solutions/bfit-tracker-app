@@ -76,14 +76,19 @@ dialogContent(NutrientsEnum nutrientsEnum, BuildContext buildContext) {
                 ],
               ),
               SizedBox(height: 28.0),
-              AutoSizeText(
-                nutrientsEnum.description,
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: CustomColor.DIM_GRAY,
-                  fontWeight: FontWeight.bold,
+              Expanded(
+                flex: 1,
+                child: SingleChildScrollView(
+                  child: AutoSizeText(
+                    nutrientsEnum.description,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: CustomColor.DIM_GRAY,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    maxFontSize: 14,
+                  ),
                 ),
-                maxFontSize: 14,
               ),
               SizedBox(height: 32.0),
               Container(

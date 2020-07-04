@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:bfit_tracker/enums/nutrients.dart';
 import 'package:bfit_tracker/models/nutrient_stat.dart';
 import 'package:bfit_tracker/utils.dart';
@@ -25,8 +27,16 @@ class NutritionDataRepository {
         double sum = 0;
         nutritionData.forEach((element) {
           Map<String, String> map = Map<String, String>.from(element);
-          sum += double.parse(
-              map.entries.firstWhere((element) => element.key == key).value);
+          var nutrient =
+              map.entries.firstWhere((element) => element.key == key);
+
+          double value = double.parse(nutrient.value);
+          if (nutrient.key == 'vitamin_a' && Platform.isAndroid) {
+            // Convert IU to MCG
+            value = value * 0.3;
+          }
+
+          sum += value;
         });
 
         nutrientsStat.add(NutrientStat(
