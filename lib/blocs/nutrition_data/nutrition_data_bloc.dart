@@ -7,6 +7,8 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:jiffy/jiffy.dart';
 import 'package:meta/meta.dart';
+import 'package:nutrition/nutrition.dart';
+import 'package:nutrition/nutrition_enum.dart';
 
 part 'nutrition_data_event.dart';
 part 'nutrition_data_state.dart';
@@ -30,6 +32,10 @@ class NutritionDataBloc extends Bloc<NutritionDataEvent, NutritionDataState> {
       yield* _mapLoadingToState(event);
     }
 
+    if (event is AddNutritionData) {
+      yield* _mapAddingToState(event);
+    }
+
     if (event is SetDateSelected) {
       yield* _mapSetDateSelectedToState(event);
     }
@@ -45,6 +51,16 @@ class NutritionDataBloc extends Bloc<NutritionDataEvent, NutritionDataState> {
       } else {
         yield NutritionDataLoaded(nutritionData, event.startDateTime);
       }
+    } catch (_) {
+      yield NutritionDataNotLoaded();
+    }
+  }
+
+  Stream<NutritionDataState> _mapAddingToState(AddNutritionData event) async* {
+    try {
+      Nutrition.addData(
+          event.nutrients, event.startDateTime, event.endDateTime);
+      this.add(LoadNutritionData());
     } catch (_) {
       yield NutritionDataNotLoaded();
     }

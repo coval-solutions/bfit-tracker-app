@@ -10,6 +10,7 @@ import 'package:bfit_tracker/ui/home/nutrition_area/nutrient_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:nutrition/nutrition_enum.dart';
 import 'package:openfoodfacts/openfoodfacts.dart';
 
 class NutritionArea extends StatefulWidget {
@@ -56,16 +57,22 @@ class _NutritionAreaState extends State<NutritionArea> {
         result.rawContent,
         language: OpenFoodFactsLanguage.ENGLISH,
         fields: [ProductField.NUTRIMENTS]);
-    ProductResult result2 = await OpenFoodAPIClient.getProduct(configuration);
+    ProductResult product = await OpenFoodAPIClient.getProduct(configuration);
 
-    if (result2.status == 1) {
-      var nutriments = result2.product.nutriments;
-      return result2.product;
+    if (product.status == 1) {
+      var nutriments = product.product.nutriments;
+      Map<NutritionEnum, double> nutrients = {
+        NutritionEnum.FIBRE: nutriments.fiber ?? 0.0,
+        NutritionEnum.FAT: nutriments.fat ?? 0.0,
+        NutritionEnum.PROTEIN: nutriments.proteins ?? 0.0,
+        NutritionEnum.CARBOHYDRATES: nutriments.carbohydrates ?? 0.0
+      };
+
+      nutritionDataBloc.add(AddNutritionData(nutrients));
+      return product.product;
     } else {
       return;
     }
-
-    print(result.type);
   }
 
   @override

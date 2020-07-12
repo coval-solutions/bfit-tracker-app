@@ -1,8 +1,10 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:bfit_tracker/blocs/nutrition_data/nutrition_data_bloc.dart';
 import 'package:bfit_tracker/enums/nutrients.dart';
 import 'package:bfit_tracker/theme.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class NutrientDialog extends StatelessWidget {
@@ -26,6 +28,9 @@ class NutrientDialog extends StatelessWidget {
 }
 
 dialogContent(NutrientsEnum nutrientsEnum, BuildContext buildContext) {
+  // ignore: close_sinks
+  final NutritionDataBloc nutritionDataBloc =
+      BlocProvider.of<NutritionDataBloc>(buildContext);
   return Stack(
     children: <Widget>[
       Container(
@@ -114,7 +119,8 @@ dialogContent(NutrientsEnum nutrientsEnum, BuildContext buildContext) {
                 child: CupertinoButton(
                   color: mainTheme.buttonColor,
                   onPressed: () {
-                    Navigator.of(buildContext).pop();
+                    if (nutritionDataBloc != null) {}
+                    //Navigator.of(buildContext).pop();
                   },
                   child: AutoSizeText(
                     'Confirm',

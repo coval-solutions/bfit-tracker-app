@@ -5,6 +5,7 @@ import 'package:bfit_tracker/models/nutrient_stat.dart';
 import 'package:bfit_tracker/utils.dart';
 import 'package:bfit_tracker/utils/coval_math.dart';
 import 'package:nutrition/nutrition.dart';
+import 'package:nutrition/nutrition_enum.dart';
 
 class NutritionDataRepository {
   Future<List<NutrientStat>> retrieve(
@@ -31,7 +32,8 @@ class NutritionDataRepository {
               map.entries.firstWhere((element) => element.key == key);
 
           double value = double.parse(nutrient.value);
-          if (nutrient.key == 'vitamin_a' && Platform.isAndroid) {
+          if (nutrient.key == Nutrition.dataTypes[NutritionEnum.VITAMIN_A] &&
+              Platform.isAndroid) {
             // Convert IU to MCG
             value = value * 0.3;
           }
