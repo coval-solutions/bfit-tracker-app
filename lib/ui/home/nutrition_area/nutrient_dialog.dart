@@ -29,6 +29,8 @@ class NutrientDialog extends StatelessWidget {
 }
 
 dialogContent(NutritionEnum nutrientsEnum, BuildContext buildContext) {
+  TextEditingController textEditingController = new TextEditingController();
+
   // ignore: close_sinks
   final NutritionDataBloc nutritionDataBloc =
       BlocProvider.of<NutritionDataBloc>(buildContext);
@@ -105,6 +107,7 @@ dialogContent(NutritionEnum nutrientsEnum, BuildContext buildContext) {
               Container(
                 width: MediaQuery.of(buildContext).size.width / 2,
                 child: TextField(
+                  controller: textEditingController,
                   maxLines: 1,
                   autofocus: true,
                   keyboardType: TextInputType.number,
@@ -121,9 +124,11 @@ dialogContent(NutritionEnum nutrientsEnum, BuildContext buildContext) {
                   color: mainTheme.buttonColor,
                   onPressed: () {
                     if (nutritionDataBloc != null) {
-                      nutritionDataBloc.add(AddNutritionData({}));
+                      nutritionDataBloc.add(AddNutritionData(
+                          {nutrientsEnum: double.parse(textEditingController.text)}));
                     }
-                    //Navigator.of(buildContext).pop();
+
+                    Navigator.of(buildContext).pop();
                   },
                   child: AutoSizeText(
                     'Confirm',
