@@ -1,7 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:barcode_scan/barcode_scan.dart';
 import 'package:bfit_tracker/blocs/nutrition_data/nutrition_data_bloc.dart';
-import 'package:bfit_tracker/enums/nutrients.dart';
 import 'package:bfit_tracker/models/nutrient_stat.dart';
 import 'package:bfit_tracker/theme.dart';
 import 'package:bfit_tracker/ui/coval_solutions/empty_app_bar.dart';
@@ -14,7 +13,7 @@ import 'package:nutrition/nutrition_enum.dart';
 import 'package:openfoodfacts/openfoodfacts.dart';
 
 class NutritionArea extends StatefulWidget {
-  final List<NutrientsEnum> nutrientsEnums = NutrientsEnum.values;
+  final List<NutritionEnum> nutrientsEnums = NutritionEnum.values;
   final List<Color> colors = [
     mainTheme.primaryColor,
     mainTheme.accentColor,
@@ -156,7 +155,7 @@ class _NutritionAreaState extends State<NutritionArea> {
                       itemCount: nutritionData.length ?? 0,
                       itemBuilder: (BuildContext context, int index) {
                         return NutrientCard(
-                            nutrientsEnum: nutritionData[index].type,
+                            nutritionEnum: nutritionData[index].type,
                             value: double.parse(nutritionData[index].value),
                             color:
                                 widget.colors[(index % widget.colors.length)]);

@@ -6,9 +6,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:nutrition/nutrition_enum.dart';
 
 class NutrientDialog extends StatelessWidget {
-  final NutrientsEnum nutrientsEnum;
+  final NutritionEnum nutrientsEnum;
 
   NutrientDialog({
     @required this.nutrientsEnum,
@@ -27,7 +28,7 @@ class NutrientDialog extends StatelessWidget {
   }
 }
 
-dialogContent(NutrientsEnum nutrientsEnum, BuildContext buildContext) {
+dialogContent(NutritionEnum nutrientsEnum, BuildContext buildContext) {
   // ignore: close_sinks
   final NutritionDataBloc nutritionDataBloc =
       BlocProvider.of<NutritionDataBloc>(buildContext);
@@ -119,7 +120,9 @@ dialogContent(NutrientsEnum nutrientsEnum, BuildContext buildContext) {
                 child: CupertinoButton(
                   color: mainTheme.buttonColor,
                   onPressed: () {
-                    if (nutritionDataBloc != null) {}
+                    if (nutritionDataBloc != null) {
+                      nutritionDataBloc.add(AddNutritionData({}));
+                    }
                     //Navigator.of(buildContext).pop();
                   },
                   child: AutoSizeText(

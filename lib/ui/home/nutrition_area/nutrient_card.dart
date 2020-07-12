@@ -3,13 +3,14 @@ import 'package:bfit_tracker/enums/nutrients.dart';
 import 'package:bfit_tracker/ui/home/nutrition_area/nutrient_dialog.dart';
 import 'package:bfit_tracker/utils/coval_math.dart';
 import 'package:flutter/material.dart';
+import 'package:nutrition/nutrition_enum.dart';
 
 class NutrientCard extends StatelessWidget {
-  final NutrientsEnum nutrientsEnum;
+  final NutritionEnum nutritionEnum;
   final double value;
   final Color color;
 
-  const NutrientCard({Key key, this.nutrientsEnum, this.value, this.color})
+  const NutrientCard({Key key, this.nutritionEnum, this.value, this.color})
       : super(key: key);
 
   @override
@@ -19,7 +20,7 @@ class NutrientCard extends StatelessWidget {
         showDialog(
           context: context,
           builder: (BuildContext context) =>
-              NutrientDialog(nutrientsEnum: this.nutrientsEnum),
+              NutrientDialog(nutrientsEnum: this.nutritionEnum),
         );
       },
       child: Card(
@@ -38,7 +39,7 @@ class NutrientCard extends StatelessWidget {
                 left: 22,
               ),
               child: AutoSizeText(
-                this.nutrientsEnum.name ?? '',
+                this.nutritionEnum.name ?? '',
                 style: TextStyle(
                   fontWeight: FontWeight.w600,
                   color: Colors.white,
@@ -61,7 +62,7 @@ class NutrientCard extends StatelessWidget {
                   ),
                   children: <TextSpan>[
                     TextSpan(
-                      text: ' ' + this.nutrientsEnum.units,
+                      text: ' ' + this.nutritionEnum.units,
                       style: TextStyle(
                         fontSize: 12,
                       ),
