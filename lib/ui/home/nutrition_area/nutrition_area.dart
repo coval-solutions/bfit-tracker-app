@@ -47,30 +47,34 @@ class _NutritionAreaState extends State<NutritionArea> {
   }
 
   Future<void> scanBarcode() async {
-    var result = await BarcodeScanner.scan();
-    if (result.rawContent == null || result.rawContent.isEmpty) {
-      return;
-    }
+    try {
+      var result = await BarcodeScanner.scan();
+      if (result.rawContent == null || result.rawContent.isEmpty) {
+        return;
+      }
 
-    ProductQueryConfiguration configuration = ProductQueryConfiguration(
-        result.rawContent,
-        language: OpenFoodFactsLanguage.ENGLISH,
-        fields: [ProductField.NUTRIMENTS]);
-    ProductResult product = await OpenFoodAPIClient.getProduct(configuration);
+      ProductQueryConfiguration configuration = ProductQueryConfiguration(
+          result.rawContent,
+          language: OpenFoodFactsLanguage.ENGLISH,
+          fields: [ProductField.NUTRIMENTS]);
+      ProductResult product = await OpenFoodAPIClient.getProduct(configuration);
 
-    if (product.status == 1) {
-      var nutriments = product.product.nutriments;
-      Map<NutritionEnum, double> nutrients = {
-        NutritionEnum.FIBRE: nutriments.fiber ?? 0.0,
-        NutritionEnum.FAT: nutriments.fat ?? 0.0,
-        NutritionEnum.PROTEIN: nutriments.proteins ?? 0.0,
-        NutritionEnum.CARBOHYDRATES: nutriments.carbohydrates ?? 0.0
-      };
+      if (product.status == 1) {
+        var nutriments = product.product.nutriments;
+        Map<NutritionEnum, double> nutrients = {
+          NutritionEnum.FIBRE: nutriments.fiber ?? 0.0,
+          NutritionEnum.FAT: nutriments.fat ?? 0.0,
+          NutritionEnum.PROTEIN: nutriments.proteins ?? 0.0,
+          NutritionEnum.CARBOHYDRATES: nutriments.carbohydrates ?? 0.0
+        };
 
-      nutritionDataBloc.add(AddNutritionData(nutrients));
-      return product.product;
-    } else {
-      return;
+        nutritionDataBloc.add(AddNutritionData(nutrients));
+        return product.product;
+      } else {
+        return;
+      }
+    } catch (err) {
+      print(err);
     }
   }
 
