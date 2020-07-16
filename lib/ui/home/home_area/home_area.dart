@@ -299,14 +299,24 @@ class _NearByGymsCardState extends State<NearByGymsCard> {
             child: BlocConsumer<LocationBloc, LocationState>(
               listener: (BuildContext context, state) {},
               builder: (BuildContext context, state) {
+                if (state is LocationError) {
+                  return Center(
+                    child: AutoSizeText(
+                      'BFit Tracker is unable to locate your current position. 😞',
+                      textAlign: TextAlign.center,
+                    ),
+                  );
+                }
+
                 if (!(state is Located)) {
                   return Center(child: CircularProgressIndicator());
                 }
+
                 return BlocConsumer<GymBloc, GymState>(
                   listener: (BuildContext context, state) {},
                   builder: (BuildContext context, state) {
                     if (!(state is GymLoaded)) {
-                      return CircularProgressIndicator();
+                      return Center(child: CircularProgressIndicator());
                     }
 
                     return FutureBuilder<List<Gym>>(

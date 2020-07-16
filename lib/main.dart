@@ -4,11 +4,13 @@ import 'package:bfit_tracker/blocs/courses/courses_bloc.dart';
 import 'package:bfit_tracker/blocs/fitness_data/fitness_data_bloc.dart';
 import 'package:bfit_tracker/blocs/gym/gym_bloc.dart';
 import 'package:bfit_tracker/blocs/location/location_bloc.dart';
+import 'package:bfit_tracker/blocs/nutrition_data/nutrition_data_bloc.dart';
 import 'package:bfit_tracker/blocs/user_info/user_info_bloc.dart';
 import 'package:bfit_tracker/repositories/course_repository.dart';
 import 'package:bfit_tracker/repositories/fitness_data_repository.dart';
 import 'package:bfit_tracker/repositories/gym_repository.dart';
 import 'package:bfit_tracker/repositories/location_repository.dart';
+import 'package:bfit_tracker/repositories/nutrition_data_repository.dart';
 import 'package:bfit_tracker/repositories/user_info_repository.dart';
 import 'package:bfit_tracker/repositories/user_repository.dart';
 import 'package:bfit_tracker/simple_bloc_delegate.dart';
@@ -25,6 +27,8 @@ Future<void> main() async {
   final LocationRepository locationRepository = LocationRepository();
   final GymRepository gymRepository = GymRepository();
   final FitnessDataRepository fitnessDataRepository = FitnessDataRepository();
+  final NutritionDataRepository nutritionDataRepository =
+      NutritionDataRepository();
   final CourseRepository courseRepository = CourseRepository();
 
   runApp(
@@ -55,6 +59,11 @@ Future<void> main() async {
           create: (BuildContext context) => FitnessDataBloc(
             fitnessDataRepository: fitnessDataRepository,
           )..add(LoadFitnessData()),
+        ),
+        BlocProvider<NutritionDataBloc>(
+          create: (BuildContext context) => NutritionDataBloc(
+            nutritionDataRepository: nutritionDataRepository,
+          )..add(LoadNutritionData()),
         ),
         BlocProvider<CoursesBloc>(
           create: (BuildContext context) => CoursesBloc(

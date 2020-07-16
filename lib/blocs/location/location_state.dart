@@ -9,6 +9,8 @@ abstract class LocationState extends Equatable {
 
 class Uninitialized extends LocationState {}
 
+class LocationError extends LocationState {}
+
 class Located extends LocationState {
   final Position _position;
 
