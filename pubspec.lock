@@ -406,9 +406,9 @@ packages:
   nutrition:
     dependency: "direct main"
     description:
-      path: "../nutrition"
-      relative: true
-    source: path
+      name: nutrition
+      url: "https://pub.dartlang.org"
+    source: hosted
     version: "1.0.0"
   openfoodfacts:
     dependency: "direct main"

@@ -28,21 +28,17 @@ class LoadNutritionData extends NutritionDataEvent {
 
 class AddNutritionData extends NutritionDataEvent {
   final Map<NutritionEnum, double> nutrients;
-  final DateTime startDateTime;
-  final DateTime endDateTime;
+  final DateTime dateTime;
 
-  AddNutritionData(this.nutrients,
-      {DateTime startDateTime, DateTime endDateTime})
-      : startDateTime = startDateTime ?? DateTime.now(),
-        endDateTime = endDateTime ?? DateTime.now();
+  AddNutritionData(this.nutrients, {DateTime dateTime})
+      : dateTime = dateTime ?? DateTime.now();
 
   @override
-  List<Object> get props =>
-      [this.nutrients, this.startDateTime, this.endDateTime];
+  List<Object> get props => [this.nutrients, this.dateTime];
 
   @override
   String toString() =>
-      "AddNutritionData { nutrients: ${this.nutrients} startDateTime: ${this.startDateTime} endDateTime: ${this.endDateTime} }";
+      "AddNutritionData { nutrients: ${this.nutrients} dateTime: ${this.dateTime} }";
 }
 
 class SetDateSelected extends NutritionDataEvent {

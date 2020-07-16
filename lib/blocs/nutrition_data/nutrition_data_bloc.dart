@@ -58,8 +58,7 @@ class NutritionDataBloc extends Bloc<NutritionDataEvent, NutritionDataState> {
 
   Stream<NutritionDataState> _mapAddingToState(AddNutritionData event) async* {
     try {
-      Nutrition.addData(
-          event.nutrients, event.startDateTime, event.endDateTime);
+      Nutrition.addData(event.nutrients, event.dateTime);
       this.add(LoadNutritionData());
     } catch (_) {
       yield NutritionDataNotLoaded();
