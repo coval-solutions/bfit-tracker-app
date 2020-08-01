@@ -1,6 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:bfit_tracker/blocs/courses/courses_bloc.dart';
-import 'package:bfit_tracker/models/course.dart';
+import 'package:bfit_tracker/blocs/workout/workout_bloc.dart';
+import 'package:bfit_tracker/models/workout.dart';
 import 'package:bfit_tracker/theme.dart';
 import 'package:bfit_tracker/ui/coval_solutions/empty_app_bar.dart';
 import 'package:bfit_tracker/ui/home/courses_area/course_card.dart';
@@ -18,7 +18,7 @@ class CoursesArea extends StatefulWidget {
 class _CoursesAreaState extends State<CoursesArea> {
   final List<Color> colors = [mainTheme.primaryColor, mainTheme.accentColor];
   bool showDetails = false;
-  Course courseSelected;
+  Workout courseSelected;
 
   void hideDetails() {
     setState(() {
@@ -28,9 +28,9 @@ class _CoursesAreaState extends State<CoursesArea> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<CoursesBloc, CoursesState>(
-      listener: (BuildContext context, CoursesState state) {},
-      builder: (BuildContext context, CoursesState state) {
+    return BlocConsumer<WorkoutBloc, WorkoutsState>(
+      listener: (BuildContext context, WorkoutsState state) {},
+      builder: (BuildContext context, WorkoutsState state) {
         if (!(state is CoursesDataLoaded) && state.props.isEmpty) {
           return Center(child: CircularProgressIndicator());
         }
@@ -38,7 +38,7 @@ class _CoursesAreaState extends State<CoursesArea> {
         return FutureBuilder(
           future: state.props.first,
           builder:
-              (BuildContext context, AsyncSnapshot<List<Course>> snapshot) {
+              (BuildContext context, AsyncSnapshot<List<Workout>> snapshot) {
             if ((snapshot.connectionState == ConnectionState.none ||
                     snapshot.connectionState == ConnectionState.waiting) ||
                 snapshot.data == null) {
@@ -50,10 +50,10 @@ class _CoursesAreaState extends State<CoursesArea> {
               return Center(child: CircularProgressIndicator());
             }
 
-            if (showDetails && courseSelected != null) {
-              return CourseDetails(
-                  course: courseSelected, callback: this.hideDetails);
-            }
+            // if (showDetails && courseSelected != null) {
+            //   return CourseDetails(
+            //       course: courseSelected, callback: this.hideDetails);
+            // }
 
             return Scaffold(
               appBar: EmptyAppBar(),
@@ -82,24 +82,24 @@ class _CoursesAreaState extends State<CoursesArea> {
                       padding: const EdgeInsets.all(8.0),
                       itemCount: snapshot.data.length,
                       itemBuilder: (BuildContext context, int index) {
-                        if (snapshot.data[index].courseDetail != null) {
-                          return GestureDetector(
-                              onTap: () {
-                                setState(() {
-                                  courseSelected = snapshot.data[index];
-                                  showDetails = true;
-                                });
-                              },
-                              child: CourseCard(
-                                course: snapshot.data[index],
-                                color: colors[index % colors.length],
-                                duration:
-                                    Duration(milliseconds: 400 * (index + 1)),
-                              ));
-                        }
+                        // if (snapshot.data[index].courseDetail != null) {
+                        //   return GestureDetector(
+                        //       onTap: () {
+                        //         setState(() {
+                        //           courseSelected = snapshot.data[index];
+                        //           showDetails = true;
+                        //         });
+                        //       },
+                        //       child: CourseCard(
+                        //         workout: snapshot.data[index],
+                        //         color: colors[index % colors.length],
+                        //         duration:
+                        //             Duration(milliseconds: 400 * (index + 1)),
+                        //       ));
+                        // }
 
                         return CourseCard(
-                          course: snapshot.data[index],
+                          workout: snapshot.data[index],
                           color: colors[index % colors.length],
                           duration: Duration(milliseconds: 400 * (index + 1)),
                         );

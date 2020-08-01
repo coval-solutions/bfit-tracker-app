@@ -1,16 +1,16 @@
-part of 'courses_bloc.dart';
+part of 'workout_bloc.dart';
 
-abstract class CoursesState extends Equatable {
-  const CoursesState();
+abstract class WorkoutsState extends Equatable {
+  const WorkoutsState();
 
   @override
   List<Object> get props => [];
 }
 
-class CoursesNotLoaded extends CoursesState {}
+class CoursesNotLoaded extends WorkoutsState {}
 
-class CoursesDataLoaded extends CoursesState {
-  final Future<List<Course>> _courses;
+class CoursesDataLoaded extends WorkoutsState {
+  final Future<List<Workout>> _courses;
 
   const CoursesDataLoaded(courses)
       : assert(courses != null),
@@ -23,4 +23,4 @@ class CoursesDataLoaded extends CoursesState {
   String toString() => "CoursesDataLoaded { courses: ${this._courses} }";
 }
 
-class CoursesDataLoading extends CoursesState {}
+class CoursesDataLoading extends WorkoutsState {}

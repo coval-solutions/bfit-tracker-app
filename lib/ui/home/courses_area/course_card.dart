@@ -1,16 +1,16 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:bfit_tracker/models/course.dart';
+import 'package:bfit_tracker/models/workout.dart';
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 
 class CourseCard extends StatefulWidget {
-  final Course course;
+  final Workout workout;
   final Color color;
   final Duration duration;
 
   CourseCard({
     Key key,
-    @required this.course,
+    @required this.workout,
     @required this.color,
     this.duration = const Duration(milliseconds: 400),
   }) : super(key: key);
@@ -56,53 +56,59 @@ class _CourseCardState extends State<CourseCard>
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12.0),
         ),
-        child: Stack(
+        child: Column(
           children: <Widget>[
-            Positioned(
-              top: 12,
-              left: 14,
-              child: AutoSizeText(
-                widget.course.getHumanReadableName(),
-                maxLines: 2,
-                minFontSize: 22,
-                style: TextStyle(
-                  color: Colors.white,
-                ),
-              ),
-            ),
-            Positioned(
-              bottom: 6,
-              right: 10,
-              child: AutoSizeText.rich(
-                  TextSpan(
-                    text: widget.course.minutes.toString(),
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                      fontSize: 18,
-                    ),
-                    children: <TextSpan>[
-                      TextSpan(
-                        text: 'mins',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                          fontSize: 8,
-                        ),
-                      ),
-                    ],
-                  ),
-                  maxLines: 1),
-            ),
-            SizedBox(
-              height: 128,
-              child: FlareActor(
-                  'assets/animations/${widget.course.animationFilename}',
-                  alignment: Alignment.center,
-                  animation: 'active'),
-            ),
+            AutoSizeText(widget.workout.getTypesString()),
+            AutoSizeText(widget.workout.getHumanReadableName()),
           ],
         ),
+        // child: Stack(
+        //   children: <Widget>[
+        //     Positioned(
+        //       top: 12,
+        //       left: 14,
+        //       child: AutoSizeText(
+        //         widget.workout.getHumanReadableName(),
+        //         maxLines: 2,
+        //         minFontSize: 22,
+        //         style: TextStyle(
+        //           color: Colors.white,
+        //         ),
+        //       ),
+        //     ),
+        //     // Positioned(
+        //     //   bottom: 6,
+        //     //   right: 10,
+        //     //   child: AutoSizeText.rich(
+        //     //       TextSpan(
+        //     //         text: widget.workout. .minutes.toString(),
+        //     //         style: TextStyle(
+        //     //           fontWeight: FontWeight.bold,
+        //     //           color: Colors.white,
+        //     //           fontSize: 18,
+        //     //         ),
+        //     //         children: <TextSpan>[
+        //     //           TextSpan(
+        //     //             text: 'mins',
+        //     //             style: TextStyle(
+        //     //               fontWeight: FontWeight.bold,
+        //     //               color: Colors.white,
+        //     //               fontSize: 8,
+        //     //             ),
+        //     //           ),
+        //     //         ],
+        //     //       ),
+        //     //       maxLines: 1),
+        //     // ),
+        //     // SizedBox(
+        //     //   height: 128,
+        //     //   child: FlareActor(
+        //     //       'assets/animations/${widget.workout.imageLocation}',
+        //     //       alignment: Alignment.center,
+        //     //       animation: 'active'),
+        //     // ),
+        //   ],
+        // ),
       ),
     );
   }
