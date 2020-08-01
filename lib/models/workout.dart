@@ -5,7 +5,7 @@ class Workout {
   final String description;
   final String imageLocation;
   final bool isFast;
-  final List<String> types;
+  final List<dynamic> types;
 
   Workout(
       {this.title,
@@ -24,11 +24,11 @@ class Workout {
     );
   }
 
-  String getHumanReadableName() {
-    return this.title.replaceAll(' ', '\n');
+  String getHumanReadableDescription() {
+    return this.description.replaceAll(' ', '\n');
   }
 
   String getTypesString() {
-    return this.types.join(', ');
+    return this.types.join(', ').toUpperCase();
   }
 }
