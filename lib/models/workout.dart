@@ -6,13 +6,15 @@ class Workout {
   final String imageLocation;
   final bool isFast;
   final List<dynamic> types;
+  final List<dynamic> workouts;
 
   Workout(
       {this.title,
       this.description,
       this.imageLocation,
       this.isFast,
-      this.types});
+      this.types,
+      this.workouts});
 
   Workout fromSnapshot(DocumentSnapshot snapshot) {
     return Workout(
@@ -21,6 +23,7 @@ class Workout {
       imageLocation: snapshot.data['image_location'] ?? '',
       isFast: snapshot.data['is_fast'] ?? false,
       types: snapshot.data['types'] ?? ['Mixed'],
+      workouts: snapshot.data['workouts'] ?? [],
     );
   }
 

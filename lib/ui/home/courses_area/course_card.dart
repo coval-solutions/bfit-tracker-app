@@ -1,27 +1,30 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:bfit_tracker/models/workout.dart';
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
-class CourseCard extends StatefulWidget {
-  final Workout workout;
+class WorkoutsCard extends StatefulWidget {
+  final String smallTitle;
+  final String mainTitle;
+  final String description;
+  final String imageUrl;
   final Color color;
   final Duration duration;
 
-  CourseCard({
+  WorkoutsCard({
     Key key,
-    @required this.workout,
+    @required this.smallTitle,
+    @required this.mainTitle,
+    @required this.description,
+    @required this.imageUrl,
     @required this.color,
     this.duration = const Duration(milliseconds: 400),
   }) : super(key: key);
 
   @override
-  _CourseCardState createState() => _CourseCardState();
+  _WorkoutsCardState createState() => _WorkoutsCardState();
 }
 
-class _CourseCardState extends State<CourseCard>
+class _WorkoutsCardState extends State<WorkoutsCard>
     with SingleTickerProviderStateMixin {
   AnimationController _controller;
   Animation<Offset> _offsetAnimation;
@@ -68,7 +71,7 @@ class _CourseCardState extends State<CourseCard>
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     AutoSizeText(
-                      widget.workout.getTypesString(),
+                      widget.smallTitle,
                       minFontSize: 8,
                       maxFontSize: 12,
                       style: TextStyle(
@@ -76,16 +79,16 @@ class _CourseCardState extends State<CourseCard>
                     ),
                     SizedBox(height: 4),
                     AutoSizeText(
-                      widget.workout.title,
+                      widget.mainTitle,
                       minFontSize: 16,
-                      maxFontSize: 24,
+                      maxFontSize: 20,
                       style: TextStyle(
                           color: Colors.white, fontWeight: FontWeight.bold),
                     ),
                     SizedBox(height: 10),
                     AutoSizeText(
-                      widget.workout.description,
-                      minFontSize: 8,
+                      widget.description,
+                      minFontSize: 10,
                       maxFontSize: 12,
                       maxLines: 3,
                       style: TextStyle(
@@ -95,12 +98,13 @@ class _CourseCardState extends State<CourseCard>
                 ),
               ),
               Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Container(
                     height: 80,
                     width: 120,
                     child: SvgPicture.network(
-                      widget.workout.imageLocation,
+                      widget.imageUrl,
                       fit: BoxFit.contain,
                     ),
                   ),
