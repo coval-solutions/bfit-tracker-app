@@ -3,25 +3,26 @@ import 'package:bfit_tracker/blocs/workout/workout_bloc.dart';
 import 'package:bfit_tracker/models/workout.dart';
 import 'package:bfit_tracker/theme.dart';
 import 'package:bfit_tracker/ui/coval_solutions/empty_app_bar.dart';
-import 'package:bfit_tracker/ui/home/courses_area/course_card.dart';
+import 'package:bfit_tracker/ui/home/workouts_area/workout_card.dart';
+import 'package:bfit_tracker/ui/home/workouts_area/workout_details.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class CoursesArea extends StatefulWidget {
-  CoursesArea({Key key}) : super(key: key);
+class WorkoutsArea extends StatefulWidget {
+  WorkoutsArea({Key key}) : super(key: key);
 
   @override
-  _CoursesAreaState createState() => _CoursesAreaState();
+  _WorkoutsAreaState createState() => _WorkoutsAreaState();
 }
 
-class _CoursesAreaState extends State<CoursesArea> {
+class _WorkoutsAreaState extends State<WorkoutsArea> {
   final List<Color> colors = [mainTheme.primaryColor, mainTheme.accentColor];
   final TextEditingController textEditingController = TextEditingController();
   List<Workout> fastWorkouts = [];
   List<Workout> bodyWorkouts = [];
   bool showDetails = false;
-  Workout courseSelected;
+  Workout workoutSelected;
 
   @override
   void initState() {
@@ -80,10 +81,10 @@ class _CoursesAreaState extends State<CoursesArea> {
               return Center(child: CircularProgressIndicator());
             }
 
-            // if (showDetails && courseSelected != null) {
-            //   return CourseDetails(
-            //       course: courseSelected, callback: this.hideDetails);
-            // }
+            if (showDetails && workoutSelected != null) {
+              return WorkoutDetails(
+                  workout: workoutSelected, callback: this.hideDetails);
+            }
 
             // User hasn't searched anything, show all results (categorised)s
 
@@ -93,7 +94,7 @@ class _CoursesAreaState extends State<CoursesArea> {
                   .toList();
 
               bodyWorkouts = snapshot.data
-                  .where((element) => element.types.contains('body'))
+                  .where((element) => element.type.contains('body'))
                   .toList();
             }
 
@@ -145,24 +146,28 @@ class _CoursesAreaState extends State<CoursesArea> {
                       padding: const EdgeInsets.all(8.0),
                       itemCount: fastWorkouts.length,
                       itemBuilder: (BuildContext context, int index) {
-                        // if (snapshot.data[index].courseDetail != null) {
-                        //   return GestureDetector(
-                        //       onTap: () {
-                        //         setState(() {
-                        //           courseSelected = snapshot.data[index];
-                        //           showDetails = true;
-                        //         });
-                        //       },
-                        //       child: CourseCard(
-                        //         workout: snapshot.data[index],
-                        //         color: colors[index % colors.length],
-                        //         duration:
-                        //             Duration(milliseconds: 400 * (index + 1)),
-                        //       ));
-                        // }
+                        if (snapshot.data[index].exercises.isNotEmpty) {
+                          return GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  workoutSelected = snapshot.data[index];
+                                  showDetails = true;
+                                });
+                              },
+                              child: WorkoutCard(
+                                smallTitle:
+                                    fastWorkouts[index].type.toUpperCase(),
+                                mainTitle: fastWorkouts[index].title,
+                                description: fastWorkouts[index].description,
+                                imageUrl: fastWorkouts[index].imageLocation,
+                                color: colors[index % colors.length],
+                                duration:
+                                    Duration(milliseconds: 400 * (index + 1)),
+                              ));
+                        }
 
-                        return WorkoutsCard(
-                          smallTitle: fastWorkouts[index].getTypesString(),
+                        return WorkoutCard(
+                          smallTitle: fastWorkouts[index].type.toUpperCase(),
                           mainTitle: fastWorkouts[index].title,
                           description: fastWorkouts[index].description,
                           imageUrl: fastWorkouts[index].imageLocation,
@@ -193,27 +198,35 @@ class _CoursesAreaState extends State<CoursesArea> {
                         padding: const EdgeInsets.all(8.0),
                         itemCount: bodyWorkouts.length,
                         itemBuilder: (BuildContext context, int index) {
-                          // if (snapshot.data[index].courseDetail != null) {
-                          //   return GestureDetector(
-                          //       onTap: () {
-                          //         setState(() {
-                          //           courseSelected = snapshot.data[index];
-                          //           showDetails = true;
-                          //         });
-                          //       },
-                          //       child: CourseCard(
-                          //         workout: snapshot.data[index],
-                          //         color: colors[index % colors.length],
-                          //         duration:
-                          //             Duration(milliseconds: 400 * (index + 1)),
-                          //       ));
-                          // }
+                          if (snapshot.data[index].exercises.isNotEmpty) {
+                            return GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    workoutSelected = snapshot.data[index];
+                                    showDetails = true;
+                                  });
+                                },
+                                child: Container(
+                                  width: 230,
+                                  child: WorkoutCard(
+                                    smallTitle:
+                                        "${bodyWorkouts[index].exercises.length} workouts",
+                                    mainTitle: bodyWorkouts[index].title,
+                                    description:
+                                        bodyWorkouts[index].description,
+                                    imageUrl: bodyWorkouts[index].imageLocation,
+                                    color: colors[index % colors.length],
+                                    duration: Duration(
+                                        milliseconds: 400 * (index + 1)),
+                                  ),
+                                ));
+                          }
 
                           return Container(
                             width: 230,
-                            child: WorkoutsCard(
+                            child: WorkoutCard(
                               smallTitle:
-                                  "${bodyWorkouts[index].workouts.length} workouts",
+                                  "${bodyWorkouts[index].exercises.length} workouts",
                               mainTitle: bodyWorkouts[index].title,
                               description: bodyWorkouts[index].description,
                               imageUrl: bodyWorkouts[index].imageLocation,

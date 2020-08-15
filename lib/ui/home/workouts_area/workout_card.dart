@@ -2,7 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
-class WorkoutsCard extends StatefulWidget {
+class WorkoutCard extends StatefulWidget {
   final String smallTitle;
   final String mainTitle;
   final String description;
@@ -10,7 +10,7 @@ class WorkoutsCard extends StatefulWidget {
   final Color color;
   final Duration duration;
 
-  WorkoutsCard({
+  WorkoutCard({
     Key key,
     @required this.smallTitle,
     @required this.mainTitle,
@@ -21,10 +21,10 @@ class WorkoutsCard extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _WorkoutsCardState createState() => _WorkoutsCardState();
+  _WorkoutCardState createState() => _WorkoutCardState();
 }
 
-class _WorkoutsCardState extends State<WorkoutsCard>
+class _WorkoutCardState extends State<WorkoutCard>
     with SingleTickerProviderStateMixin {
   AnimationController _controller;
   Animation<Offset> _offsetAnimation;
@@ -48,8 +48,8 @@ class _WorkoutsCardState extends State<WorkoutsCard>
 
   @override
   void dispose() {
-    super.dispose();
     _controller.dispose();
+    super.dispose();
   }
 
   @override
@@ -75,7 +75,9 @@ class _WorkoutsCardState extends State<WorkoutsCard>
                       minFontSize: 8,
                       maxFontSize: 12,
                       style: TextStyle(
-                          color: Colors.white, fontWeight: FontWeight.bold),
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                     SizedBox(height: 4),
                     AutoSizeText(
@@ -83,7 +85,9 @@ class _WorkoutsCardState extends State<WorkoutsCard>
                       minFontSize: 16,
                       maxFontSize: 20,
                       style: TextStyle(
-                          color: Colors.white, fontWeight: FontWeight.bold),
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                     SizedBox(height: 10),
                     AutoSizeText(
@@ -92,7 +96,9 @@ class _WorkoutsCardState extends State<WorkoutsCard>
                       maxFontSize: 12,
                       maxLines: 3,
                       style: TextStyle(
-                          color: Colors.white, fontWeight: FontWeight.w600),
+                        color: Colors.white,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
                   ],
                 ),
