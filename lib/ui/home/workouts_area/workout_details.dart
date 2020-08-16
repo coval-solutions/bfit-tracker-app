@@ -1,8 +1,8 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:bfit_tracker/models/workout.dart';
 import 'package:bfit_tracker/theme.dart';
-import 'package:bfit_tracker/ui/coval_solutions/animated_counter.dart';
-import 'package:cached_network_image/cached_network_image.dart';
+import 'package:bfit_tracker/ui/home/workouts_area/equipment_pill.dart';
+import 'package:bfit_tracker/ui/home/workouts_area/exercise_list_item.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -20,9 +20,12 @@ class WorkoutDetails extends StatefulWidget {
 }
 
 class _WorkoutDetailsState extends State<WorkoutDetails> {
+  List<Color> colors;
+
   @override
   void initState() {
     super.initState();
+    colors = [mainTheme.primaryColor, mainTheme.accentColor];
   }
 
   TextStyle counterTextStyle = TextStyle(
@@ -39,7 +42,7 @@ class _WorkoutDetailsState extends State<WorkoutDetails> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: mainTheme.backgroundColor,
+      backgroundColor: Colors.white,
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -129,6 +132,68 @@ class _WorkoutDetailsState extends State<WorkoutDetails> {
               ],
             ),
           ),
+          SizedBox(height: 16),
+          Expanded(
+            child: Card(
+              elevation: 0,
+              color: mainTheme.backgroundColor,
+              margin: EdgeInsets.all(0),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(24.0),
+              ),
+              child: SizedBox(
+                width: double.infinity,
+                child: Padding(
+                  padding: const EdgeInsets.all(24),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      AutoSizeText(
+                        'Equipment',
+                        minFontSize: 16,
+                        maxFontSize: 24,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: CustomColor.DIM_GRAY,
+                        ),
+                      ),
+                      EquipmentPill(
+                        pillColor: CustomColor.GREY_CHATEAU.withOpacity(0.4),
+                        borderColor: mainTheme.backgroundColor,
+                        textColor: CustomColor.DIM_GRAY,
+                        equipment: false,
+                      ),
+                      SizedBox(height: 16),
+                      AutoSizeText(
+                        'Exercises',
+                        minFontSize: 16,
+                        maxFontSize: 24,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: CustomColor.DIM_GRAY,
+                        ),
+                      ),
+                      Expanded(
+                        child: ListView.separated(
+                          scrollDirection: Axis.vertical,
+                          shrinkWrap: true,
+                          itemCount: widget.workout.exercises.length,
+                          separatorBuilder: (BuildContext context, int index) =>
+                              Divider(),
+                          itemBuilder: (context, index) {
+                            return ExerciseListItem(
+                              exercise: widget.workout.exercises[index],
+                              color: this.colors[index % this.colors.length],
+                            );
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
         ],
       ),
     );
@@ -139,7 +204,7 @@ class _WorkoutDetailsState extends State<WorkoutDetails> {
 //   margin: EdgeInsets.all(0),
 //   elevation: 3,
 //   shape: RoundedRectangleBorder(
-//     borderRadius: BorderRadius.circular(12.0),
+//     borderRadius: BorderRadius.circular(10.0),
 //   ),
 //   child: Column(
 //     children: <Widget>[

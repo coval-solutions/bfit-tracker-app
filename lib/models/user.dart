@@ -1,15 +1,15 @@
-import 'package:flutter/material.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class User {
   final String _uid;
   final String _email;
   final String _displayName;
-  final NetworkImage _displayPicture;
+  final CachedNetworkImageProvider _displayPicture;
 
   User(this._uid, this._email, this._displayName, this._displayPicture);
 
-  static NetworkImage getImageFromUrl(String url) {
-    return NetworkImage(url);
+  static CachedNetworkImageProvider getImageFromUrl(String url) {
+    return CachedNetworkImageProvider(url);
   }
 
   String getName() {
@@ -24,7 +24,7 @@ class User {
     return _displayName.split(" ")[0];
   }
 
-  NetworkImage getDisplayPicture() {
+  CachedNetworkImageProvider getDisplayPicture() {
     return _displayPicture;
   }
 

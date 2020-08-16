@@ -44,7 +44,7 @@ class _WeekDayListState extends State<WeekDayList> {
       child: Container(
         child: Card(
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12.0),
+            borderRadius: BorderRadius.circular(10.0),
           ),
           child: Container(
             height: 64,
@@ -88,7 +88,7 @@ Widget weekdayCard(int index, List<DateTime> days) {
         color: Colors.white,
         onPressed: null,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12.0),
+          borderRadius: BorderRadius.circular(10.0),
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

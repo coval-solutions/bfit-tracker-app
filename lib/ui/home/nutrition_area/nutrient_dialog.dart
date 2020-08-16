@@ -19,7 +19,7 @@ class NutrientDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return Dialog(
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(10.0),
       ),
       elevation: 0,
       backgroundColor: Colors.transparent,
@@ -40,7 +40,7 @@ dialogContent(NutritionEnum nutrientsEnum, BuildContext buildContext) {
         decoration: new BoxDecoration(
           color: Colors.white,
           shape: BoxShape.rectangle,
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(10.0),
           boxShadow: [
             BoxShadow(
               color: Colors.black26,
@@ -124,8 +124,9 @@ dialogContent(NutritionEnum nutrientsEnum, BuildContext buildContext) {
                   color: mainTheme.buttonColor,
                   onPressed: () {
                     if (nutritionDataBloc != null) {
-                      nutritionDataBloc.add(AddNutritionData(
-                          {nutrientsEnum: double.parse(textEditingController.text)}));
+                      nutritionDataBloc.add(AddNutritionData({
+                        nutrientsEnum: double.parse(textEditingController.text)
+                      }));
                     }
 
                     Navigator.of(buildContext).pop();

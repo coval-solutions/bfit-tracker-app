@@ -4,14 +4,16 @@ class Exercise {
   final String name;
   final int seconds;
   final bool equipmentNeeded;
+  final String imageLocation;
 
-  Exercise({this.name, this.seconds, this.equipmentNeeded});
+  Exercise({this.name, this.seconds, this.equipmentNeeded, this.imageLocation});
 
   Exercise fromSnapshot(DocumentSnapshot snapshot) {
     return Exercise(
       name: snapshot.data['name'] ?? '',
       seconds: snapshot.data['seconds'] ?? '',
-      equipmentNeeded: snapshot.data['equipmen'] ?? false,
+      equipmentNeeded: snapshot.data['equipment'] ?? false,
+      imageLocation: snapshot.data['image_location'] ?? '',
     );
   }
 }

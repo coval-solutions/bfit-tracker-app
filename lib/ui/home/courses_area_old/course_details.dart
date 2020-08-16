@@ -53,7 +53,7 @@
 //             margin: EdgeInsets.all(0),
 //             elevation: 3,
 //             shape: RoundedRectangleBorder(
-//               borderRadius: BorderRadius.circular(12.0),
+//               borderRadius: BorderRadius.circular(10.0),
 //             ),
 //             child: Column(
 //               children: <Widget>[

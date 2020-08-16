@@ -54,7 +54,7 @@
 //       child: Card(
 //         color: widget.color,
 //         shape: RoundedRectangleBorder(
-//           borderRadius: BorderRadius.circular(12.0),
+//           borderRadius: BorderRadius.circular(10.0),
 //         ),
 //         child: Stack(
 //           children: <Widget>[
