@@ -94,9 +94,12 @@ class _WorkoutDetailsState extends State<WorkoutDetails> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
-                      Icon(
-                        Icons.directions_run,
-                        color: CustomColor.DIM_GRAY,
+                      Padding(
+                        padding: const EdgeInsets.only(right: 8.0),
+                        child: Icon(
+                          Icons.directions_run,
+                          color: CustomColor.DIM_GRAY,
+                        ),
                       ),
                       AutoSizeText(
                         '${widget.workout.exercises.length} exercises',
@@ -114,9 +117,12 @@ class _WorkoutDetailsState extends State<WorkoutDetails> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
-                      Icon(
-                        Icons.timer,
-                        color: CustomColor.DIM_GRAY,
+                      Padding(
+                        padding: const EdgeInsets.only(right: 8.0),
+                        child: Icon(
+                          Icons.timer,
+                          color: CustomColor.DIM_GRAY,
+                        ),
                       ),
                       AutoSizeText(
                         '${widget.workout.getWorkoutTiming()} minutes',

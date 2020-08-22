@@ -121,9 +121,29 @@ class _WorkoutsAreaState extends State<WorkoutsArea> {
                     Padding(
                       padding: const EdgeInsets.all(12),
                       child: CupertinoTextField(
+                        prefix: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 4),
+                          child: Icon(
+                            Icons.search,
+                            color: CustomColor.DIM_GRAY,
+                          ),
+                        ),
                         placeholder: 'Search',
+                        placeholderStyle: TextStyle(
+                          height: 1.25,
+                          color: CustomColor.DIM_GRAY,
+                        ),
                         maxLines: 1,
+                        padding: const EdgeInsets.symmetric(vertical: 8),
                         controller: this.textEditingController,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(14.0),
+                          ),
+                          border: Border.all(
+                            color: CustomColor.DIM_GRAY,
+                          ),
+                        ),
                       ),
                     ),
                     Row(
