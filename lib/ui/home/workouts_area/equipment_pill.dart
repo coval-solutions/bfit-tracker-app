@@ -5,13 +5,13 @@ class EquipmentPill extends StatelessWidget {
   final Color pillColor;
   final Color borderColor;
   final Color textColor;
-  final bool equipment;
+  final String equipment;
 
   const EquipmentPill(
       {@required this.pillColor,
       @required this.borderColor,
       @required this.textColor,
-      this.equipment = false,
+      this.equipment = '',
       Key key})
       : super(key: key);
 
@@ -21,7 +21,7 @@ class EquipmentPill extends StatelessWidget {
       color: this.pillColor,
       onPressed: () {},
       child: AutoSizeText(
-        equipment ? '' : 'No equipment',
+        equipment.isNotEmpty ? equipment : 'No equipment',
         minFontSize: 12,
         style: TextStyle(
           color: textColor,

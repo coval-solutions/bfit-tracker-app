@@ -41,6 +41,7 @@ class _WorkoutDetailsState extends State<WorkoutDetails> {
 
   @override
   Widget build(BuildContext context) {
+    var equipment = this.widget.workout.getEquipment();
     return Scaffold(
       backgroundColor: Colors.white,
       body: Column(
@@ -163,11 +164,27 @@ class _WorkoutDetailsState extends State<WorkoutDetails> {
                           color: CustomColor.DIM_GRAY,
                         ),
                       ),
-                      EquipmentPill(
-                        pillColor: CustomColor.GREY_CHATEAU.withOpacity(0.4),
-                        borderColor: mainTheme.backgroundColor,
-                        textColor: CustomColor.DIM_GRAY,
-                        equipment: false,
+                      SizedBox(height: 16),
+                      Container(
+                        height: 32,
+                        child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          physics: AlwaysScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          itemCount: equipment.length,
+                          itemBuilder: (context, i) {
+                            return Padding(
+                              padding: const EdgeInsets.only(right: 8.0),
+                              child: EquipmentPill(
+                                pillColor:
+                                    CustomColor.GREY_CHATEAU.withOpacity(0.4),
+                                borderColor: mainTheme.backgroundColor,
+                                textColor: CustomColor.DIM_GRAY,
+                                equipment: equipment[i],
+                              ),
+                            );
+                          },
+                        ),
                       ),
                       SizedBox(height: 16),
                       AutoSizeText(

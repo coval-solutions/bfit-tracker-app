@@ -49,4 +49,17 @@ class Workout {
 
     return '${duration.inMinutes.remainder(60)}:${duration.inSeconds.remainder(60)}';
   }
+
+  List<dynamic> getEquipment() {
+    var equipmentList = [];
+    for (Exercise exercise in this.exercises) {
+      for (String equipment in exercise.equipment) {
+        if (equipment.isNotEmpty) {
+          equipmentList.add(equipment);
+        }
+      }
+    }
+
+    return equipmentList;
+  }
 }
