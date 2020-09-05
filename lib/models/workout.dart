@@ -54,7 +54,8 @@ class Workout {
     var equipmentList = [];
     for (Exercise exercise in this.exercises) {
       for (String equipment in exercise.equipment) {
-        if (equipment.isNotEmpty) {
+        equipment = equipment.trim();
+        if (equipment.isNotEmpty && !equipmentList.contains(equipment)) {
           equipmentList.add(equipment);
         }
       }

@@ -166,34 +166,25 @@ class _WorkoutsAreaState extends State<WorkoutsArea> {
                       padding: const EdgeInsets.all(8.0),
                       itemCount: fastWorkouts.length,
                       itemBuilder: (BuildContext context, int index) {
-                        if (snapshot.data[index].exercises.isNotEmpty) {
-                          return GestureDetector(
-                              onTap: () {
+                        return GestureDetector(
+                            onTap: () {
+                              if (fastWorkouts[index].exercises.isNotEmpty) {
                                 setState(() {
-                                  workoutSelected = snapshot.data[index];
+                                  workoutSelected = fastWorkouts[index];
                                   showDetails = true;
                                 });
-                              },
-                              child: WorkoutCard(
-                                smallTitle:
-                                    fastWorkouts[index].type.toUpperCase(),
-                                mainTitle: fastWorkouts[index].title,
-                                description: fastWorkouts[index].description,
-                                imageUrl: fastWorkouts[index].imageLocation,
-                                color: colors[index % colors.length],
-                                duration:
-                                    Duration(milliseconds: 400 * (index + 1)),
-                              ));
-                        }
-
-                        return WorkoutCard(
-                          smallTitle: fastWorkouts[index].type.toUpperCase(),
-                          mainTitle: fastWorkouts[index].title,
-                          description: fastWorkouts[index].description,
-                          imageUrl: fastWorkouts[index].imageLocation,
-                          color: colors[index % colors.length],
-                          duration: Duration(milliseconds: 400 * (index + 1)),
-                        );
+                              }
+                            },
+                            child: WorkoutCard(
+                              smallTitle:
+                                  fastWorkouts[index].type.toUpperCase(),
+                              mainTitle: fastWorkouts[index].title,
+                              description: fastWorkouts[index].description,
+                              imageUrl: fastWorkouts[index].imageLocation,
+                              color: colors[index % colors.length],
+                              duration:
+                                  Duration(milliseconds: 400 * (index + 1)),
+                            ));
                       },
                     ),
                     Row(
@@ -218,43 +209,28 @@ class _WorkoutsAreaState extends State<WorkoutsArea> {
                         padding: const EdgeInsets.all(8.0),
                         itemCount: bodyWorkouts.length,
                         itemBuilder: (BuildContext context, int index) {
-                          if (snapshot.data[index].exercises.isNotEmpty) {
-                            return GestureDetector(
-                                onTap: () {
+                          return GestureDetector(
+                              onTap: () {
+                                if (bodyWorkouts[index].exercises.isNotEmpty) {
                                   setState(() {
-                                    workoutSelected = snapshot.data[index];
+                                    workoutSelected = bodyWorkouts[index];
                                     showDetails = true;
                                   });
-                                },
-                                child: Container(
-                                  width: 230,
-                                  child: WorkoutCard(
-                                    smallTitle:
-                                        "${bodyWorkouts[index].exercises.length} workouts",
-                                    mainTitle: bodyWorkouts[index].title,
-                                    description:
-                                        bodyWorkouts[index].description,
-                                    imageUrl: bodyWorkouts[index].imageLocation,
-                                    color: colors[index % colors.length],
-                                    duration: Duration(
-                                        milliseconds: 400 * (index + 1)),
-                                  ),
-                                ));
-                          }
-
-                          return Container(
-                            width: 230,
-                            child: WorkoutCard(
-                              smallTitle:
-                                  "${bodyWorkouts[index].exercises.length} workouts",
-                              mainTitle: bodyWorkouts[index].title,
-                              description: bodyWorkouts[index].description,
-                              imageUrl: bodyWorkouts[index].imageLocation,
-                              color: colors[index % colors.length],
-                              duration:
-                                  Duration(milliseconds: 400 * (index + 1)),
-                            ),
-                          );
+                                }
+                              },
+                              child: Container(
+                                width: 230,
+                                child: WorkoutCard(
+                                  smallTitle:
+                                      "${bodyWorkouts[index].exercises.length} workouts",
+                                  mainTitle: bodyWorkouts[index].title,
+                                  description: bodyWorkouts[index].description,
+                                  imageUrl: bodyWorkouts[index].imageLocation,
+                                  color: colors[index % colors.length],
+                                  duration:
+                                      Duration(milliseconds: 400 * (index + 1)),
+                                ),
+                              ));
                         },
                       ),
                     ),
