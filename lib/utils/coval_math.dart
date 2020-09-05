@@ -17,6 +17,10 @@ class CovalMath {
     return NumberFormat.decimalPattern(_localeString).format(value);
   }
 
+  static String fillZero(value, position) {
+    return value.toString().padLeft(position, '0');
+  }
+
   static double doubleInRange(int start, int end) =>
       _random.nextDouble() * (end - start) + start;
 }

@@ -1,5 +1,6 @@
 import 'package:bfit_tracker/models/exercise.dart';
 import 'package:bfit_tracker/repositories/workout_repository.dart';
+import 'package:bfit_tracker/utils/coval_math.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Workout {
@@ -46,8 +47,12 @@ class Workout {
         .fold(0, (previousValue, element) => previousValue + element.seconds);
 
     var duration = Duration(seconds: seconds);
+    int remainderSecs = duration.inSeconds.remainder(60);
+    if (remainderSecs > 0) {
+      return '${duration.inMinutes.remainder(60)}:${CovalMath.fillZero(remainderSecs, 2)}';
+    }
 
-    return '${duration.inMinutes.remainder(60)}:${duration.inSeconds.remainder(60)}';
+    return '${CovalMath.fillZero(duration.inMinutes.remainder(60), 2)}';
   }
 
   List<dynamic> getEquipment() {
