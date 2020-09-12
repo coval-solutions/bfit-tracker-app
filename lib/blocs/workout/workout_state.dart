@@ -23,4 +23,18 @@ class CoursesDataLoaded extends WorkoutsState {
   String toString() => "CoursesDataLoaded { courses: ${this._courses} }";
 }
 
+class WorkoutSelected extends WorkoutsState {
+  final Workout _workout;
+
+  const WorkoutSelected(_workout)
+      : assert(_workout != null),
+        _workout = _workout;
+
+  @override
+  List<Object> get props => [this._workout];
+
+  @override
+  String toString() => "WorkoutSelected { workout: ${this._workout} }";
+}
+
 class CoursesDataLoading extends WorkoutsState {}

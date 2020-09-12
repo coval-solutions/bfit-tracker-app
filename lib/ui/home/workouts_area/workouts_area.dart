@@ -4,6 +4,7 @@ import 'package:bfit_tracker/models/workout.dart';
 import 'package:bfit_tracker/theme.dart';
 import 'package:bfit_tracker/ui/coval_solutions/empty_app_bar.dart';
 import 'package:bfit_tracker/ui/home/workouts_area/workout_card.dart';
+import 'package:bfit_tracker/ui/home/workouts_area/workout_countdown.dart';
 import 'package:bfit_tracker/ui/home/workouts_area/workout_details.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -59,187 +60,198 @@ class _WorkoutsAreaState extends State<WorkoutsArea> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<WorkoutBloc, WorkoutsState>(
-      listener: (BuildContext context, WorkoutsState state) {},
+    return BlocBuilder<WorkoutBloc, WorkoutsState>(
       builder: (BuildContext context, WorkoutsState state) {
         if (!(state is CoursesDataLoaded) && state.props.isEmpty) {
           return Center(child: CircularProgressIndicator());
         }
 
-        return FutureBuilder(
-          future: state.props.first,
-          builder:
-              (BuildContext context, AsyncSnapshot<List<Workout>> snapshot) {
-            if ((snapshot.connectionState == ConnectionState.none ||
-                    snapshot.connectionState == ConnectionState.waiting) ||
-                snapshot.data == null) {
-              if (snapshot.hasError) {
-                // TODO: Add Crashlytics
-                print(snapshot.error);
+        if (state is WorkoutSelected) {
+          Future.delayed(Duration.zero, () {
+            Navigator.of(context).pushReplacement(MaterialPageRoute(
+                builder: (BuildContext context) =>
+                    WorkoutCountdown(number: 5)));
+          });
+
+          return Center(child: CircularProgressIndicator());
+        } else {
+          return FutureBuilder(
+            future: state.props.first,
+            builder:
+                (BuildContext context, AsyncSnapshot<List<Workout>> snapshot) {
+              if ((snapshot.connectionState == ConnectionState.none ||
+                      snapshot.connectionState == ConnectionState.waiting) ||
+                  snapshot.data == null) {
+                if (snapshot.hasError) {
+                  // TODO: Add Crashlytics
+                  print(snapshot.error);
+                }
+
+                return Center(child: CircularProgressIndicator());
               }
 
-              return Center(child: CircularProgressIndicator());
-            }
+              if (showDetails && workoutSelected != null) {
+                return WorkoutDetails(
+                    workout: workoutSelected, callback: this.hideDetails);
+              }
 
-            if (showDetails && workoutSelected != null) {
-              return WorkoutDetails(
-                  workout: workoutSelected, callback: this.hideDetails);
-            }
+              // User hasn't searched anything, show all results (categorised)s
+              if (this.textEditingController.text.isEmpty) {
+                fastWorkouts = snapshot.data
+                    .where((element) => element.isFast == true)
+                    .toList();
 
-            // User hasn't searched anything, show all results (categorised)s
+                bodyWorkouts = snapshot.data
+                    .where((element) => element.type.contains('body'))
+                    .toList();
+              }
 
-            if (this.textEditingController.text.isEmpty) {
-              fastWorkouts = snapshot.data
-                  .where((element) => element.isFast == true)
-                  .toList();
-
-              bodyWorkouts = snapshot.data
-                  .where((element) => element.type.contains('body'))
-                  .toList();
-            }
-
-            return Scaffold(
-              appBar: EmptyAppBar(),
-              backgroundColor: mainTheme.backgroundColor,
-              body: SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    Align(
-                      alignment: Alignment.topCenter,
-                      child: AutoSizeText(
-                        'Courses Available',
-                        maxLines: 1,
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: CustomColor.DIM_GRAY,
+              return Scaffold(
+                appBar: EmptyAppBar(),
+                backgroundColor: mainTheme.backgroundColor,
+                body: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      Align(
+                        alignment: Alignment.topCenter,
+                        child: AutoSizeText(
+                          'Courses Available',
+                          maxLines: 1,
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: CustomColor.DIM_GRAY,
+                          ),
+                          minFontSize: 26,
+                          maxFontSize: 26,
                         ),
-                        minFontSize: 26,
-                        maxFontSize: 26,
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(12),
-                      child: CupertinoTextField(
-                        prefix: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 4),
-                          child: Icon(
-                            Icons.search,
+                      Padding(
+                        padding: const EdgeInsets.all(12),
+                        child: CupertinoTextField(
+                          prefix: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 4),
+                            child: Icon(
+                              Icons.search,
+                              color: CustomColor.DIM_GRAY,
+                            ),
+                          ),
+                          placeholder: 'Search',
+                          placeholderStyle: TextStyle(
+                            height: 1.25,
                             color: CustomColor.DIM_GRAY,
                           ),
-                        ),
-                        placeholder: 'Search',
-                        placeholderStyle: TextStyle(
-                          height: 1.25,
-                          color: CustomColor.DIM_GRAY,
-                        ),
-                        maxLines: 1,
-                        padding: const EdgeInsets.symmetric(vertical: 8),
-                        controller: this.textEditingController,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(14.0),
-                          ),
-                          border: Border.all(
-                            color: CustomColor.DIM_GRAY,
+                          maxLines: 1,
+                          padding: const EdgeInsets.symmetric(vertical: 8),
+                          controller: this.textEditingController,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(14.0),
+                            ),
+                            border: Border.all(
+                              color: CustomColor.DIM_GRAY,
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Padding(
-                          padding: const EdgeInsets.only(left: 14),
-                          child: AutoSizeText('FAST WORKOUTS'),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(right: 14),
-                          child: AutoSizeText('Discover more >'),
-                        ),
-                      ],
-                    ),
-                    ListView.builder(
-                      scrollDirection: Axis.vertical,
-                      physics: NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      padding: const EdgeInsets.all(8.0),
-                      itemCount: fastWorkouts.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        return GestureDetector(
-                            onTap: () {
-                              if (fastWorkouts[index].exercises.isNotEmpty) {
-                                setState(() {
-                                  workoutSelected = fastWorkouts[index];
-                                  showDetails = true;
-                                });
-                              }
-                            },
-                            child: WorkoutCard(
-                              smallTitle:
-                                  fastWorkouts[index].type.toUpperCase(),
-                              mainTitle: fastWorkouts[index].title,
-                              description: fastWorkouts[index].description,
-                              imageUrl: fastWorkouts[index].imageLocation,
-                              color: colors[index % colors.length],
-                              duration:
-                                  Duration(milliseconds: 400 * (index + 1)),
-                            ));
-                      },
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Padding(
-                          padding: const EdgeInsets.only(left: 14),
-                          child: AutoSizeText('BODY WORKOUTS'),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(right: 14),
-                          child: AutoSizeText('Discover more >'),
-                        ),
-                      ],
-                    ),
-                    Container(
-                      height: 164,
-                      child: ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        physics: AlwaysScrollableScrollPhysics(),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Padding(
+                            padding: const EdgeInsets.only(left: 14),
+                            child: AutoSizeText('FAST WORKOUTS'),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(right: 14),
+                            child: AutoSizeText('Discover more >'),
+                          ),
+                        ],
+                      ),
+                      ListView.builder(
+                        scrollDirection: Axis.vertical,
+                        physics: NeverScrollableScrollPhysics(),
                         shrinkWrap: true,
                         padding: const EdgeInsets.all(8.0),
-                        itemCount: bodyWorkouts.length,
+                        itemCount: fastWorkouts.length,
                         itemBuilder: (BuildContext context, int index) {
                           return GestureDetector(
                               onTap: () {
-                                if (bodyWorkouts[index].exercises.isNotEmpty) {
+                                if (fastWorkouts[index].exercises.isNotEmpty) {
                                   setState(() {
-                                    workoutSelected = bodyWorkouts[index];
+                                    workoutSelected = fastWorkouts[index];
                                     showDetails = true;
                                   });
                                 }
                               },
-                              child: Container(
-                                width: 230,
-                                child: WorkoutCard(
-                                  smallTitle:
-                                      "${bodyWorkouts[index].exercises.length} workouts",
-                                  mainTitle: bodyWorkouts[index].title,
-                                  description: bodyWorkouts[index].description,
-                                  imageUrl: bodyWorkouts[index].imageLocation,
-                                  color: colors[index % colors.length],
-                                  duration:
-                                      Duration(milliseconds: 400 * (index + 1)),
-                                ),
+                              child: WorkoutCard(
+                                smallTitle:
+                                    fastWorkouts[index].type.toUpperCase(),
+                                mainTitle: fastWorkouts[index].title,
+                                description: fastWorkouts[index].description,
+                                imageUrl: fastWorkouts[index].imageLocation,
+                                color: colors[index % colors.length],
+                                duration:
+                                    Duration(milliseconds: 400 * (index + 1)),
                               ));
                         },
                       ),
-                    ),
-                  ],
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Padding(
+                            padding: const EdgeInsets.only(left: 14),
+                            child: AutoSizeText('BODY WORKOUTS'),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(right: 14),
+                            child: AutoSizeText('Discover more >'),
+                          ),
+                        ],
+                      ),
+                      Container(
+                        height: 164,
+                        child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          physics: AlwaysScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          padding: const EdgeInsets.all(8.0),
+                          itemCount: bodyWorkouts.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            return GestureDetector(
+                                onTap: () {
+                                  if (bodyWorkouts[index]
+                                      .exercises
+                                      .isNotEmpty) {
+                                    setState(() {
+                                      workoutSelected = bodyWorkouts[index];
+                                      showDetails = true;
+                                    });
+                                  }
+                                },
+                                child: Container(
+                                  width: 230,
+                                  child: WorkoutCard(
+                                    smallTitle:
+                                        "${bodyWorkouts[index].exercises.length} workouts",
+                                    mainTitle: bodyWorkouts[index].title,
+                                    description:
+                                        bodyWorkouts[index].description,
+                                    imageUrl: bodyWorkouts[index].imageLocation,
+                                    color: colors[index % colors.length],
+                                    duration: Duration(
+                                        milliseconds: 400 * (index + 1)),
+                                  ),
+                                ));
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            );
-          },
-        );
+              );
+            },
+          );
+        }
       },
     );
   }

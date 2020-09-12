@@ -1,11 +1,12 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:bfit_tracker/blocs/workout/workout_bloc.dart';
 import 'package:bfit_tracker/models/workout.dart';
 import 'package:bfit_tracker/theme.dart';
 import 'package:bfit_tracker/ui/home/workouts_area/equipment_pill.dart';
 import 'package:bfit_tracker/ui/home/workouts_area/exercise_list_item.dart';
-import 'package:bfit_tracker/ui/home/workouts_area/workout_countdown.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:recase/recase.dart';
 
@@ -233,9 +234,8 @@ class _WorkoutDetailsState extends State<WorkoutDetails> {
                 color: mainTheme.accentColor,
                 pressedOpacity: 0.8,
                 onPressed: () {
-                  Navigator.of(context).pushReplacement(MaterialPageRoute(
-                      builder: (BuildContext context) =>
-                          WorkoutCountdown(number: 5)));
+                  BlocProvider.of<WorkoutBloc>(context)
+                    ..add(SetWorkoutSelected(this.widget.workout));
                 },
                 child: AutoSizeText(
                   'Start Now',

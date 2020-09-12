@@ -26,6 +26,16 @@ class WorkoutBloc extends Bloc<WorkoutsEvent, WorkoutsState> {
   ) async* {
     if (event is LoadCoursesData) {
       yield* _mapLoadingToState(event);
+    } else if (event is SetWorkoutSelected) {
+      yield* _mapSelectedToState(event);
+    }
+  }
+
+  Stream<WorkoutsState> _mapSelectedToState(SetWorkoutSelected event) async* {
+    try {
+      yield WorkoutSelected(event._workout);
+    } catch (_) {
+      yield CoursesNotLoaded();
     }
   }
 
