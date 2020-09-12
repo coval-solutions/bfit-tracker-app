@@ -1,5 +1,4 @@
 import 'package:bfit_tracker/models/exercise.dart';
-import 'package:bfit_tracker/repositories/workout_repository.dart';
 import 'package:bfit_tracker/utils/coval_math.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -9,7 +8,8 @@ class Workout {
   final String imageLocation;
   final bool isFast;
   final String type;
-  final List<Exercise> exercises;
+  final List<dynamic> exerciseDocRefs;
+  List<Exercise> exercises;
 
   Workout(
       {this.title,
@@ -17,24 +17,17 @@ class Workout {
       this.imageLocation,
       this.isFast,
       this.type,
-      this.exercises});
+      this.exerciseDocRefs});
 
-  Workout fromSnapshot(DocumentSnapshot workoutSnapshot,
-      List<DocumentSnapshot> exerciseSnapshots) {
-    List<Exercise> exercises = [];
-    for (DocumentSnapshot exerciseSnapshot in exerciseSnapshots) {
-      exercises.add(Exercise().fromSnapshot(exerciseSnapshot));
-    }
-
-    var workout = Workout(
-        title: workoutSnapshot.data['title'] ?? '',
-        description: workoutSnapshot.data['description'] ?? '',
-        imageLocation: workoutSnapshot.data['image_location'] ?? '',
-        isFast: workoutSnapshot.data['is_fast'] ?? false,
-        type: workoutSnapshot.data['type'] ?? 'Mixed',
-        exercises: exercises);
-
-    return workout;
+  Workout fromSnapshot(DocumentSnapshot snapshot) {
+    return Workout(
+      title: snapshot.data['title'] ?? '',
+      description: snapshot.data['description'] ?? '',
+      imageLocation: snapshot.data['image_location'] ?? '',
+      isFast: snapshot.data['is_fast'] ?? false,
+      type: snapshot.data['type'] ?? 'Mixed',
+      exerciseDocRefs: snapshot.data['exercises'] ?? [],
+    );
   }
 
   String getHumanReadableDescription() {
@@ -42,9 +35,12 @@ class Workout {
   }
 
   String getWorkoutTiming() {
-    int seconds = this
-        .exercises
-        .fold(0, (previousValue, element) => previousValue + element.seconds);
+    int seconds = 0;
+    if (exercises != null && exercises.isNotEmpty) {
+      seconds = this
+          .exercises
+          .fold(0, (previousValue, element) => previousValue + element.seconds);
+    }
 
     var duration = Duration(seconds: seconds);
     int remainderSecs = duration.inSeconds.remainder(60);
@@ -57,15 +53,21 @@ class Workout {
 
   List<dynamic> getEquipment() {
     var equipmentList = [];
-    for (Exercise exercise in this.exercises) {
-      for (String equipment in exercise.equipment) {
-        equipment = equipment.trim();
-        if (equipment.isNotEmpty && !equipmentList.contains(equipment)) {
-          equipmentList.add(equipment);
+    if (exercises != null) {
+      for (Exercise exercise in this.exercises) {
+        for (String equipment in exercise.equipment) {
+          equipment = equipment.trim();
+          if (equipment.isNotEmpty && !equipmentList.contains(equipment)) {
+            equipmentList.add(equipment);
+          }
         }
       }
     }
 
     return equipmentList;
+  }
+
+  void setExercises(List<Exercise> exercises) {
+    this.exercises = exercises;
   }
 }

@@ -4,6 +4,7 @@ import 'package:bfit_tracker/models/workout.dart';
 import 'package:bfit_tracker/theme.dart';
 import 'package:bfit_tracker/ui/home/workouts_area/equipment_pill.dart';
 import 'package:bfit_tracker/ui/home/workouts_area/exercise_list_item.dart';
+import 'package:bfit_tracker/ui/home/workouts_area/workout_countdown.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -12,10 +13,8 @@ import 'package:recase/recase.dart';
 
 class WorkoutDetails extends StatefulWidget {
   final Workout workout;
-  final Function callback;
 
-  const WorkoutDetails({@required this.workout, this.callback, Key key})
-      : super(key: key);
+  const WorkoutDetails({@required this.workout, Key key}) : super(key: key);
 
   @override
   _WorkoutDetailsState createState() => _WorkoutDetailsState();
@@ -43,6 +42,11 @@ class _WorkoutDetailsState extends State<WorkoutDetails> {
 
   @override
   Widget build(BuildContext context) {
+    if (this.widget.workout.exercises == null ||
+        this.widget.workout.exercises.isEmpty) {
+      return Center(child: CircularProgressIndicator());
+    }
+
     var equipment = this.widget.workout.getEquipment();
     return Scaffold(
       backgroundColor: Colors.white,
@@ -55,9 +59,7 @@ class _WorkoutDetailsState extends State<WorkoutDetails> {
             children: <Widget>[
               GestureDetector(
                 onTap: () {
-                  if (this.widget.callback != null) {
-                    this.widget.callback();
-                  }
+                  BlocProvider.of<WorkoutBloc>(context)..add(LoadWorkouts());
                 },
                 child: Padding(
                   padding: const EdgeInsets.only(top: 28.0, left: 12.0),
@@ -108,7 +110,7 @@ class _WorkoutDetailsState extends State<WorkoutDetails> {
                             ),
                           ),
                           AutoSizeText(
-                            '${widget.workout.exercises.length} exercises',
+                            '${widget.workout.exercises?.length} exercises',
                             minFontSize: 16,
                             maxFontSize: 18,
                             style: TextStyle(
@@ -205,7 +207,7 @@ class _WorkoutDetailsState extends State<WorkoutDetails> {
                             child: ListView.separated(
                               scrollDirection: Axis.vertical,
                               shrinkWrap: true,
-                              itemCount: widget.workout.exercises.length,
+                              itemCount: widget.workout.exercises?.length ?? 0,
                               separatorBuilder:
                                   (BuildContext context, int index) =>
                                       Divider(),
@@ -234,8 +236,9 @@ class _WorkoutDetailsState extends State<WorkoutDetails> {
                 color: mainTheme.accentColor,
                 pressedOpacity: 0.8,
                 onPressed: () {
-                  BlocProvider.of<WorkoutBloc>(context)
-                    ..add(SetWorkoutSelected(this.widget.workout));
+                  Navigator.of(context).pushReplacement(MaterialPageRoute(
+                      builder: (BuildContext context) =>
+                          WorkoutCountdown(number: 5)));
                 },
                 child: AutoSizeText(
                   'Start Now',

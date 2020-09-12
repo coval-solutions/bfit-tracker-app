@@ -46,6 +46,7 @@ class AuthenticationBloc
         this.add(LoggedIn());
       }
     } catch (_) {
+      print(_);
       yield Unauthenticated();
     }
   }

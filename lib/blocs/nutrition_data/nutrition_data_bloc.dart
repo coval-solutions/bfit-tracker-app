@@ -52,6 +52,7 @@ class NutritionDataBloc extends Bloc<NutritionDataEvent, NutritionDataState> {
         yield NutritionDataLoaded(nutritionData, event.startDateTime);
       }
     } catch (_) {
+      print(_);
       yield NutritionDataNotLoaded();
     }
   }
@@ -61,6 +62,7 @@ class NutritionDataBloc extends Bloc<NutritionDataEvent, NutritionDataState> {
       Nutrition.addData(event.nutrients, event.dateTime);
       this.add(LoadNutritionData());
     } catch (_) {
+      print(_);
       yield NutritionDataNotLoaded();
     }
   }
@@ -70,6 +72,7 @@ class NutritionDataBloc extends Bloc<NutritionDataEvent, NutritionDataState> {
     try {
       yield NutritionDataLoaded(this.state.props.first, event._dateSelected);
     } catch (_) {
+      print(_);
       yield NutritionDataNotLoaded();
     }
   }

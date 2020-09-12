@@ -7,7 +7,7 @@ abstract class WorkoutsEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class LoadCoursesData extends WorkoutsEvent {}
+class LoadWorkouts extends WorkoutsEvent {}
 
 class SetWorkoutSelected extends WorkoutsEvent {
   final Workout _workout;

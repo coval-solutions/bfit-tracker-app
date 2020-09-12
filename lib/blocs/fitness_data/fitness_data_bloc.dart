@@ -44,6 +44,7 @@ class FitnessDataBloc extends Bloc<FitnessDataEvent, FitnessDataState> {
         yield FitnessDataLoaded(fitnessData, this.state.props.last);
       }
     } catch (_) {
+      print(_);
       yield FitnessDataNotLoaded();
     }
   }
@@ -53,6 +54,7 @@ class FitnessDataBloc extends Bloc<FitnessDataEvent, FitnessDataState> {
     try {
       yield FitnessDataLoaded(this.state.props.first, event._dateSelected);
     } catch (_) {
+      print(_);
       yield FitnessDataNotLoaded();
     }
   }

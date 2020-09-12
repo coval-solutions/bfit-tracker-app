@@ -52,7 +52,7 @@ class _HomeScreenState extends State<HomeScreen> {
             case HomeScreenBottomNavBarItems.NUTRITION:
               return _nutritionArea();
             case HomeScreenBottomNavBarItems.COURSES:
-              return _coursesArea();
+              return _workoutsArea();
             case HomeScreenBottomNavBarItems.ANALYTICS:
               return _analyticsArea();
             case HomeScreenBottomNavBarItems.PROFILE:
@@ -94,7 +94,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return NutritionArea();
   }
 
-  Widget _coursesArea() {
+  Widget _workoutsArea() {
     return WorkoutsArea();
   }
 

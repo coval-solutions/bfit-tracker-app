@@ -6,6 +6,7 @@ import 'package:bfit_tracker/blocs/location/location_bloc.dart';
 import 'package:bfit_tracker/blocs/nutrition_data/nutrition_data_bloc.dart';
 import 'package:bfit_tracker/blocs/user_info/user_info_bloc.dart';
 import 'package:bfit_tracker/blocs/workout/workout_bloc.dart';
+import 'package:bfit_tracker/repositories/exercise_repository.dart';
 import 'package:bfit_tracker/repositories/workout_repository.dart';
 import 'package:bfit_tracker/repositories/fitness_data_repository.dart';
 import 'package:bfit_tracker/repositories/gym_repository.dart';
@@ -29,7 +30,8 @@ Future<void> main() async {
   final FitnessDataRepository fitnessDataRepository = FitnessDataRepository();
   final NutritionDataRepository nutritionDataRepository =
       NutritionDataRepository();
-  final WorkoutRepository courseRepository = WorkoutRepository();
+  final WorkoutRepository workoutRepository = WorkoutRepository();
+  final ExerciseRepository exerciseRepository = ExerciseRepository();
 
   runApp(
     MultiBlocProvider(
@@ -67,8 +69,9 @@ Future<void> main() async {
         ),
         BlocProvider<WorkoutBloc>(
           create: (BuildContext context) => WorkoutBloc(
-            courseRepository: courseRepository,
-          )..add(LoadCoursesData()),
+              workoutRepository: workoutRepository,
+              exerciseRepository: exerciseRepository)
+            ..add(LoadWorkouts()),
         ),
       ],
       child: BlocBuilder<AuthenticationBloc, AuthenticationState>(

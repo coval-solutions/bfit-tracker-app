@@ -40,6 +40,7 @@ class UserInfoBloc extends Bloc<UserInfoEvent, UserInfoState> {
       final userInfo = _userInfoRepository.retrieve(this._user);
       yield UserInfoLoaded(userInfo);
     } catch (_) {
+      print(_);
       yield UserInfoNotLoaded();
     }
   }

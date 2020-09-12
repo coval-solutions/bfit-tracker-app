@@ -7,20 +7,20 @@ abstract class WorkoutsState extends Equatable {
   List<Object> get props => [];
 }
 
-class CoursesNotLoaded extends WorkoutsState {}
+class WorkoutsNotLoaded extends WorkoutsState {}
 
-class CoursesDataLoaded extends WorkoutsState {
-  final Future<List<Workout>> _courses;
+class WorkoutsLoaded extends WorkoutsState {
+  final List<Workout> _workouts;
 
-  const CoursesDataLoaded(courses)
-      : assert(courses != null),
-        _courses = courses;
-
-  @override
-  List<Object> get props => [this._courses];
+  const WorkoutsLoaded(workouts)
+      : assert(workouts != null),
+        _workouts = workouts;
 
   @override
-  String toString() => "CoursesDataLoaded { courses: ${this._courses} }";
+  List<Object> get props => [this._workouts];
+
+  @override
+  String toString() => "WorkoutsLoaded { workouts: ${this._workouts} }";
 }
 
 class WorkoutSelected extends WorkoutsState {
@@ -37,4 +37,4 @@ class WorkoutSelected extends WorkoutsState {
   String toString() => "WorkoutSelected { workout: ${this._workout} }";
 }
 
-class CoursesDataLoading extends WorkoutsState {}
+class WorkoutsLoading extends WorkoutsState {}
