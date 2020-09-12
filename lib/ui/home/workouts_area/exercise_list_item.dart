@@ -14,7 +14,7 @@ class ExerciseListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      contentPadding: EdgeInsets.all(0),
+      contentPadding: EdgeInsets.zero,
       leading: Container(
         width: 76,
         height: 76,
