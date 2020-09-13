@@ -42,13 +42,7 @@ class Workout {
           .fold(0, (previousValue, element) => previousValue + element.seconds);
     }
 
-    var duration = Duration(seconds: seconds);
-    int remainderSecs = duration.inSeconds.remainder(60);
-    if (remainderSecs > 0) {
-      return '${duration.inMinutes.remainder(60)}:${CovalMath.fillZero(remainderSecs, 2)}';
-    }
-
-    return '${CovalMath.fillZero(duration.inMinutes.remainder(60), 2)}';
+    return CovalMath.getHumanreadableTime(seconds);
   }
 
   List<dynamic> getEquipment() {

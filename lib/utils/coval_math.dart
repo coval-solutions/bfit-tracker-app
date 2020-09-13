@@ -21,6 +21,20 @@ class CovalMath {
     return value.toString().padLeft(position, '0');
   }
 
+  static String getHumanreadableTime(int seconds) {
+    if (seconds == 0) {
+      return '0:00';
+    }
+
+    var duration = Duration(seconds: seconds);
+    int remainderSecs = duration.inSeconds.remainder(60);
+    if (remainderSecs > 0) {
+      return '${duration.inMinutes.remainder(60)}:${CovalMath.fillZero(remainderSecs, 2)}';
+    }
+
+    return '${CovalMath.fillZero(duration.inMinutes.remainder(60), 2)}';
+  }
+
   static double doubleInRange(int start, int end) =>
       _random.nextDouble() * (end - start) + start;
 }
