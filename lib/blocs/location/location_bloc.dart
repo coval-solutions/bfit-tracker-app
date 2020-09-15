@@ -33,6 +33,7 @@ class LocationBloc extends Bloc<LocationEvent, LocationState> {
       Position position = await _locationRepository.retrieve();
       yield Located(position);
     } catch (_) {
+      print(_);
       yield LocationError();
     }
   }

@@ -9,7 +9,7 @@ import 'package:percent_indicator/linear_percent_indicator.dart';
 Widget totalGymTimeStat(gymTime) {
   return Card(
     shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(12.0),
+      borderRadius: BorderRadius.circular(10.0),
     ),
     color: Colors.white,
     child: Padding(
@@ -63,7 +63,7 @@ Widget otherStats(value, text, {unit}) {
 
   return Card(
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12.0),
+        borderRadius: BorderRadius.circular(10.0),
       ),
       color: Colors.white,
       child: Padding(

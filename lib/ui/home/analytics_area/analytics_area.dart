@@ -79,35 +79,37 @@ class _AnalyticsAreaState extends State<AnalyticsArea> {
 
           return RefreshIndicator(
             onRefresh: this._refresh,
-            child: Column(children: <Widget>[
-              Align(
-                alignment: Alignment.topCenter,
-                child: AutoSizeText(
-                  'Your Analytics',
-                  maxLines: 1,
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: CustomColor.DIM_GRAY,
+            child: Column(
+              children: <Widget>[
+                Align(
+                  alignment: Alignment.topCenter,
+                  child: AutoSizeText(
+                    'Your Analytics',
+                    maxLines: 1,
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: CustomColor.DIM_GRAY,
+                    ),
+                    minFontSize: 26,
+                    maxFontSize: 26,
                   ),
-                  minFontSize: 26,
-                  maxFontSize: 26,
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                  vertical: 6,
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 6,
+                  ),
                 ),
-              ),
-              WeekDayList(days: FitnessDataRepository.getDateTimes()),
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                  vertical: 6,
+                WeekDayList(days: FitnessDataRepository.getDateTimes()),
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 6,
+                  ),
                 ),
-              ),
-              StatsCardList(data: this.fitnessData),
-              Spacer(),
-              WeeklyStepsGraph(data: getStepsData(this.fitnessData)),
-            ]),
+                StatsCardList(data: this.fitnessData),
+                Spacer(),
+                WeeklyStepsGraph(data: getStepsData(this.fitnessData)),
+              ],
+            ),
           );
         }),
       ),

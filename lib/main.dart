@@ -1,12 +1,13 @@
 import 'package:bfit_tracker/app.dart';
 import 'package:bfit_tracker/blocs/authentication/authentication_bloc.dart';
-import 'package:bfit_tracker/blocs/courses/courses_bloc.dart';
 import 'package:bfit_tracker/blocs/fitness_data/fitness_data_bloc.dart';
 import 'package:bfit_tracker/blocs/gym/gym_bloc.dart';
 import 'package:bfit_tracker/blocs/location/location_bloc.dart';
 import 'package:bfit_tracker/blocs/nutrition_data/nutrition_data_bloc.dart';
 import 'package:bfit_tracker/blocs/user_info/user_info_bloc.dart';
-import 'package:bfit_tracker/repositories/course_repository.dart';
+import 'package:bfit_tracker/blocs/workout/workout_bloc.dart';
+import 'package:bfit_tracker/repositories/exercise_repository.dart';
+import 'package:bfit_tracker/repositories/workout_repository.dart';
 import 'package:bfit_tracker/repositories/fitness_data_repository.dart';
 import 'package:bfit_tracker/repositories/gym_repository.dart';
 import 'package:bfit_tracker/repositories/location_repository.dart';
@@ -29,7 +30,8 @@ Future<void> main() async {
   final FitnessDataRepository fitnessDataRepository = FitnessDataRepository();
   final NutritionDataRepository nutritionDataRepository =
       NutritionDataRepository();
-  final CourseRepository courseRepository = CourseRepository();
+  final WorkoutRepository workoutRepository = WorkoutRepository();
+  final ExerciseRepository exerciseRepository = ExerciseRepository();
 
   runApp(
     MultiBlocProvider(
@@ -65,10 +67,11 @@ Future<void> main() async {
             nutritionDataRepository: nutritionDataRepository,
           )..add(LoadNutritionData()),
         ),
-        BlocProvider<CoursesBloc>(
-          create: (BuildContext context) => CoursesBloc(
-            courseRepository: courseRepository,
-          )..add(LoadCoursesData()),
+        BlocProvider<WorkoutBloc>(
+          create: (BuildContext context) => WorkoutBloc(
+              workoutRepository: workoutRepository,
+              exerciseRepository: exerciseRepository)
+            ..add(LoadWorkouts()),
         ),
       ],
       child: BlocBuilder<AuthenticationBloc, AuthenticationState>(

@@ -8,7 +8,9 @@
     </item>
 
     <item>
+
         <bitmap
+            android:gravity="center"
             android:src="@mipmap/rounded_logo_bf" />
     </item>
 </layer-list>

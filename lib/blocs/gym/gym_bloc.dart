@@ -36,6 +36,7 @@ class GymBloc extends Bloc<GymEvent, GymState> {
       final gyms = _gymRepository.retrieve(this._position);
       yield GymLoaded(gyms);
     } catch (_) {
+      print(_);
       yield GymNotLoaded();
     }
   }

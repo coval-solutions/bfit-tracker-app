@@ -100,7 +100,7 @@ class StatCard extends StatelessWidget {
           elevation: 2,
           color: this.color ?? mainTheme.primaryColor,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12.0),
+            borderRadius: BorderRadius.circular(10.0),
           ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
