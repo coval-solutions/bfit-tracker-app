@@ -2,6 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:bfit_tracker/blocs/workout/workout_bloc.dart';
 import 'package:bfit_tracker/models/workout.dart';
 import 'package:bfit_tracker/theme.dart';
+import 'package:bfit_tracker/ui/coval_solutions/no_glow_listview.dart';
 import 'package:bfit_tracker/ui/home/workouts_area/equipment_pill.dart';
 import 'package:bfit_tracker/ui/home/workouts_area/exercise_list_item.dart';
 import 'package:bfit_tracker/ui/home/workouts_area/workout_countdown.dart';
@@ -42,6 +43,7 @@ class _WorkoutDetailsState extends State<WorkoutDetails> {
 
   @override
   Widget build(BuildContext context) {
+    double topPadding = MediaQuery.of(context).padding.top.toDouble();
     if (this.widget.workout.exercises == null ||
         this.widget.workout.exercises.isEmpty) {
       return Center(child: CircularProgressIndicator());
@@ -62,7 +64,7 @@ class _WorkoutDetailsState extends State<WorkoutDetails> {
                   BlocProvider.of<WorkoutBloc>(context)..add(LoadWorkouts());
                 },
                 child: Padding(
-                  padding: const EdgeInsets.only(top: 28.0, left: 12.0),
+                  padding: EdgeInsets.only(top: 28.0 + topPadding, left: 12.0),
                   child: SvgPicture.asset(
                     'assets/images/left-pointing-arrow.svg',
                     color: CustomColor.DIM_GRAY,
@@ -203,21 +205,27 @@ class _WorkoutDetailsState extends State<WorkoutDetails> {
                               color: CustomColor.DIM_GRAY,
                             ),
                           ),
+                          SizedBox(height: 16),
                           Expanded(
-                            child: ListView.separated(
-                              scrollDirection: Axis.vertical,
-                              shrinkWrap: true,
-                              itemCount: widget.workout.exercises?.length ?? 0,
-                              separatorBuilder:
-                                  (BuildContext context, int index) =>
-                                      Divider(),
-                              itemBuilder: (context, index) {
-                                return ExerciseListItem(
-                                  exercise: widget.workout.exercises[index],
-                                  color:
-                                      this.colors[index % this.colors.length],
-                                );
-                              },
+                            child: ScrollConfiguration(
+                              behavior: NoGlowingOverscrollIndicator(),
+                              child: ListView.separated(
+                                padding: EdgeInsets.only(bottom: 52),
+                                scrollDirection: Axis.vertical,
+                                shrinkWrap: true,
+                                itemCount:
+                                    widget.workout.exercises?.length ?? 0,
+                                separatorBuilder:
+                                    (BuildContext context, int index) =>
+                                        Divider(),
+                                itemBuilder: (context, index) {
+                                  return ExerciseListItem(
+                                    exercise: widget.workout.exercises[index],
+                                    color:
+                                        this.colors[index % this.colors.length],
+                                  );
+                                },
+                              ),
                             ),
                           ),
                         ],
