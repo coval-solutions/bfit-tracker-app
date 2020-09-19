@@ -6,7 +6,7 @@ workflows:
     name: Default
     max_build_duration: 60
     environment:
-      flutter: 1.17.2
+      flutter: 1.20.4
       xcode: latest
       cocoapods: default
       vars:
