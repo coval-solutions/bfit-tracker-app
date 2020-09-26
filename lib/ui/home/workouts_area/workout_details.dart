@@ -2,6 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:bfit_tracker/blocs/workout/workout_bloc.dart';
 import 'package:bfit_tracker/models/workout.dart';
 import 'package:bfit_tracker/theme.dart';
+import 'package:bfit_tracker/ui/coval_solutions/empty_app_bar.dart';
 import 'package:bfit_tracker/ui/coval_solutions/no_glow_listview.dart';
 import 'package:bfit_tracker/ui/home/workouts_area/equipment_pill.dart';
 import 'package:bfit_tracker/ui/home/workouts_area/exercise_list_item.dart';
@@ -43,7 +44,6 @@ class _WorkoutDetailsState extends State<WorkoutDetails> {
 
   @override
   Widget build(BuildContext context) {
-    double topPadding = MediaQuery.of(context).padding.top.toDouble();
     if (this.widget.workout.exercises == null ||
         this.widget.workout.exercises.isEmpty) {
       return Center(child: CircularProgressIndicator());
@@ -51,6 +51,7 @@ class _WorkoutDetailsState extends State<WorkoutDetails> {
 
     var equipment = this.widget.workout.getEquipment();
     return Scaffold(
+      appBar: EmptyAppBar(),
       backgroundColor: Colors.white,
       body: Stack(
         alignment: Alignment.topCenter,
@@ -64,7 +65,7 @@ class _WorkoutDetailsState extends State<WorkoutDetails> {
                   BlocProvider.of<WorkoutBloc>(context)..add(LoadWorkouts());
                 },
                 child: Padding(
-                  padding: EdgeInsets.only(top: 28.0 + topPadding, left: 12.0),
+                  padding: EdgeInsets.only(top: 28.0, left: 12.0),
                   child: SvgPicture.asset(
                     'assets/images/left-pointing-arrow.svg',
                     color: CustomColor.DIM_GRAY,
@@ -238,7 +239,7 @@ class _WorkoutDetailsState extends State<WorkoutDetails> {
           ),
           Positioned(
             bottom: 18,
-            child: SizedBox(
+            child: Container(
               width: MediaQuery.of(context).size.width * 0.8,
               child: CupertinoButton(
                 color: mainTheme.accentColor,
@@ -257,6 +258,18 @@ class _WorkoutDetailsState extends State<WorkoutDetails> {
                   minFontSize: 18,
                   maxLines: 1,
                 ),
+              ),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(
+                  Radius.circular(10),
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    blurRadius: 6,
+                    color: Colors.grey.shade300,
+                    offset: Offset(0, 0.75),
+                  )
+                ],
               ),
             ),
           ),
