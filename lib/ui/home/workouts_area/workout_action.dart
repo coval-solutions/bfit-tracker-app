@@ -5,6 +5,7 @@ import 'package:bfit_tracker/blocs/workout/workout_bloc.dart';
 import 'package:bfit_tracker/models/exercise.dart';
 import 'package:bfit_tracker/models/workout.dart';
 import 'package:bfit_tracker/theme.dart';
+import 'package:bfit_tracker/ui/home/workouts_area/workout_complete.dart';
 import 'package:bfit_tracker/utils/coval_math.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -23,6 +24,7 @@ class _WorkoutActionState extends State<WorkoutAction> {
   Workout workout;
   int currentExerciseIndex;
   Timer timer;
+  double overallTime;
   double workoutTimer;
   bool paused;
 
@@ -33,6 +35,7 @@ class _WorkoutActionState extends State<WorkoutAction> {
       workoutBloc = BlocProvider.of<WorkoutBloc>(context);
       workout = workoutBloc.state.props.first;
       currentExerciseIndex = 0;
+      overallTime = 0.0;
       workoutTimer = 0.0;
       paused = false;
     });
@@ -49,6 +52,9 @@ class _WorkoutActionState extends State<WorkoutAction> {
     this.timer?.cancel();
     this.timer = Timer.periodic(Duration(seconds: 1), (timer) {
       if (!this.paused) {
+        setState(() {
+          overallTime++;
+        });
         if (this.workoutTimer >= seconds) {
           this.timer.cancel();
           this.timer = null;
@@ -67,9 +73,9 @@ class _WorkoutActionState extends State<WorkoutAction> {
     });
   }
 
-  void pauseTimer(bool pause) {
+  void pauseTimer() {
     setState(() {
-      paused = pause;
+      paused = !this.paused;
     });
   }
 
@@ -116,23 +122,23 @@ class _WorkoutActionState extends State<WorkoutAction> {
               children: <Widget>[
                 FloatingActionButton(
                   heroTag: 'paused',
-                  onPressed: this.paused ? null : () => this.pauseTimer(true),
-                  disabledElevation: 0,
-                  backgroundColor: this.paused
-                      ? mainTheme.accentColor.withOpacity(0.6)
-                      : mainTheme.accentColor,
+                  onPressed: () => this.pauseTimer(),
+                  backgroundColor: mainTheme.accentColor,
                   child: Icon(
-                    Icons.pause,
+                    this.paused ? Icons.play_arrow : Icons.pause,
                     color: Colors.white,
                   ),
                 ),
                 FloatingActionButton(
-                  heroTag: 'play',
-                  onPressed: this.paused ? () => this.pauseTimer(false) : null,
+                  heroTag: 'continue',
+                  onPressed: () {
+                    print(this.overallTime);
+                    Navigator.of(context).pushReplacement(MaterialPageRoute(
+                        builder: (BuildContext context) =>
+                            WorkoutComplete(this.workout, this.overallTime)));
+                  },
                   disabledElevation: 0,
-                  backgroundColor: this.paused
-                      ? mainTheme.primaryColor
-                      : mainTheme.primaryColor.withOpacity(0.6),
+                  backgroundColor: mainTheme.primaryColor,
                   child: RotatedBox(
                     quarterTurns: 2,
                     child: SvgPicture.asset(
