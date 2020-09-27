@@ -1,10 +1,10 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:bfit_tracker/models/user.dart';
+import 'package:bfit_tracker/models/coval_user.dart';
 import 'package:bfit_tracker/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-Widget profileInfo(User user) {
+Widget profileInfo(CovalUser user) {
   return Column(
     children: <Widget>[
       Align(

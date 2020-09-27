@@ -3,8 +3,8 @@ import 'package:bfit_tracker/blocs/authentication/authentication_bloc.dart';
 import 'package:bfit_tracker/blocs/gym/gym_bloc.dart';
 import 'package:bfit_tracker/blocs/location/location_bloc.dart';
 import 'package:bfit_tracker/controllers/gym_controller.dart';
+import 'package:bfit_tracker/models/coval_user.dart';
 import 'package:bfit_tracker/models/gym.dart';
-import 'package:bfit_tracker/models/user.dart';
 import 'package:bfit_tracker/theme.dart';
 import 'package:bfit_tracker/ui/coval_solutions/empty_app_bar.dart';
 import 'package:flutter/cupertino.dart';
@@ -54,7 +54,7 @@ class WelcomeCard extends StatelessWidget {
     final AuthenticationBloc _authenticationBloc =
         BlocProvider.of<AuthenticationBloc>(context);
 
-    final User user = _authenticationBloc.state.props.first;
+    final CovalUser user = _authenticationBloc.state.props.first;
 
     return Card(
       elevation: 2,

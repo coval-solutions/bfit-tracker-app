@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:bfit_tracker/models/user.dart';
+import 'package:bfit_tracker/models/coval_user.dart';
 import 'package:bfit_tracker/repositories/user_repository.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
@@ -38,8 +38,8 @@ class AuthenticationBloc
     try {
       final isSignedIn = await _userRepository.isSignedIn();
       if (isSignedIn) {
-        final FirebaseUser firebaseUser = await _userRepository.getUser();
-        final User user = this._userFromFirebaseUser(firebaseUser);
+        final CovalUser user =
+            this._userFromFirebaseUser(_userRepository.getUser());
         yield Authenticated(user);
       } else {
         await this._userRepository.signInWithGoogle();
@@ -52,8 +52,8 @@ class AuthenticationBloc
   }
 
   Stream<AuthenticationState> _mapLoggedInToState() async* {
-    final FirebaseUser firebaseUser = await _userRepository.getUser();
-    final User user = this._userFromFirebaseUser(firebaseUser);
+    final User firebaseUser = await _userRepository.getUser();
+    final CovalUser user = this._userFromFirebaseUser(firebaseUser);
     yield Authenticated(user);
   }
 
@@ -62,10 +62,13 @@ class AuthenticationBloc
     _userRepository.signOut();
   }
 
-  User _userFromFirebaseUser(FirebaseUser firebaseUser) {
+  CovalUser _userFromFirebaseUser(User firebaseUser) {
     return firebaseUser != null
-        ? User(firebaseUser.uid, firebaseUser.email, firebaseUser.displayName,
-            User.getImageFromUrl(firebaseUser.photoUrl))
+        ? CovalUser(
+            firebaseUser.uid,
+            firebaseUser.email,
+            firebaseUser.displayName,
+            CovalUser.getImageFromUrl(firebaseUser.photoURL))
         : null;
   }
 

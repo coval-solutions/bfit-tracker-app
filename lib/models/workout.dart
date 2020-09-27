@@ -21,12 +21,12 @@ class Workout {
 
   Workout fromSnapshot(DocumentSnapshot snapshot) {
     return Workout(
-      title: snapshot.data['title'] ?? '',
-      description: snapshot.data['description'] ?? '',
-      imageLocation: snapshot.data['image_location'] ?? '',
-      isFast: snapshot.data['is_fast'] ?? false,
-      type: snapshot.data['type'] ?? 'Mixed',
-      exerciseDocRefs: snapshot.data['exercises'] ?? [],
+      title: snapshot.data()['title'] ?? '',
+      description: snapshot.data()['description'] ?? '',
+      imageLocation: snapshot.data()['image_location'] ?? '',
+      isFast: snapshot.data()['is_fast'] ?? false,
+      type: snapshot.data()['type'] ?? 'Mixed',
+      exerciseDocRefs: snapshot.data()['exercises'] ?? [],
     );
   }
 
