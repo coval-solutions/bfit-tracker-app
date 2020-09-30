@@ -4,11 +4,12 @@ import 'package:bfit_tracker/blocs/bottom_nav_bar/home_screen_bottom_nav_bar_blo
 import 'package:bfit_tracker/models/user_info.dart';
 import 'package:bfit_tracker/theme.dart';
 import 'package:bfit_tracker/ui/home/analytics_area/analytics_area.dart';
-import 'package:bfit_tracker/ui/home/workouts_area/workouts_area.dart';
 import 'package:bfit_tracker/ui/home/home_area/home_area.dart';
 import 'package:bfit_tracker/ui/home/nutrition_area/nutrition_area.dart';
 import 'package:bfit_tracker/ui/home/profile_area/profile_area.dart';
+import 'package:bfit_tracker/ui/home/workouts_area/workouts_area.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -103,6 +104,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _profileArea() {
+    FirebaseCrashlytics.instance.crash();
     return ProfileArea(widget.userInfo);
   }
 }

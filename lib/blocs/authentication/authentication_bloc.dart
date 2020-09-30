@@ -5,6 +5,7 @@ import 'package:bfit_tracker/repositories/user_repository.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:meta/meta.dart';
 
 part 'authentication_event.dart';
@@ -38,8 +39,9 @@ class AuthenticationBloc
     try {
       final isSignedIn = await _userRepository.isSignedIn();
       if (isSignedIn) {
-        final CovalUser user =
-            this._userFromFirebaseUser(_userRepository.getUser());
+        User firebaseUser = _userRepository.getUser();
+        FirebaseCrashlytics.instance.setUserIdentifier(firebaseUser.uid);
+        final CovalUser user = this._userFromFirebaseUser(firebaseUser);
         yield Authenticated(user);
       } else {
         await this._userRepository.signInWithGoogle();

@@ -24,6 +24,8 @@ dependencies:
   equatable: ^1.2.5
   firebase_analytics: ^6.0.0
   firebase_auth: ^0.18.0+1
+  firebase_core: ^0.5.0
+  firebase_crashlytics: ^0.2.0
   fl_chart: ^0.11.1
   flare_flutter: ^2.0.6
   flutter_bloc: ^4.0.0
