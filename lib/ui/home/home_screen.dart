@@ -104,7 +104,6 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _profileArea() {
-    FirebaseCrashlytics.instance.crash();
     return ProfileArea(widget.userInfo);
   }
 }
