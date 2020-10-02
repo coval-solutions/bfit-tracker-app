@@ -9,7 +9,6 @@ import 'package:bfit_tracker/ui/home/nutrition_area/nutrition_area.dart';
 import 'package:bfit_tracker/ui/home/profile_area/profile_area.dart';
 import 'package:bfit_tracker/ui/home/workouts_area/workouts_area.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
-import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {

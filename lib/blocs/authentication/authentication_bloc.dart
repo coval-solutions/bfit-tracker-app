@@ -4,6 +4,7 @@ import 'package:bfit_tracker/models/coval_user.dart';
 import 'package:bfit_tracker/repositories/user_repository.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:meta/meta.dart';
@@ -42,6 +43,7 @@ class AuthenticationBloc
         User firebaseUser = _userRepository.getUser();
         FirebaseCrashlytics.instance.setUserIdentifier(firebaseUser.uid);
         final CovalUser user = this._userFromFirebaseUser(firebaseUser);
+        FirebaseAnalytics().setUserId(user.getUid());
         yield Authenticated(user);
       } else {
         await this._userRepository.signInWithGoogle();
@@ -54,7 +56,7 @@ class AuthenticationBloc
   }
 
   Stream<AuthenticationState> _mapLoggedInToState() async* {
-    final User firebaseUser = await _userRepository.getUser();
+    final User firebaseUser = _userRepository.getUser();
     final CovalUser user = this._userFromFirebaseUser(firebaseUser);
     yield Authenticated(user);
   }

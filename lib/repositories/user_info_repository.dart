@@ -7,20 +7,20 @@ class UserInfoRepository {
 
   Stream<UserInfo> retrieve(CovalUser user) {
     return _userInfoCollection
-        .document(user.getUid())
+        .doc(user.getUid())
         .snapshots()
         .map(UserInfo().fromSnapshot);
   }
 
   Future<void> create(CovalUser user, UserInfo userInfo) async {
     return await _userInfoCollection
-        .document(user.getUid())
-        .setData(userInfo.toDocument());
+        .doc(user.getUid())
+        .update(userInfo.toDocument());
   }
 
   Future<void> update(CovalUser user, UserInfo userInfo) async {
     return await _userInfoCollection
-        .document(user.getUid())
-        .updateData(userInfo.toDocument());
+        .doc(user.getUid())
+        .update(userInfo.toDocument());
   }
 }
