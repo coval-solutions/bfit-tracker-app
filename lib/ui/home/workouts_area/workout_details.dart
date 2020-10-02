@@ -7,6 +7,7 @@ import 'package:bfit_tracker/ui/coval_solutions/no_glow_listview.dart';
 import 'package:bfit_tracker/ui/home/workouts_area/equipment_pill.dart';
 import 'package:bfit_tracker/ui/home/workouts_area/exercise_list_item.dart';
 import 'package:bfit_tracker/ui/home/workouts_area/workout_countdown.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -245,6 +246,8 @@ class _WorkoutDetailsState extends State<WorkoutDetails> {
                 color: mainTheme.accentColor,
                 pressedOpacity: 0.8,
                 onPressed: () {
+                  String eventName = 'workout_${widget.workout.docRef}_started';
+                  FirebaseAnalytics().logEvent(name: eventName);
                   Navigator.of(context).pushReplacement(MaterialPageRoute(
                       builder: (BuildContext context) =>
                           WorkoutCountdown(number: 5)));

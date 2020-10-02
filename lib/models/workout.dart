@@ -1,8 +1,9 @@
 import 'package:bfit_tracker/models/exercise.dart';
+import 'package:bfit_tracker/models/firebase_collection.dart';
 import 'package:bfit_tracker/utils/coval_math.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class Workout {
+class Workout extends FirebaseCollection {
   final String title;
   final String description;
   final String imageLocation;
@@ -12,15 +13,18 @@ class Workout {
   List<Exercise> exercises;
 
   Workout(
-      {this.title,
-      this.description,
-      this.imageLocation,
-      this.isFast,
-      this.type,
-      this.exerciseDocRefs});
+    String docRef, {
+    this.title,
+    this.description,
+    this.imageLocation,
+    this.isFast,
+    this.type,
+    this.exerciseDocRefs,
+  }) : super(docRef);
 
   Workout fromSnapshot(DocumentSnapshot snapshot) {
     return Workout(
+      docRef,
       title: snapshot.data()['title'] ?? '',
       description: snapshot.data()['description'] ?? '',
       imageLocation: snapshot.data()['image_location'] ?? '',
