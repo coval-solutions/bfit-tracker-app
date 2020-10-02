@@ -17,12 +17,15 @@ dependencies:
   barcode_scan: ^3.0.1
   bloc: ^4.0.0
   cached_network_image: ^2.3.2+1
-  cloud_firestore: ^0.13.5
+  cloud_firestore: ^0.14.0+2
   curved_navigation_bar: ^0.3.4
   device_info: ^0.4.2+7
   dots_indicator: ^1.2.0
   equatable: ^1.2.5
-  firebase_auth: ^0.16.0
+  firebase_analytics: ^6.0.0
+  firebase_auth: ^0.18.0+1
+  firebase_core: ^0.5.0
+  firebase_crashlytics: ^0.2.0
   fl_chart: ^0.11.1
   flare_flutter: ^2.0.6
   flutter_bloc: ^4.0.0

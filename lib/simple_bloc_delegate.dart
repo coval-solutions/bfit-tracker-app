@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 
 class SimpleBlocDelegate extends BlocDelegate {
   @override
@@ -11,6 +12,7 @@ class SimpleBlocDelegate extends BlocDelegate {
   void onError(Bloc bloc, Object error, StackTrace stacktrace) {
     super.onError(bloc, error, stacktrace);
     print(error);
+    FirebaseCrashlytics.instance.recordError(error, stacktrace);
   }
 
   @override

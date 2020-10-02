@@ -10,7 +10,7 @@ abstract class AuthenticationState extends Equatable {
 class Uninitialized extends AuthenticationState {}
 
 class Authenticated extends AuthenticationState {
-  final User _user;
+  final CovalUser _user;
 
   const Authenticated(this._user);
 

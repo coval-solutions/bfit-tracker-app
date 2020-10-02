@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:bfit_tracker/models/user.dart';
+import 'package:bfit_tracker/models/coval_user.dart';
 import 'package:bfit_tracker/models/user_info.dart';
 import 'package:bfit_tracker/repositories/user_info_repository.dart';
 import 'package:bloc/bloc.dart';
@@ -12,11 +12,12 @@ part 'user_info_event.dart';
 part 'user_info_state.dart';
 
 class UserInfoBloc extends Bloc<UserInfoEvent, UserInfoState> {
-  final User _user;
+  final CovalUser _user;
   final UserInfoRepository _userInfoRepository;
 
   UserInfoBloc(
-      {@required User user, @required UserInfoRepository userInfoRepository})
+      {@required CovalUser user,
+      @required UserInfoRepository userInfoRepository})
       : assert(user != null && userInfoRepository != null),
         _user = user,
         _userInfoRepository = userInfoRepository;

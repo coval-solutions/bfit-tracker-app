@@ -10,10 +10,10 @@ class Exercise {
 
   Exercise fromSnapshot(DocumentSnapshot snapshot) {
     return Exercise(
-      name: snapshot.data['name'] ?? '',
-      seconds: snapshot.data['seconds'] ?? '',
-      equipment: snapshot.data['equipment'] ?? [],
-      imageLocation: snapshot.data['image_location'] ?? '',
+      name: snapshot.data()['name'] ?? '',
+      seconds: snapshot.data()['seconds'] ?? '',
+      equipment: snapshot.data()['equipment'] ?? [],
+      imageLocation: snapshot.data()['image_location'] ?? '',
     );
   }
 }

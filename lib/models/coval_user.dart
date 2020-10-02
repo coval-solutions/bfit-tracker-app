@@ -1,12 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
 
-class User {
+class CovalUser {
   final String _uid;
   final String _email;
   final String _displayName;
   final CachedNetworkImageProvider _displayPicture;
 
-  User(this._uid, this._email, this._displayName, this._displayPicture);
+  CovalUser(this._uid, this._email, this._displayName, this._displayPicture);
 
   static CachedNetworkImageProvider getImageFromUrl(String url) {
     return CachedNetworkImageProvider(url);

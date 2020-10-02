@@ -11,10 +11,10 @@ class UserInfo {
 
   UserInfo fromSnapshot(DocumentSnapshot snapshot) {
     return UserInfo(
-        height: snapshot.data['height'] ?? 175,
-        isMale: snapshot.data['isMale'] ?? false,
-        gymTime: snapshot.data['gymTime'] ?? 0,
-        goals: Goal.fromJson(snapshot.data['goals']));
+        height: snapshot.data()['height'] ?? 175,
+        isMale: snapshot.data()['isMale'] ?? false,
+        gymTime: snapshot.data()['gymTime'] ?? 0,
+        goals: Goal.fromJson(snapshot.data()['goals']));
   }
 
   Map<String, Object> toDocument() => {
