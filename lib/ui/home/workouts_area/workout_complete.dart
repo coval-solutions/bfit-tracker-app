@@ -5,6 +5,7 @@ import 'package:bfit_tracker/utils/coval_math.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:transformer_page_view/transformer_page_view.dart';
 
 class WorkoutComplete extends StatefulWidget {
   final Workout workout;
@@ -17,6 +18,21 @@ class WorkoutComplete extends StatefulWidget {
 }
 
 class _WorkoutCompleteState extends State<WorkoutComplete> {
+  static const NUM_OF_PAGES = 2;
+  TransformerPageController _pageController;
+
+  @override
+  void initState() {
+    super.initState();
+    _pageController = TransformerPageController();
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -59,93 +75,25 @@ class _WorkoutCompleteState extends State<WorkoutComplete> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(bottom: 60),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    AutoSizeText.rich(
-                      TextSpan(
-                        text: widget.workout.exercises.length.toString(),
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: CustomColor.DIM_GRAY,
-                        ),
-                        children: <TextSpan>[
-                          TextSpan(
-                            text: '\nExercises',
-                            style: TextStyle(
-                              fontWeight: FontWeight.normal,
-                              fontSize: 8,
-                            ),
-                          ),
-                        ],
-                      ),
-                      textAlign: TextAlign.center,
-                      minFontSize: 22,
-                      maxFontSize: 26,
-                    ),
-                    SizedBox(
-                      width: 1,
-                      height: 36,
-                      child: Container(
-                        color: CustomColor.GREY_CHATEAU,
-                      ),
-                    ),
-                    AutoSizeText.rich(
-                      TextSpan(
-                        text: CovalMath.getHumanreadableTime(
-                            widget.secondsWorkingOut.toInt()),
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: CustomColor.DIM_GRAY,
-                        ),
-                        children: <TextSpan>[
-                          TextSpan(
-                            text: '\nMinutes',
-                            style: TextStyle(
-                              fontWeight: FontWeight.normal,
-                              fontSize: 8,
-                            ),
-                          ),
-                        ],
-                      ),
-                      textAlign: TextAlign.center,
-                      minFontSize: 22,
-                      maxFontSize: 26,
-                    ),
-                    SizedBox(
-                      width: 1,
-                      height: 36,
-                      child: Container(
-                        color: CustomColor.GREY_CHATEAU,
-                      ),
-                    ),
-                    AutoSizeText.rich(
-                      TextSpan(
-                        text: (widget.secondsWorkingOut * 0.15)
-                            .floor()
-                            .toString(),
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: CustomColor.DIM_GRAY,
-                        ),
-                        children: <TextSpan>[
-                          TextSpan(
-                            text: '\nCalories',
-                            style: TextStyle(
-                              fontWeight: FontWeight.normal,
-                              fontSize: 8,
-                            ),
-                          ),
-                        ],
-                      ),
-                      textAlign: TextAlign.center,
-                      minFontSize: 22,
-                      maxFontSize: 26,
-                    ),
-                  ],
-                ),
-              ),
+                  padding: const EdgeInsets.only(bottom: 60),
+                  child: Container(
+                    height: 64,
+                    child: TransformerPageView(
+                        pageSnapping: true,
+                        loop: false,
+                        pageController: _pageController,
+                        itemCount: NUM_OF_PAGES,
+                        transformer: PageTransformerBuilder(
+                            builder: (Widget child, TransformInfo info) {
+                          if (info.index == 0) {
+                            return workoutCompleteResults(
+                                widget.workout, widget.secondsWorkingOut);
+                          }
+
+                          return workoutCompleteNumberOfTimes(
+                              widget.workout, widget.secondsWorkingOut);
+                        })),
+                  )),
               Container(
                 child: CupertinoButton(
                   color: mainTheme.accentColor,
@@ -194,4 +142,119 @@ class _WorkoutCompleteState extends State<WorkoutComplete> {
       ),
     );
   }
+}
+
+Widget workoutCompleteResults(Workout workout, double secondsWorkingOut) {
+  return Row(
+    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+    children: [
+      AutoSizeText.rich(
+        TextSpan(
+          text: workout.exercises.length.toString(),
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            color: CustomColor.DIM_GRAY,
+          ),
+          children: <TextSpan>[
+            TextSpan(
+              text: '\nExercises',
+              style: TextStyle(
+                fontWeight: FontWeight.normal,
+                fontSize: 8,
+              ),
+            ),
+          ],
+        ),
+        textAlign: TextAlign.center,
+        minFontSize: 22,
+        maxFontSize: 26,
+      ),
+      SizedBox(
+        width: 1,
+        height: 36,
+        child: Container(
+          color: CustomColor.GREY_CHATEAU,
+        ),
+      ),
+      AutoSizeText.rich(
+        TextSpan(
+          text: CovalMath.getHumanreadableTime(secondsWorkingOut.toInt()),
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            color: CustomColor.DIM_GRAY,
+          ),
+          children: <TextSpan>[
+            TextSpan(
+              text: '\nMinutes',
+              style: TextStyle(
+                fontWeight: FontWeight.normal,
+                fontSize: 8,
+              ),
+            ),
+          ],
+        ),
+        textAlign: TextAlign.center,
+        minFontSize: 22,
+        maxFontSize: 26,
+      ),
+      SizedBox(
+        width: 1,
+        height: 36,
+        child: Container(
+          color: CustomColor.GREY_CHATEAU,
+        ),
+      ),
+      AutoSizeText.rich(
+        TextSpan(
+          text: (secondsWorkingOut * 0.15).floor().toString(),
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            color: CustomColor.DIM_GRAY,
+          ),
+          children: <TextSpan>[
+            TextSpan(
+              text: '\nCalories',
+              style: TextStyle(
+                fontWeight: FontWeight.normal,
+                fontSize: 8,
+              ),
+            ),
+          ],
+        ),
+        textAlign: TextAlign.center,
+        minFontSize: 22,
+        maxFontSize: 26,
+      ),
+    ],
+  );
+}
+
+Widget workoutCompleteNumberOfTimes(Workout workout, double secondsWorkingOut) {
+  return Row(
+    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+    children: [
+      AutoSizeText.rich(
+        TextSpan(
+          text: workout.exercises.length.toString(),
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            color: CustomColor.DIM_GRAY,
+          ),
+          children: <TextSpan>[
+            TextSpan(
+              text:
+                  '\ntimes this training was completed by\npeople all over the universe',
+              style: TextStyle(
+                fontWeight: FontWeight.normal,
+                fontSize: 8,
+              ),
+            ),
+          ],
+        ),
+        textAlign: TextAlign.center,
+        minFontSize: 22,
+        maxFontSize: 26,
+      ),
+    ],
+  );
 }
