@@ -11,7 +11,7 @@
   "email": "support@covalsolutions.com",
   "scripts": {
     "lint": "eslint 'src/**/*'",
-    "build": "webpack --watch",
+    "build": "webpack",
     "serve": "yarn run build && firebase emulators:start --only functions",
     "shell": "yarn run build && firebase functions:shell",
     "start": "yarn run shell",
@@ -21,7 +21,7 @@
   "engines": {
     "node": "12"
   },
-  "main": "lib/index.js",
+  "main": "lib/bundle.js",
   "dependencies": {
     "@google-cloud/bigquery": "^5.3.0",
     "dotenv": "^8.2.0",
