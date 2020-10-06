@@ -1,14 +1,16 @@
 import * as express from 'express';
 import * as functions from 'firebase-functions';
-import { authenticate } from './authenticate';
 import { BigQuery } from '@google-cloud/bigquery';
+import { authenticate } from './authenticate';
 
 const app = express();
+
+// Automatically allow cross-origin requests
 app.use(authenticate);
 
 // GET /api/workout-started-count/{workoutDocRef}
 // Get details about a message
-app.get('/api/workout-started-count/:workoutDocRef', async (req, res) => {
+app.get('/workout-started-count/:workoutDocRef', async (req, res) => {
   const workoutDocRef = req.params.workoutDocRef;
 
   console.log(`Looking up Workout started count for DocRef "${workoutDocRef}"`);
