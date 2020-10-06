@@ -5,14 +5,17 @@
 import * as admin from 'firebase-admin';
 import { Response } from 'express';
 import * as dotenv from 'dotenv';
+import * as serviceAccountJson from '../adminsdk.json';
 
 // Load the .env
 dotenv.config();
 
-console.log(process.env.SERVICE_ACCOUNT_JSON);
-const serviceAccount = require(process.env.SERVICE_ACCOUNT_JSON!);
 admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
+  credential: admin.credential.cert({
+    projectId: serviceAccountJson.project_id,
+    clientEmail: serviceAccountJson.client_email,
+    privateKey: serviceAccountJson.private_key,
+  }),
   databaseURL: process.env.DATABASE_URL,
 });
 
