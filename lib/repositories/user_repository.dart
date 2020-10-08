@@ -37,4 +37,8 @@ class UserRepository {
   User getUser() {
     return _firebaseAuth.currentUser;
   }
+
+  static Future<String> getIdToken() async {
+    return await FirebaseAuth.instance.currentUser.getIdToken();
+  }
 }

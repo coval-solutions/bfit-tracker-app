@@ -10,3 +10,6 @@ node_modules/
 
 # .env
 .env
+
+# Admin SDK JSON
+adminsdk.json

@@ -1,13 +1,23 @@
 {
   "compilerOptions": {
+    "outDir": "./lib/",
     "module": "commonjs",
-    "noImplicitReturns": true,
-    "noUnusedLocals": true,
-    "outDir": "lib",
+    "moduleResolution": "node",
+    "target": "es2017",
     "sourceMap": true,
     "strict": true,
-    "target": "es2017"
+    "noImplicitReturns": true,
+    "noImplicitAny": true,
+    "noUnusedLocals": true,
+    "allowJs": true,
+    "resolveJsonModule": true
   },
   "compileOnSave": true,
-  "include": ["src", ".eslintrc.js"]
+  "include": [
+    "./src/**/*",
+    "./.eslintrc.js"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }
