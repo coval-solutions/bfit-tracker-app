@@ -6,6 +6,7 @@
  */
 
 import * as admin from 'firebase-admin';
+import * as functions from 'firebase-functions';
 import { Response } from 'express';
 import * as serviceAccountJson from '../adminsdk.json';
 
@@ -29,8 +30,8 @@ export const authenticate = async (req: any, res: Response, next: Function) => {
 
   const idToken = req.headers.authorization.split('Bearer ')[1];
   try {
-    console.log(idToken);
     req.user = await admin.auth().verifyIdToken(idToken);
+    functions.logger.info('Endpoint is authenticated correctly.');
     next();
     return;
   } catch (e) {

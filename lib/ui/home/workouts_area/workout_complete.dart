@@ -26,17 +26,49 @@ class WorkoutComplete extends StatefulWidget {
 class _WorkoutCompleteState extends State<WorkoutComplete> {
   static const NUM_OF_PAGES = 2;
   TransformerPageController _pageController;
+  Future _fetchWorkoutStartedCountFuture;
 
   @override
   void initState() {
     super.initState();
     _pageController = TransformerPageController();
+    _fetchWorkoutStartedCountFuture =
+        fetchWorkoutStartedCount(widget.workout.docRef);
   }
 
   @override
   void dispose() {
     _pageController.dispose();
     super.dispose();
+  }
+
+  Future<int> fetchWorkoutStartedCount(String docRef) async {
+    String token = await UserRepository.getIdToken();
+    final resp = await http.get(
+        'http://localhost:5001/bfit-tracker-app/europe-west2/api/workout-started-count/$docRef',
+        headers: {HttpHeaders.authorizationHeader: 'Bearer $token'});
+    if (resp.statusCode == 200) {
+      // If the server did return a 200 OK response,
+      // then parse the JSON.
+      Map<String, dynamic> body = json.decode(resp.body);
+      if (!body.containsKey('count')) {
+        FirebaseCrashlytics.instance.recordError(
+            Exception(
+                'Failed to load Workout started count, missing `count` key'),
+            StackTrace.current,
+            reason: resp.statusCode);
+        return 0;
+      }
+
+      return body['count'];
+    } else {
+      // If the server did not return a 200 OK response,
+      // then return the default value of 0, and report to Crashlytics.
+      FirebaseCrashlytics.instance.recordError(
+          Exception('Failed to load Workout started count'), StackTrace.current,
+          reason: resp.statusCode);
+      return 0;
+    }
   }
 
   @override
@@ -97,7 +129,9 @@ class _WorkoutCompleteState extends State<WorkoutComplete> {
                           }
 
                           return workoutCompleteNumberOfTimes(
-                              widget.workout, widget.secondsWorkingOut);
+                              widget.workout,
+                              widget.secondsWorkingOut,
+                              this._fetchWorkoutStartedCountFuture);
                         })),
                   )),
               Container(
@@ -235,56 +269,37 @@ Widget workoutCompleteResults(Workout workout, double secondsWorkingOut) {
   );
 }
 
-Widget workoutCompleteNumberOfTimes(Workout workout, double secondsWorkingOut) {
-  Future<String> fetchWorkoutStartedCount(String docRef) async {
-    String token = await UserRepository.getIdToken();
-    final resp = await http.get(
-        'http://localhost:5001/bfit-tracker-app/europe-west2/api/workout-started-count/$docRef',
-        headers: {HttpHeaders.authorizationHeader: 'Bearer $token'});
-    if (resp.statusCode == 200) {
-      // If the server did return a 200 OK response,
-      // then parse the JSON.
-      return json.decode(resp.body);
-    } else {
-      // If the server did not return a 200 OK response,
-      // then return the default value of 0, and report to Crashlytics.
-      FirebaseCrashlytics.instance.recordError(
-          Exception('Failed to load Workout started count'), StackTrace.current,
-          reason: resp.statusCode);
-      return "0";
-    }
-  }
-
+Widget workoutCompleteNumberOfTimes(
+    Workout workout, double secondsWorkingOut, Future future) {
   return FutureBuilder(
-    future: fetchWorkoutStartedCount.call(workout.docRef),
-    builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
-      return Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          AutoSizeText.rich(
-            TextSpan(
-              text: snapshot.hasData ? snapshot.data : '0',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                color: CustomColor.DIM_GRAY,
-              ),
-              children: <TextSpan>[
-                TextSpan(
-                  text:
-                      '\ntimes this training was completed by\npeople all over the universe',
-                  style: TextStyle(
-                    fontWeight: FontWeight.normal,
-                    fontSize: 8,
-                  ),
+      future: future,
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        return Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            AutoSizeText.rich(
+              TextSpan(
+                text: snapshot.hasData ? snapshot.data.toString() : '0',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: CustomColor.DIM_GRAY,
                 ),
-              ],
+                children: <TextSpan>[
+                  TextSpan(
+                    text:
+                        '\ntimes this training was completed by\npeople all over the universe',
+                    style: TextStyle(
+                      fontWeight: FontWeight.normal,
+                      fontSize: 8,
+                    ),
+                  ),
+                ],
+              ),
+              textAlign: TextAlign.center,
+              minFontSize: 22,
+              maxFontSize: 26,
             ),
-            textAlign: TextAlign.center,
-            minFontSize: 22,
-            maxFontSize: 26,
-          ),
-        ],
-      );
-    },
-  );
+          ],
+        );
+      });
 }
