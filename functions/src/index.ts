@@ -5,7 +5,7 @@ import { authenticate } from './authenticate';
 
 const app = express();
 
-// Automatically allow cross-origin requests
+// Use the middleware `authenticate`
 app.use(authenticate);
 
 // GET /api/workout-started-count/{workoutDocRef}
@@ -34,7 +34,7 @@ app.get('/workout-started-count/:workoutDocRef', async (req, res) => {
 
     // Cache response for 30 mins
     res.set('Cache-Control', 'private, max-age=1800');
-    return res.status(200).json(rows);
+    return res.sendStatus(200).json(rows);
   } catch (error) {
     console.log(
       'Error getting workout started count',

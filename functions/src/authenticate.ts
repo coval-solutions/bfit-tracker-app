@@ -7,11 +7,7 @@
 
 import * as admin from 'firebase-admin';
 import { Response } from 'express';
-import * as dotenv from 'dotenv';
 import * as serviceAccountJson from '../adminsdk.json';
-
-// Load the .env
-dotenv.config();
 
 admin.initializeApp({
   credential: admin.credential.cert({
