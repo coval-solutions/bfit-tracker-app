@@ -8,8 +8,9 @@ class Workout {
   final String description;
   final String imageLocation;
   final bool isFast;
-  final String type;
   final List<dynamic> exercises;
+
+  String type;
 
   Workout(
     this.docRef, {
@@ -17,20 +18,37 @@ class Workout {
     this.description,
     this.imageLocation,
     this.isFast,
-    this.type,
     this.exercises,
   });
 
   Workout fromSnapshot(DocumentSnapshot snapshot, List<dynamic> exercises) {
-    return Workout(
+    Workout workout = Workout(
       docRef,
       title: snapshot.data()['title'] ?? '',
       description: snapshot.data()['description'] ?? '',
       imageLocation: snapshot.data()['image_location'] ?? '',
       isFast: snapshot.data()['is_fast'] ?? false,
-      type: snapshot.data()['type'] ?? 'Mixed',
       exercises: exercises,
     );
+
+    workout.type = workout._calculateType();
+
+    return workout;
+  }
+
+  String _calculateType() {
+    Set types = {};
+    for (Exercise exercise in this.exercises) {
+      for (String type in exercise.type) {
+        types.add(type);
+      }
+    }
+
+    if (types.isEmpty) {
+      return 'MIXED';
+    }
+
+    return types.length > 1 ? 'MIXED' : types.first.toString().toUpperCase();
   }
 
   String getHumanReadableDescription() {

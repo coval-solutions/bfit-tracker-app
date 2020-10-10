@@ -6,9 +6,10 @@ class Exercise {
   final int seconds;
   final List<dynamic> equipment;
   final String imageLocation;
+  final List<dynamic> type;
 
   Exercise(this.docRef,
-      {this.name, this.seconds, this.equipment, this.imageLocation});
+      {this.name, this.seconds, this.equipment, this.imageLocation, this.type});
 
   Exercise fromSnapshot(DocumentSnapshot snapshot) {
     return Exercise(
@@ -17,6 +18,7 @@ class Exercise {
       seconds: snapshot.data()['seconds'] ?? '',
       equipment: snapshot.data()['equipment'] ?? [],
       imageLocation: snapshot.data()['image_location'] ?? '',
+      type: snapshot.data()['type'] ?? [],
     );
   }
 }

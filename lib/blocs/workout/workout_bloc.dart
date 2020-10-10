@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:bfit_tracker/models/workout.dart';
-import 'package:bfit_tracker/repositories/exercise_repository.dart';
 import 'package:bfit_tracker/repositories/workout_repository.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
@@ -13,14 +12,10 @@ part 'workout_state.dart';
 
 class WorkoutBloc extends Bloc<WorkoutsEvent, WorkoutsState> {
   final WorkoutRepository _workoutRepository;
-  final ExerciseRepository _exerciseRepository;
 
-  WorkoutBloc(
-      {@required WorkoutRepository workoutRepository,
-      @required ExerciseRepository exerciseRepository})
-      : assert(workoutRepository != null && exerciseRepository != null),
-        _workoutRepository = workoutRepository,
-        _exerciseRepository = exerciseRepository;
+  WorkoutBloc({@required WorkoutRepository workoutRepository})
+      : assert(workoutRepository != null),
+        _workoutRepository = workoutRepository;
 
   @override
   WorkoutsState get initialState => WorkoutsNotLoaded();

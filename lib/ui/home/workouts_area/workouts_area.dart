@@ -70,9 +70,7 @@ class _WorkoutsAreaState extends State<WorkoutsArea> {
           fastWorkouts =
               workouts.where((element) => element.isFast == true).toList();
 
-          bodyWorkouts = workouts
-              .where((element) => element.type.contains('body'))
-              .toList();
+          bodyWorkouts = workouts;
         }
 
         return Scaffold(
