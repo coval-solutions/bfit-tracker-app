@@ -4,9 +4,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class ExerciseRepository {
   Future<List<Exercise>> retrieve(List<dynamic> documentReferences) async {
     List<Exercise> exercises = [];
-    for (DocumentReference docRef in documentReferences) {
-      DocumentSnapshot documentSnapshot = await docRef.get();
-      exercises.add(Exercise().fromSnapshot(documentSnapshot));
+    for (DocumentReference documentReference in documentReferences) {
+      DocumentSnapshot documentSnapshot =
+          await documentReference.snapshots().first;
+      exercises
+          .add(Exercise(documentReference.id).fromSnapshot(documentSnapshot));
     }
 
     return exercises;

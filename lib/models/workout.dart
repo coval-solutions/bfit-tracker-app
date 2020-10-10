@@ -1,28 +1,27 @@
 import 'package:bfit_tracker/models/exercise.dart';
-import 'package:bfit_tracker/models/firebase_collection.dart';
 import 'package:bfit_tracker/utils/coval_math.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class Workout extends FirebaseCollection {
+class Workout {
+  final String docRef;
   final String title;
   final String description;
   final String imageLocation;
   final bool isFast;
   final String type;
-  final List<dynamic> exerciseDocRefs;
-  List<Exercise> exercises;
+  final List<dynamic> exercises;
 
   Workout(
-    String docRef, {
+    this.docRef, {
     this.title,
     this.description,
     this.imageLocation,
     this.isFast,
     this.type,
-    this.exerciseDocRefs,
-  }) : super(docRef);
+    this.exercises,
+  });
 
-  Workout fromSnapshot(DocumentSnapshot snapshot) {
+  Workout fromSnapshot(DocumentSnapshot snapshot, List<dynamic> exercises) {
     return Workout(
       docRef,
       title: snapshot.data()['title'] ?? '',
@@ -30,7 +29,7 @@ class Workout extends FirebaseCollection {
       imageLocation: snapshot.data()['image_location'] ?? '',
       isFast: snapshot.data()['is_fast'] ?? false,
       type: snapshot.data()['type'] ?? 'Mixed',
-      exerciseDocRefs: snapshot.data()['exercises'] ?? [],
+      exercises: exercises,
     );
   }
 
@@ -63,9 +62,5 @@ class Workout extends FirebaseCollection {
     }
 
     return equipmentList;
-  }
-
-  void setExercises(List<Exercise> exercises) {
-    this.exercises = exercises;
   }
 }
