@@ -1,40 +1,49 @@
 import * as express from 'express';
 import * as functions from 'firebase-functions';
-import { authenticate } from './authenticate';
 import { BigQuery } from '@google-cloud/bigquery';
+import { authenticate } from './authenticate';
 
 const app = express();
+
+// Use the middleware `authenticate`
 app.use(authenticate);
 
 // GET /api/workout-started-count/{workoutDocRef}
 // Get details about a message
-app.get('/api/workout-started-count/:workoutDocRef', async (req, res) => {
+app.get('/workout-started-count/:workoutDocRef', async (req, res) => {
   const workoutDocRef = req.params.workoutDocRef;
 
-  console.log(`Looking up Workout started count for DocRef "${workoutDocRef}"`);
+  functions.logger.info(
+    `Looking up Workout started count for DocRef "${workoutDocRef}"`
+  );
 
   try {
     const bigQuery = new BigQuery();
-    const query = `SELECT name
+    const query = `SELECT count
       FROM \`bfit-tracker-app.analytics_211868704.workouts_started\`
-      WHERE workout_doc_ref = ${workoutDocRef}`;
+      WHERE workout_doc_ref = \'${workoutDocRef}\'
+      LIMIT 1`;
 
     // Run the query as a job
     const [job] = await bigQuery.createQueryJob({ query });
-    console.log(`Job ${job.id} started.`);
+    functions.logger.info(`Job ${job.id} started.`);
 
     // Wait for the query to finish
     const [rows] = await job.getQueryResults();
 
-    // Print the results
-    console.log('Rows:');
-    rows.forEach((row: any) => console.log(row));
+    if (rows === undefined) {
+      return res.sendStatus(500);
+    }
+
+    if (rows.length === 0) {
+      return res.json({ count: 0 });
+    }
 
     // Cache response for 30 mins
     res.set('Cache-Control', 'private, max-age=1800');
-    return res.status(200).json(rows);
+    return res.json(rows[0]);
   } catch (error) {
-    console.log(
+    functions.logger.error(
       'Error getting workout started count',
       workoutDocRef,
       error.message
