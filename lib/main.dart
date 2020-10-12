@@ -8,7 +8,6 @@ import 'package:bfit_tracker/blocs/location/location_bloc.dart';
 import 'package:bfit_tracker/blocs/nutrition_data/nutrition_data_bloc.dart';
 import 'package:bfit_tracker/blocs/user_info/user_info_bloc.dart';
 import 'package:bfit_tracker/blocs/workout/workout_bloc.dart';
-import 'package:bfit_tracker/repositories/exercise_repository.dart';
 import 'package:bfit_tracker/repositories/fitness_data_repository.dart';
 import 'package:bfit_tracker/repositories/gym_repository.dart';
 import 'package:bfit_tracker/repositories/location_repository.dart';
@@ -40,7 +39,6 @@ Future<void> main() async {
   final NutritionDataRepository nutritionDataRepository =
       NutritionDataRepository();
   final WorkoutRepository workoutRepository = WorkoutRepository();
-  final ExerciseRepository exerciseRepository = ExerciseRepository();
 
   await FirebaseCrashlytics.instance
       .setCrashlyticsCollectionEnabled(kReleaseMode);
@@ -83,10 +81,9 @@ Future<void> main() async {
             )..add(LoadNutritionData()),
           ),
           BlocProvider<WorkoutBloc>(
-            create: (BuildContext context) => WorkoutBloc(
-                workoutRepository: workoutRepository,
-                exerciseRepository: exerciseRepository)
-              ..add(LoadWorkouts()),
+            create: (BuildContext context) =>
+                WorkoutBloc(workoutRepository: workoutRepository)
+                  ..add(LoadWorkouts()),
           ),
         ],
         child: BlocBuilder<AuthenticationBloc, AuthenticationState>(

@@ -1,8 +1,6 @@
 import 'dart:async';
 
-import 'package:bfit_tracker/models/exercise.dart';
 import 'package:bfit_tracker/models/workout.dart';
-import 'package:bfit_tracker/repositories/exercise_repository.dart';
 import 'package:bfit_tracker/repositories/workout_repository.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
@@ -14,14 +12,10 @@ part 'workout_state.dart';
 
 class WorkoutBloc extends Bloc<WorkoutsEvent, WorkoutsState> {
   final WorkoutRepository _workoutRepository;
-  final ExerciseRepository _exerciseRepository;
 
-  WorkoutBloc(
-      {@required WorkoutRepository workoutRepository,
-      @required ExerciseRepository exerciseRepository})
-      : assert(workoutRepository != null && exerciseRepository != null),
-        _workoutRepository = workoutRepository,
-        _exerciseRepository = exerciseRepository;
+  WorkoutBloc({@required WorkoutRepository workoutRepository})
+      : assert(workoutRepository != null),
+        _workoutRepository = workoutRepository;
 
   @override
   WorkoutsState get initialState => WorkoutsNotLoaded();
@@ -39,16 +33,6 @@ class WorkoutBloc extends Bloc<WorkoutsEvent, WorkoutsState> {
 
   Stream<WorkoutsState> _mapSelectedToState(SetWorkoutSelected event) async* {
     try {
-      yield WorkoutsLoading();
-      // We have not loaded the exercises yet, we must do this, or KABOOM!
-      if (event._workout.exercises == null ||
-          event._workout.exercises.isEmpty) {
-        // TODO: add some sort of caching
-        List<Exercise> exercises =
-            await _exerciseRepository.retrieve(event._workout.exerciseDocRefs);
-        event._workout.setExercises(exercises);
-      }
-
       yield WorkoutSelected(event._workout);
     } catch (_) {
       print(_);

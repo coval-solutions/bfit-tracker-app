@@ -70,9 +70,7 @@ class _WorkoutsAreaState extends State<WorkoutsArea> {
           fastWorkouts =
               workouts.where((element) => element.isFast == true).toList();
 
-          bodyWorkouts = workouts
-              .where((element) => element.type.contains('body'))
-              .toList();
+          bodyWorkouts = workouts;
         }
 
         return Scaffold(
@@ -145,7 +143,7 @@ class _WorkoutsAreaState extends State<WorkoutsArea> {
                   itemBuilder: (BuildContext context, int index) {
                     return GestureDetector(
                         onTap: () {
-                          if (fastWorkouts[index].exerciseDocRefs.isNotEmpty) {
+                          if (fastWorkouts[index].exercises.isNotEmpty) {
                             context.bloc<WorkoutBloc>()
                               ..add(SetWorkoutSelected(fastWorkouts[index]));
                           }
@@ -184,9 +182,7 @@ class _WorkoutsAreaState extends State<WorkoutsArea> {
                     itemBuilder: (BuildContext context, int index) {
                       return GestureDetector(
                           onTap: () {
-                            if (bodyWorkouts[index]
-                                .exerciseDocRefs
-                                .isNotEmpty) {
+                            if (bodyWorkouts[index].exercises.isNotEmpty) {
                               context.bloc<WorkoutBloc>()
                                 ..add(SetWorkoutSelected(bodyWorkouts[index]));
                             }
@@ -195,7 +191,7 @@ class _WorkoutsAreaState extends State<WorkoutsArea> {
                             width: 230,
                             child: WorkoutCard(
                               smallTitle:
-                                  "${bodyWorkouts[index].exerciseDocRefs.length} workouts",
+                                  "${bodyWorkouts[index].exercises.length} workouts",
                               mainTitle: bodyWorkouts[index].title,
                               description: bodyWorkouts[index].description,
                               imageUrl: bodyWorkouts[index].imageLocation,
