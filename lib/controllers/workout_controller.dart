@@ -7,13 +7,13 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 
 class WorkoutController {
-  static String API_URL =
+  static String apiUrl =
       '${DotEnv().env['GOOGLE_FUNCTIONS_URL'] ?? 'http://localhost:5001/'}';
 
   static Future<int> fetchWorkoutStartedCount(String docRef) async {
     String token = await UserRepository.getIdToken();
 
-    final resp = await http.get('$API_URL/workout-started-count/$docRef',
+    final resp = await http.get('$apiUrl/workout-started-count/$docRef',
         headers: {HttpHeaders.authorizationHeader: 'Bearer $token'});
     if (resp.statusCode == 200) {
       // If the server did return a 200 OK response,
