@@ -3,22 +3,38 @@ import 'package:bfit_tracker/models/coval_user.dart';
 import 'package:bfit_tracker/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:wiredash/wiredash.dart';
 
 Widget profileInfo(CovalUser user) {
   return Column(
     children: <Widget>[
-      Align(
-        alignment: Alignment.topCenter,
-        child: AutoSizeText(
-          'Your Profile',
-          maxLines: 1,
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            color: CustomColor.DIM_GRAY,
+      Stack(
+        children: [
+          LayoutBuilder(
+            builder: (BuildContext context, BoxConstraints constraints) {
+              return GestureDetector(
+                onTap: () => Wiredash.of(context).show(),
+                child: Icon(
+                  Icons.info_outline,
+                  color: CustomColor.DIM_GRAY,
+                ),
+              );
+            },
           ),
-          minFontSize: 26,
-          maxFontSize: 26,
-        ),
+          Align(
+            alignment: Alignment.center,
+            child: AutoSizeText(
+              'Your Profile',
+              maxLines: 1,
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: CustomColor.DIM_GRAY,
+              ),
+              minFontSize: 26,
+              maxFontSize: 26,
+            ),
+          ),
+        ],
       ),
       Padding(
         padding: EdgeInsets.symmetric(
