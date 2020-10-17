@@ -1,10 +1,13 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:bfit_tracker/blocs/workout/workout_bloc.dart';
 import 'package:bfit_tracker/controllers/workout_controller.dart';
 import 'package:bfit_tracker/models/workout.dart';
 import 'package:bfit_tracker/theme.dart';
+import 'package:bfit_tracker/ui/home/workouts_area/workouts_area.dart';
 import 'package:bfit_tracker/utils/coval_math.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:transformer_page_view/transformer_page_view.dart';
 
@@ -22,6 +25,7 @@ class _WorkoutCompleteState extends State<WorkoutComplete> {
   static const NUM_OF_PAGES = 2;
   TransformerPageController _pageController;
   Future _fetchWorkoutStartedCountFuture;
+  Bloc _workoutBloc;
 
   @override
   void initState() {
@@ -29,10 +33,12 @@ class _WorkoutCompleteState extends State<WorkoutComplete> {
     _pageController = TransformerPageController();
     _fetchWorkoutStartedCountFuture =
         WorkoutController.fetchWorkoutStartedCount(widget.workout.docRef);
+    _workoutBloc = BlocProvider.of<WorkoutBloc>(context);
   }
 
   @override
   void dispose() {
+    _workoutBloc..add(LoadWorkouts());
     _pageController.dispose();
     super.dispose();
   }
@@ -130,7 +136,11 @@ class _WorkoutCompleteState extends State<WorkoutComplete> {
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 16),
                 child: CupertinoButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    // TODO: Send results of this workout over to Firestore
+                    Navigator.of(context).pushReplacement(MaterialPageRoute(
+                        builder: (BuildContext context) => WorkoutsArea()));
+                  },
                   child: AutoSizeText(
                     'CONTINUE',
                     style: TextStyle(

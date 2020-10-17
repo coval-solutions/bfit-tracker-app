@@ -43,7 +43,6 @@ class _WorkoutActionState extends State<WorkoutAction> {
 
   @override
   void dispose() {
-    this.workoutBloc?.close();
     this.timer?.cancel();
     super.dispose();
   }
@@ -132,7 +131,6 @@ class _WorkoutActionState extends State<WorkoutAction> {
                 FloatingActionButton(
                   heroTag: 'continue',
                   onPressed: () {
-                    print(this.overallTime);
                     Navigator.of(context).pushReplacement(MaterialPageRoute(
                         builder: (BuildContext context) =>
                             WorkoutComplete(this.workout, this.overallTime)));
