@@ -24,7 +24,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-Future<void> main() async {
+// Global vars
+bool isTesting = false;
+
+Future<void> main({bool testing: false}) async {
+  isTesting = testing;
+
   WidgetsFlutterBinding.ensureInitialized();
 
   await DotEnv().load('.env');
@@ -41,9 +46,9 @@ Future<void> main() async {
   final WorkoutRepository workoutRepository = WorkoutRepository();
 
   await FirebaseCrashlytics.instance
-      .setCrashlyticsCollectionEnabled(kReleaseMode);
+      .setCrashlyticsCollectionEnabled(kReleaseMode && !isTesting);
 
-  FirebaseAnalytics().setAnalyticsCollectionEnabled(kReleaseMode);
+  FirebaseAnalytics().setAnalyticsCollectionEnabled(kReleaseMode && !isTesting);
 
   runZonedGuarded(() {
     runApp(

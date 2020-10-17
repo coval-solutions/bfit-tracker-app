@@ -1,6 +1,7 @@
 # BFit Custom
 /android/app/google-services.json
 /ios/Flutter/flutter_export_environment.sh
+/ios/Flutter/.last_build_id
 /ios/Runner/GoogleService-Info.plist
 /functions/adminsdk.json
 .env
