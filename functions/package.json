@@ -21,8 +21,13 @@
     "node": "12"
   },
   "main": "lib/bundle.js",
-  "devDependencies": {
+  "dependencies": {
     "@google-cloud/bigquery": "^5.3.0",
+    "express": "^4.17.1",
+    "firebase-functions": "^3.11.0",
+    "firebase-admin": "^9.2.0"
+  },
+  "devDependencies": {
     "@types/dotenv": "^8.2.0",
     "@types/express": "^4.17.8",
     "@typescript-eslint/eslint-plugin": "^4.4.0",
