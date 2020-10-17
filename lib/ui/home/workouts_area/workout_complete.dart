@@ -250,6 +250,11 @@ Widget workoutCompleteNumberOfTimes(
   return FutureBuilder(
       future: future,
       builder: (BuildContext context, AsyncSnapshot snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting ||
+            snapshot.connectionState == ConnectionState.none) {
+          return Center(child: CircularProgressIndicator());
+        }
+
         return Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
