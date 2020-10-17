@@ -7,8 +7,10 @@ import 'package:bfit_tracker/ui/onboarding/onboarding_screen.dart';
 import 'package:bfit_tracker/ui/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:health/health.dart';
 import 'package:nutrition/nutrition.dart';
+import 'package:wiredash/wiredash.dart';
 
 class App extends StatefulWidget {
   @override
@@ -18,6 +20,8 @@ class App extends StatefulWidget {
 class _AppState extends State<App> {
   bool _haveHealthPermission = false;
   bool _haveNutritionPermission = false;
+
+  final _navigatorKey = GlobalKey<NavigatorState>();
 
   @override
   void initState() {
@@ -42,50 +46,56 @@ class _AppState extends State<App> {
   Widget build(BuildContext context) {
     final AuthenticationState authenticatedState =
         BlocProvider.of<AuthenticationBloc>(context).state;
-    return MaterialApp(
-      theme: mainTheme,
-      debugShowCheckedModeBanner: false,
-      home: (!(authenticatedState is Authenticated))
-          ? SplashScreenLoading()
-          : BlocConsumer<UserInfoBloc, UserInfoState>(
-              listener: (BuildContext context, UserInfoState state) {
-              this._checkHealthPermissions();
-              this._checkNutritionPermissions();
-            }, builder: (BuildContext context, UserInfoState state) {
-              if (state is UserInfoLoaded) {
-                return StreamBuilder(
-                  stream: state.props.first,
-                  builder: (BuildContext context, AsyncSnapshot snapshot) {
-                    if (snapshot.connectionState == ConnectionState.none ||
-                        snapshot.connectionState == ConnectionState.waiting) {
-                      return Stack(
-                        children: <Widget>[
-                          SplashScreenLoading(),
-                          Center(
-                            child: CircularProgressIndicator(),
-                          ),
-                        ],
-                      );
-                    }
+    return Wiredash(
+      navigatorKey: this._navigatorKey,
+      projectId: DotEnv().env['WIREDASH_PROJECT_ID'] ?? '',
+      secret: DotEnv().env['WIREDASH_SECRET_KEY'] ?? '',
+      child: MaterialApp(
+        navigatorKey: this._navigatorKey,
+        theme: mainTheme,
+        debugShowCheckedModeBanner: false,
+        home: (!(authenticatedState is Authenticated))
+            ? SplashScreenLoading()
+            : BlocConsumer<UserInfoBloc, UserInfoState>(
+                listener: (BuildContext context, UserInfoState state) {
+                this._checkHealthPermissions();
+                this._checkNutritionPermissions();
+              }, builder: (BuildContext context, UserInfoState state) {
+                if (state is UserInfoLoaded) {
+                  return StreamBuilder(
+                    stream: state.props.first,
+                    builder: (BuildContext context, AsyncSnapshot snapshot) {
+                      if (snapshot.connectionState == ConnectionState.none ||
+                          snapshot.connectionState == ConnectionState.waiting) {
+                        return Stack(
+                          children: <Widget>[
+                            SplashScreenLoading(),
+                            Center(
+                              child: CircularProgressIndicator(),
+                            ),
+                          ],
+                        );
+                      }
 
-                    if (this._haveHealthPermission) {
-                      if (this._haveNutritionPermission) {
-                        if (snapshot.hasData && snapshot.data is UserInfo) {
-                          return HomeScreen(userInfo: snapshot.data);
-                        } else {
-                          // No data found, let's onboard the user
-                          return OnboardingScreen();
+                      if (this._haveHealthPermission) {
+                        if (this._haveNutritionPermission) {
+                          if (snapshot.hasData && snapshot.data is UserInfo) {
+                            return HomeScreen(userInfo: snapshot.data);
+                          } else {
+                            // No data found, let's onboard the user
+                            return OnboardingScreen();
+                          }
                         }
                       }
-                    }
 
-                    return SplashScreenLoading();
-                  },
-                );
-              } else {
-                return SplashScreenLoading();
-              }
-            }),
+                      return SplashScreenLoading();
+                    },
+                  );
+                } else {
+                  return SplashScreenLoading();
+                }
+              }),
+      ),
     );
   }
 }
