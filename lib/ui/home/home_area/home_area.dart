@@ -105,6 +105,7 @@ class WelcomeCard extends StatelessWidget {
               Expanded(
                 child: AutoSizeText(
                   "Welcome back,\n${user.getForename()}!",
+                  key: Key('welcomeMessage'),
                   maxLines: 2,
                   maxFontSize: 24,
                   style: TextStyle(

@@ -1,5 +1,6 @@
 import 'package:bfit_tracker/blocs/authentication/authentication_bloc.dart';
 import 'package:bfit_tracker/blocs/user_info/user_info_bloc.dart';
+import 'package:bfit_tracker/main.dart';
 import 'package:bfit_tracker/models/user_info.dart';
 import 'package:bfit_tracker/theme.dart';
 import 'package:bfit_tracker/ui/home/home_screen.dart';
@@ -29,6 +30,14 @@ class _AppState extends State<App> {
   }
 
   Future<void> _checkHealthPermissions() async {
+    if (isTesting) {
+      setState(() {
+        _haveHealthPermission = true;
+      });
+
+      return;
+    }
+
     bool isAuthorized = await Health.requestAuthorization();
     setState(() {
       _haveHealthPermission = isAuthorized;
@@ -36,6 +45,14 @@ class _AppState extends State<App> {
   }
 
   Future<void> _checkNutritionPermissions() async {
+    if (isTesting) {
+      setState(() {
+        _haveNutritionPermission = true;
+      });
+
+      return;
+    }
+
     bool isAuthorized = await Nutrition.requestPermission();
     setState(() {
       _haveNutritionPermission = isAuthorized;

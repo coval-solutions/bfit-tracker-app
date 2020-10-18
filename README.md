@@ -1,4 +1,4 @@
-# bfit_tracker
+# BFit Tracker
 
 A new Flutter project.
 
