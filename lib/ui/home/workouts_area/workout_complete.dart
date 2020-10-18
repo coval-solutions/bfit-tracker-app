@@ -1,16 +1,14 @@
-import 'dart:convert';
-import 'dart:io';
-
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:bfit_tracker/blocs/workout/workout_bloc.dart';
+import 'package:bfit_tracker/controllers/workout_controller.dart';
 import 'package:bfit_tracker/models/workout.dart';
-import 'package:bfit_tracker/repositories/user_repository.dart';
 import 'package:bfit_tracker/theme.dart';
+import 'package:bfit_tracker/ui/home/workouts_area/workouts_area.dart';
 import 'package:bfit_tracker/utils/coval_math.dart';
-import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:http/http.dart' as http;
 import 'package:transformer_page_view/transformer_page_view.dart';
 
 class WorkoutComplete extends StatefulWidget {
@@ -27,48 +25,22 @@ class _WorkoutCompleteState extends State<WorkoutComplete> {
   static const NUM_OF_PAGES = 2;
   TransformerPageController _pageController;
   Future _fetchWorkoutStartedCountFuture;
+  Bloc _workoutBloc;
 
   @override
   void initState() {
     super.initState();
     _pageController = TransformerPageController();
     _fetchWorkoutStartedCountFuture =
-        fetchWorkoutStartedCount(widget.workout.docRef);
+        WorkoutController.fetchWorkoutStartedCount(widget.workout.docRef);
+    _workoutBloc = BlocProvider.of<WorkoutBloc>(context);
   }
 
   @override
   void dispose() {
+    _workoutBloc..add(LoadWorkouts());
     _pageController.dispose();
     super.dispose();
-  }
-
-  Future<int> fetchWorkoutStartedCount(String docRef) async {
-    String token = await UserRepository.getIdToken();
-    final resp = await http.get(
-        'http://localhost:5001/bfit-tracker-app/europe-west2/api/workout-started-count/$docRef',
-        headers: {HttpHeaders.authorizationHeader: 'Bearer $token'});
-    if (resp.statusCode == 200) {
-      // If the server did return a 200 OK response,
-      // then parse the JSON.
-      Map<String, dynamic> body = json.decode(resp.body);
-      if (!body.containsKey('count')) {
-        FirebaseCrashlytics.instance.recordError(
-            Exception(
-                'Failed to load Workout started count, missing `count` key'),
-            StackTrace.current,
-            reason: resp.statusCode);
-        return 0;
-      }
-
-      return body['count'];
-    } else {
-      // If the server did not return a 200 OK response,
-      // then return the default value of 0, and report to Crashlytics.
-      FirebaseCrashlytics.instance.recordError(
-          Exception('Failed to load Workout started count'), StackTrace.current,
-          reason: resp.statusCode);
-      return 0;
-    }
   }
 
   @override
@@ -164,7 +136,11 @@ class _WorkoutCompleteState extends State<WorkoutComplete> {
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 16),
                 child: CupertinoButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    // TODO: Send results of this workout over to Firestore
+                    Navigator.of(context).pushReplacement(MaterialPageRoute(
+                        builder: (BuildContext context) => WorkoutsArea()));
+                  },
                   child: AutoSizeText(
                     'CONTINUE',
                     style: TextStyle(
@@ -274,6 +250,11 @@ Widget workoutCompleteNumberOfTimes(
   return FutureBuilder(
       future: future,
       builder: (BuildContext context, AsyncSnapshot snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting ||
+            snapshot.connectionState == ConnectionState.none) {
+          return Center(child: CircularProgressIndicator());
+        }
+
         return Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
