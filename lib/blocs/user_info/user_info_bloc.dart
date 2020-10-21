@@ -47,7 +47,7 @@ class UserInfoBloc extends Bloc<UserInfoEvent, UserInfoState> {
   }
 
   Stream<UserInfoState> _mapCreateToState(CreateUserInfo event) async* {
-    _userInfoRepository.create(this._user, event._userInfo);
+    await _userInfoRepository.create(this._user, event._userInfo);
   }
 
   @override
