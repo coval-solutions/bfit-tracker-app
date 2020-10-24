@@ -49,6 +49,11 @@ class _WorkoutsAreaState extends State<WorkoutsArea> {
     super.dispose();
   }
 
+  Future<void> _refresh() {
+    BlocProvider.of<WorkoutBloc>(context)..add(LoadWorkouts());
+    return Future.value();
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<WorkoutBloc, WorkoutsState>(
@@ -73,6 +78,45 @@ class _WorkoutsAreaState extends State<WorkoutsArea> {
           bodyWorkouts = workouts;
         }
 
+        if (fastWorkouts.isEmpty || bodyWorkouts.isEmpty) {
+          return Scaffold(
+            appBar: EmptyAppBar(),
+            backgroundColor: mainTheme.backgroundColor,
+            body: RefreshIndicator(
+              onRefresh: this._refresh,
+              child: SingleChildScrollView(
+                child: Container(
+                  height: MediaQuery.of(context).size.height,
+                  child: Stack(
+                    children: <Widget>[
+                      Align(
+                        alignment: Alignment.topCenter,
+                        child: AutoSizeText(
+                          'Workouts Available',
+                          maxLines: 1,
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: CustomColor.DIM_GRAY,
+                          ),
+                          minFontSize: 26,
+                          maxFontSize: 26,
+                        ),
+                      ),
+                      Align(
+                        alignment: Alignment.center,
+                        child: AutoSizeText(
+                          'Unable to find workouts,\nplease check your connection',
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          );
+        }
+
         return Scaffold(
           appBar: EmptyAppBar(),
           backgroundColor: mainTheme.backgroundColor,
@@ -83,7 +127,7 @@ class _WorkoutsAreaState extends State<WorkoutsArea> {
                 Align(
                   alignment: Alignment.topCenter,
                   child: AutoSizeText(
-                    'Courses Available',
+                    'Workouts Available',
                     maxLines: 1,
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
