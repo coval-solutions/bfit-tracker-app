@@ -13,8 +13,9 @@ import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {
   final UserInfo userInfo;
+  final HomeScreenBottomNavBarItems navBarItem;
 
-  HomeScreen({Key key, this.userInfo}) : super(key: key);
+  HomeScreen({Key key, this.userInfo, this.navBarItem}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -27,8 +28,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void initState() {
-    super.initState();
     this._bottomNavBarBloc = HomeScreenBottomNavBarBloc();
+    super.initState();
   }
 
   @override
@@ -43,7 +44,7 @@ class _HomeScreenState extends State<HomeScreen> {
       backgroundColor: mainTheme.backgroundColor,
       body: StreamBuilder<HomeScreenBottomNavBarItems>(
         stream: _bottomNavBarBloc.itemStream,
-        initialData: _bottomNavBarBloc.defaultItem,
+        initialData: this.widget.navBarItem ?? _bottomNavBarBloc.defaultItem,
         builder: (BuildContext context,
             AsyncSnapshot<HomeScreenBottomNavBarItems> snapshot) {
           switch (snapshot.data) {
@@ -64,10 +65,12 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       bottomNavigationBar: StreamBuilder(
         stream: _bottomNavBarBloc.itemStream,
-        initialData: _bottomNavBarBloc.defaultItem,
+        initialData: this.widget.navBarItem ?? _bottomNavBarBloc.defaultItem,
         builder: (BuildContext context,
             AsyncSnapshot<HomeScreenBottomNavBarItems> snapshot) {
           return CurvedNavigationBar(
+            index: this.widget.navBarItem?.index ??
+                _bottomNavBarBloc.defaultItem.index,
             height: min(72, 52 + MediaQuery.of(context).padding.bottom),
             backgroundColor: mainTheme.accentColor,
             items: <Widget>[
