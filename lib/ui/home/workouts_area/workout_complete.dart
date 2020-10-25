@@ -1,9 +1,10 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:bfit_tracker/blocs/bottom_nav_bar/home_screen_bottom_nav_bar_bloc.dart';
 import 'package:bfit_tracker/blocs/workout/workout_bloc.dart';
 import 'package:bfit_tracker/controllers/workout_controller.dart';
 import 'package:bfit_tracker/models/workout.dart';
 import 'package:bfit_tracker/theme.dart';
-import 'package:bfit_tracker/ui/home/workouts_area/workouts_area.dart';
+import 'package:bfit_tracker/ui/home/home_screen.dart';
 import 'package:bfit_tracker/utils/coval_math.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -139,7 +140,8 @@ class _WorkoutCompleteState extends State<WorkoutComplete> {
                   onPressed: () {
                     // TODO: Send results of this workout over to Firestore
                     Navigator.of(context).pushReplacement(MaterialPageRoute(
-                        builder: (BuildContext context) => WorkoutsArea()));
+                        builder: (BuildContext context) => HomeScreen(
+                            navBarItem: HomeScreenBottomNavBarItems.COURSES)));
                   },
                   child: AutoSizeText(
                     'CONTINUE',
