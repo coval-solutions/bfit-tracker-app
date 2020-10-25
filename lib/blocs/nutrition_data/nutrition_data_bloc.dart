@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:bfit_tracker/models/nutrient_stat.dart';
 import 'package:bfit_tracker/repositories/nutrition_data_repository.dart';
@@ -59,6 +60,13 @@ class NutritionDataBloc extends Bloc<NutritionDataEvent, NutritionDataState> {
 
   Stream<NutritionDataState> _mapAddingToState(AddNutritionData event) async* {
     try {
+      if (event.nutrients.containsKey(NutritionEnum.VITAMIN_A) &&
+          Platform.isAndroid) {
+        // Convert MCG to IU - IU * 3.33
+        event.nutrients[NutritionEnum.VITAMIN_A] =
+            event.nutrients[NutritionEnum.VITAMIN_A] * 3.33;
+      }
+
       Nutrition.addData(event.nutrients, event.dateTime);
       this.add(LoadNutritionData());
     } catch (_) {

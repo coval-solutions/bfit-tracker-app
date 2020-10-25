@@ -34,8 +34,8 @@ class NutritionDataRepository {
           double value = double.parse(nutrient.value);
           if (nutrient.key == Nutrition.dataTypes[NutritionEnum.VITAMIN_A] &&
               Platform.isAndroid) {
-            // Convert IU to MCG
-            value = value * 0.3;
+            // Convert IU to MCG - IU / 3.33
+            value = double.parse((value / 3.33).toStringAsFixed(1));
           }
 
           sum += value;
