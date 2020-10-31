@@ -1,6 +1,11 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:bfit_tracker/models/coval_user.dart';
+import 'package:bfit_tracker/models/exercise.dart';
+import 'package:bfit_tracker/models/user_info.dart';
+import 'package:bfit_tracker/models/workout.dart';
+import 'package:bfit_tracker/repositories/user_info_repository.dart';
 import 'package:bfit_tracker/repositories/user_repository.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -37,5 +42,23 @@ class WorkoutController {
           reason: resp.statusCode);
       return 0;
     }
+  }
+
+  static void workoutCompleted(
+      UserInfo userInfo, CovalUser user, Workout workout) {
+    Map<String, dynamic> workoutsCompleted =
+        userInfo.workoutsComplete ?? new Map<String, dynamic>();
+    for (Exercise exercise in workout.exercises) {
+      exercise.type.forEach((element) {
+        if (workoutsCompleted.containsKey(element)) {
+          workoutsCompleted[element] = workoutsCompleted[element] + 1;
+        } else {
+          workoutsCompleted[element] = 1;
+        }
+      });
+    }
+
+    userInfo.setWorkoutsComplete(workoutsCompleted);
+    UserInfoRepository().update(user, userInfo);
   }
 }

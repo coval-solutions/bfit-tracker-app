@@ -6,21 +6,34 @@ class UserInfo {
   final bool isMale;
   final int gymTime;
   final Goal goals;
+  Map<String, dynamic> workoutsComplete;
 
-  UserInfo({this.height, this.isMale, this.gymTime, this.goals});
+  UserInfo(
+      {this.height,
+      this.isMale,
+      this.gymTime,
+      this.goals,
+      this.workoutsComplete});
 
   UserInfo fromSnapshot(DocumentSnapshot snapshot) {
     return UserInfo(
-        height: snapshot.data()['height'] ?? 175,
-        isMale: snapshot.data()['isMale'] ?? false,
-        gymTime: snapshot.data()['gymTime'] ?? 0,
-        goals: Goal.fromJson(snapshot.data()['goals']));
+      height: snapshot.data()['height'] ?? 175,
+      isMale: snapshot.data()['isMale'] ?? false,
+      gymTime: snapshot.data()['gymTime'] ?? 0,
+      goals: Goal.fromJson(snapshot.data()['goals']),
+      workoutsComplete: snapshot.data()['workoutsComplete'],
+    );
+  }
+
+  setWorkoutsComplete(Map<String, dynamic> workoutsCompleted) {
+    this.workoutsComplete = workoutsCompleted;
   }
 
   Map<String, Object> toDocument() => {
         'height': height,
         'isMale': isMale,
         'gymTime': gymTime,
-        'goals': goals.toDocument()
+        'goals': goals.toDocument(),
+        'workoutsComplete': workoutsComplete,
       };
 }
