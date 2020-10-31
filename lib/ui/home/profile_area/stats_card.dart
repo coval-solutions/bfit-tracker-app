@@ -62,60 +62,56 @@ Widget otherStats(value, text, {unit}) {
   bool overMax = value100 > 1;
 
   return Card(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10.0),
-      ),
-      color: Colors.white,
-      child: Padding(
-        padding: EdgeInsets.all(24),
-        child: CircularPercentIndicator(
-          animation: true,
-          radius: 120.0,
-          lineWidth: 6,
-          percent: overMax ? min(1, value100 - 1) : value100,
-          circularStrokeCap: CircularStrokeCap.round,
-          center: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              AutoSizeText.rich(
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(10.0),
+    ),
+    color: Colors.white,
+    child: CircularPercentIndicator(
+      animation: true,
+      radius: 120.0,
+      lineWidth: 6,
+      percent: overMax ? min(1, value100 - 1) : value100,
+      circularStrokeCap: CircularStrokeCap.round,
+      center: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          AutoSizeText.rich(
+              TextSpan(
+                text: value.toStringAsFixed(0),
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: CustomColor.DIM_GRAY,
+                  fontSize: 18,
+                ),
+                children: <TextSpan>[
                   TextSpan(
-                    text: value.toStringAsFixed(0),
+                    text: unit?.toString(),
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       color: CustomColor.DIM_GRAY,
-                      fontSize: 18,
+                      fontSize: 8,
                     ),
-                    children: <TextSpan>[
-                      TextSpan(
-                        text: unit?.toString(),
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: CustomColor.DIM_GRAY,
-                          fontSize: 8,
-                        ),
-                      ),
-                    ],
                   ),
-                  maxLines: 1),
-              Padding(
-                padding: EdgeInsets.only(
-                  bottom: 4,
-                ),
+                ],
               ),
-              AutoSizeText(
-                text.toString(),
-                maxLines: 1,
-                style: TextStyle(
-                  color: CustomColor.DIM_GRAY,
-                  fontSize: 12,
-                ),
-              ),
-            ],
+              maxLines: 1),
+          Padding(
+            padding: EdgeInsets.only(
+              bottom: 4,
+            ),
           ),
-          backgroundColor:
-              overMax ? mainTheme.accentColor : CustomColor.LAVENDER,
-          progressColor:
-              overMax ? mainTheme.primaryColor : mainTheme.accentColor,
-        ),
-      ));
+          AutoSizeText(
+            text.toString(),
+            maxLines: 1,
+            style: TextStyle(
+              color: CustomColor.DIM_GRAY,
+              fontSize: 12,
+            ),
+          ),
+        ],
+      ),
+      backgroundColor: overMax ? mainTheme.accentColor : CustomColor.LAVENDER,
+      progressColor: overMax ? mainTheme.primaryColor : mainTheme.accentColor,
+    ),
+  );
 }

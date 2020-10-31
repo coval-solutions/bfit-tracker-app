@@ -1,7 +1,9 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:bfit_tracker/blocs/bottom_nav_bar/home_screen_bottom_nav_bar_bloc.dart';
+import 'package:bfit_tracker/blocs/user_info/user_info_bloc.dart';
 import 'package:bfit_tracker/blocs/workout/workout_bloc.dart';
 import 'package:bfit_tracker/controllers/workout_controller.dart';
+import 'package:bfit_tracker/models/user_info.dart';
 import 'package:bfit_tracker/models/workout.dart';
 import 'package:bfit_tracker/theme.dart';
 import 'package:bfit_tracker/ui/home/home_screen.dart';
@@ -137,10 +139,15 @@ class _WorkoutCompleteState extends State<WorkoutComplete> {
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 16),
                 child: CupertinoButton(
-                  onPressed: () {
-                    // TODO: Send results of this workout over to Firestore
+                  onPressed: () async {
+                    // ignore: close_sinks
+                    final userInfoBloc = BlocProvider.of<UserInfoBloc>(context);
+                    UserInfo newUserInfo =
+                        await WorkoutController.workoutCompleted(userInfoBloc,
+                            this.widget.workout, this.widget.secondsWorkingOut);
                     Navigator.of(context).pushReplacement(MaterialPageRoute(
                         builder: (BuildContext context) => HomeScreen(
+                            userInfo: newUserInfo,
                             navBarItem: HomeScreenBottomNavBarItems.COURSES)));
                   },
                   child: AutoSizeText(

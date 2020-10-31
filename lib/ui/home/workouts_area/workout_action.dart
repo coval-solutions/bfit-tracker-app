@@ -82,73 +82,75 @@ class _WorkoutActionState extends State<WorkoutAction> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Stack(
-        children: <Widget>[
-          ListView.separated(
-            itemCount: this.workout.exercises.length,
-            separatorBuilder: (BuildContext context, int index) => Divider(
-              color: CustomColor.GREY_CHATEAU,
-              thickness: 1,
-              height: 1,
-            ),
-            itemBuilder: (BuildContext context, int index) {
-              if (index == this.currentExerciseIndex) {
-                int seconds = this.workout.exercises[index].seconds;
-                if (this.timer == null) {
-                  this.createTimer(seconds);
+      body: SafeArea(
+        child: Stack(
+          children: <Widget>[
+            ListView.separated(
+              itemCount: this.workout.exercises.length,
+              separatorBuilder: (BuildContext context, int index) => Divider(
+                color: CustomColor.GREY_CHATEAU,
+                thickness: 1,
+                height: 1,
+              ),
+              itemBuilder: (BuildContext context, int index) {
+                if (index == this.currentExerciseIndex) {
+                  int seconds = this.workout.exercises[index].seconds;
+                  if (this.timer == null) {
+                    this.createTimer(seconds);
+                  }
+
+                  double percentage = this.workoutTimer / seconds;
+                  return exerciseTile(this.workout.exercises[index],
+                      active: true, workoutProgress: percentage);
                 }
 
-                double percentage = this.workoutTimer / seconds;
-                return exerciseTile(this.workout.exercises[index],
-                    active: true, workoutProgress: percentage);
-              }
+                // We have therefore completed this exercise, let's show the 100% complete
+                if (index < this.currentExerciseIndex) {
+                  return exerciseTile(this.workout.exercises[index],
+                      active: false, completed: true, workoutProgress: 1);
+                }
 
-              // We have therefore completed this exercise, let's show the 100% complete
-              if (index < this.currentExerciseIndex) {
-                return exerciseTile(this.workout.exercises[index],
-                    active: false, completed: true, workoutProgress: 1);
-              }
-
-              return exerciseTile(this.workout.exercises[index]);
-            },
-          ),
-          Positioned(
-            left: 20,
-            right: 20,
-            bottom: 20,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                FloatingActionButton(
-                  heroTag: 'paused',
-                  onPressed: () => this.pauseTimer(),
-                  backgroundColor: mainTheme.accentColor,
-                  child: Icon(
-                    this.paused ? Icons.play_arrow : Icons.pause,
-                    color: Colors.white,
-                  ),
-                ),
-                FloatingActionButton(
-                  heroTag: 'continue',
-                  onPressed: () {
-                    Navigator.of(context).pushReplacement(MaterialPageRoute(
-                        builder: (BuildContext context) =>
-                            WorkoutComplete(this.workout, this.overallTime)));
-                  },
-                  disabledElevation: 0,
-                  backgroundColor: mainTheme.primaryColor,
-                  child: RotatedBox(
-                    quarterTurns: 2,
-                    child: SvgPicture.asset(
-                      'assets/images/left-pointing-arrow.svg',
+                return exerciseTile(this.workout.exercises[index]);
+              },
+            ),
+            Positioned(
+              left: 20,
+              right: 20,
+              bottom: 20,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  FloatingActionButton(
+                    heroTag: 'paused',
+                    onPressed: () => this.pauseTimer(),
+                    backgroundColor: mainTheme.accentColor,
+                    child: Icon(
+                      this.paused ? Icons.play_arrow : Icons.pause,
                       color: Colors.white,
                     ),
                   ),
-                ),
-              ],
+                  FloatingActionButton(
+                    heroTag: 'continue',
+                    onPressed: () {
+                      Navigator.of(context).pushReplacement(MaterialPageRoute(
+                          builder: (BuildContext context) =>
+                              WorkoutComplete(this.workout, this.overallTime)));
+                    },
+                    disabledElevation: 0,
+                    backgroundColor: mainTheme.primaryColor,
+                    child: RotatedBox(
+                      quarterTurns: 2,
+                      child: SvgPicture.asset(
+                        'assets/images/left-pointing-arrow.svg',
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

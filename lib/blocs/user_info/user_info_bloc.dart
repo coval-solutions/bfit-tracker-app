@@ -33,6 +33,8 @@ class UserInfoBloc extends Bloc<UserInfoEvent, UserInfoState> {
       yield* _mapLoadingToState();
     } else if (event is CreateUserInfo) {
       yield* _mapCreateToState(event);
+    } else if (event is UpdateUserInfo) {
+      yield* _mapUpdateToState(event);
     }
   }
 
@@ -48,6 +50,10 @@ class UserInfoBloc extends Bloc<UserInfoEvent, UserInfoState> {
 
   Stream<UserInfoState> _mapCreateToState(CreateUserInfo event) async* {
     await _userInfoRepository.create(this._user, event._userInfo);
+  }
+
+  Stream<UserInfoState> _mapUpdateToState(UpdateUserInfo event) async* {
+    await _userInfoRepository.update(this._user, event._userInfo);
   }
 
   @override
