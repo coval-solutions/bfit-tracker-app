@@ -4,7 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class UserInfo {
   final int height;
   final bool isMale;
-  final int gymTime;
+  final double gymTime;
   final Goal goals;
   final Map<String, dynamic> workoutsComplete;
 
@@ -23,6 +23,20 @@ class UserInfo {
       goals: Goal.fromJson(snapshot.data()['goals']),
       workoutsComplete: snapshot.data()['workoutsComplete'],
     );
+  }
+
+  Map<String, dynamic> getStats() {
+    Map<String, dynamic> stats = new Map<String, dynamic>();
+    stats['BMI Goal'] = this.goals.getBmi();
+    stats['Weight Goal'] = this.goals.getWeight();
+    stats['Workouts Total'] = this.goals.getCourses();
+    stats['Daily Steps'] = this.goals.getSteps();
+
+    this.workoutsComplete.forEach((key, value) {
+      stats[key + ' workout'] = value;
+    });
+
+    return stats;
   }
 
   Map<String, Object> toDocument() => {

@@ -143,8 +143,8 @@ class _WorkoutCompleteState extends State<WorkoutComplete> {
                     // ignore: close_sinks
                     final userInfoBloc = BlocProvider.of<UserInfoBloc>(context);
                     UserInfo newUserInfo =
-                        await WorkoutController.workoutCompleted(
-                            userInfoBloc, this.widget.workout);
+                        await WorkoutController.workoutCompleted(userInfoBloc,
+                            this.widget.workout, this.widget.secondsWorkingOut);
                     Navigator.of(context).pushReplacement(MaterialPageRoute(
                         builder: (BuildContext context) => HomeScreen(
                             userInfo: newUserInfo,

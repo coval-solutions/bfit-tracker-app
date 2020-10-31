@@ -43,8 +43,8 @@ class WorkoutController {
     }
   }
 
-  static Future<UserInfo> workoutCompleted(
-      UserInfoBloc userInfoBloc, Workout workout) async {
+  static Future<UserInfo> workoutCompleted(UserInfoBloc userInfoBloc,
+      Workout workout, double secondsWorkingOut) async {
     final Stream<UserInfo> userInfo = userInfoBloc.state.props.first;
     UserInfo userInfoObj = await userInfo.first;
 
@@ -63,7 +63,7 @@ class WorkoutController {
     UserInfo newUserInfo = new UserInfo(
         height: userInfoObj.height,
         isMale: userInfoObj.isMale,
-        gymTime: userInfoObj.gymTime,
+        gymTime: (userInfoObj.gymTime ?? 0) + secondsWorkingOut / 60,
         goals: userInfoObj.goals,
         workoutsComplete: workoutsCompleted);
 
