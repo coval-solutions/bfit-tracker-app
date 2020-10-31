@@ -94,7 +94,11 @@ class _NutritionAreaState extends State<NutritionArea> {
         child: RefreshIndicator(
           onRefresh: this._refresh,
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 12),
+            padding: const EdgeInsets.only(
+              top: 12,
+              left: 12,
+              right: 12,
+            ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[

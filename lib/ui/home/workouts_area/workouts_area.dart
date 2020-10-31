@@ -83,32 +83,37 @@ class _WorkoutsAreaState extends State<WorkoutsArea> {
             body: SafeArea(
               child: RefreshIndicator(
                 onRefresh: this._refresh,
-                child: SingleChildScrollView(
-                  child: Container(
-                    height: MediaQuery.of(context).size.height,
-                    child: Stack(
-                      children: <Widget>[
-                        Align(
-                          alignment: Alignment.topCenter,
-                          child: AutoSizeText(
-                            'Workouts Available',
-                            maxLines: 1,
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: CustomColor.DIM_GRAY,
+                child: Padding(
+                  padding: const EdgeInsets.only(
+                    top: 12,
+                  ),
+                  child: SingleChildScrollView(
+                    child: Container(
+                      height: MediaQuery.of(context).size.height,
+                      child: Stack(
+                        children: <Widget>[
+                          Align(
+                            alignment: Alignment.topCenter,
+                            child: AutoSizeText(
+                              'Workouts Available',
+                              maxLines: 1,
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: CustomColor.DIM_GRAY,
+                              ),
+                              minFontSize: 26,
+                              maxFontSize: 26,
                             ),
-                            minFontSize: 26,
-                            maxFontSize: 26,
                           ),
-                        ),
-                        Align(
-                          alignment: Alignment.center,
-                          child: AutoSizeText(
-                            'Unable to find workouts,\nplease check your connection',
-                            textAlign: TextAlign.center,
+                          Align(
+                            alignment: Alignment.center,
+                            child: AutoSizeText(
+                              'Unable to find workouts,\nplease check your connection',
+                              textAlign: TextAlign.center,
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -120,135 +125,143 @@ class _WorkoutsAreaState extends State<WorkoutsArea> {
         return Scaffold(
           backgroundColor: mainTheme.backgroundColor,
           body: SafeArea(
-            child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  Align(
-                    alignment: Alignment.topCenter,
-                    child: AutoSizeText(
-                      'Workouts Available',
-                      maxLines: 1,
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: CustomColor.DIM_GRAY,
-                      ),
-                      minFontSize: 26,
-                      maxFontSize: 26,
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(12),
-                    child: CupertinoTextField(
-                      prefix: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 4),
-                        child: Icon(
-                          Icons.search,
+            child: Padding(
+              padding: const EdgeInsets.only(
+                top: 12,
+              ),
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Align(
+                      alignment: Alignment.topCenter,
+                      child: AutoSizeText(
+                        'Workouts Available',
+                        maxLines: 1,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
                           color: CustomColor.DIM_GRAY,
                         ),
+                        minFontSize: 26,
+                        maxFontSize: 26,
                       ),
-                      placeholder: 'Search',
-                      placeholderStyle: TextStyle(
-                        height: 1.25,
-                        color: CustomColor.DIM_GRAY,
-                      ),
-                      maxLines: 1,
-                      padding: const EdgeInsets.symmetric(vertical: 8),
-                      controller: this.textEditingController,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(14.0),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(12),
+                      child: CupertinoTextField(
+                        prefix: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 4),
+                          child: Icon(
+                            Icons.search,
+                            color: CustomColor.DIM_GRAY,
+                          ),
                         ),
-                        border: Border.all(
+                        placeholder: 'Search',
+                        placeholderStyle: TextStyle(
+                          height: 1.25,
                           color: CustomColor.DIM_GRAY,
+                        ),
+                        maxLines: 1,
+                        padding: const EdgeInsets.symmetric(vertical: 8),
+                        controller: this.textEditingController,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(14.0),
+                          ),
+                          border: Border.all(
+                            color: CustomColor.DIM_GRAY,
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.only(left: 14),
-                        child: AutoSizeText('FAST WORKOUTS'),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(right: 14),
-                        child: AutoSizeText('Discover more >'),
-                      ),
-                    ],
-                  ),
-                  ListView.builder(
-                    scrollDirection: Axis.vertical,
-                    physics: NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    padding: const EdgeInsets.all(8.0),
-                    itemCount: fastWorkouts.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return GestureDetector(
-                          onTap: () {
-                            if (fastWorkouts[index].exercises.isNotEmpty) {
-                              context.bloc<WorkoutBloc>()
-                                ..add(SetWorkoutSelected(fastWorkouts[index]));
-                            }
-                          },
-                          child: WorkoutCard(
-                            smallTitle: fastWorkouts[index].type.toUpperCase(),
-                            mainTitle: fastWorkouts[index].title,
-                            description: fastWorkouts[index].description,
-                            imageUrl: fastWorkouts[index].imageLocation,
-                            color: colors[index % colors.length],
-                            duration: Duration(milliseconds: 400 * (index + 1)),
-                          ));
-                    },
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.only(left: 14),
-                        child: AutoSizeText('BODY WORKOUTS'),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(right: 14),
-                        child: AutoSizeText('Discover more >'),
-                      ),
-                    ],
-                  ),
-                  Container(
-                    height: 164,
-                    child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      physics: AlwaysScrollableScrollPhysics(),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Padding(
+                          padding: const EdgeInsets.only(left: 14),
+                          child: AutoSizeText('FAST WORKOUTS'),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(right: 14),
+                          child: AutoSizeText('Discover more >'),
+                        ),
+                      ],
+                    ),
+                    ListView.builder(
+                      scrollDirection: Axis.vertical,
+                      physics: NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
                       padding: const EdgeInsets.all(8.0),
-                      itemCount: bodyWorkouts.length,
+                      itemCount: fastWorkouts.length,
                       itemBuilder: (BuildContext context, int index) {
                         return GestureDetector(
                             onTap: () {
-                              if (bodyWorkouts[index].exercises.isNotEmpty) {
+                              if (fastWorkouts[index].exercises.isNotEmpty) {
                                 context.bloc<WorkoutBloc>()
                                   ..add(
-                                      SetWorkoutSelected(bodyWorkouts[index]));
+                                      SetWorkoutSelected(fastWorkouts[index]));
                               }
                             },
-                            child: Container(
-                              width: 230,
-                              child: WorkoutCard(
-                                smallTitle:
-                                    "${bodyWorkouts[index].exercises.length} workouts",
-                                mainTitle: bodyWorkouts[index].title,
-                                description: bodyWorkouts[index].description,
-                                imageUrl: bodyWorkouts[index].imageLocation,
-                                color: colors[index % colors.length],
-                                duration:
-                                    Duration(milliseconds: 400 * (index + 1)),
-                              ),
+                            child: WorkoutCard(
+                              smallTitle:
+                                  fastWorkouts[index].type.toUpperCase(),
+                              mainTitle: fastWorkouts[index].title,
+                              description: fastWorkouts[index].description,
+                              imageUrl: fastWorkouts[index].imageLocation,
+                              color: colors[index % colors.length],
+                              duration:
+                                  Duration(milliseconds: 400 * (index + 1)),
                             ));
                       },
                     ),
-                  ),
-                ],
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Padding(
+                          padding: const EdgeInsets.only(left: 14),
+                          child: AutoSizeText('BODY WORKOUTS'),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(right: 14),
+                          child: AutoSizeText('Discover more >'),
+                        ),
+                      ],
+                    ),
+                    Container(
+                      height: 164,
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        physics: AlwaysScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        padding: const EdgeInsets.all(8.0),
+                        itemCount: bodyWorkouts.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return GestureDetector(
+                              onTap: () {
+                                if (bodyWorkouts[index].exercises.isNotEmpty) {
+                                  context.bloc<WorkoutBloc>()
+                                    ..add(SetWorkoutSelected(
+                                        bodyWorkouts[index]));
+                                }
+                              },
+                              child: Container(
+                                width: 230,
+                                child: WorkoutCard(
+                                  smallTitle:
+                                      "${bodyWorkouts[index].exercises.length} workouts",
+                                  mainTitle: bodyWorkouts[index].title,
+                                  description: bodyWorkouts[index].description,
+                                  imageUrl: bodyWorkouts[index].imageLocation,
+                                  color: colors[index % colors.length],
+                                  duration:
+                                      Duration(milliseconds: 400 * (index + 1)),
+                                ),
+                              ));
+                        },
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
