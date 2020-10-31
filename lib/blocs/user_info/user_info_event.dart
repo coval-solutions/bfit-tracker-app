@@ -21,4 +21,14 @@ class CreateUserInfo extends UserInfoEvent {
   String toString() => "CreateUserInfo { userInfo: ${this._userInfo} }";
 }
 
-class UpdateUserInfo extends UserInfoEvent {}
+class UpdateUserInfo extends UserInfoEvent {
+  final UserInfo _userInfo;
+
+  UpdateUserInfo(this._userInfo);
+
+  @override
+  List<Object> get props => [this._userInfo];
+
+  @override
+  String toString() => "UpdateUserInfo { userInfo: ${this._userInfo} }";
+}

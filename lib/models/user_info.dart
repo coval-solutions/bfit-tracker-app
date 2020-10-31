@@ -6,7 +6,7 @@ class UserInfo {
   final bool isMale;
   final int gymTime;
   final Goal goals;
-  Map<String, dynamic> workoutsComplete;
+  final Map<String, dynamic> workoutsComplete;
 
   UserInfo(
       {this.height,
@@ -23,10 +23,6 @@ class UserInfo {
       goals: Goal.fromJson(snapshot.data()['goals']),
       workoutsComplete: snapshot.data()['workoutsComplete'],
     );
-  }
-
-  setWorkoutsComplete(Map<String, dynamic> workoutsCompleted) {
-    this.workoutsComplete = workoutsCompleted;
   }
 
   Map<String, Object> toDocument() => {

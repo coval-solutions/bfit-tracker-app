@@ -1,11 +1,10 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:bfit_tracker/models/coval_user.dart';
+import 'package:bfit_tracker/blocs/user_info/user_info_bloc.dart';
 import 'package:bfit_tracker/models/exercise.dart';
 import 'package:bfit_tracker/models/user_info.dart';
 import 'package:bfit_tracker/models/workout.dart';
-import 'package:bfit_tracker/repositories/user_info_repository.dart';
 import 'package:bfit_tracker/repositories/user_repository.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -44,10 +43,13 @@ class WorkoutController {
     }
   }
 
-  static void workoutCompleted(
-      UserInfo userInfo, CovalUser user, Workout workout) {
+  static Future<UserInfo> workoutCompleted(
+      UserInfoBloc userInfoBloc, Workout workout) async {
+    final Stream<UserInfo> userInfo = userInfoBloc.state.props.first;
+    UserInfo userInfoObj = await userInfo.first;
+
     Map<String, dynamic> workoutsCompleted =
-        userInfo.workoutsComplete ?? new Map<String, dynamic>();
+        userInfoObj.workoutsComplete ?? new Map<String, dynamic>();
     for (Exercise exercise in workout.exercises) {
       exercise.type.forEach((element) {
         if (workoutsCompleted.containsKey(element)) {
@@ -58,7 +60,14 @@ class WorkoutController {
       });
     }
 
-    userInfo.setWorkoutsComplete(workoutsCompleted);
-    UserInfoRepository().update(user, userInfo);
+    UserInfo newUserInfo = new UserInfo(
+        height: userInfoObj.height,
+        isMale: userInfoObj.isMale,
+        gymTime: userInfoObj.gymTime,
+        goals: userInfoObj.goals,
+        workoutsComplete: workoutsCompleted);
+
+    userInfoBloc.add(UpdateUserInfo(newUserInfo));
+    return newUserInfo;
   }
 }
