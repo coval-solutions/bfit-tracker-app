@@ -52,9 +52,11 @@ class _AnalyticsAreaState extends State<AnalyticsArea> {
       backgroundColor: mainTheme.backgroundColor,
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 6,
-            vertical: 4,
+          padding: const EdgeInsets.only(
+            left: 6,
+            right: 6,
+            top: 12,
+            bottom: 4,
           ),
           child: BlocConsumer<FitnessDataBloc, FitnessDataState>(
               listener: (context, state) {

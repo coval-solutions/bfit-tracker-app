@@ -35,6 +35,7 @@ Future<void> main({bool testing: false}) async {
 
   await DotEnv().load('.env');
   await Firebase.initializeApp();
+
   FirebaseFirestore.instance.settings =
       Settings(persistenceEnabled: kReleaseMode);
 

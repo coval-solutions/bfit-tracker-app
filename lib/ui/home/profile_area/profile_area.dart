@@ -41,76 +41,81 @@ class _ProfileAreaState extends State<ProfileArea> {
     return Scaffold(
       backgroundColor: mainTheme.backgroundColor,
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: BlocConsumer<FitnessDataBloc, FitnessDataState>(
-            listener: (BuildContext context, state) {},
-            builder: (context, snapshot) {
-              if (!(snapshot is FitnessDataLoaded)) {
-                return Center(child: CircularProgressIndicator());
-              }
+        child: Padding(
+          padding: const EdgeInsets.only(top: 12),
+          child: SingleChildScrollView(
+            child: BlocConsumer<FitnessDataBloc, FitnessDataState>(
+              listener: (BuildContext context, state) {},
+              builder: (context, snapshot) {
+                if (!(snapshot is FitnessDataLoaded)) {
+                  return Center(child: CircularProgressIndicator());
+                }
 
-              var stats = this.widget._userInfo.getStats().entries;
-              return FutureBuilder<Map<HealthDataType, Map>>(
-                  future: _fitnessDataBloc.state.props.first,
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState != ConnectionState.done ||
-                        snapshot.data == null) {
-                      return Center(child: CircularProgressIndicator());
-                    }
+                var stats = this.widget._userInfo.getStats().entries;
+                return FutureBuilder<Map<HealthDataType, Map>>(
+                    future: _fitnessDataBloc.state.props.first,
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState != ConnectionState.done ||
+                          snapshot.data == null) {
+                        return Center(child: CircularProgressIndicator());
+                      }
 
-                    var stepsData = snapshot.data.entries
-                        .where((item) => item.key == HealthDataType.STEPS);
-                    double todaysSteps =
-                        double.parse(stepsData.first.value.values.last.value);
-                    double stepsPercent =
-                        (todaysSteps / widget._userInfo.goals.getSteps()) * 100;
-                    return Padding(
-                      padding:
-                          EdgeInsets.symmetric(vertical: 4, horizontal: 16),
-                      child: Column(
-                        children: <Widget>[
-                          profileInfo(_authenticationBloc.state.props.first),
-                          Padding(
-                            padding: EdgeInsets.symmetric(
-                              vertical: 8,
+                      var stepsData = snapshot.data.entries
+                          .where((item) => item.key == HealthDataType.STEPS);
+                      double todaysSteps =
+                          double.parse(stepsData.first.value.values.last.value);
+                      double stepsPercent =
+                          (todaysSteps / widget._userInfo.goals.getSteps()) *
+                              100;
+                      return Padding(
+                        padding:
+                            EdgeInsets.symmetric(vertical: 4, horizontal: 16),
+                        child: Column(
+                          children: <Widget>[
+                            profileInfo(_authenticationBloc.state.props.first),
+                            Padding(
+                              padding: EdgeInsets.symmetric(
+                                vertical: 8,
+                              ),
                             ),
-                          ),
-                          totalGymTimeStat(widget._userInfo.gymTime /
-                              widget._userInfo.goals.getGym()),
-                          GridView.builder(
-                              shrinkWrap: true,
-                              physics: ScrollPhysics(),
-                              itemCount: stats.length,
-                              gridDelegate:
-                                  SliverGridDelegateWithFixedCrossAxisCount(
-                                      crossAxisCount: 2),
-                              itemBuilder: (BuildContext context, int index) {
-                                var element = stats.elementAt(index);
-                                // Don't title case this, otherwise BMI appears like: B M I
-                                if (element.key == 'BMI Goal') {
-                                  return otherStats(element.value, element.key);
-                                }
+                            totalGymTimeStat(widget._userInfo.gymTime /
+                                widget._userInfo.goals.getGym()),
+                            GridView.builder(
+                                shrinkWrap: true,
+                                physics: ScrollPhysics(),
+                                itemCount: stats.length,
+                                gridDelegate:
+                                    SliverGridDelegateWithFixedCrossAxisCount(
+                                        crossAxisCount: 2),
+                                itemBuilder: (BuildContext context, int index) {
+                                  var element = stats.elementAt(index);
+                                  // Don't title case this, otherwise BMI appears like: B M I
+                                  if (element.key == 'BMI Goal') {
+                                    return otherStats(
+                                        element.value, element.key);
+                                  }
 
-                                if (element.key == 'Daily Steps') {
+                                  if (element.key == 'Daily Steps') {
+                                    return otherStats(
+                                        stepsPercent, element.key.titleCase,
+                                        unit: '%');
+                                  }
+
+                                  if (element.key == 'Weight Goal') {
+                                    return otherStats(
+                                        element.value, element.key.titleCase,
+                                        unit: 'kg');
+                                  }
+
                                   return otherStats(
-                                      stepsPercent, element.key.titleCase,
-                                      unit: '%');
-                                }
-
-                                if (element.key == 'Weight Goal') {
-                                  return otherStats(
-                                      element.value, element.key.titleCase,
-                                      unit: 'kg');
-                                }
-
-                                return otherStats(
-                                    element.value, element.key.titleCase);
-                              }),
-                        ],
-                      ),
-                    );
-                  });
-            },
+                                      element.value, element.key.titleCase);
+                                }),
+                          ],
+                        ),
+                      );
+                    });
+              },
+            ),
           ),
         ),
       ),
