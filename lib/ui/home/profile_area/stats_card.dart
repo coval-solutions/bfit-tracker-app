@@ -102,7 +102,8 @@ Widget otherStats(value, text, {unit}) {
           ),
           AutoSizeText(
             text.toString(),
-            maxLines: 1,
+            textAlign: TextAlign.center,
+            maxLines: 2,
             style: TextStyle(
               color: CustomColor.DIM_GRAY,
               fontSize: 12,

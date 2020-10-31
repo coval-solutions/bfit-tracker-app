@@ -3,7 +3,6 @@ import 'package:barcode_scan/barcode_scan.dart';
 import 'package:bfit_tracker/blocs/nutrition_data/nutrition_data_bloc.dart';
 import 'package:bfit_tracker/models/nutrient_stat.dart';
 import 'package:bfit_tracker/theme.dart';
-import 'package:bfit_tracker/ui/coval_solutions/empty_app_bar.dart';
 import 'package:bfit_tracker/ui/coval_solutions/no_glow_listview.dart';
 import 'package:bfit_tracker/ui/home/nutrition_area/nutrient_card.dart';
 import 'package:flutter/material.dart';
@@ -81,7 +80,6 @@ class _NutritionAreaState extends State<NutritionArea> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: EmptyAppBar(),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           scanBarcode();
@@ -92,83 +90,85 @@ class _NutritionAreaState extends State<NutritionArea> {
         ),
         backgroundColor: Colors.white,
       ),
-      body: RefreshIndicator(
-        onRefresh: this._refresh,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 12),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              Align(
-                alignment: Alignment.topCenter,
-                child: AutoSizeText(
-                  'Nutrition Tracker',
-                  maxLines: 1,
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: CustomColor.DIM_GRAY,
+      body: SafeArea(
+        child: RefreshIndicator(
+          onRefresh: this._refresh,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 12),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Align(
+                  alignment: Alignment.topCenter,
+                  child: AutoSizeText(
+                    'Nutrition Tracker',
+                    maxLines: 1,
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: CustomColor.DIM_GRAY,
+                    ),
+                    minFontSize: 26,
+                    maxFontSize: 26,
                   ),
-                  minFontSize: 26,
-                  maxFontSize: 26,
                 ),
-              ),
-              Align(
-                alignment: Alignment.topCenter,
-                child: AutoSizeText(
-                  'Weekly',
-                  maxLines: 1,
-                  style: TextStyle(
-                    fontWeight: FontWeight.normal,
-                    color: CustomColor.DIM_GRAY,
-                    fontStyle: FontStyle.italic,
+                Align(
+                  alignment: Alignment.topCenter,
+                  child: AutoSizeText(
+                    'Weekly',
+                    maxLines: 1,
+                    style: TextStyle(
+                      fontWeight: FontWeight.normal,
+                      color: CustomColor.DIM_GRAY,
+                      fontStyle: FontStyle.italic,
+                    ),
+                    minFontSize: 18,
+                    maxFontSize: 18,
                   ),
-                  minFontSize: 18,
-                  maxFontSize: 18,
                 ),
-              ),
-              Padding(
-                padding: EdgeInsets.only(top: 30),
-              ),
-              BlocConsumer<NutritionDataBloc, NutritionDataState>(
-                  listener: (context, state) {
-                if (this.nutritionDataBloc == null) {
-                  this.setState(() {
-                    nutritionDataBloc = context.bloc();
-                  });
-                }
-
-                if (state is NutritionDataLoaded) {
-                  this.getNutritionData(state.props.first);
-                }
-              }, builder: (BuildContext context, NutritionDataState state) {
-                if (!(state is NutritionDataLoaded) ||
-                    this.nutritionData == null) {
-                  if (this.nutritionData == null && state.props.isNotEmpty) {
-                    this.getNutritionData(state.props.first);
+                Padding(
+                  padding: EdgeInsets.only(top: 30),
+                ),
+                BlocConsumer<NutritionDataBloc, NutritionDataState>(
+                    listener: (context, state) {
+                  if (this.nutritionDataBloc == null) {
+                    this.setState(() {
+                      nutritionDataBloc = context.bloc();
+                    });
                   }
 
-                  return Center(child: CircularProgressIndicator());
-                }
+                  if (state is NutritionDataLoaded) {
+                    this.getNutritionData(state.props.first);
+                  }
+                }, builder: (BuildContext context, NutritionDataState state) {
+                  if (!(state is NutritionDataLoaded) ||
+                      this.nutritionData == null) {
+                    if (this.nutritionData == null && state.props.isNotEmpty) {
+                      this.getNutritionData(state.props.first);
+                    }
 
-                return Flexible(
-                  child: ScrollConfiguration(
-                    behavior: NoGlowingOverscrollIndicator(),
-                    child: ListView.builder(
-                      shrinkWrap: true,
-                      physics: const AlwaysScrollableScrollPhysics(),
-                      itemCount: nutritionData.length ?? 0,
-                      itemBuilder: (BuildContext context, int index) {
-                        return NutrientCard(
-                            nutritionEnum: nutritionData[index].type,
-                            value: double.parse(nutritionData[index].value),
-                            color:
-                                widget.colors[(index % widget.colors.length)]);
-                      },
+                    return Center(child: CircularProgressIndicator());
+                  }
+
+                  return Flexible(
+                    child: ScrollConfiguration(
+                      behavior: NoGlowingOverscrollIndicator(),
+                      child: ListView.builder(
+                        shrinkWrap: true,
+                        physics: const AlwaysScrollableScrollPhysics(),
+                        itemCount: nutritionData.length ?? 0,
+                        itemBuilder: (BuildContext context, int index) {
+                          return NutrientCard(
+                              nutritionEnum: nutritionData[index].type,
+                              value: double.parse(nutritionData[index].value),
+                              color: widget
+                                  .colors[(index % widget.colors.length)]);
+                        },
+                      ),
                     ),
-                  ),
-                );
-              }),
-            ],
+                  );
+                }),
+              ],
+            ),
           ),
         ),
       ),

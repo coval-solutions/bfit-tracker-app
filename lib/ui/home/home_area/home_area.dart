@@ -4,7 +4,6 @@ import 'package:bfit_tracker/blocs/gym/gym_bloc.dart';
 import 'package:bfit_tracker/blocs/location/location_bloc.dart';
 import 'package:bfit_tracker/models/coval_user.dart';
 import 'package:bfit_tracker/theme.dart';
-import 'package:bfit_tracker/ui/coval_solutions/empty_app_bar.dart';
 import 'package:bfit_tracker/ui/home/home_area/gyms_near_me.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -15,34 +14,35 @@ class HomeArea extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: EmptyAppBar(),
-        body: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 12,
-          ),
-          child: Column(
-            children: <Widget>[
-              WelcomeCard(),
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                  vertical: 6,
-                ),
+        body: SafeArea(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(
+          horizontal: 12,
+        ),
+        child: Column(
+          children: <Widget>[
+            WelcomeCard(),
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                vertical: 6,
               ),
-              AspectRatio(
-                aspectRatio: 3 / 2,
-                child: ArticlesCard(),
+            ),
+            AspectRatio(
+              aspectRatio: 3 / 2,
+              child: ArticlesCard(),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                vertical: 6,
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                  vertical: 6,
-                ),
-              ),
-              Expanded(
-                child: NearByGymsCard(),
-              ),
-            ],
-          ),
-        ));
+            ),
+            Expanded(
+              child: NearByGymsCard(),
+            ),
+          ],
+        ),
+      ),
+    ));
   }
 }
 
