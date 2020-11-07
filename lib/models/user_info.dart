@@ -32,15 +32,17 @@ class UserInfo {
     stats['Workouts Total'] = this.goals.getCourses();
     stats['Daily Steps'] = this.goals.getSteps();
 
-    this.workoutsComplete.forEach((key, value) {
-      // If exercise is plural (i.e. ends with s, such as Biceps or Triceps)
-      // then remove the last character to make it singular
-      if (key.endsWith('s')) {
-        key = key.substring(0, key.length - 1);
-      }
+    if (this.workoutsComplete != null) {
+      this.workoutsComplete.forEach((key, value) {
+        // If exercise is plural (i.e. ends with s, such as Biceps or Triceps)
+        // then remove the last character to make it singular
+        if (key.endsWith('s')) {
+          key = key.substring(0, key.length - 1);
+        }
 
-      stats[key + ' exercises completed'] = value;
-    });
+        stats[key + ' exercises completed'] = value;
+      });
+    }
 
     return stats;
   }
