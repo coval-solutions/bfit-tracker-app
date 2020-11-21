@@ -1,30 +1,27 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:bfit_tracker/blocs/user_info/user_info_bloc.dart';
-import 'package:bfit_tracker/models/goal.dart';
-import 'package:bfit_tracker/models/user_info.dart';
 import 'package:bfit_tracker/theme.dart';
+import 'package:bfit_tracker/ui/onboarding/about_you_screen_weight.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:height_slider/height_slider.dart';
+import 'package:transformer_page_view/transformer_page_view.dart';
 
-class AboutYouScreen extends StatefulWidget {
-  AboutYouScreen({Key key}) : super(key: key);
+class AboutYouScreenHeight extends StatefulWidget {
+  final TransformerPageView transformerPageView;
+
+  AboutYouScreenHeight({Key key, this.transformerPageView}) : super(key: key);
 
   @override
-  _AboutYouScreenState createState() => _AboutYouScreenState();
+  _AboutYouScreenHeightState createState() => _AboutYouScreenHeightState();
 }
 
-class _AboutYouScreenState extends State<AboutYouScreen> {
+class _AboutYouScreenHeightState extends State<AboutYouScreenHeight> {
   bool isMaleSelected = true;
   int height = 170;
 
   @override
   Widget build(BuildContext context) {
-    //ignore: close_sinks
-    final userInfoBloc = BlocProvider.of<UserInfoBloc>(context);
-
     return Scaffold(
       backgroundColor: mainTheme.primaryColor,
       body: SafeArea(
@@ -158,21 +155,27 @@ class _AboutYouScreenState extends State<AboutYouScreen> {
                 splashColor: Colors.transparent,
                 highlightColor: Colors.transparent,
                 onPressed: () {
-                  final UserInfo userInfo = UserInfo(
-                      height: this.height,
-                      isMale: this.isMaleSelected,
-                      goals: Goal(
-                        bmi: 24,
-                        weight: 72,
-                        courses: 45,
-                        gym: 100,
-                        steps: 10000,
-                      ));
-
-                  userInfoBloc.add(CreateUserInfo(userInfo));
-
-                  // Pop back to App, either go to Home or Onboarding
-                  Navigator.pop(context);
+                  Navigator.pushReplacement(
+                    context,
+                    PageRouteBuilder(
+                      pageBuilder: (context, animation, secondaryAnimation) =>
+                          AboutYouScreenWeight(
+                        height: this.height,
+                        isMale: this.isMaleSelected,
+                      ),
+                      transitionDuration: Duration(milliseconds: 400),
+                      transitionsBuilder:
+                          (context, animation, secondaryAnimation, child) {
+                        return SlideTransition(
+                          position: Tween<Offset>(
+                                  begin: Offset(1.0, 0.0), end: Offset.zero)
+                              .animate(CurvedAnimation(
+                                  parent: animation, curve: Curves.easeInOut)),
+                          child: child,
+                        );
+                      },
+                    ),
+                  );
                 },
                 elevation: 5,
                 shape: RoundedRectangleBorder(
@@ -192,10 +195,10 @@ class _AboutYouScreenState extends State<AboutYouScreen> {
                   ),
                   child: Container(
                     constraints:
-                        BoxConstraints(minWidth: 150.0, minHeight: 52.0),
+                        const BoxConstraints(minWidth: 150.0, minHeight: 52.0),
                     alignment: Alignment.center,
-                    child: AutoSizeText(
-                      'Finish',
+                    child: const AutoSizeText(
+                      'Next',
                       minFontSize: 20,
                       style: TextStyle(
                           color: Colors.white, fontWeight: FontWeight.bold),

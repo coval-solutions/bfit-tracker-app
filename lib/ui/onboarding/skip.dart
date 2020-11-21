@@ -1,5 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:bfit_tracker/ui/onboarding/about_you_screen.dart';
+import 'package:bfit_tracker/ui/onboarding/about_you_screen_height.dart';
 import 'package:flutter/material.dart';
 
 class SkipOnboardingButton extends StatelessWidget {
@@ -11,7 +11,7 @@ class SkipOnboardingButton extends StatelessWidget {
           context,
           PageRouteBuilder(
             pageBuilder: (context, animation, secondaryAnimation) =>
-                AboutYouScreen(),
+                AboutYouScreenHeight(),
             transitionDuration: Duration(milliseconds: 400),
             transitionsBuilder:
                 (context, animation, secondaryAnimation, child) {

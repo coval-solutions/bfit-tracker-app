@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class UserInfo {
   final int height;
+  final int weight;
   final bool isMale;
   final double gymTime;
   final Goal goals;
@@ -10,6 +11,7 @@ class UserInfo {
 
   UserInfo(
       {this.height,
+      this.weight,
       this.isMale,
       this.gymTime,
       this.goals,
@@ -18,6 +20,7 @@ class UserInfo {
   UserInfo fromSnapshot(DocumentSnapshot snapshot) {
     return UserInfo(
       height: snapshot.data()['height'] ?? 175,
+      weight: snapshot.data()['weight'] ?? 80,
       isMale: snapshot.data()['isMale'] ?? false,
       gymTime: snapshot.data()['gymTime'] ?? 0,
       goals: Goal.fromJson(snapshot.data()['goals']),
