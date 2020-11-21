@@ -1,6 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:bfit_tracker/theme.dart';
-import 'package:bfit_tracker/ui/onboarding/about_you_screen.dart';
 import 'package:bfit_tracker/ui/onboarding/next.dart';
 import 'package:bfit_tracker/ui/onboarding/skip.dart';
 import 'package:dots_indicator/dots_indicator.dart';
@@ -21,7 +20,7 @@ class OnboardingScreen extends StatefulWidget {
 }
 
 class OnboardingScreenState extends State<OnboardingScreen> {
-  static const NUM_OF_PAGES = 3;
+  static const NUM_OF_PAGES = 4;
   TransformerPageController _pageController;
 
   final List<String> background = [
@@ -48,7 +47,6 @@ class OnboardingScreenState extends State<OnboardingScreen> {
     'Learn amazing workout skills by using our visual animations',
   ];
 
-  AboutYouScreen aboutYouScreen = AboutYouScreen();
   TransformerPageView transformerPageView;
 
   @override
