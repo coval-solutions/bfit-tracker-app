@@ -62,6 +62,7 @@ class _AboutYouScreenWeightState extends State<AboutYouScreenWeight> {
                     final UserInfo userInfo = UserInfo(
                       height: this.widget.height,
                       isMale: this.widget.isMale,
+                      weight: this.weight,
                       goals: Goal(
                         bmi: 24,
                         weight: 72,

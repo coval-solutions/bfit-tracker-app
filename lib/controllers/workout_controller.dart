@@ -61,11 +61,14 @@ class WorkoutController {
     }
 
     UserInfo newUserInfo = new UserInfo(
-        height: userInfoObj.height,
-        isMale: userInfoObj.isMale,
-        gymTime: (userInfoObj.gymTime ?? 0) + secondsWorkingOut / 60,
-        goals: userInfoObj.goals,
-        workoutsComplete: workoutsCompleted);
+      height: userInfoObj.height,
+      weight: userInfoObj.weight,
+      isMale: userInfoObj.isMale,
+      gymTime: (userInfoObj.gymTime ?? 0) + secondsWorkingOut / 60,
+      goals: userInfoObj.goals,
+      workoutsComplete: workoutsCompleted,
+      totalWorkoutsCompleted: userInfoObj.totalWorkoutsCompleted + 1,
+    );
 
     userInfoBloc.add(UpdateUserInfo(newUserInfo));
     return newUserInfo;

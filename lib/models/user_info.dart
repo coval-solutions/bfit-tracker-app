@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:bfit_tracker/models/goal.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -8,6 +10,7 @@ class UserInfo {
   final double gymTime;
   final Goal goals;
   final Map<String, dynamic> workoutsComplete;
+  final int totalWorkoutsCompleted;
 
   UserInfo(
       {this.height,
@@ -15,7 +18,8 @@ class UserInfo {
       this.isMale,
       this.gymTime,
       this.goals,
-      this.workoutsComplete});
+      this.workoutsComplete,
+      this.totalWorkoutsCompleted});
 
   UserInfo fromSnapshot(DocumentSnapshot snapshot) {
     return UserInfo(
@@ -25,6 +29,7 @@ class UserInfo {
       gymTime: snapshot.data()['gymTime'] ?? 0,
       goals: Goal.fromJson(snapshot.data()['goals']),
       workoutsComplete: snapshot.data()['workoutsComplete'],
+      totalWorkoutsCompleted: snapshot.data()['totalWorkoutsCompleted'] ?? 0,
     );
   }
 
@@ -52,9 +57,15 @@ class UserInfo {
 
   Map<String, Object> toDocument() => {
         'height': height,
+        'weight': weight,
         'isMale': isMale,
         'gymTime': gymTime,
         'goals': goals.toDocument(),
         'workoutsComplete': workoutsComplete,
+        'totalWorkoutsCompleted': totalWorkoutsCompleted,
       };
+
+  double calculateBmi() {
+    return this.weight / pow(this.height / 100, 2);
+  }
 }
