@@ -91,20 +91,41 @@ class _ProfileAreaState extends State<ProfileArea> {
                                   var element = stats.elementAt(index);
                                   // Don't title case this, otherwise BMI appears like: B M I
                                   if (element.key == 'BMI Goal') {
+                                    double currentBmi =
+                                        this.widget._userInfo.calculateBmi();
                                     return otherStats(
-                                        element.value, element.key);
+                                      (currentBmi / element.value) * 100,
+                                      'BMI Goal\nProgress',
+                                      unit: '%',
+                                    );
                                   }
 
                                   if (element.key == 'Daily Steps') {
                                     return otherStats(
-                                        stepsPercent, element.key.titleCase,
+                                        stepsPercent, 'Daily Steps\nProgress',
                                         unit: '%');
                                   }
 
                                   if (element.key == 'Weight Goal') {
+                                    int currentWeight =
+                                        this.widget._userInfo.weight;
                                     return otherStats(
-                                        element.value, element.key.titleCase,
-                                        unit: 'kg');
+                                        (currentWeight / element.value) * 100,
+                                        'Weight Goal\nProgress',
+                                        unit: '%');
+                                  }
+
+                                  if (element.key == 'Workouts Total') {
+                                    int totalWorkoutsComplete = this
+                                        .widget
+                                        ._userInfo
+                                        .totalWorkoutsCompleted;
+                                    return otherStats(
+                                        (totalWorkoutsComplete /
+                                                element.value) *
+                                            100,
+                                        'Workouts Complete\nProgress',
+                                        unit: '%');
                                   }
 
                                   return otherStats(
