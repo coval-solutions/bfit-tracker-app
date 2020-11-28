@@ -77,7 +77,8 @@ class _WorkoutsAreaState extends State<WorkoutsArea> {
           bodyWorkouts = workouts;
         }
 
-        if (fastWorkouts.isEmpty || bodyWorkouts.isEmpty) {
+        if ((fastWorkouts.isEmpty || bodyWorkouts.isEmpty) &&
+            this.textEditingController.text.isEmpty) {
           return Scaffold(
             backgroundColor: mainTheme.backgroundColor,
             body: SafeArea(
