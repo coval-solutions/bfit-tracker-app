@@ -31,6 +31,26 @@ class _AboutYouScreenWeightState extends State<AboutYouScreenWeight> {
       body: SafeArea(
         child: Stack(
           children: [
+            Padding(
+              padding: const EdgeInsets.only(
+                top: 24.0,
+                left: 12.0,
+                right: 12.0,
+              ),
+              child: Align(
+                alignment: Alignment.topCenter,
+                child: AutoSizeText(
+                  'Now choose your weight...',
+                  minFontSize: 32,
+                  maxLines: 2,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ),
             Center(
               child: SvgPicture.asset(
                 'assets/images/onboarding/circles_4.svg',
