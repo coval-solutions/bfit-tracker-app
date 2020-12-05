@@ -47,7 +47,7 @@ class HomeArea extends StatelessWidget {
                             return AspectRatio(
                               aspectRatio: 3 / 2,
                               child: state.props.first != null
-                                  ? ArticlesCard(snapshot.data.first)
+                                  ? ArticlesCard(snapshot.data)
                                   : Center(
                                       child: CircularProgressIndicator(),
                                     ),
