@@ -12,14 +12,15 @@ class UserInfo {
   final Map<String, dynamic> workoutsComplete;
   final int totalWorkoutsCompleted;
 
-  UserInfo(
-      {this.height,
-      this.weight,
-      this.isMale,
-      this.gymTime,
-      this.goals,
-      this.workoutsComplete,
-      this.totalWorkoutsCompleted});
+  UserInfo({
+    this.height,
+    this.weight,
+    this.isMale,
+    this.gymTime,
+    this.goals,
+    this.workoutsComplete,
+    this.totalWorkoutsCompleted,
+  });
 
   UserInfo fromSnapshot(DocumentSnapshot snapshot) {
     return UserInfo(
