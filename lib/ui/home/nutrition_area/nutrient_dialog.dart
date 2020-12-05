@@ -109,6 +109,7 @@ dialogContent(NutritionEnum nutrientsEnum, BuildContext buildContext) {
                 child: TextField(
                   controller: textEditingController,
                   maxLines: 1,
+                  maxLength: 3,
                   autofocus: true,
                   keyboardType: TextInputType.number,
                   decoration: InputDecoration(
