@@ -60,7 +60,7 @@ class NutritionDataRepository {
     nutrientsEnumMap.forEach((key, value) {
       nutrientsStat.add(NutrientStat(
         value:
-            random ? CovalMath.doubleInRange(50, 2500).toInt().toString() : '0',
+            random ? CovalMath.doubleInRange(10, 999).toInt().toString() : '0',
         type: value,
       ));
     });

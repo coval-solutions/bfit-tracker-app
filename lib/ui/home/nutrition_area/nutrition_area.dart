@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:barcode_scan/barcode_scan.dart';
 import 'package:bfit_tracker/blocs/nutrition_data/nutrition_data_bloc.dart';
@@ -163,7 +165,9 @@ class _NutritionAreaState extends State<NutritionArea> {
                         itemBuilder: (BuildContext context, int index) {
                           return NutrientCard(
                               nutritionEnum: nutritionData[index].type,
-                              value: double.parse(nutritionData[index].value),
+                              value: min(
+                                  double.parse(nutritionData[index].value),
+                                  999),
                               color: widget
                                   .colors[(index % widget.colors.length)]);
                         },
