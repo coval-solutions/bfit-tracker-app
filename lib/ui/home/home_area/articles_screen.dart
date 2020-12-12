@@ -67,8 +67,9 @@ class _ArticlesScreenState extends State<ArticlesScreen> {
                     onPressed: () {
                       this.setSelectedMenuItem('new');
                     },
-                    child: const Text(
+                    child: const AutoSizeText(
                       'New',
+                      maxLines: 1,
                       style: TextStyle(
                         fontWeight: FontWeight.w600,
                       ),
@@ -90,8 +91,9 @@ class _ArticlesScreenState extends State<ArticlesScreen> {
                     onPressed: () {
                       this.setSelectedMenuItem('quickRead');
                     },
-                    child: const Text(
+                    child: const AutoSizeText(
                       'Quick Read',
+                      maxLines: 1,
                       style: TextStyle(
                         fontWeight: FontWeight.w600,
                       ),
@@ -113,8 +115,9 @@ class _ArticlesScreenState extends State<ArticlesScreen> {
                     onPressed: () {
                       this.setSelectedMenuItem('suggested');
                     },
-                    child: const Text(
+                    child: const AutoSizeText(
                       'Suggested',
+                      maxLines: 1,
                       style: TextStyle(
                         fontWeight: FontWeight.w600,
                       ),
