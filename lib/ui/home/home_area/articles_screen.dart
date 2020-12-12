@@ -181,13 +181,29 @@ class _ArticlesScreenState extends State<ArticlesScreen> {
                               width: sizes.width * 0.46,
                               height: sizes.height * 0.24,
                               child: Card(
-                                color: mainTheme.primaryColor,
+                                color: Colors.white,
                                 child: Padding(
                                   padding: const EdgeInsets.all(12.0),
                                   child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       AutoSizeText(
-                                          widget.articles[index].title),
+                                        widget.articles[index].title,
+                                        minFontSize: 18,
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                      SizedBox(height: 10),
+                                      AutoSizeText(
+                                        'By ${widget.articles[index].author}',
+                                        minFontSize: 12,
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.w500,
+                                          color: CustomColor.GREY_CHATEAU,
+                                        ),
+                                      ),
                                     ],
                                   ),
                                 ),
