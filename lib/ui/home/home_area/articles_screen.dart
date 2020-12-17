@@ -1,6 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:bfit_tracker/models/article.dart';
 import 'package:bfit_tracker/theme.dart';
+import 'package:bfit_tracker/ui/home/home_area/article_info_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -183,36 +184,8 @@ class _ArticlesScreenState extends State<ArticlesScreen> {
                             child: Container(
                               width: sizes.width * 0.46,
                               height: sizes.height * 0.24,
-                              child: Card(
-                                color: Colors.white,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(12.0),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      AutoSizeText(
-                                        widget.articles[index].title,
-                                        minFontSize: 18,
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                      SizedBox(height: 10),
-                                      AutoSizeText(
-                                        'By ${widget.articles[index].author}',
-                                        minFontSize: 12,
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.w500,
-                                          color: CustomColor.GREY_CHATEAU,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(8.0),
-                                ),
+                              child: ArticleInfoCard(
+                                article: widget.articles[index],
                               ),
                             ),
                           ),
