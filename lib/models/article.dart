@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Article {
+  final String docRef;
   final String title;
   final String subtitle;
   final String author;
@@ -8,7 +9,8 @@ class Article {
   final String textUrl;
   final int minsToRead;
 
-  Article({
+  Article(
+    this.docRef, {
     this.title,
     this.subtitle,
     this.author,
@@ -19,6 +21,7 @@ class Article {
 
   Article fromSnapshot(DocumentSnapshot snapshot) {
     return Article(
+      docRef,
       title: snapshot.data()['title'] ?? '',
       subtitle: snapshot.data()['subtitle'] ?? '',
       author: snapshot.data()['author'] ?? '',
