@@ -20,7 +20,7 @@ class ArticleInfoCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        String eventName = 'article_${this.article.docRef}_count';
+        String eventName = 'article_${this.article.docRef}_click';
         FirebaseAnalytics().logEvent(name: eventName);
         // Navigator.of(context).pushReplacement(MaterialPageRoute(
         //     builder: (BuildContext context) => WorkoutCountdown(number: 5)));
