@@ -9,7 +9,6 @@ const app = express();
 app.use(authenticate);
 
 // GET /api/workout-started-count/{workoutDocRef}
-// Get details about a message
 app.get('/workout-started-count/:workoutDocRef', async (req, res) => {
   const workoutDocRef = req.params.workoutDocRef;
 
@@ -48,6 +47,35 @@ app.get('/workout-started-count/:workoutDocRef', async (req, res) => {
       workoutDocRef,
       error.message
     );
+
+    return res.sendStatus(500);
+  }
+});
+
+// GET /api/article-viewed-counts
+app.get('/article-viewed-counts', async (req, res) => {
+  functions.logger.info(`Looking up Article viewed counts`);
+
+  try {
+    const bigQuery = new BigQuery();
+    const query = `SELECT article_doc_ref, count FROM bfit-tracker-app.analytics_211868704.articles_viewed`;
+
+    // Run the query as a job
+    const [job] = await bigQuery.createQueryJob({ query });
+    functions.logger.info(`Job ${job.id} started.`);
+
+    // Wait for the query to finish
+    const [rows] = await job.getQueryResults();
+
+    if (rows === undefined) {
+      return res.sendStatus(500);
+    }
+
+    // Cache response for 30 mins
+    res.set('Cache-Control', 'private, max-age=1800');
+    return res.json(rows);
+  } catch (error) {
+    functions.logger.error('Error getting article viewed count', error.message);
 
     return res.sendStatus(500);
   }

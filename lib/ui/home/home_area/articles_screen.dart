@@ -1,4 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:bfit_tracker/controllers/article_controller.dart';
 import 'package:bfit_tracker/models/article.dart';
 import 'package:bfit_tracker/theme.dart';
 import 'package:bfit_tracker/ui/home/home_area/article_info_card.dart';
@@ -16,12 +17,14 @@ class ArticlesScreen extends StatefulWidget {
 
 class _ArticlesScreenState extends State<ArticlesScreen> {
   var selectedMenuItem;
+  var articleViewCounts;
 
   @override
   void initState() {
     super.initState();
     setState(() {
       selectedMenuItem = 'new';
+      articleViewCounts = this.getArticleViewedCount();
     });
   }
 
@@ -29,6 +32,10 @@ class _ArticlesScreenState extends State<ArticlesScreen> {
     setState(() {
       selectedMenuItem = key;
     });
+  }
+
+  Future<void> getArticleViewedCount() async {
+    return await ArticleController.fetchArticleViewedCount();
   }
 
   @override
@@ -145,53 +152,73 @@ class _ArticlesScreenState extends State<ArticlesScreen> {
                   borderRadius: BorderRadius.circular(30.0),
                 ),
                 margin: EdgeInsets.zero,
-                child: ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: widget.articles.length,
-                    itemBuilder: (context, index) {
-                      return Stack(
-                        alignment: Alignment.center,
-                        children: [
-                          Align(
-                            alignment: Alignment.centerRight,
-                            child: Container(
-                              width: sizes.width * 0.54,
-                              height: sizes.height * 0.3,
-                              child: Padding(
-                                padding: const EdgeInsets.only(
-                                  right: 28.0,
-                                  top: 14.0,
-                                  bottom: 14.0,
-                                ),
-                                child: Card(
-                                  color: mainTheme.primaryColor,
+                child: FutureBuilder(
+                  future: ArticleController.fetchArticleViewedCount(),
+                  builder:
+                      (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+                    if (snapshot.connectionState != ConnectionState.done) {
+                      return Center(child: CircularProgressIndicator());
+                    }
+
+                    List<dynamic> viewCountPerArticle = snapshot.data;
+                    return ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: widget.articles.length,
+                        itemBuilder: (context, index) {
+                          Article currentArticle = widget.articles[index];
+                          var viewCountForCurrentArticle =
+                              (viewCountPerArticle.firstWhere((element) =>
+                                          element['article_doc_ref'] ==
+                                          currentArticle.docRef)
+                                      as Map<String, dynamic>)['count'] ??
+                                  0;
+                          return Stack(
+                            alignment: Alignment.center,
+                            children: [
+                              Align(
+                                alignment: Alignment.centerRight,
+                                child: Container(
+                                  width: sizes.width * 0.54,
+                                  height: sizes.height * 0.3,
                                   child: Padding(
-                                    padding: const EdgeInsets.all(12.0),
-                                    child: SvgPicture.network(
-                                      widget.articles[index].imageUrl,
-                                      fit: BoxFit.scaleDown,
+                                    padding: const EdgeInsets.only(
+                                      right: 28.0,
+                                      top: 14.0,
+                                      bottom: 14.0,
+                                    ),
+                                    child: Card(
+                                      color: mainTheme.primaryColor,
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(12.0),
+                                        child: SvgPicture.network(
+                                          widget.articles[index].imageUrl,
+                                          fit: BoxFit.scaleDown,
+                                        ),
+                                      ),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(8.0),
+                                      ),
                                     ),
                                   ),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(8.0),
+                                ),
+                              ),
+                              Positioned(
+                                left: 42,
+                                child: Container(
+                                  width: sizes.width * 0.46,
+                                  height: sizes.height * 0.24,
+                                  child: ArticleInfoCard(
+                                    article: currentArticle,
+                                    viewCount: viewCountForCurrentArticle,
                                   ),
                                 ),
                               ),
-                            ),
-                          ),
-                          Positioned(
-                            left: 42,
-                            child: Container(
-                              width: sizes.width * 0.46,
-                              height: sizes.height * 0.24,
-                              child: ArticleInfoCard(
-                                article: widget.articles[index],
-                              ),
-                            ),
-                          ),
-                        ],
-                      );
-                    }),
+                            ],
+                          );
+                        });
+                  },
+                ),
               ),
             ),
           ],

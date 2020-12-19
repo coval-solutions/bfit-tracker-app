@@ -10,10 +10,12 @@ class ArticleInfoCard extends StatelessWidget {
 
   // TODO: get this figure from somewhere else
   final int numOfStars = 5;
+  final int viewCount;
 
   const ArticleInfoCard({
     Key key,
     @required this.article,
+    this.viewCount = 0,
   }) : super(key: key);
 
   @override
