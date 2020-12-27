@@ -3,7 +3,7 @@
     "outDir": "./lib/",
     "module": "es6",
     "moduleResolution": "node",
-    "target": "es5",
+    "target": "es6",
     "sourceMap": true,
     "strict": true,
     "noImplicitReturns": true,

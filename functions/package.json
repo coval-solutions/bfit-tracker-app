@@ -1,6 +1,6 @@
 {
-  "name": "my-webpack-project",
-  "description": "My webpack project",
+  "name": "bfit_tracker_functions",
+  "description": "Firebase Functions for BFit Tracker",
   "version": "1.0.0",
   "repository": {
     "type": "git",

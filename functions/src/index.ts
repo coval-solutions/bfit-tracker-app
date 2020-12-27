@@ -1,7 +1,7 @@
 import * as express from 'express';
 import * as functions from 'firebase-functions';
 import { BigQuery } from '@google-cloud/bigquery';
-import { authenticate } from './authenticate';
+import authenticate from './authenticate';
 
 const app = express();
 
