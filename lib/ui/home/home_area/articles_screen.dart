@@ -149,7 +149,10 @@ class _ArticlesScreenState extends State<ArticlesScreen> {
             Expanded(
               child: Card(
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30.0),
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(30.0),
+                    topRight: Radius.circular(30.0),
+                  ),
                 ),
                 margin: EdgeInsets.zero,
                 child: FutureBuilder(
