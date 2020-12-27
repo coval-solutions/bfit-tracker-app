@@ -10,17 +10,17 @@ app.use(authenticate);
 
 // GET /api/workout-started-count/{workoutDocRef}
 app.get('/workout-started-count/:workoutDocRef', async (req, res) => {
-  const workoutDocRef = req.params.workoutDocRef;
+  const { workoutDocRef } = req.params;
 
   functions.logger.info(
-    `Looking up Workout started count for DocRef "${workoutDocRef}"`
+    `Looking up Workout started count for DocRef "${workoutDocRef}"`,
   );
 
   try {
     const bigQuery = new BigQuery();
     const query = `SELECT count
       FROM \`bfit-tracker-app.analytics_211868704.workouts_started\`
-      WHERE workout_doc_ref = \'${workoutDocRef}\'
+      WHERE workout_doc_ref = '${workoutDocRef}'
       LIMIT 1`;
 
     // Run the query as a job
@@ -45,7 +45,7 @@ app.get('/workout-started-count/:workoutDocRef', async (req, res) => {
     functions.logger.error(
       'Error getting workout started count',
       workoutDocRef,
-      error.message
+      error.message,
     );
 
     return res.sendStatus(500);
@@ -54,11 +54,11 @@ app.get('/workout-started-count/:workoutDocRef', async (req, res) => {
 
 // GET /api/article-viewed-counts
 app.get('/article-viewed-counts', async (req, res) => {
-  functions.logger.info(`Looking up Article viewed counts`);
+  functions.logger.info('Looking up Article viewed counts');
 
   try {
     const bigQuery = new BigQuery();
-    const query = `SELECT article_doc_ref, count FROM bfit-tracker-app.analytics_211868704.articles_viewed`;
+    const query = 'SELECT article_doc_ref, count FROM bfit-tracker-app.analytics_211868704.articles_viewed';
 
     // Run the query as a job
     const [job] = await bigQuery.createQueryJob({ query });

@@ -21,8 +21,8 @@ admin.initializeApp({
 
 export const authenticate = async (req: any, res: Response, next: Function) => {
   if (
-    !req.headers.authorization ||
-    !req.headers.authorization.startsWith('Bearer ')
+    !req.headers.authorization
+    || !req.headers.authorization.startsWith('Bearer ')
   ) {
     res.status(403).send('Unauthorized, token was not provided');
     return;
@@ -35,7 +35,6 @@ export const authenticate = async (req: any, res: Response, next: Function) => {
     next();
     return;
   } catch (e) {
-    res.status(403).send('Unauthorized, idToken: ' + idToken);
-    return;
+    res.status(403).send(`Unauthorized, idToken: ${idToken}`);
   }
 };

@@ -12,7 +12,7 @@ import 'package:http/http.dart' as http;
 
 class WorkoutController {
   static String apiUrl =
-      '${DotEnv().env['GOOGLE_FUNCTIONS_URL'] ?? 'http://localhost:5001/'}';
+      '${DotEnv().env['GOOGLE_FUNCTIONS_URL'] ?? 'http://localhost:5001/bfit-tracker-app/europe-west2/api'}';
 
   static Future<int> fetchWorkoutStartedCount(String docRef) async {
     String token = await UserRepository.getIdToken();

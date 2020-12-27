@@ -166,12 +166,15 @@ class _ArticlesScreenState extends State<ArticlesScreen> {
                         itemCount: widget.articles.length,
                         itemBuilder: (context, index) {
                           Article currentArticle = widget.articles[index];
-                          var viewCountForCurrentArticle =
-                              (viewCountPerArticle.firstWhere((element) =>
-                                          element['article_doc_ref'] ==
-                                          currentArticle.docRef)
-                                      as Map<String, dynamic>)['count'] ??
-                                  0;
+                          var viewCountForCurrentArticle = 0;
+                          if (viewCountPerArticle != null) {
+                            viewCountForCurrentArticle =
+                                (viewCountPerArticle.firstWhere((element) =>
+                                            element['article_doc_ref'] ==
+                                            currentArticle.docRef)
+                                        as Map<String, dynamic>)['count'] ??
+                                    0;
+                          }
                           return Stack(
                             alignment: Alignment.center,
                             children: [
