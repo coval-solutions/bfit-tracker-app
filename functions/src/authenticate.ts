@@ -1,6 +1,6 @@
 /**
  * Express middleware that validates Firebase ID Tokens passed in the Authorization HTTP header.
- * The Firebase ID token needs to be passed as a Bearer token in the Authorization HTTP header like this:
+ * The Firebase ID token needs to be passed as a Bearer token in the Authorization HTTP header:
  * `Authorization: Bearer <Firebase ID Token>`.
  * when decoded successfully, the ID Token content will be added as `req.user`.
  */
@@ -19,10 +19,10 @@ admin.initializeApp({
   databaseURL: process.env.DATABASE_URL,
 });
 
-export const authenticate = async (req: any, res: Response, next: Function) => {
+const authenticate = async (req: any, res: Response, next: Function) => {
   if (
-    !req.headers.authorization ||
-    !req.headers.authorization.startsWith('Bearer ')
+    !req.headers.authorization
+    || !req.headers.authorization.startsWith('Bearer ')
   ) {
     res.status(403).send('Unauthorized, token was not provided');
     return;
@@ -35,7 +35,8 @@ export const authenticate = async (req: any, res: Response, next: Function) => {
     next();
     return;
   } catch (e) {
-    res.status(403).send('Unauthorized, idToken: ' + idToken);
-    return;
+    res.status(403).send(`Unauthorized, idToken: ${idToken}`);
   }
 };
+
+export default authenticate;

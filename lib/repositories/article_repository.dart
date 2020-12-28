@@ -5,7 +5,7 @@ class ArticleRepository {
   final _articleCollection = FirebaseFirestore.instance.collection('Articles');
 
   Stream<List<Article>> retrieve() {
-    return _articleCollection.snapshots().map(
-        (event) => event.docs.map((e) => Article().fromSnapshot(e)).toList());
+    return _articleCollection.snapshots().map((event) =>
+        event.docs.map((e) => Article(e.id).fromSnapshot(e)).toList());
   }
 }

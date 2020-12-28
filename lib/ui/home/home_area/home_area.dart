@@ -1,7 +1,7 @@
 import 'package:bfit_tracker/blocs/article/article_bloc.dart';
 import 'package:bfit_tracker/ui/home/home_area/articles_card.dart';
 import 'package:bfit_tracker/ui/home/home_area/gyms_near_me.dart';
-import 'package:bfit_tracker/ui/home/home_area/welcome_cart.dart';
+import 'package:bfit_tracker/ui/home/home_area/welcome_card.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

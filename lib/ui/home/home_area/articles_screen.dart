@@ -1,15 +1,47 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:bfit_tracker/controllers/article_controller.dart';
 import 'package:bfit_tracker/models/article.dart';
 import 'package:bfit_tracker/theme.dart';
+import 'package:bfit_tracker/ui/home/home_area/article_info_card.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
-class ArticlesScreen extends StatelessWidget {
+class ArticlesScreen extends StatefulWidget {
   final List<Article> articles;
 
   ArticlesScreen(this.articles);
 
   @override
+  _ArticlesScreenState createState() => _ArticlesScreenState();
+}
+
+class _ArticlesScreenState extends State<ArticlesScreen> {
+  var selectedMenuItem;
+  var articleViewCounts;
+
+  @override
+  void initState() {
+    super.initState();
+    setState(() {
+      selectedMenuItem = 'new';
+      articleViewCounts = this.getArticleViewedCount();
+    });
+  }
+
+  void setSelectedMenuItem(String key) {
+    setState(() {
+      selectedMenuItem = key;
+    });
+  }
+
+  Future<void> getArticleViewedCount() async {
+    return await ArticleController.fetchArticleViewedCount();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    var sizes = MediaQuery.of(context).size;
+
     return Scaffold(
       backgroundColor: mainTheme.primaryColor,
       body: Padding(
@@ -40,15 +72,22 @@ class ArticlesScreen extends StatelessWidget {
                 Expanded(
                   child: RaisedButton(
                     elevation: 2,
-                    onPressed: () {},
-                    child: const Text(
+                    onPressed: () {
+                      this.setSelectedMenuItem('new');
+                    },
+                    child: const AutoSizeText(
                       'New',
+                      maxLines: 1,
                       style: TextStyle(
                         fontWeight: FontWeight.w600,
                       ),
                     ),
-                    color: Colors.white,
-                    textColor: mainTheme.primaryColor,
+                    color: this.selectedMenuItem == 'new'
+                        ? Colors.white
+                        : mainTheme.primaryColor,
+                    textColor: this.selectedMenuItem == 'new'
+                        ? mainTheme.primaryColor
+                        : Colors.white.withOpacity(0.5),
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12.0)),
                   ),
@@ -57,15 +96,22 @@ class ArticlesScreen extends StatelessWidget {
                 Expanded(
                   child: RaisedButton(
                     elevation: 2,
-                    onPressed: () {},
-                    child: const Text(
+                    onPressed: () {
+                      this.setSelectedMenuItem('quickRead');
+                    },
+                    child: const AutoSizeText(
                       'Quick Read',
+                      maxLines: 1,
                       style: TextStyle(
                         fontWeight: FontWeight.w600,
                       ),
                     ),
-                    color: Colors.white,
-                    textColor: mainTheme.primaryColor,
+                    color: this.selectedMenuItem == 'quickRead'
+                        ? Colors.white
+                        : mainTheme.primaryColor,
+                    textColor: this.selectedMenuItem == 'quickRead'
+                        ? mainTheme.primaryColor
+                        : Colors.white.withOpacity(0.5),
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12.0)),
                   ),
@@ -74,15 +120,22 @@ class ArticlesScreen extends StatelessWidget {
                 Expanded(
                   child: RaisedButton(
                     elevation: 2,
-                    onPressed: () {},
-                    child: const Text(
+                    onPressed: () {
+                      this.setSelectedMenuItem('suggested');
+                    },
+                    child: const AutoSizeText(
                       'Suggested',
+                      maxLines: 1,
                       style: TextStyle(
                         fontWeight: FontWeight.w600,
                       ),
                     ),
-                    color: Colors.white,
-                    textColor: mainTheme.primaryColor,
+                    color: this.selectedMenuItem == 'suggested'
+                        ? Colors.white
+                        : mainTheme.primaryColor,
+                    textColor: this.selectedMenuItem == 'suggested'
+                        ? mainTheme.primaryColor
+                        : Colors.white.withOpacity(0.5),
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12.0)),
                   ),
@@ -95,11 +148,82 @@ class ArticlesScreen extends StatelessWidget {
             ),
             Expanded(
               child: Card(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(30.0),
+                    topRight: Radius.circular(30.0),
+                  ),
+                ),
                 margin: EdgeInsets.zero,
-                child: ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: articles.length,
-                  itemBuilder: (context, index) => Text(articles[index].title),
+                child: FutureBuilder(
+                  future: ArticleController.fetchArticleViewedCount(),
+                  builder:
+                      (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+                    if (snapshot.connectionState != ConnectionState.done) {
+                      return Center(child: CircularProgressIndicator());
+                    }
+
+                    List<dynamic> viewCountPerArticle = snapshot.data;
+                    return ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: widget.articles.length,
+                        itemBuilder: (context, index) {
+                          Article currentArticle = widget.articles[index];
+                          var viewCountForCurrentArticle = 0;
+                          if (viewCountPerArticle != null) {
+                            viewCountForCurrentArticle =
+                                (viewCountPerArticle.firstWhere((element) =>
+                                            element['article_doc_ref'] ==
+                                            currentArticle.docRef)
+                                        as Map<String, dynamic>)['count'] ??
+                                    0;
+                          }
+                          return Stack(
+                            alignment: Alignment.center,
+                            children: [
+                              Align(
+                                alignment: Alignment.centerRight,
+                                child: Container(
+                                  width: sizes.width * 0.54,
+                                  height: sizes.height * 0.3,
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(
+                                      right: 28.0,
+                                      top: 14.0,
+                                      bottom: 14.0,
+                                    ),
+                                    child: Card(
+                                      color: mainTheme.primaryColor,
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(12.0),
+                                        child: SvgPicture.network(
+                                          widget.articles[index].imageUrl,
+                                          fit: BoxFit.scaleDown,
+                                        ),
+                                      ),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(8.0),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Positioned(
+                                left: 42,
+                                child: Container(
+                                  width: sizes.width * 0.46,
+                                  height: sizes.height * 0.24,
+                                  child: ArticleInfoCard(
+                                    article: currentArticle,
+                                    viewCount: viewCountForCurrentArticle,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          );
+                        });
+                  },
                 ),
               ),
             ),
