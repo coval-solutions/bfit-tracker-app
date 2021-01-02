@@ -1,6 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:bfit_tracker/models/article.dart';
 import 'package:bfit_tracker/theme.dart';
+import 'package:bfit_tracker/ui/home/home_area/article_screen.dart';
 import 'package:bfit_tracker/ui/home/home_area/articles_star_rating.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
@@ -24,8 +25,8 @@ class ArticleInfoCard extends StatelessWidget {
       onTap: () {
         String eventName = 'article_${this.article.docRef}_click';
         FirebaseAnalytics().logEvent(name: eventName);
-        // Navigator.of(context).pushReplacement(MaterialPageRoute(
-        //     builder: (BuildContext context) => WorkoutCountdown(number: 5)));
+        Navigator.of(context).push(MaterialPageRoute(
+            builder: (BuildContext context) => ArticleScreen(this.article)));
       },
       child: Card(
         color: Colors.white,

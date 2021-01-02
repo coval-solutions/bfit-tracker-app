@@ -6,16 +6,17 @@ import 'package:bfit_tracker/ui/home/home_area/article_info_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
-class ArticlesScreen extends StatefulWidget {
+class ArticlesSelectionScreen extends StatefulWidget {
   final List<Article> articles;
 
-  ArticlesScreen(this.articles);
+  ArticlesSelectionScreen(this.articles);
 
   @override
-  _ArticlesScreenState createState() => _ArticlesScreenState();
+  _ArticlesSelectionScreenState createState() =>
+      _ArticlesSelectionScreenState();
 }
 
-class _ArticlesScreenState extends State<ArticlesScreen> {
+class _ArticlesSelectionScreenState extends State<ArticlesSelectionScreen> {
   var selectedMenuItem;
   var articleViewCounts;
 

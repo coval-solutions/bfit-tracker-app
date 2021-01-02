@@ -4,11 +4,7 @@ version: 1.0.0+1
 
 environment:
   sdk: ">=2.6.0 <3.0.0"
-  flutter: "1.20.4"
-
-dependency_overrides:
-  flutter_svg: ^0.19.1
-  meta: ^1.2.3
+  flutter: "1.22.5"
 
 dependencies:
   flutter:
@@ -29,16 +25,19 @@ dependencies:
   fl_chart: ^0.11.1
   flare_flutter: ^2.0.6
   flutter_bloc: ^4.0.0
+  flutter_cached_pdfview: ^0.3.3
   flutter_dotenv: ^2.1.0
   flutter_svg: ^0.19.0
   font_awesome_flutter: ^8.10.0
   geolocator: ^6.0.0+4
+  googleapis: ^0.56.1
   google_sign_in: ^4.5.3
   health: 1.0.2
   height_slider: ^1.3.1
   http: ^0.12.2
   intl: ^0.16.1
   jiffy: ^3.0.1
+  kt_dart: ^0.8.0
   meta: ^1.2.3
   nutrition: ^1.0.0
   openfoodfacts: ^0.3.11+1
@@ -47,7 +46,7 @@ dependencies:
   transformer_page_view: ^0.1.6
   url_launcher: ^5.6.0
   weight_slider: ^1.2.0
-  wiredash: ^0.3.0
+  wiredash: ^0.4.0
 
 dev_dependencies:
   dependency_validator: ^1.5.0
@@ -69,7 +68,7 @@ flutter:
       fonts:
         - asset: assets/fonts/SFUIText-Regular.ttf
           weight: 400
-        - asset: assets/fonts/SFUIText-Bold.ttf
-          weight: 600
         - asset: assets/fonts/SFUIText-Semibold.ttf
           weight: 600
+        - asset: assets/fonts/SFUIText-Bold.ttf
+          weight: 700
