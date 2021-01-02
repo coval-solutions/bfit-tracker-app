@@ -5,9 +5,13 @@ class UserRepository {
   final FirebaseAuth _firebaseAuth;
   final GoogleSignIn _googleSignIn;
 
+  static const SCOPES = [
+    "https://www.googleapis.com/auth/documents.readonly",
+  ];
+
   UserRepository({FirebaseAuth firebaseAuth, GoogleSignIn googleSignin})
       : _firebaseAuth = firebaseAuth ?? FirebaseAuth.instance,
-        _googleSignIn = googleSignin ?? GoogleSignIn();
+        _googleSignIn = googleSignin ?? GoogleSignIn(scopes: SCOPES);
 
   Future<User> signInWithGoogle() async {
     final GoogleSignInAccount googleUser = await _googleSignIn.signIn();
@@ -34,8 +38,25 @@ class UserRepository {
     return _firebaseAuth.currentUser != null;
   }
 
+  GoogleSignInAccount getGoogleUser() {
+    return _googleSignIn.currentUser;
+  }
+
   User getUser() {
     return _firebaseAuth.currentUser;
+  }
+
+  Future<String> getAccessToken() async {
+    GoogleSignInAccount googleSignInAccount = this.getGoogleUser();
+    if (googleSignInAccount == null) {
+      await GoogleSignIn(scopes: SCOPES).signIn();
+      this.getAccessToken();
+    }
+
+    GoogleSignInAuthentication googleSignInAuthentication =
+        await getGoogleUser().authentication;
+
+    return googleSignInAuthentication.accessToken;
   }
 
   static Future<String> getIdToken() async {
