@@ -70,7 +70,9 @@ class ArticleScreen extends StatelessWidget {
                                 ),
                               ),
                               SizedBox(height: 24),
-                              ArticleStarRating(),
+                              ArticleStarRating(
+                                numOfReviews: 198,
+                              ),
                             ],
                           ),
                         ),
