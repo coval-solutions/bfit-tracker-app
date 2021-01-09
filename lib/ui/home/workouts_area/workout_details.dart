@@ -2,6 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:bfit_tracker/blocs/workout/workout_bloc.dart';
 import 'package:bfit_tracker/models/workout.dart';
 import 'package:bfit_tracker/theme.dart';
+import 'package:bfit_tracker/ui/coval_solutions/back_arrow.dart';
 import 'package:bfit_tracker/ui/coval_solutions/no_glow_listview.dart';
 import 'package:bfit_tracker/ui/home/workouts_area/equipment_pill.dart';
 import 'package:bfit_tracker/ui/home/workouts_area/exercise_list_item.dart';
@@ -10,7 +11,6 @@ import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:recase/recase.dart';
 
 class WorkoutDetails extends StatefulWidget {
@@ -66,8 +66,7 @@ class _WorkoutDetailsState extends State<WorkoutDetails> {
                   },
                   child: Padding(
                     padding: EdgeInsets.only(top: 28.0, left: 12.0),
-                    child: SvgPicture.asset(
-                      'assets/images/left-pointing-arrow.svg',
+                    child: BackArrow(
                       color: CustomColor.DIM_GRAY,
                       fit: BoxFit.fitWidth,
                     ),

@@ -2,10 +2,10 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:bfit_tracker/blocs/nutrition_data/nutrition_data_bloc.dart';
 import 'package:bfit_tracker/enums/nutrients.dart';
 import 'package:bfit_tracker/theme.dart';
+import 'package:bfit_tracker/ui/coval_solutions/back_arrow.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:nutrition/nutrition_enum.dart';
 
 class NutrientDialog extends StatelessWidget {
@@ -64,8 +64,7 @@ dialogContent(NutritionEnum nutrientsEnum, BuildContext buildContext) {
                       alignment: Alignment.topLeft,
                       child: Padding(
                         padding: const EdgeInsets.only(top: 28, left: 16),
-                        child: SvgPicture.asset(
-                          'assets/images/left-pointing-arrow.svg',
+                        child: BackArrow(
                           color: CustomColor.DIM_GRAY,
                         ),
                       ),

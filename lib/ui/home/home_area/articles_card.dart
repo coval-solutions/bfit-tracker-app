@@ -1,7 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:bfit_tracker/models/article.dart';
 import 'package:bfit_tracker/theme.dart';
-import 'package:bfit_tracker/ui/home/home_area/articles_selection_screen.dart';
+import 'package:bfit_tracker/ui/home/home_area/articles/articles_selection_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 

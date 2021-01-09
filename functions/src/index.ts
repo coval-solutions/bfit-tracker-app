@@ -65,7 +65,7 @@ app.get('/article-viewed-counts', async (req, res) => {
     functions.logger.info(`Job ${job.id} started.`);
 
     // Wait for the query to finish
-    const [rows] = await job.getQueryResults();
+    const [...rows] = await job.getQueryResults();
 
     if (rows === undefined) {
       return res.sendStatus(500);
@@ -73,7 +73,7 @@ app.get('/article-viewed-counts', async (req, res) => {
 
     // Cache response for 30 mins
     res.set('Cache-Control', 'private, max-age=1800');
-    return res.json(rows);
+    return res.json(rows[0]);
   } catch (error) {
     functions.logger.error('Error getting article viewed count', error.message);
 
