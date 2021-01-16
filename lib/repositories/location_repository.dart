@@ -14,8 +14,8 @@ class LocationRepository {
     }
 
     try {
-      Position location =
-          await getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+      Position location = await Geolocator.getCurrentPosition(
+          desiredAccuracy: LocationAccuracy.high);
 
       return location;
     } catch (err, stack) {

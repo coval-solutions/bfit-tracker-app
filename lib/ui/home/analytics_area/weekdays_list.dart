@@ -23,7 +23,7 @@ class _WeekDayListState extends State<WeekDayList> {
   FitnessDataBloc fitnessDataBloc;
   List<DateTime> days;
 
-  _WeekDayListState({Key key, @required this.days});
+  _WeekDayListState({@required this.days});
 
   @override
   void initState() {

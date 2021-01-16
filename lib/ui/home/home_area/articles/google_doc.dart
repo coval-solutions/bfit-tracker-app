@@ -1,4 +1,5 @@
 import 'package:bfit_tracker/models/article_image.dart';
+import 'package:bfit_tracker/ui/coval_solutions/no_glow_listview.dart';
 import 'package:bfit_tracker/utils/google_api_client.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +15,6 @@ class _GoogleDocState extends State<GoogleDoc> {
   List<docsV1.StructuralElement> _listItems = [];
   Map<String, ArticleImage> _imagesData = {};
   bool _contentLoaded = false;
-  String _documentTitle = '';
 
   @override
   void initState() {
@@ -24,29 +24,24 @@ class _GoogleDocState extends State<GoogleDoc> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      height: double.infinity,
-      color: Colors.white,
-      child: AnimatedSwitcher(
-        duration: Duration(milliseconds: 300),
-        child: _contentLoaded
-            ? ListView.builder(
-                itemBuilder: (context, index) {
-                  final element = _listItems[index];
-                  return _elementToWidget(element);
-                },
-                padding: const EdgeInsets.all(16.0),
-                itemCount: _listItems.length,
-              )
-            : Stack(
-                children: <Widget>[
-                  Align(
-                    child: CircularProgressIndicator(),
-                  ),
-                ],
+    return AnimatedSwitcher(
+      duration: Duration(milliseconds: 300),
+      child: _contentLoaded
+          ? Padding(
+              padding: const EdgeInsets.symmetric(vertical: 16.0),
+              child: ScrollConfiguration(
+                behavior: NoGlowingOverscrollIndicator(),
+                child: ListView.builder(
+                  shrinkWrap: true,
+                  itemBuilder: (context, index) {
+                    final element = _listItems[index];
+                    return _elementToWidget(element);
+                  },
+                  itemCount: _listItems.length,
+                ),
               ),
-      ),
+            )
+          : Center(child: CircularProgressIndicator()),
     );
   }
 
@@ -55,13 +50,10 @@ class _GoogleDocState extends State<GoogleDoc> {
     final docsApi = docsV1.DocsApi(client);
     var document = await docsApi.documents
         .get('18j4mySvYQxdktF2Xc_CDMLw7AGc_MjqwTruwsBnF-rc');
-    print('document.title: ${document.title}');
-    print('content.length: ${document.body.content.length}');
     _parseDocument(document);
   }
 
   Future<void> _parseDocument(docsV1.Document document) async {
-    _documentTitle = document.title;
     var content = KtList.from(document.body.content);
 
     final elements = content
@@ -133,6 +125,7 @@ class _GoogleDocState extends State<GoogleDoc> {
         }
       },
     );
+
     var paragraphText = paragraphSpans.isNotEmpty()
         ? Container(
             width: double.infinity,

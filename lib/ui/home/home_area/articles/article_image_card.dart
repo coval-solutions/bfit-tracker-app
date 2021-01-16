@@ -18,6 +18,7 @@ class ArticleImageCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+      elevation: 3,
       color: mainTheme.primaryColor,
       child: Padding(
         padding: this.padding,
