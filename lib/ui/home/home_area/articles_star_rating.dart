@@ -6,7 +6,7 @@ import '../../../theme.dart';
 
 class ArticleStarRating extends StatelessWidget {
   final int numOfStars;
-  List<Widget> list = List<Widget>();
+  final List<Widget> list = List<Widget>();
 
   ArticleStarRating({this.numOfStars = 5}) {
     for (var i = 1; i <= numOfStars; i++) {
