@@ -1,8 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:bfit_tracker/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-
-import '../../../../theme.dart';
 
 class ArticleStarRating extends StatelessWidget {
   final int numOfStars;
