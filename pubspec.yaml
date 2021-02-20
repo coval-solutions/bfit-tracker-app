@@ -4,7 +4,7 @@ version: 1.0.0+1
 
 environment:
   sdk: ">=2.6.0 <3.0.0"
-  flutter: "1.22.5"
+  flutter: "1.20.4"
 
 dependencies:
   flutter:
@@ -25,7 +25,6 @@ dependencies:
   fl_chart: ^0.11.1
   flare_flutter: ^2.0.6
   flutter_bloc: ^4.0.0
-  flutter_cached_pdfview: ^0.3.3
   flutter_dotenv: ^2.1.0
   flutter_svg: ^0.19.0
   font_awesome_flutter: ^8.10.0
@@ -38,7 +37,7 @@ dependencies:
   intl: ^0.16.1
   jiffy: ^3.0.1
   kt_dart: ^0.8.0
-  meta: ^1.2.3
+  meta: ^1.1.8
   nutrition: ^1.0.0
   openfoodfacts: ^0.3.11+1
   percent_indicator: ^2.1.7+4
