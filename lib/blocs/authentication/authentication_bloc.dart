@@ -38,8 +38,9 @@ class AuthenticationBloc
 
   Stream<AuthenticationState> _mapAppStartedToState() async* {
     try {
+      final googleUser = _userRepository.getGoogleUser();
       final isSignedIn = await _userRepository.isSignedIn();
-      if (isSignedIn) {
+      if (googleUser != null && isSignedIn) {
         User firebaseUser = _userRepository.getUser();
         FirebaseCrashlytics.instance.setUserIdentifier(firebaseUser.uid);
         final CovalUser user = this._userFromFirebaseUser(firebaseUser);
@@ -74,6 +75,10 @@ class AuthenticationBloc
             firebaseUser.displayName,
             CovalUser.getImageFromUrl(firebaseUser.photoURL))
         : null;
+  }
+
+  Future<String> getAccessToken() async {
+    return await this._userRepository.getAccessToken();
   }
 
   @override

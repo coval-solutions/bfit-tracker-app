@@ -5,11 +5,11 @@ import 'package:bfit_tracker/blocs/workout/workout_bloc.dart';
 import 'package:bfit_tracker/models/exercise.dart';
 import 'package:bfit_tracker/models/workout.dart';
 import 'package:bfit_tracker/theme.dart';
+import 'package:bfit_tracker/ui/coval_solutions/back_arrow.dart';
 import 'package:bfit_tracker/ui/home/workouts_area/workout_complete.dart';
 import 'package:bfit_tracker/utils/coval_math.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class WorkoutAction extends StatefulWidget {
   WorkoutAction({Key key}) : super(key: key);
@@ -140,8 +140,7 @@ class _WorkoutActionState extends State<WorkoutAction> {
                     backgroundColor: mainTheme.primaryColor,
                     child: RotatedBox(
                       quarterTurns: 2,
-                      child: SvgPicture.asset(
-                        'assets/images/left-pointing-arrow.svg',
+                      child: BackArrow(
                         color: Colors.white,
                       ),
                     ),
