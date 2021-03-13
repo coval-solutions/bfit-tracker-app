@@ -32,7 +32,6 @@ dependencies:
   flare_flutter: ^2.0.6
   flutter_bloc: ^4.0.0
   flutter_dotenv: ^2.1.0
-#  flutter_svg: ^0.21.0-nullsafety.0
   font_awesome_flutter: ^8.10.0
   geolocator: ^7.0.1
   googleapis: ^2.0.0

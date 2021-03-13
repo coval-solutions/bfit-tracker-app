@@ -91,13 +91,15 @@ class _AboutYouScreenWeightState extends State<AboutYouScreenWeight> {
                         ),
                       );
 
-                      context.bloc<UserInfoBloc>()..add(CreateUserInfo(userInfo));
+                      context.bloc<UserInfoBloc>()
+                        ..add(CreateUserInfo(userInfo));
 
                       // Pop back to App, either go to Home or Onboarding
                       Navigator.pop(context);
                     },
                     style: ButtonStyle(
-                      padding: MaterialStateProperty.all(const EdgeInsets.all(0.0)),
+                      padding:
+                          MaterialStateProperty.all(const EdgeInsets.all(0.0)),
                       shape: MaterialStateProperty.all(
                         RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30.0),
@@ -107,7 +109,8 @@ class _AboutYouScreenWeightState extends State<AboutYouScreenWeight> {
                           (Set<MaterialState> states) {
                         return states.contains(MaterialState.pressed) ? 12 : 6;
                       }),
-                      overlayColor: MaterialStateProperty.all(Colors.transparent),
+                      overlayColor:
+                          MaterialStateProperty.all(Colors.transparent),
                     ),
                     child: Ink(
                       decoration: BoxDecoration(
