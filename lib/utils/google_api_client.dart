@@ -74,10 +74,4 @@ class GoogleApiClient extends http.BaseClient {
     headers.addAll(defaultHeaders);
     return _httpClient.head(url, headers: headers);
   }
-
-  @override
-  Future<Response> delete(url, {Map<String, String> headers}) {
-    headers.addAll(defaultHeaders);
-    return _httpClient.delete(url, headers: headers);
-  }
 }

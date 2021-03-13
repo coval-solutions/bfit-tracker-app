@@ -24,7 +24,7 @@ class _WeeklyStepsGraphState extends State<WeeklyStepsGraph> {
 
   @override
   Widget build(BuildContext context) {
-    List<FlSpot> flSpots = List<FlSpot>();
+    List<FlSpot> flSpots = <FlSpot>[];
     double index = 0.0;
     double maxSteps = 0;
     if (widget.data != null && widget.data.isNotEmpty) {
@@ -106,10 +106,10 @@ class _WeeklyStepsGraphState extends State<WeeklyStepsGraph> {
         show: true,
         bottomTitles: SideTitles(
           showTitles: true,
-          textStyle: const TextStyle(
-              color: CustomColor.DIM_GRAY,
-              fontWeight: FontWeight.bold,
-              fontSize: 12),
+          // textStyle: const TextStyle(
+          //     color: CustomColor.DIM_GRAY,
+          //     fontWeight: FontWeight.bold,
+          //     fontSize: 12),
           getTitles: (value) {
             return Jiffy(dates[value.toInt()]).E;
           },
@@ -118,11 +118,11 @@ class _WeeklyStepsGraphState extends State<WeeklyStepsGraph> {
         leftTitles: SideTitles(
           interval: interval < 1 ? null : interval,
           showTitles: true,
-          textStyle: const TextStyle(
-            color: CustomColor.DIM_GRAY,
-            fontWeight: FontWeight.bold,
-            fontSize: 12,
-          ),
+          // textStyle: const TextStyle(
+          //   color: CustomColor.DIM_GRAY,
+          //   fontWeight: FontWeight.bold,
+          //   fontSize: 12,
+          // ),
           getTitles: (value) {
             return CovalMath.compact(value);
           },

@@ -13,9 +13,11 @@ class LoadNutritionData extends NutritionDataEvent {
 
   LoadNutritionData({DateTime startDateTime, DateTime endDateTime})
       : startDateTime = startDateTime ??
-            Jiffy()
-                .startOf(Units.DAY)
-                .subtract(Duration(days: NutritionDataBloc.numOfDaysInThePast)),
+            ((Jiffy()..startOf(Units.DAY))
+                  ..subtract(
+                      duration:
+                          Duration(days: NutritionDataBloc.numOfDaysInThePast)))
+                .dateTime,
         endDateTime = endDateTime ?? DateTime.now();
 
   @override

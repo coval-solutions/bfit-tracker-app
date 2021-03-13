@@ -39,7 +39,8 @@ class FitnessDataBloc extends Bloc<FitnessDataEvent, FitnessDataState> {
     try {
       final fitnessData = _fitnessDataRepository.retrieve(event.startDateTime);
       if (this.state.props.isEmpty) {
-        yield FitnessDataLoaded(fitnessData, Jiffy().startOf(Units.DAY));
+        yield FitnessDataLoaded(
+            fitnessData, (Jiffy()..startOf(Units.DAY)).dateTime);
       } else {
         yield FitnessDataLoaded(fitnessData, this.state.props.last);
       }

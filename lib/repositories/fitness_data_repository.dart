@@ -20,10 +20,11 @@ class FitnessDataRepository {
   ];
 
   static List<DateTime> getDateTimes() {
-    List<DateTime> dateTimes = List<DateTime>();
-    DateTime dateTime = Jiffy()
-        .startOf(Units.DAY)
-        .subtract(Duration(days: FitnessDataBloc.numOfDaysInThePast));
+    List<DateTime> dateTimes = <DateTime>[];
+    DateTime dateTime = ((Jiffy()..startOf(Units.DAY))
+          ..subtract(
+              duration: Duration(days: FitnessDataBloc.numOfDaysInThePast)))
+        .dateTime;
     dateTimes.add(dateTime);
     for (int i = 0; i < FitnessDataBloc.numOfDaysInThePast; i++) {
       dateTime = dateTime.add(Duration(days: 1));
@@ -55,8 +56,7 @@ class FitnessDataRepository {
               Map<DateTime, FitnessStat>();
           for (DateTime dateTime in dateTimes) {
             int epochStart = dateTime.millisecondsSinceEpoch;
-            int epochEnd =
-                Jiffy(dateTime).endOf(Units.DAY).millisecondsSinceEpoch;
+            int epochEnd = (Jiffy(dateTime)..endOf(Units.DAY)).millisecond;
             List<HealthDataPoint> healthDataPoints = healthData
                 .where((element) =>
                     element.dateFrom >= epochStart &&

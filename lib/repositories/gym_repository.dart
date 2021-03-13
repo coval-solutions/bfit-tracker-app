@@ -12,10 +12,10 @@ class GymRepository {
   Future<List<Gym>> retrieve(Position position) async {
     String url =
         "${GOOGLE_MAPS_API_URL}location=${position.latitude},${position.longitude}&radius=2500&types=gym&key=${DotEnv().env['GOOGLE_MAPS_KEY']}";
-    final response = await get(url);
+    final response = await get(Uri.parse(url));
     final result = json.decode(response.body)['results'];
 
-    List<Gym> gyms = List<Gym>();
+    List<Gym> gyms = <Gym>[];
     result.forEach((gym) => gyms.add(Gym.fromJson(gym)));
 
     return gyms;

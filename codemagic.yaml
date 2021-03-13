@@ -1,12 +1,9 @@
-# Automatically generated on 2020-05-29 UTC from https://codemagic.io/app/5e41ceef35303b46c455f044/settings
-# Note that this configuration is not an exact match to UI settings. Review and adjust as necessary.
-
 workflows:
   default:
     name: Default
     max_build_duration: 60
     environment:
-      flutter: 1.20.4
+      flutter: 2.0.1
       xcode: '12.4'
       cocoapods: 1.10.1
       vars:

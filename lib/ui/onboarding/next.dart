@@ -11,10 +11,7 @@ class NextOnboardingButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return RaisedButton(
-      highlightElevation: 12,
-      splashColor: Colors.transparent,
-      highlightColor: Colors.transparent,
+    return ElevatedButton(
       onPressed: () {
         if (transformerPageView.pageController.hasClients) {
           switch (transformerPageView.pageController.page.toInt()) {
@@ -47,9 +44,19 @@ class NextOnboardingButton extends StatelessWidget {
           }
         }
       },
-      elevation: 5,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
-      padding: const EdgeInsets.all(0.0),
+      style: ButtonStyle(
+        padding: MaterialStateProperty.all(const EdgeInsets.all(0)),
+        shape: MaterialStateProperty.all(
+          RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(30.0),
+          ),
+        ),
+        elevation: MaterialStateProperty.resolveWith<double>(
+            (Set<MaterialState> states) {
+          return states.contains(MaterialState.pressed) ? 12 : 6;
+        }),
+        overlayColor: MaterialStateProperty.all(Colors.transparent),
+      ),
       child: Ink(
         decoration: BoxDecoration(
           gradient: LinearGradient(

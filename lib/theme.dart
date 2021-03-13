@@ -8,6 +8,12 @@ final ThemeData mainTheme = ThemeData(
   buttonColor: CustomColor.SELECTIVE_YELLOW,
   fontFamily: 'SF UI Text',
   visualDensity: VisualDensity.adaptivePlatformDensity,
+  buttonTheme: ButtonThemeData(
+    buttonColor: CustomColor.SELECTIVE_YELLOW,
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(10.0),
+    ),
+  ),
 );
 
 class CustomColor {

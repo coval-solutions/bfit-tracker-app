@@ -71,74 +71,80 @@ class _ArticlesSelectionScreenState extends State<ArticlesSelectionScreen> {
               children: [
                 SizedBox(width: 16),
                 Expanded(
-                  child: RaisedButton(
-                    elevation: 2,
+                  child: ElevatedButton(
                     onPressed: () {
                       this.setSelectedMenuItem('new');
                     },
-                    child: const AutoSizeText(
+                    style: ElevatedButton.styleFrom(
+                      elevation: 2,
+                      primary: this.selectedMenuItem == 'new'
+                          ? Colors.white
+                          : mainTheme.primaryColor,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12.0),
+                      ),
+                    ),
+                    child: AutoSizeText(
                       'New',
                       maxLines: 1,
                       style: TextStyle(
-                        fontWeight: FontWeight.w600,
-                      ),
+                          fontWeight: FontWeight.w600,
+                          color: this.selectedMenuItem == 'new'
+                              ? mainTheme.primaryColor
+                              : Colors.white.withOpacity(0.5)),
                     ),
-                    color: this.selectedMenuItem == 'new'
-                        ? Colors.white
-                        : mainTheme.primaryColor,
-                    textColor: this.selectedMenuItem == 'new'
-                        ? mainTheme.primaryColor
-                        : Colors.white.withOpacity(0.5),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12.0)),
                   ),
                 ),
                 SizedBox(width: 16),
                 Expanded(
-                  child: RaisedButton(
-                    elevation: 2,
+                  child: ElevatedButton(
                     onPressed: () {
                       this.setSelectedMenuItem('quickRead');
                     },
-                    child: const AutoSizeText(
+                    style: ElevatedButton.styleFrom(
+                      elevation: 2,
+                      primary: this.selectedMenuItem == 'quickRead'
+                          ? Colors.white
+                          : mainTheme.primaryColor,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12.0),
+                      ),
+                    ),
+                    child: AutoSizeText(
                       'Quick Read',
                       maxLines: 1,
                       style: TextStyle(
-                        fontWeight: FontWeight.w600,
-                      ),
+                          fontWeight: FontWeight.w600,
+                          color: this.selectedMenuItem == 'quickRead'
+                              ? mainTheme.primaryColor
+                              : Colors.white.withOpacity(0.5)),
                     ),
-                    color: this.selectedMenuItem == 'quickRead'
-                        ? Colors.white
-                        : mainTheme.primaryColor,
-                    textColor: this.selectedMenuItem == 'quickRead'
-                        ? mainTheme.primaryColor
-                        : Colors.white.withOpacity(0.5),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12.0)),
                   ),
                 ),
                 SizedBox(width: 16),
                 Expanded(
-                  child: RaisedButton(
-                    elevation: 2,
+                  child: ElevatedButton(
                     onPressed: () {
                       this.setSelectedMenuItem('suggested');
                     },
-                    child: const AutoSizeText(
+                    style: ElevatedButton.styleFrom(
+                      elevation: 2,
+                      primary: this.selectedMenuItem == 'suggested'
+                          ? Colors.white
+                          : mainTheme.primaryColor,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12.0),
+                      ),
+                    ),
+                    child: AutoSizeText(
                       'Suggested',
                       maxLines: 1,
                       style: TextStyle(
-                        fontWeight: FontWeight.w600,
-                      ),
+                          fontWeight: FontWeight.w600,
+                          color: this.selectedMenuItem == 'suggested'
+                              ? mainTheme.primaryColor
+                              : Colors.white.withOpacity(0.5)),
                     ),
-                    color: this.selectedMenuItem == 'suggested'
-                        ? Colors.white
-                        : mainTheme.primaryColor,
-                    textColor: this.selectedMenuItem == 'suggested'
-                        ? mainTheme.primaryColor
-                        : Colors.white.withOpacity(0.5),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12.0)),
                   ),
                 ),
                 SizedBox(width: 16),
