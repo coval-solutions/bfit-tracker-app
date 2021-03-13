@@ -84,11 +84,10 @@ Widget weekdayCard(int index, List<DateTime> days) {
     ),
     child: Container(
       width: 60,
-      child: FlatButton(
-        color: Colors.white,
+      child: TextButton(
         onPressed: null,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10.0),
+        style: TextButton.styleFrom(
+          primary: Colors.white,
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

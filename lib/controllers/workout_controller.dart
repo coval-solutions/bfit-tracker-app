@@ -17,7 +17,8 @@ class WorkoutController {
   static Future<int> fetchWorkoutStartedCount(String docRef) async {
     String token = await UserRepository.getIdToken();
 
-    final resp = await http.get('$apiUrl/workout-started-count/$docRef',
+    final resp = await http.get(
+        Uri.parse('$apiUrl/workout-started-count/$docRef'),
         headers: {HttpHeaders.authorizationHeader: 'Bearer $token'});
     if (resp.statusCode == 200) {
       // If the server did return a 200 OK response,

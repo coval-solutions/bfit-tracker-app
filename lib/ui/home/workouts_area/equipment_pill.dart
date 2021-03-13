@@ -17,9 +17,15 @@ class EquipmentPill extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FlatButton(
-      color: this.pillColor,
+    return TextButton(
       onPressed: () {},
+      style: TextButton.styleFrom(
+        backgroundColor: this.pillColor,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10.0),
+          side: BorderSide(color: this.borderColor),
+        ),
+      ),
       child: AutoSizeText(
         equipment.isNotEmpty ? equipment : 'No equipment',
         minFontSize: 12,
@@ -27,10 +33,6 @@ class EquipmentPill extends StatelessWidget {
           color: textColor,
           fontWeight: FontWeight.w600,
         ),
-      ),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10.0),
-        side: BorderSide(color: this.borderColor),
       ),
     );
   }

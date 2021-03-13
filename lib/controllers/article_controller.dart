@@ -10,7 +10,8 @@ class ArticleController extends ApiController {
   static Future<dynamic> fetchArticleViewedCount() async {
     String token = await UserRepository.getIdToken();
 
-    final resp = await http.get('${ApiController.apiUrl}/article-viewed-counts',
+    final resp = await http.get(
+        Uri.parse('${ApiController.apiUrl}/article-viewed-counts'),
         headers: {HttpHeaders.authorizationHeader: 'Bearer $token'});
     if (resp.statusCode == 200) {
       try {

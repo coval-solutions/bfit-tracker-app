@@ -41,7 +41,7 @@ class _AboutYouScreenWeightState extends State<AboutYouScreenWeight> {
                 alignment: Alignment.topCenter,
                 child: AutoSizeText(
                   'Now choose your weight...',
-                  minFontSize: 32,
+                  minFontSize: 30,
                   maxLines: 2,
                   textAlign: TextAlign.center,
                   style: TextStyle(
@@ -65,7 +65,7 @@ class _AboutYouScreenWeightState extends State<AboutYouScreenWeight> {
                       ? 'assets/images/onboarding/man.svg'
                       : 'assets/images/onboarding/woman.svg',
                   fit: BoxFit.contain,
-                  height: screenSize.height / 2,
+                  height: screenSize.height / 2.2,
                 ),
                 AspectRatio(
                   aspectRatio: 2 / 1,
@@ -74,58 +74,67 @@ class _AboutYouScreenWeightState extends State<AboutYouScreenWeight> {
                     onChange: (val) => setState(() => this.weight = val),
                   ),
                 ),
-                RaisedButton(
-                  highlightElevation: 12,
-                  splashColor: Colors.transparent,
-                  highlightColor: Colors.transparent,
-                  onPressed: () {
-                    final UserInfo userInfo = UserInfo(
-                      height: this.widget.height,
-                      isMale: this.widget.isMale,
-                      weight: this.weight,
-                      goals: Goal(
-                        bmi: 24,
-                        weight: 72,
-                        courses: 45,
-                        gym: 100,
-                        steps: 10000,
-                      ),
-                    );
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 24.0),
+                  child: ElevatedButton(
+                    onPressed: () {
+                      final UserInfo userInfo = UserInfo(
+                        height: this.widget.height,
+                        isMale: this.widget.isMale,
+                        weight: this.weight,
+                        goals: Goal(
+                          bmi: 24,
+                          weight: 72,
+                          courses: 45,
+                          gym: 100,
+                          steps: 10000,
+                        ),
+                      );
 
-                    context.bloc<UserInfoBloc>()..add(CreateUserInfo(userInfo));
+                      context.bloc<UserInfoBloc>()..add(CreateUserInfo(userInfo));
 
-                    // Pop back to App, either go to Home or Onboarding
-                    Navigator.pop(context);
-                  },
-                  elevation: 5,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30.0)),
-                  padding: const EdgeInsets.all(0.0),
-                  child: Ink(
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter,
-                        colors: <Color>[
-                          mainTheme.accentColor,
-                          Color(0xFF9BD8FF),
-                        ],
+                      // Pop back to App, either go to Home or Onboarding
+                      Navigator.pop(context);
+                    },
+                    style: ButtonStyle(
+                      padding: MaterialStateProperty.all(const EdgeInsets.all(0.0)),
+                      shape: MaterialStateProperty.all(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30.0),
+                        ),
                       ),
-                      borderRadius: BorderRadius.all(Radius.circular(80.0)),
+                      elevation: MaterialStateProperty.resolveWith<double>(
+                          (Set<MaterialState> states) {
+                        return states.contains(MaterialState.pressed) ? 12 : 6;
+                      }),
+                      overlayColor: MaterialStateProperty.all(Colors.transparent),
                     ),
-                    child: Container(
-                      constraints: BoxConstraints(
-                        minWidth: 150.0,
-                        minHeight: 52.0,
-                        maxWidth: screenSize.width / 2,
+                    child: Ink(
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                          colors: <Color>[
+                            mainTheme.accentColor,
+                            Color(0xFF9BD8FF),
+                          ],
+                        ),
+                        borderRadius: BorderRadius.all(Radius.circular(80.0)),
                       ),
-                      alignment: Alignment.center,
-                      child: const AutoSizeText(
-                        'Finish',
-                        minFontSize: 20,
-                        style: TextStyle(
-                            color: Colors.white, fontWeight: FontWeight.bold),
-                        textAlign: TextAlign.center,
+                      child: Container(
+                        constraints: BoxConstraints(
+                          minWidth: 150.0,
+                          minHeight: 52.0,
+                          maxWidth: screenSize.width / 2,
+                        ),
+                        alignment: Alignment.center,
+                        child: const AutoSizeText(
+                          'Finish',
+                          minFontSize: 20,
+                          style: TextStyle(
+                              color: Colors.white, fontWeight: FontWeight.bold),
+                          textAlign: TextAlign.center,
+                        ),
                       ),
                     ),
                   ),

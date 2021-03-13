@@ -24,20 +24,37 @@ class ArticlesCard extends StatelessWidget {
           Expanded(
             child: Stack(
               children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 8),
-                  child: SvgPicture.network(
-                    article.imageUrl,
-                    fit: BoxFit.fitHeight,
+                Container(
+                  width: double.infinity,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 8),
+                    child: SvgPicture.network(
+                      article.imageUrl,
+                      fit: BoxFit.fitHeight,
+                    ),
                   ),
                 ),
                 Positioned(
                   top: 2,
                   right: 12,
-                  child: RaisedButton(
-                    padding: const EdgeInsets.all(0),
-                    disabledColor: mainTheme.accentColor,
+                  child: ElevatedButton(
                     onPressed: null,
+                    style: ButtonStyle(
+                      elevation: MaterialStateProperty.all(2),
+                      // padding:
+                      //     MaterialStateProperty.all(const EdgeInsets.all(0)),
+                      backgroundColor: MaterialStateProperty.resolveWith<Color>(
+                          (Set<MaterialState> states) {
+                        return states.contains(MaterialState.disabled)
+                            ? mainTheme.accentColor
+                            : mainTheme.primaryColor;
+                      }),
+                      shape: MaterialStateProperty.all(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12.0),
+                        ),
+                      ),
+                    ),
                     child: AutoSizeText(
                       '${article.minsToRead} min read',
                       maxLines: 1,
@@ -45,9 +62,6 @@ class ArticlesCard extends StatelessWidget {
                       style: TextStyle(
                         color: Colors.white,
                       ),
-                    ),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12.0),
                     ),
                   ),
                 ),

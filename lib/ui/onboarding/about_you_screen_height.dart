@@ -43,12 +43,7 @@ class _AboutYouScreenHeightState extends State<AboutYouScreenHeight> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
-                RaisedButton(
-                  highlightElevation: 12,
-                  splashColor: Colors.transparent,
-                  highlightColor: Colors.transparent,
-                  disabledColor: mainTheme.accentColor,
-                  color: isMaleSelected ? mainTheme.accentColor : Colors.white,
+                ElevatedButton(
                   onPressed: isMaleSelected
                       ? () {}
                       : () {
@@ -56,39 +51,52 @@ class _AboutYouScreenHeightState extends State<AboutYouScreenHeight> {
                             isMaleSelected = true;
                           });
                         },
-                  elevation: 5,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30.0)),
-                  padding: const EdgeInsets.all(0.0),
+                  style: ButtonStyle(
+                    shape: MaterialStateProperty.all(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30.0),
+                      ),
+                    ),
+                    elevation: MaterialStateProperty.resolveWith<double>(
+                        (Set<MaterialState> states) {
+                      return states.contains(MaterialState.pressed) ? 12 : 6;
+                    }),
+                    backgroundColor: MaterialStateProperty.resolveWith<Color>(
+                        (Set<MaterialState> states) {
+                      return states.contains(MaterialState.disabled)
+                          ? mainTheme.accentColor
+                          : isMaleSelected
+                              ? mainTheme.accentColor
+                              : Colors.white;
+                    }),
+                    overlayColor: MaterialStateProperty.all(Colors.transparent),
+                  ),
                   child: Container(
                     constraints:
-                        const BoxConstraints(minWidth: 24.0, minHeight: 52.0),
+                        const BoxConstraints(minWidth: 74.0, minHeight: 52.0),
                     alignment: Alignment.center,
                     child: isMaleSelected
                         ? const AutoSizeText(
                             'Male',
                             minFontSize: 20,
                             style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold),
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                            ),
                             textAlign: TextAlign.center,
                           )
                         : const AutoSizeText(
                             'Male',
                             minFontSize: 20,
                             style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold),
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
+                            ),
                             textAlign: TextAlign.center,
                           ),
                   ),
                 ),
-                RaisedButton(
-                  highlightElevation: 12,
-                  splashColor: Colors.transparent,
-                  highlightColor: Colors.transparent,
-                  color:
-                      isMaleSelected ? Colors.white : mainTheme.disabledColor,
+                ElevatedButton(
                   onPressed: isMaleSelected
                       ? () {
                           setState(() {
@@ -96,13 +104,29 @@ class _AboutYouScreenHeightState extends State<AboutYouScreenHeight> {
                           });
                         }
                       : () {},
-                  elevation: 5,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30.0)),
-                  padding: const EdgeInsets.all(0.0),
+                  style: ButtonStyle(
+                    shape: MaterialStateProperty.all(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30.0),
+                      ),
+                    ),
+                    elevation: MaterialStateProperty.resolveWith<double>(
+                        (Set<MaterialState> states) {
+                      return states.contains(MaterialState.pressed) ? 12 : 6;
+                    }),
+                    backgroundColor: MaterialStateProperty.resolveWith<Color>(
+                        (Set<MaterialState> states) {
+                      return states.contains(MaterialState.disabled)
+                          ? mainTheme.accentColor
+                          : isMaleSelected
+                              ? Colors.white
+                              : mainTheme.disabledColor;
+                    }),
+                    overlayColor: MaterialStateProperty.all(Colors.transparent),
+                  ),
                   child: Container(
                     constraints:
-                        const BoxConstraints(minWidth: 24.0, minHeight: 52.0),
+                        const BoxConstraints(minWidth: 74.0, minHeight: 52.0),
                     alignment: Alignment.center,
                     child: isMaleSelected
                         ? const AutoSizeText(
@@ -123,6 +147,46 @@ class _AboutYouScreenHeightState extends State<AboutYouScreenHeight> {
                           ),
                   ),
                 ),
+                // RaisedButton(
+                //   highlightElevation: 12,
+                //   splashColor: Colors.transparent,
+                //   highlightColor: Colors.transparent,
+                //   color:
+                //       isMaleSelected ? Colors.white : mainTheme.disabledColor,
+                //   onPressed: isMaleSelected
+                //       ? () {
+                //           setState(() {
+                //             isMaleSelected = false;
+                //           });
+                //         }
+                //       : () {},
+                //   elevation: 5,
+                //   shape: RoundedRectangleBorder(
+                //       borderRadius: BorderRadius.circular(30.0)),
+                //   padding: const EdgeInsets.all(0.0),
+                //   child: Container(
+                //     constraints:
+                //         const BoxConstraints(minWidth: 24.0, minHeight: 52.0),
+                //     alignment: Alignment.center,
+                //     child: isMaleSelected
+                //         ? const AutoSizeText(
+                //             'Female',
+                //             minFontSize: 20,
+                //             style: TextStyle(
+                //                 color: Colors.black,
+                //                 fontWeight: FontWeight.bold),
+                //             textAlign: TextAlign.center,
+                //           )
+                //         : const AutoSizeText(
+                //             'Female',
+                //             minFontSize: 20,
+                //             style: TextStyle(
+                //                 color: Colors.white,
+                //                 fontWeight: FontWeight.bold),
+                //             textAlign: TextAlign.center,
+                //           ),
+                //   ),
+                // ),
               ],
             ),
             Stack(
@@ -150,10 +214,7 @@ class _AboutYouScreenHeightState extends State<AboutYouScreenHeight> {
               padding: const EdgeInsets.symmetric(
                 horizontal: 100,
               ),
-              child: RaisedButton(
-                highlightElevation: 12,
-                splashColor: Colors.transparent,
-                highlightColor: Colors.transparent,
+              child: ElevatedButton(
                 onPressed: () {
                   Navigator.pushReplacement(
                     context,
@@ -177,10 +238,19 @@ class _AboutYouScreenHeightState extends State<AboutYouScreenHeight> {
                     ),
                   );
                 },
-                elevation: 5,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30.0)),
-                padding: const EdgeInsets.all(0.0),
+                style: ButtonStyle(
+                  padding: MaterialStateProperty.all(const EdgeInsets.all(0)),
+                  shape: MaterialStateProperty.all(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30.0),
+                    ),
+                  ),
+                  elevation: MaterialStateProperty.resolveWith<double>(
+                      (Set<MaterialState> states) {
+                    return states.contains(MaterialState.pressed) ? 12 : 6;
+                  }),
+                  overlayColor: MaterialStateProperty.all(Colors.transparent),
+                ),
                 child: Ink(
                   decoration: BoxDecoration(
                     gradient: LinearGradient(

@@ -11,7 +11,7 @@ class NutritionDataRepository {
   Future<List<NutrientStat>> retrieve(
       DateTime startDateTime, DateTime endDateTime) async {
     Map nutrientsEnumMap = NutrientsEnumExtension.map();
-    List<NutrientStat> nutrientsStat = List<NutrientStat>();
+    List<NutrientStat> nutrientsStat = <NutrientStat>[];
     bool hasPermission = await Nutrition.requestPermission();
     if (hasPermission) {
       bool isPhysicalDevice = await Utils.isPhysicalDevice;
@@ -55,7 +55,7 @@ class NutritionDataRepository {
 
   List<NutrientStat> _getFakeData({bool random = false}) {
     Map nutrientsEnumMap = NutrientsEnumExtension.map();
-    List<NutrientStat> nutrientsStat = List<NutrientStat>();
+    List<NutrientStat> nutrientsStat = <NutrientStat>[];
 
     nutrientsEnumMap.forEach((key, value) {
       nutrientsStat.add(NutrientStat(

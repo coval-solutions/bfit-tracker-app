@@ -23,7 +23,7 @@ class AnimatedCount extends StatefulWidget {
 }
 
 class _AnimatedCountState extends State<AnimatedCount> {
-  List<_AnimatedCount> animatedCounts = List<_AnimatedCount>();
+  List<_AnimatedCount> animatedCounts = <_AnimatedCount>[];
 
   _AnimatedCountState(AnimationController animation, int count,
       TextStyle textStyle, String units);

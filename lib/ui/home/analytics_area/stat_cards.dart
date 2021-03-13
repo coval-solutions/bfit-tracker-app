@@ -29,7 +29,7 @@ class _StatsCardListState extends State<StatsCardList> {
   }
 
   void setFitnessDataForDate(DateTime dateTime) {
-    List<FitnessStat> fitnessData = List<FitnessStat>();
+    List<FitnessStat> fitnessData = <FitnessStat>[];
     widget.data.entries.forEach((element) {
       try {
         var healthTypeForDate = element.value.entries

@@ -6,7 +6,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 class ArticleStarRating extends StatelessWidget {
   final int numOfStars;
   final int numOfReviews;
-  final List<Widget> list = List<Widget>();
+  final List<Widget> list = <Widget>[];
 
   ArticleStarRating({
     this.numOfStars = 5,

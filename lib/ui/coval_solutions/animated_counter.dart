@@ -36,9 +36,9 @@ class _AnimatedCounterState extends State<AnimatedCounter>
   @override
   void initState() {
     super.initState();
-    text = List<Widget>();
-    animationControllers = List<AnimationController>();
-    animations = List<Animation<int>>();
+    text = <Widget>[];
+    animationControllers = <AnimationController>[];
+    animations = <Animation<int>>[];
     String countString = widget.count.toString();
     for (int i = 0; i < (countString.length - 1); i++) {
       int count = int.parse(countString[i]);

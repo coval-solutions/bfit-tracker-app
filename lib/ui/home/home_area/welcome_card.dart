@@ -22,14 +22,14 @@ class WelcomeCard extends StatelessWidget {
       color: mainTheme.accentColor,
       child: InkWell(
         onTap: () {
-          Widget cancelButton = FlatButton(
+          Widget cancelButton = TextButton(
             child: Text('Cancel'),
             onPressed: () {
               Navigator.pop(context);
             },
           );
 
-          Widget yesButton = FlatButton(
+          Widget yesButton = TextButton(
             child: Text('Yes, Sign Out'),
             onPressed: () {
               _authenticationBloc.add(LoggedOut());
