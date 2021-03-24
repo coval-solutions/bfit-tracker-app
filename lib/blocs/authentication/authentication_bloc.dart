@@ -68,13 +68,14 @@ class AuthenticationBloc
   }
 
   CovalUser _userFromFirebaseUser(User firebaseUser) {
-    return firebaseUser != null
-        ? CovalUser(
-            firebaseUser.uid,
-            firebaseUser.email,
-            firebaseUser.displayName,
-            CovalUser.getImageFromUrl(firebaseUser.photoURL))
-        : null;
+    return null;
+    // return firebaseUser != null
+    //     ? CovalUser(
+    //         firebaseUser.uid,
+    //         firebaseUser.email,
+    //         firebaseUser.displayName,
+    //         CovalUser.getImageFromUrl(firebaseUser.photoURL))
+    //     : null;
   }
 
   Future<String> getAccessToken() async {

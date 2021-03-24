@@ -23,15 +23,19 @@ class UserInfo {
   });
 
   UserInfo fromSnapshot(DocumentSnapshot snapshot) {
-    return UserInfo(
-      height: snapshot.data()['height'] ?? 175,
-      weight: snapshot.data()['weight'] ?? 80,
-      isMale: snapshot.data()['isMale'] ?? false,
-      gymTime: snapshot.data()['gymTime'] ?? 0,
-      goals: Goal.fromJson(snapshot.data()['goals']),
-      workoutsComplete: snapshot.data()['workoutsComplete'],
-      totalWorkoutsCompleted: snapshot.data()['totalWorkoutsCompleted'] ?? 0,
-    );
+    if (snapshot.exists) {
+      return UserInfo(
+        height: snapshot.data()['height'] ?? 175,
+        weight: snapshot.data()['weight'] ?? 80,
+        isMale: snapshot.data()['isMale'] ?? false,
+        gymTime: snapshot.data()['gymTime'] ?? 0,
+        goals: Goal.fromJson(snapshot.data()['goals']),
+        workoutsComplete: snapshot.data()['workoutsComplete'],
+        totalWorkoutsCompleted: snapshot.data()['totalWorkoutsCompleted'] ?? 0,
+      );
+    }
+
+    return null;
   }
 
   Map<String, dynamic> getStats() {

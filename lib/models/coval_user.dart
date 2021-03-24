@@ -1,34 +1,46 @@
+import 'package:bfit_tracker/models/user_info.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
 class CovalUser {
-  final String _uid;
-  final String _email;
-  final String _displayName;
-  final CachedNetworkImageProvider _displayPicture;
+  String uid;
+  String email;
+  String displayName;
+  CachedNetworkImageProvider displayPicture;
+  UserInfo userInfo;
 
-  CovalUser(this._uid, this._email, this._displayName, this._displayPicture);
+  CovalUser(
+      {this.uid,
+      this.email,
+      this.displayName,
+      this.displayPicture,
+      this.userInfo});
 
+  // TODO: move this into the Utils class?
   static CachedNetworkImageProvider getImageFromUrl(String url) {
     return CachedNetworkImageProvider(url);
   }
 
   String getName() {
-    return _displayName;
+    return displayName;
   }
 
   String getUid() {
-    return _uid;
+    return uid;
   }
 
   String getForename() {
-    return _displayName.split(" ")[0];
+    return displayName.split(" ")[0];
   }
 
   CachedNetworkImageProvider getDisplayPicture() {
-    return _displayPicture;
+    return displayPicture;
   }
 
   String getEmail() {
-    return _email;
+    return email;
+  }
+
+  void setUserInfo(UserInfo userInfo) {
+    this.userInfo = userInfo;
   }
 }
