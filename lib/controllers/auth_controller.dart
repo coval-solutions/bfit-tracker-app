@@ -1,7 +1,10 @@
 import 'package:bfit_tracker/controllers/user_controller.dart';
 import 'package:bfit_tracker/models/coval_user.dart';
 import 'package:bfit_tracker/models/user_info.dart' as Coval;
+import 'package:bfit_tracker/routes.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
@@ -11,31 +14,47 @@ class AuthController extends GetxController {
   Rx<User> _user = Rx<User>();
 
   @override
-  void onInit() {
+  Future<void> onInit() async {
     super.onInit();
     _user.bindStream(_auth.authStateChanges());
+    await this.signInWithGoogle();
   }
 
   User getUser() {
     return _user.value;
   }
 
-  void signInWithGoogle() async {
-    if (this.getUser() != null) {
-      return;
+  Future<void> signInWithGoogle() async {
+    bool isSignedIn = await _googleSignIn.isSignedIn();
+    GoogleSignInAccount googleSignInAccount;
+    if (!isSignedIn) {
+      googleSignInAccount = await _googleSignIn.signIn();
+    } else {
+      googleSignInAccount = await _googleSignIn.signInSilently();
     }
 
-    final GoogleSignInAccount googleUser = await _googleSignIn.signIn();
     final GoogleSignInAuthentication googleAuth =
-        await googleUser.authentication;
+        await googleSignInAccount.authentication;
 
     final AuthCredential credential = GoogleAuthProvider.credential(
       accessToken: googleAuth.accessToken,
       idToken: googleAuth.idToken,
     );
 
-    await _auth.signInWithCredential(credential);
+    _auth.signInWithCredential(credential);
+    this._loadCovalUser();
 
+    UserController userController = Get.find<UserController>();
+    if (userController?.user?.userInfo == null) {
+      Get.offAllNamed(Routes.ONBOARDING);
+    } else {
+      Get.offAllNamed(Routes.HOME);
+    }
+
+    return;
+  }
+
+  Future<void> _loadCovalUser() async {
     UserController userController = Get.find<UserController>();
     User user = this.getUser();
     userController.user = CovalUser(
@@ -51,6 +70,9 @@ class AuthController extends GetxController {
 
     userController.user.setUserInfo(userInfo);
 
+    FirebaseCrashlytics.instance.setUserIdentifier(user.uid);
+    FirebaseAnalytics().setUserId(user.uid);
+
     return;
   }
 
@@ -61,6 +83,9 @@ class AuthController extends GetxController {
     ]);
 
     Get.find<UserController>().clear();
+
+    FirebaseCrashlytics.instance.setUserIdentifier(null);
+    FirebaseAnalytics().setUserId(null);
 
     return;
   }
