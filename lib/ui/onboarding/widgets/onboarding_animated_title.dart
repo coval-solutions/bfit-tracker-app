@@ -11,26 +11,28 @@ class OnboardingAnimatedTitle extends StatefulWidget {
       _OnboardingAnimatedTitleState();
 }
 
-class _OnboardingAnimatedTitleState extends State<OnboardingAnimatedTitle> {
+class _OnboardingAnimatedTitleState extends State<OnboardingAnimatedTitle>
+    with SingleTickerProviderStateMixin {
+  AnimationController controller;
+  Animation<Offset> offset;
   bool animate = false;
 
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback(
-        (_) => Future.delayed(const Duration(milliseconds: 250), () {
-              setState(() {
-                animate = !animate;
-              });
-            }));
+    controller =
+        AnimationController(vsync: this, duration: Duration(seconds: 1));
+
+    offset = Tween<Offset>(begin: Offset(-30, 0), end: Offset(0.0, 0))
+        .animate(controller);
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => controller.forward());
   }
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedAlign(
-      alignment: animate ? Alignment.center : Alignment.centerLeft,
-      duration: const Duration(seconds: 3),
-      curve: Curves.fastOutSlowIn,
+    return SlideTransition(
+      position: offset,
       child: AutoSizeText(
         widget.text,
         minFontSize: 24,
