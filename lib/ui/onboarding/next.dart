@@ -63,8 +63,8 @@ class NextOnboardingButton extends StatelessWidget {
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             colors: <Color>[
-              mainTheme.accentColor,
-              Color(0xFF9BD8FF),
+              CustomColor.MAYA_BLUE,
+              CustomColor.COLUMBIA_BLUE,
             ],
           ),
           borderRadius: BorderRadius.all(Radius.circular(80.0)),

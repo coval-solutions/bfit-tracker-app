@@ -2,11 +2,13 @@ import 'package:bfit_tracker/controllers/user_controller.dart';
 import 'package:bfit_tracker/models/coval_user.dart';
 import 'package:bfit_tracker/models/user_info.dart' as Coval;
 import 'package:bfit_tracker/routes.dart';
+import 'package:bfit_tracker/ui/onboarding/onboarding_screen.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:flutter_svg/svg.dart';
 
 class AuthController extends GetxController {
   FirebaseAuth _auth = FirebaseAuth.instance;
@@ -46,6 +48,15 @@ class AuthController extends GetxController {
 
     UserController userController = Get.find<UserController>();
     if (userController?.user?.userInfo == null) {
+      // Cache some SVGs
+      OnboardingScreenState.images.forEach((element) async {
+        await precachePicture(SvgPicture.asset(element).pictureProvider, null);
+      });
+
+      OnboardingScreenState.background.forEach((element) async {
+        await precachePicture(SvgPicture.asset(element).pictureProvider, null);
+      });
+
       Get.offAllNamed(Routes.ONBOARDING);
     } else {
       Get.offAllNamed(Routes.HOME);
