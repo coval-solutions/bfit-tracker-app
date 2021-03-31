@@ -1,11 +1,11 @@
 import 'package:bfit_tracker/controllers/bindings/auth_binding.dart';
 import 'package:bfit_tracker/routes.dart';
 import 'package:bfit_tracker/theme.dart';
-import 'package:bfit_tracker/ui/home/home_screen.dart';
-import 'package:bfit_tracker/ui/onboarding/about_you_screen_height.dart';
-import 'package:bfit_tracker/ui/onboarding/about_you_screen_weight.dart';
-import 'package:bfit_tracker/ui/onboarding/onboarding_screen.dart';
-import 'package:bfit_tracker/ui/splash_screen.dart';
+import 'package:bfit_tracker/views/home/home_screen.dart';
+import 'package:bfit_tracker/views/onboarding/about_you_screen_weight.dart';
+import 'package:bfit_tracker/views/onboarding/height_screen/onboarding_height_screen.dart';
+import 'package:bfit_tracker/views/onboarding/onboarding_screen.dart';
+import 'package:bfit_tracker/views/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
@@ -39,10 +39,17 @@ class _AppState extends State<App> {
             GetPage(name: Routes.NOT_FOUND, page: () => SplashScreenLoading()),
         initialRoute: '/',
         getPages: [
-          GetPage(name: Routes.INITIAL, page: () => SplashScreenLoading(), binding: AuthBinding()),
+          GetPage(
+              name: Routes.INITIAL,
+              page: () => SplashScreenLoading(),
+              binding: AuthBinding()),
           GetPage(name: Routes.ONBOARDING, page: () => OnboardingScreen()),
-          GetPage(name: Routes.ONBOARDING_HEIGHT, page: () => AboutYouScreenHeight()),
-          GetPage(name: Routes.ONBOARDING_WEIGHT, page: () => AboutYouScreenWeight()),
+          GetPage(
+              name: Routes.ONBOARDING_HEIGHT,
+              page: () => OnboardingHeightScreen()),
+          GetPage(
+              name: Routes.ONBOARDING_WEIGHT,
+              page: () => AboutYouScreenWeight()),
           GetPage(name: Routes.HOME, page: () => HomeScreen()),
         ],
       ),
