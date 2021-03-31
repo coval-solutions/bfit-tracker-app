@@ -49,11 +49,22 @@ class AuthController extends GetxController {
     UserController userController = Get.find<UserController>();
     if (userController?.user?.userInfo == null) {
       // Cache some SVGs
-      OnboardingScreenState.images.forEach((element) async {
-        await precachePicture(SvgPicture.asset(element).pictureProvider, null);
-      });
+      var otherOnboardingSvgs = [
+        'assets/images/onboarding/circles_height.svg',
+        'assets/images/onboarding/circles_weight.svg',
+        'assets/images/onboarding/man.svg',
+        'assets/images/onboarding/man_face.svg',
+        'assets/images/onboarding/woman.svg',
+        'assets/images/onboarding/woman_face.svg',
+      ];
 
-      OnboardingScreenState.background.forEach((element) async {
+      var svgs = [
+        ...OnboardingScreenState.images,
+        ...OnboardingScreenState.background,
+        ...otherOnboardingSvgs
+      ];
+
+      svgs.forEach((element) async {
         await precachePicture(SvgPicture.asset(element).pictureProvider, null);
       });
 

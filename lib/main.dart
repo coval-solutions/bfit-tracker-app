@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:io';
 
 import 'package:bfit_tracker/app.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -9,8 +8,6 @@ import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:glob/glob.dart';
-import 'package:glob/list_local_fs.dart';
 
 // Global vars
 bool isTesting = false;
@@ -25,10 +22,6 @@ Future<void> main({bool testing: false}) async {
 
   FirebaseFirestore.instance.settings =
       Settings(persistenceEnabled: kReleaseMode);
-
-  var test = Glob("**.dart").listSync();
-  var dir = new Directory('/');
-  List allContents = dir.listSync(recursive: true);
 
   // BlocSupervisor.delegate = SimpleBlocDelegate();
   // final UserRepository userRepository = UserRepository();

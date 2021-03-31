@@ -35,7 +35,6 @@ dependencies:
   font_awesome_flutter: ^8.10.0
   geolocator: ^7.0.1
   get: ^4.0.0-nullsafety.2
-  glob: ^2.0.1
   googleapis: ^2.0.0
   google_sign_in: ^4.5.3
   health: 1.0.6
