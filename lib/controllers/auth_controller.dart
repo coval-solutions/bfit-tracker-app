@@ -90,7 +90,7 @@ class AuthController extends GetxController {
         .retrieve(userController.user)
         .first;
 
-    userController.user.setUserInfo(userInfo);
+    userController.user.setUserInfo(userInfo ?? Coval.UserInfo());
 
     FirebaseCrashlytics.instance.setUserIdentifier(user.uid);
     FirebaseAnalytics().setUserId(user.uid);

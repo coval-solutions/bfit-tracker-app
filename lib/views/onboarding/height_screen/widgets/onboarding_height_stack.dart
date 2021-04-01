@@ -1,5 +1,5 @@
+import 'package:bfit_tracker/views/onboarding/height_screen/widgets/onboarding_gender_buttons.dart';
 import 'package:bfit_tracker/views/onboarding/height_screen/widgets/onboarding_height_circles.dart';
-import 'package:bfit_tracker/views/onboarding/height_screen/widgets/onboarding_height_slider.dart';
 import 'package:bfit_tracker/views/onboarding/height_screen/widgets/onboarding_height_title.dart';
 import 'package:flutter/material.dart';
 
@@ -23,6 +23,7 @@ class OnboardingHeightStack extends StatelessWidget {
               padding: const EdgeInsets.symmetric(vertical: 16),
               child: OnboardingHeightTitle(),
             ),
+            OnboardingGenderButtons(),
             // OnboardingHeightSlider(),
           ],
         ),

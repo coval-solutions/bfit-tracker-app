@@ -6,20 +6,20 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class UserInfo {
   final int height;
   final int weight;
-  final bool isMale;
+  bool isMale;
   final double gymTime;
   final Goal goals;
   final Map<String, dynamic> workoutsComplete;
   final int totalWorkoutsCompleted;
 
   UserInfo({
-    this.height,
-    this.weight,
-    this.isMale,
-    this.gymTime,
+    this.height = 175,
+    this.weight = 80,
+    this.isMale = true,
+    this.gymTime = 0,
     this.goals,
     this.workoutsComplete,
-    this.totalWorkoutsCompleted,
+    this.totalWorkoutsCompleted = 0,
   });
 
   UserInfo fromSnapshot(DocumentSnapshot snapshot) {
@@ -27,7 +27,7 @@ class UserInfo {
       return UserInfo(
         height: snapshot.data()['height'] ?? 175,
         weight: snapshot.data()['weight'] ?? 80,
-        isMale: snapshot.data()['isMale'] ?? false,
+        isMale: snapshot.data()['isMale'] ?? true,
         gymTime: snapshot.data()['gymTime'] ?? 0,
         goals: Goal.fromJson(snapshot.data()['goals']),
         workoutsComplete: snapshot.data()['workoutsComplete'],
