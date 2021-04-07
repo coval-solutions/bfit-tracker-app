@@ -27,7 +27,12 @@ class OnboardingGenderButton extends GetView<UserController> {
   ButtonStyle buildButtonStyle() {
     return ButtonStyle(
       padding: MaterialStateProperty.all(const EdgeInsets.all(0)),
-      // backgroundColor: MaterialStateProperty.all(Colors.white),
+      backgroundColor:
+          MaterialStateProperty.resolveWith<Color>((Set<MaterialState> states) {
+        return states.contains(MaterialState.disabled)
+            ? Colors.transparent
+            : Colors.white;
+      }),
       shape: MaterialStateProperty.all(
         RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(30.0),

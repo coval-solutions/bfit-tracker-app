@@ -4,8 +4,8 @@ import 'package:bfit_tracker/models/goal.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class UserInfo {
-  final int height;
-  final int weight;
+  int height;
+  int weight;
   bool isMale;
   final double gymTime;
   final Goal goals;
@@ -13,8 +13,8 @@ class UserInfo {
   final int totalWorkoutsCompleted;
 
   UserInfo({
-    this.height = 175,
-    this.weight = 80,
+    this.height = 170,
+    this.weight = 70,
     this.isMale = true,
     this.gymTime = 0,
     this.goals,
@@ -25,8 +25,8 @@ class UserInfo {
   UserInfo fromSnapshot(DocumentSnapshot snapshot) {
     if (snapshot.exists) {
       return UserInfo(
-        height: snapshot.data()['height'] ?? 175,
-        weight: snapshot.data()['weight'] ?? 80,
+        height: snapshot.data()['height'] ?? 170,
+        weight: snapshot.data()['weight'] ?? 70,
         isMale: snapshot.data()['isMale'] ?? true,
         gymTime: snapshot.data()['gymTime'] ?? 0,
         goals: Goal.fromJson(snapshot.data()['goals']),

@@ -13,7 +13,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 class AuthController extends GetxController {
   FirebaseAuth _auth = FirebaseAuth.instance;
   GoogleSignIn _googleSignIn = GoogleSignIn();
-  Rx<User> _user = Rx<User>();
+  Rx<User> _user = Rx<User>(null);
 
   @override
   Future<void> onInit() async {

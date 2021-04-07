@@ -7,10 +7,8 @@ class OnboardingHeightScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: mainTheme.primaryColor,
-      body: Center(
-        child: SafeArea(
-          child: OnboardingHeightStack(),
-        ),
+      body: SafeArea(
+        child: OnboardingHeightStack(),
       ),
     );
   }

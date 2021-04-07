@@ -71,7 +71,8 @@ class OnboardingStack extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     SkipOnboardingButton(),
-                    OnboardingNextButton(transformerPageController),
+                    OnboardingNextButton(
+                        transformerPageController: transformerPageController),
                   ],
                 ),
               ),

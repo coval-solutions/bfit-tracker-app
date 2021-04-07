@@ -10,6 +10,14 @@ class UserController extends GetxController {
 
   set user(CovalUser value) => this._covalUser.value = value;
 
+  void setHeight(int height) {
+    _covalUser.update((val) {
+      print('Old: ' + val.userInfo.height.toString());
+      val.userInfo.height = height;
+      print('New: ' + val.userInfo.height.toString());
+    });
+  }
+
   void setIsMale(bool isMale) {
     _covalUser.update((val) {
       val.userInfo.isMale = isMale;

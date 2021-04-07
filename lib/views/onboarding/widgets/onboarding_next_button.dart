@@ -8,22 +8,25 @@ import 'package:transformer_page_view/transformer_page_view.dart';
 class OnboardingNextButton extends StatelessWidget {
   final TransformerPageController transformerPageController;
 
-  OnboardingNextButton(this.transformerPageController);
+  OnboardingNextButton({this.transformerPageController});
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
       onPressed: () => {
-        if (transformerPageController.hasClients) {
-          if (transformerPageController.page.toInt() == 2) {
-            Get.offAllNamed(Routes.ONBOARDING_HEIGHT)
+        if (transformerPageController != null && transformerPageController.hasClients) {
+            if (transformerPageController.page.toInt() == 2) {
+              Get.offAllNamed(Routes.ONBOARDING_HEIGHT)
+            } else {
+                transformerPageController.nextPage(
+                  duration: Duration(milliseconds: 400),
+                  curve: Curves.easeInOut,
+                )
+              }
           } else {
-            transformerPageController.nextPage(
-              duration: Duration(milliseconds: 400),
-              curve: Curves.easeInOut,
-            )
+            // We can safely assume we are the Weight Screen, therefore go to Height Screen
+            Get.offAllNamed(Routes.ONBOARDING_WEIGHT)
           }
-        }
       },
       style: buildButtonStyle(),
       child: NextButton(),
