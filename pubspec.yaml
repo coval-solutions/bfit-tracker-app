@@ -38,7 +38,7 @@ dependencies:
   googleapis: ^2.0.0
   google_sign_in: ^4.5.3
   health: 1.0.6
-  height_slider: ^1.4.0-nullsafety
+  height_slider: ^1.4.0-nullsafety+1
   http: ^0.13.0
   intl: ^0.17.0
   jiffy: ^4.0.0

@@ -2,9 +2,9 @@ import 'package:bfit_tracker/controllers/bindings/auth_binding.dart';
 import 'package:bfit_tracker/routes.dart';
 import 'package:bfit_tracker/theme.dart';
 import 'package:bfit_tracker/views/home/home_screen.dart';
-import 'package:bfit_tracker/views/onboarding/about_you_screen_weight.dart';
 import 'package:bfit_tracker/views/onboarding/height_screen/onboarding_height_screen.dart';
 import 'package:bfit_tracker/views/onboarding/onboarding_screen.dart';
+import 'package:bfit_tracker/views/onboarding/weight_screen/onboarding_weight_screen.dart';
 import 'package:bfit_tracker/views/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -49,7 +49,7 @@ class _AppState extends State<App> {
               page: () => OnboardingHeightScreen()),
           GetPage(
               name: Routes.ONBOARDING_WEIGHT,
-              page: () => AboutYouScreenWeight()),
+              page: () => OnboardingWeightScreen()),
           GetPage(name: Routes.HOME, page: () => HomeScreen()),
         ],
       ),

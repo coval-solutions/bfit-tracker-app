@@ -82,7 +82,7 @@ class NextButtonText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      constraints: const BoxConstraints(minWidth: 150.0, minHeight: 52.0),
+      constraints: BoxConstraints(maxHeight: 52.0, maxWidth: Get.width / 2),
       alignment: Alignment.center,
       child: const AutoSizeText(
         'Next',

@@ -14,19 +14,19 @@ class _OnboardingHeightSliderState extends State<OnboardingHeightSlider> {
 
   @override
   Widget build(BuildContext context) {
-    return Flexible(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 0),
-        child: Obx(
-          () => HeightSlider(
-            height: height,
-            maxHeight: 170,
-            minHeight: 120,
-            onChange: (val) => setState(() => height = val),
-            unit: 'cm',
-            personImagePath:
-                "assets/images/onboarding/${userController.user.userInfo.isMale ? 'man' : 'woman'}.svg",
-          ),
+    return Container(
+      constraints: BoxConstraints(
+        maxHeight: Get.height / 2,
+      ),
+      child: Obx(
+        () => HeightSlider(
+          height: height,
+          maxHeight: 210,
+          minHeight: 120,
+          onChange: (val) => setState(() => height = val),
+          unit: 'cm',
+          personImagePath:
+              "assets/images/onboarding/${userController.user.userInfo.isMale ? 'man' : 'woman'}.svg",
         ),
       ),
     );

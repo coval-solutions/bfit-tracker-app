@@ -15,7 +15,6 @@ class OnboardingHeightStack extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Stack(
-      // alignment: Alignment.topCenter,
       children: [
         Padding(
           padding: const EdgeInsets.only(top: 275),
@@ -27,19 +26,29 @@ class OnboardingHeightStack extends StatelessWidget {
               padding: const EdgeInsets.symmetric(vertical: 16),
               child: OnboardingHeightTitle(),
             ),
-            OnboardingGenderButtons(),
-            OnboardingHeightSlider(),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 16),
-              child: OnboardingDotsIndicator(
-                dotsCount: OnboardingScreenState.NUM_OF_PAGES,
-                currentDotPosition: double.parse(
-                        OnboardingScreenState.NUM_OF_PAGES.toString()) -
-                    1,
-              ),
+              child: OnboardingGenderButtons(),
             ),
-            OnboardingNextButton(),
+            OnboardingHeightSlider(),
           ],
+        ),
+        Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 16),
+                child: OnboardingDotsIndicator(
+                  dotsCount: OnboardingScreenState.NUM_OF_PAGES,
+                  currentDotPosition: double.parse(
+                          OnboardingScreenState.NUM_OF_PAGES.toString()) -
+                      1,
+                ),
+              ),
+              OnboardingNextButton(),
+            ],
+          ),
         ),
       ],
     );
