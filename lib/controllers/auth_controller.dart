@@ -43,7 +43,7 @@ class AuthController extends GetxController {
       idToken: googleAuth.idToken,
     );
 
-    _auth.signInWithCredential(credential);
+    await _auth.signInWithCredential(credential);
     this._loadCovalUser();
 
     UserController userController = Get.find<UserController>();
