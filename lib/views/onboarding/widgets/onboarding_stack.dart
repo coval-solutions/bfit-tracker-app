@@ -6,7 +6,6 @@ import 'package:bfit_tracker/views/onboarding/widgets/onboarding_next_button.dar
 import 'package:bfit_tracker/views/onboarding/widgets/onboarding_skip_button.dart';
 import 'package:bfit_tracker/views/onboarding/widgets/onboarding_titles.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:transformer_page_view/transformer_page_view.dart';
 
 class OnboardingStack extends StatelessWidget {
@@ -35,48 +34,45 @@ class OnboardingStack extends StatelessWidget {
           transformInfo: transformInfo,
           backgroundAssetPath: backgroundAssetPath,
         ),
-        Padding(
-          padding: EdgeInsets.only(top: 164),
-          child: Align(
-            alignment: Alignment.topCenter,
-            child: OnboardingExerciseImage(
+        Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            OnboardingExerciseImage(
               transformInfo: transformInfo,
               mainImageAssetPath: mainImageAssetPath,
             ),
-          ),
-        ),
-        Padding(
-          padding: EdgeInsets.only(
-            top: (Get.height / 2) + 32,
-          ),
-          child: OnboardingTitles(
-            mainTitleText: mainTitleText,
-            subtitleText: subtitleText,
-            animate: this.transformInfo.index == 0 ? true : false,
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.only(bottom: 40, right: 40, left: 40),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              OnboardingDotsIndicator(
+            SizedBox(height: 32),
+            OnboardingTitles(
+              mainTitleText: mainTitleText,
+              subtitleText: subtitleText,
+              animate: this.transformInfo.index == 0 ? true : false,
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 32),
+              child: OnboardingDotsIndicator(
                 dotsCount: OnboardingScreenState.NUM_OF_PAGES,
                 currentDotPosition:
                     double.parse(transformInfo.index.toString()),
               ),
-              Padding(
-                padding: const EdgeInsets.only(top: 60),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    SkipOnboardingButton(),
-                    OnboardingNextButton(
-                        transformerPageController: transformerPageController),
-                  ],
-                ),
+            ),
+          ],
+        ),
+        Positioned.fill(
+          bottom: 16,
+          child: Align(
+            alignment: Alignment.bottomCenter,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  SkipOnboardingButton(),
+                  OnboardingNextButton(
+                    transformerPageController: transformerPageController,
+                  ),
+                ],
               ),
-            ],
+            ),
           ),
         ),
       ],
