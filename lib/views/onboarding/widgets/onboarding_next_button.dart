@@ -14,10 +14,13 @@ class OnboardingNextButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       onPressed: () => {
-        if (transformerPageController != null && transformerPageController.hasClients) {
-            if (transformerPageController.page.toInt() == 2) {
-              Get.offAllNamed(Routes.ONBOARDING_HEIGHT)
-            } else {
+        if (transformerPageController != null &&
+            transformerPageController.hasClients)
+          {
+            if (transformerPageController.page.toInt() == 2)
+              {Get.offAllNamed(Routes.ONBOARDING_HEIGHT)}
+            else
+              {
                 transformerPageController.nextPage(
                   duration: Duration(milliseconds: 400),
                   curve: Curves.easeInOut,

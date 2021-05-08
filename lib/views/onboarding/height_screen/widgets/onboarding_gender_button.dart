@@ -18,6 +18,7 @@ class OnboardingGenderButton extends GetView<UserController> {
         padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 24),
         child: SvgPicture.asset(
           "assets/images/onboarding/${this.isMale ? 'man' : 'woman'}_face.svg",
+          width: Get.width * 0.08,
           semanticsLabel: 'Face of a ${this.isMale ? 'man' : 'woman'}',
         ),
       ),

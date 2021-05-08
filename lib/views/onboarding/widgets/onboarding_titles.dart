@@ -1,4 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:bfit_tracker/utils.dart';
+import 'package:get/get.dart';
 import 'package:bfit_tracker/views/onboarding/widgets/onboarding_animated_title.dart';
 import 'package:flutter/material.dart';
 
@@ -24,33 +26,8 @@ class OnboardingTitles extends StatelessWidget {
               ? OnboardingAnimatedTitle(text: mainTitleText)
               : OnboardingTitle(mainTitleText: mainTitleText),
         ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: OnboardingSubtitle(subtitleText: subtitleText),
-        ),
+        OnboardingSubtitle(subtitleText: subtitleText),
       ],
-    );
-  }
-}
-
-class OnboardingSubtitle extends StatelessWidget {
-  const OnboardingSubtitle({
-    Key key,
-    @required this.subtitleText,
-  }) : super(key: key);
-
-  final String subtitleText;
-
-  @override
-  Widget build(BuildContext context) {
-    return AutoSizeText(
-      subtitleText,
-      minFontSize: 16,
-      textAlign: TextAlign.center,
-      style: TextStyle(
-        color: Colors.white,
-        fontWeight: FontWeight.w600,
-      ),
     );
   }
 }
@@ -67,11 +44,38 @@ class OnboardingTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return AutoSizeText(
       mainTitleText,
-      minFontSize: 24,
       textAlign: TextAlign.center,
+      maxLines: 2,
+      presetFontSizes: [28, 26],
       style: TextStyle(
         color: Colors.white,
         fontWeight: FontWeight.bold,
+      ),
+    );
+  }
+}
+
+class OnboardingSubtitle extends StatelessWidget {
+  const OnboardingSubtitle({
+    Key key,
+    @required this.subtitleText,
+  }) : super(key: key);
+
+  final String subtitleText;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+      child: AutoSizeText(
+        subtitleText,
+        textAlign: TextAlign.center,
+        maxLines: 2,
+        minFontSize: Utils.isSmallScreen() ? 16 : 18,
+        style: TextStyle(
+          color: Colors.white,
+          fontWeight: FontWeight.w600,
+        ),
       ),
     );
   }

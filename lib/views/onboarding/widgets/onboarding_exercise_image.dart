@@ -1,3 +1,4 @@
+import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:transformer_page_view/transformer_page_view.dart';
@@ -14,9 +15,12 @@ class OnboardingExerciseImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SvgPicture.asset(
-      this.mainImageAssetPath,
-      semanticsLabel: 'Exercise image',
+    return Container(
+      height: Get.height * 0.26,
+      child: SvgPicture.asset(
+        this.mainImageAssetPath,
+        semanticsLabel: 'Exercise image',
+      ),
     );
   }
 }

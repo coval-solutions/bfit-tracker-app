@@ -34,7 +34,8 @@ class _OnboardingAnimatedTitleState extends State<OnboardingAnimatedTitle>
       position: offset,
       child: AutoSizeText(
         widget.text,
-        minFontSize: 24,
+        maxLines: 1,
+        minFontSize: 28,
         style: TextStyle(
           color: Colors.white,
           fontWeight: FontWeight.bold,

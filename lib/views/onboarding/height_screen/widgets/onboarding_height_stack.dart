@@ -1,3 +1,4 @@
+import 'package:bfit_tracker/utils.dart';
 import 'package:bfit_tracker/views/onboarding/height_screen/widgets/onboarding_gender_buttons.dart';
 import 'package:bfit_tracker/views/onboarding/height_screen/widgets/onboarding_height_circles.dart';
 import 'package:bfit_tracker/views/onboarding/height_screen/widgets/onboarding_height_slider.dart';
@@ -14,40 +15,46 @@ class OnboardingHeightStack extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var isSmallScreen = Utils.isSmallScreen();
     return Stack(
       children: [
         Padding(
-          padding: const EdgeInsets.only(top: 275),
+          padding: EdgeInsets.only(top: isSmallScreen ? 100 : 275),
           child: HeightCirclesBackground(),
         ),
         Column(
           children: [
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 16),
+              padding: EdgeInsets.symmetric(vertical: isSmallScreen ? 4 : 16),
               child: OnboardingHeightTitle(),
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 16),
+              padding: EdgeInsets.symmetric(vertical: isSmallScreen ? 4 : 16),
               child: OnboardingGenderButtons(),
             ),
             OnboardingHeightSlider(),
+            Spacer(),
           ],
         ),
-        Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 16),
-                child: OnboardingDotsIndicator(
-                  dotsCount: OnboardingScreenState.NUM_OF_PAGES,
-                  currentDotPosition: double.parse(
-                          OnboardingScreenState.NUM_OF_PAGES.toString()) -
-                      1,
+        Positioned.fill(
+          bottom: 16,
+          child: Align(
+            alignment: Alignment.bottomCenter,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  child: OnboardingDotsIndicator(
+                    dotsCount: OnboardingScreenState.NUM_OF_PAGES,
+                    currentDotPosition: double.parse(
+                            OnboardingScreenState.NUM_OF_PAGES.toString()) -
+                        1,
+                  ),
                 ),
-              ),
-              OnboardingNextButton(),
-            ],
+                OnboardingNextButton(),
+              ],
+            ),
           ),
         ),
       ],

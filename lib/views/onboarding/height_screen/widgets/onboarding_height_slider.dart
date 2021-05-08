@@ -16,13 +16,13 @@ class _OnboardingHeightSliderState extends State<OnboardingHeightSlider> {
   Widget build(BuildContext context) {
     return Container(
       constraints: BoxConstraints(
-        maxHeight: Get.height / 2,
+        maxHeight: Get.height * 0.55,
       ),
       child: Obx(
         () => HeightSlider(
           height: height,
           maxHeight: 210,
-          minHeight: 120,
+          minHeight: 140,
           onChange: (val) => setState(() => height = val),
           unit: 'cm',
           personImagePath:
