@@ -1,13 +1,28 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:bfit_tracker/controllers/user_controller.dart';
+import 'package:bfit_tracker/models/goal.dart';
 import 'package:bfit_tracker/theme.dart';
+import 'package:bfit_tracker/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class OnboardingFinishButton extends StatelessWidget {
+  final UserController userController = Get.find<UserController>();
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      onPressed: () => {},
+      onPressed: () => {
+        userController.setGoals(Goal(
+            bmi: 24,
+            weight: 72,
+            courses: 45,
+            gym: 100,
+            steps: 10000
+        )),
+        userController.userInfoRepository
+            .create(userController.user, userController.user.userInfo),
+        Get.offAllNamed(Routes.HOME),
+      },
       style: buildButtonStyle(),
       child: FinishButton(),
     );

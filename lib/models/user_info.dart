@@ -7,8 +7,8 @@ class UserInfo {
   int height;
   int weight;
   bool isMale;
+  Goal goals;
   final double gymTime;
-  final Goal goals;
   final Map<String, dynamic> workoutsComplete;
   final int totalWorkoutsCompleted;
 
@@ -16,8 +16,8 @@ class UserInfo {
     this.height = 170,
     this.weight = 70,
     this.isMale = true,
-    this.gymTime = 0,
     this.goals,
+    this.gymTime = 0,
     this.workoutsComplete,
     this.totalWorkoutsCompleted = 0,
   });
@@ -65,7 +65,7 @@ class UserInfo {
         'weight': weight,
         'isMale': isMale,
         'gymTime': gymTime,
-        'goals': goals.toDocument(),
+        'goals': goals?.toDocument(),
         'workoutsComplete': workoutsComplete,
         'totalWorkoutsCompleted': totalWorkoutsCompleted,
       };

@@ -18,17 +18,19 @@ class _OnboardingHeightSliderState extends State<OnboardingHeightSlider> {
       constraints: BoxConstraints(
         maxHeight: Get.height * 0.55,
       ),
-      child: HeightSlider(
-        height: height,
-        maxHeight: 210,
-        minHeight: 140,
-        onChange: (val) => {
-          setState(() => height = val),
-          userController.setHeight(val),
-        },
-        unit: 'cm',
-        personImagePath:
-        "assets/images/onboarding/${userController.user.userInfo.isMale ? 'man' : 'woman'}.svg",
+      child: Obx(
+        () => HeightSlider(
+          height: height,
+          maxHeight: 210,
+          minHeight: 140,
+          onChange: (val) => {
+            setState(() => height = val),
+            userController.setHeight(val),
+          },
+          unit: 'cm',
+          personImagePath:
+              "assets/images/onboarding/${userController.user.userInfo.isMale ? 'man' : 'woman'}.svg",
+        ),
       ),
     );
   }

@@ -1,4 +1,5 @@
 import 'package:bfit_tracker/models/coval_user.dart';
+import 'package:bfit_tracker/models/goal.dart';
 import 'package:bfit_tracker/repositories/user_info_repository.dart';
 import 'package:get/get.dart';
 
@@ -12,23 +13,25 @@ class UserController extends GetxController {
 
   void setHeight(int height) {
     _covalUser.update((val) {
-      print('Old: ' + val.userInfo.height.toString());
       val.userInfo.height = height;
-      print('New: ' + val.userInfo.height.toString());
     });
   }
 
   void setWeight(int weight) {
     _covalUser.update((val) {
-      print('Old: ' + val.userInfo.weight.toString());
       val.userInfo.weight = weight;
-      print('New: ' + val.userInfo.weight.toString());
     });
   }
 
   void setIsMale(bool isMale) {
     _covalUser.update((val) {
       val.userInfo.isMale = isMale;
+    });
+  }
+
+  void setGoals(Goal goal) {
+    _covalUser.update((val) {
+      val.userInfo.goals = goal;
     });
   }
 
