@@ -4,34 +4,38 @@ import 'package:bfit_tracker/models/goal.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class UserInfo {
-  final int height;
-  final int weight;
-  final bool isMale;
+  int height;
+  int weight;
+  bool isMale;
+  Goal goals;
   final double gymTime;
-  final Goal goals;
   final Map<String, dynamic> workoutsComplete;
   final int totalWorkoutsCompleted;
 
   UserInfo({
-    this.height,
-    this.weight,
-    this.isMale,
-    this.gymTime,
+    this.height = 170,
+    this.weight = 70,
+    this.isMale = true,
     this.goals,
+    this.gymTime = 0,
     this.workoutsComplete,
-    this.totalWorkoutsCompleted,
+    this.totalWorkoutsCompleted = 0,
   });
 
   UserInfo fromSnapshot(DocumentSnapshot snapshot) {
-    return UserInfo(
-      height: snapshot.data()['height'] ?? 175,
-      weight: snapshot.data()['weight'] ?? 80,
-      isMale: snapshot.data()['isMale'] ?? false,
-      gymTime: snapshot.data()['gymTime'] ?? 0,
-      goals: Goal.fromJson(snapshot.data()['goals']),
-      workoutsComplete: snapshot.data()['workoutsComplete'],
-      totalWorkoutsCompleted: snapshot.data()['totalWorkoutsCompleted'] ?? 0,
-    );
+    if (snapshot.exists) {
+      return UserInfo(
+        height: snapshot.data()['height'] ?? 170,
+        weight: snapshot.data()['weight'] ?? 70,
+        isMale: snapshot.data()['isMale'] ?? true,
+        gymTime: snapshot.data()['gymTime'] ?? 0,
+        goals: Goal.fromJson(snapshot.data()['goals']),
+        workoutsComplete: snapshot.data()['workoutsComplete'],
+        totalWorkoutsCompleted: snapshot.data()['totalWorkoutsCompleted'] ?? 0,
+      );
+    }
+
+    return null;
   }
 
   Map<String, dynamic> getStats() {
@@ -61,7 +65,7 @@ class UserInfo {
         'weight': weight,
         'isMale': isMale,
         'gymTime': gymTime,
-        'goals': goals.toDocument(),
+        'goals': goals?.toDocument(),
         'workoutsComplete': workoutsComplete,
         'totalWorkoutsCompleted': totalWorkoutsCompleted,
       };

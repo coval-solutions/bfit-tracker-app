@@ -26,4 +26,5 @@ class CustomColor {
   static const Color MEDIUM_ORCHID = Color(0xffB158CC);
   static const Color ALICE_BLUE = Color(0xffF4F5F6);
   static const Color NIGHT_RIDER = Color(0xff313131);
+  static const Color COLUMBIA_BLUE = Color(0xff9BD8FF);
 }
