@@ -1,38 +1,15 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:bfit_tracker/routes.dart';
 import 'package:bfit_tracker/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:transformer_page_view/transformer_page_view.dart';
 
-class OnboardingNextButton extends StatelessWidget {
-  final TransformerPageController transformerPageController;
-
-  OnboardingNextButton({this.transformerPageController});
-
+class OnboardingFinishButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      onPressed: () => {
-        if (transformerPageController != null &&
-            transformerPageController.hasClients)
-          {
-            if (transformerPageController.page.toInt() == 2)
-              {Get.offAllNamed(Routes.ONBOARDING_HEIGHT)}
-            else {
-              transformerPageController.nextPage(
-                duration: Duration(milliseconds: 400),
-                curve: Curves.easeInOut,
-              )
-            }
-          } else {
-            // We can safely assume we are in the Height Screen,
-            // therefore go to the Weight Screen
-            Get.offAllNamed(Routes.ONBOARDING_WEIGHT)
-          }
-      },
+      onPressed: () => {},
       style: buildButtonStyle(),
-      child: NextButton(),
+      child: FinishButton(),
     );
   }
 
@@ -53,8 +30,8 @@ class OnboardingNextButton extends StatelessWidget {
   }
 }
 
-class NextButton extends StatelessWidget {
-  const NextButton({
+class FinishButton extends StatelessWidget {
+  const FinishButton({
     Key key,
   }) : super(key: key);
 
@@ -72,13 +49,13 @@ class NextButton extends StatelessWidget {
         ),
         borderRadius: BorderRadius.all(Radius.circular(80.0)),
       ),
-      child: NextButtonText(),
+      child: FinishButtonText(),
     );
   }
 }
 
-class NextButtonText extends StatelessWidget {
-  const NextButtonText({
+class FinishButtonText extends StatelessWidget {
+  const FinishButtonText({
     Key key,
   }) : super(key: key);
 
@@ -88,7 +65,7 @@ class NextButtonText extends StatelessWidget {
       constraints: BoxConstraints(maxHeight: 52.0, maxWidth: Get.width / 2),
       alignment: Alignment.center,
       child: const AutoSizeText(
-        'Next',
+        'Finish',
         minFontSize: 20,
         style: TextStyle(
           color: Colors.white,

@@ -18,6 +18,14 @@ class UserController extends GetxController {
     });
   }
 
+  void setWeight(int weight) {
+    _covalUser.update((val) {
+      print('Old: ' + val.userInfo.weight.toString());
+      val.userInfo.weight = weight;
+      print('New: ' + val.userInfo.weight.toString());
+    });
+  }
+
   void setIsMale(bool isMale) {
     _covalUser.update((val) {
       val.userInfo.isMale = isMale;

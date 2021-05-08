@@ -1052,7 +1052,7 @@ packages:
       name: weight_slider
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.2.1"
+    version: "1.2.2"
   win32:
     dependency: transitive
     description:

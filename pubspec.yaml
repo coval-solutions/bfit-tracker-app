@@ -50,7 +50,7 @@ dependencies:
   recase: ^3.0.0
   transformer_page_view: ^0.1.6
   url_launcher: ^6.0.2
-  weight_slider: ^1.2.1
+  weight_slider: ^1.2.2
   wiredash: ^0.6.2
 
 dev_dependencies:
