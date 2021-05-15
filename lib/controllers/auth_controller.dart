@@ -106,8 +106,11 @@ class AuthController extends GetxController {
 
     Get.find<UserController>().clear();
 
-    FirebaseCrashlytics.instance.setUserIdentifier(null);
-    FirebaseAnalytics().setUserId(null);
+    FirebaseCrashlytics.instance.setUserIdentifier('');
+    FirebaseAnalytics().setUserId('');
+
+    Get.offAllNamed(Routes.INITIAL);
+    this.onInit();
 
     return;
   }

@@ -1,4 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:bfit_tracker/controllers/auth_controller.dart';
 import 'package:bfit_tracker/controllers/user_controller.dart';
 import 'package:bfit_tracker/theme.dart';
 import 'package:flutter/material.dart';
@@ -25,7 +26,7 @@ class WelcomeCard extends GetView<UserController> {
           Widget yesButton = TextButton(
             child: Text('Yes, Sign Out'),
             onPressed: () {
-              // _authenticationBloc.add(LoggedOut());
+              Get.find<AuthController>().signOut();
               Navigator.pop(context);
             },
           );
