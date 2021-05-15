@@ -1,4 +1,5 @@
 import 'package:bfit_tracker/controllers/bindings/auth_binding.dart';
+import 'package:bfit_tracker/controllers/bindings/main_binding.dart';
 import 'package:bfit_tracker/routes.dart';
 import 'package:bfit_tracker/theme.dart';
 import 'package:bfit_tracker/views/main/main.dart';
@@ -40,9 +41,10 @@ class _AppState extends State<App> {
         initialRoute: '/',
         getPages: [
           GetPage(
-              name: Routes.INITIAL,
-              page: () => SplashScreenLoading(),
-              binding: AuthBinding()),
+            name: Routes.INITIAL,
+            page: () => SplashScreenLoading(),
+            binding: AuthBinding(),
+          ),
           GetPage(name: Routes.ONBOARDING, page: () => OnboardingScreen()),
           GetPage(
               name: Routes.ONBOARDING_HEIGHT,
@@ -50,7 +52,11 @@ class _AppState extends State<App> {
           GetPage(
               name: Routes.ONBOARDING_WEIGHT,
               page: () => OnboardingWeightScreen()),
-          GetPage(name: Routes.HOME, page: () => MainScreen()),
+          GetPage(
+            name: Routes.HOME,
+            page: () => MainScreen(),
+            binding: MainBinding(),
+          ),
         ],
       ),
     );
