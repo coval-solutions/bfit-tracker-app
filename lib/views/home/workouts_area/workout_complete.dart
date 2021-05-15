@@ -7,7 +7,6 @@ import 'package:bfit_tracker/models/user_info.dart';
 import 'package:bfit_tracker/models/workout.dart';
 import 'package:bfit_tracker/theme.dart';
 import 'package:bfit_tracker/utils/coval_math.dart';
-import 'package:bfit_tracker/views/home/home_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -145,10 +144,10 @@ class _WorkoutCompleteState extends State<WorkoutComplete> {
                     UserInfo newUserInfo =
                         await WorkoutController.workoutCompleted(userInfoBloc,
                             this.widget.workout, this.widget.secondsWorkingOut);
-                    Navigator.of(context).pushReplacement(MaterialPageRoute(
-                        builder: (BuildContext context) => HomeScreen(
-                            userInfo: newUserInfo,
-                            navBarItem: HomeScreenBottomNavBarItems.COURSES)));
+                    // Navigator.of(context).pushReplacement(MaterialPageRoute(
+                    //     builder: (BuildContext context) => HomeScreen(
+                    //         userInfo: newUserInfo,
+                    //         navBarItem: HomeScreenBottomNavBarItems.COURSES)));
                   },
                   child: AutoSizeText(
                     'CONTINUE',

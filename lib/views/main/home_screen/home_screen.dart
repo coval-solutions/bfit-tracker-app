@@ -1,3 +1,4 @@
+import 'package:bfit_tracker/views/main/home_screen/widgets/welcome_card.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -5,6 +6,10 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text('Home Screen');
+    return Column(
+      children: [
+        WelcomeCard(),
+      ],
+    );
   }
 }

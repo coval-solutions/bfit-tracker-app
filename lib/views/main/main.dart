@@ -24,7 +24,7 @@ class MainScreen extends GetView<NavigationController> {
           ],
           onTap: (index) => controller.index = index,
         ),
-        body: Obx(() => mainScreenChosen(controller.index)));
+        body: SafeArea(child: Obx(() => mainScreenChosen(controller.index))));
   }
 }
 
