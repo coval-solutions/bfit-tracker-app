@@ -44,7 +44,7 @@ class AuthController extends GetxController {
     );
 
     await _auth.signInWithCredential(credential);
-    this._loadCovalUser();
+    await this._loadCovalUser();
 
     UserController userController = Get.find<UserController>();
     if (userController?.user?.userInfo == null) {
