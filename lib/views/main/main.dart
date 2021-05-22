@@ -1,6 +1,8 @@
 import 'dart:math';
 
+import 'package:bfit_tracker/controllers/home_controller.dart';
 import 'package:bfit_tracker/controllers/navigation_controller.dart';
+import 'package:bfit_tracker/theme.dart';
 import 'package:bfit_tracker/views/main/home_screen/home_screen.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +16,7 @@ class MainScreen extends GetView<NavigationController> {
     return Scaffold(
         bottomNavigationBar: CurvedNavigationBar(
           index: controller.index,
+          backgroundColor: mainTheme.accentColor,
           height: min(72, 52 + MediaQuery.of(context).padding.bottom),
           items: <Widget>[
             Icon(Icons.home, size: 30),
@@ -31,6 +34,7 @@ class MainScreen extends GetView<NavigationController> {
 Widget mainScreenChosen(int index) {
   switch (index) {
     case 0:
+      Get.lazyPut(() => HomeController());
       return HomeScreen();
     case 1:
       return Text('Nutrients');
@@ -41,6 +45,7 @@ Widget mainScreenChosen(int index) {
     case 4:
       return Text('Profile');
     default:
+      Get.lazyPut(() => HomeController());
       return HomeScreen();
   }
 }
