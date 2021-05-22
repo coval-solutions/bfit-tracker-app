@@ -4,21 +4,22 @@ import 'package:get/get.dart';
 
 class HomeController extends GetxController {
   ArticleRepository _articleRepository = ArticleRepository();
-  Rx<Article> _latestArticle = new Rx<Article>(null);
+  Rx<List<Article>> _articles = new Rx<List<Article>>(null);
 
-  Article get latestArticle => _latestArticle.value;
+  List<Article> get articles => _articles.value;
+
+  set articles(List<Article> value) => this._articles.value = value;
 
   @override
   Future<void> onInit() async {
     super.onInit();
-    await this.getLatestArticle();
+    await this.getArticles();
   }
 
-  Future<void> getLatestArticle() async {
-    Stream<List<Article>> articlesStream = _articleRepository.retrieveLatest();
+  Future<void> getArticles() async {
+    Stream<List<Article>> articlesStream = _articleRepository.retrieveAll();
     if (articlesStream != null) {
-      List<Article> articles = await articlesStream.first;
-      _latestArticle.value = articles.first;
+      this.articles = await articlesStream.first;
     }
 
     return;

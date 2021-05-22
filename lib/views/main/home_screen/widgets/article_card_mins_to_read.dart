@@ -29,7 +29,8 @@ class ArticleCardMinsToRead extends StatelessWidget {
       child: AutoSizeText(
         '${this.minsToRead} min read',
         maxLines: 2,
-        minFontSize: 12,
+        minFontSize: 8,
+        maxFontSize: 16,
         textAlign: TextAlign.center,
         style: TextStyle(
           color: Colors.white,
