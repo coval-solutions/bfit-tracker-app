@@ -12,13 +12,8 @@ class OnboardingFinishButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       onPressed: () => {
-        userController.setGoals(Goal(
-            bmi: 24,
-            weight: 72,
-            courses: 45,
-            gym: 100,
-            steps: 10000
-        )),
+        userController.setGoals(
+            Goal(bmi: 24, weight: 72, courses: 45, gym: 100, steps: 10000)),
         userController.userInfoRepository
             .create(userController.user, userController.user.userInfo),
         Get.offAllNamed(Routes.HOME),

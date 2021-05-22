@@ -13,7 +13,7 @@ class ArticleList extends GetView<HomeController> {
       itemCount: controller.articles.length,
       options: CarouselOptions(aspectRatio: 4 / 3),
       itemBuilder: (BuildContext context, int index, int realIndex) =>
-        ArticleCard(article: controller.articles[index]),
+          ArticleCard(article: controller.articles[index]),
     );
   }
 }

@@ -40,20 +40,20 @@ class GymsNearMeList extends GetView<HomeController> {
                           itemBuilder: (context, index) {
                             Gym gym = controller.gymsNearMe[index];
                             return ListTile(
-                              title: AutoSizeText(
-                                '${gym.name}',
-                                maxLines: 1,
-                                maxFontSize: 14,
-                              ),
-                              subtitle: AutoSizeText(
-                                '${gym.address}',
-                                maxLines: 1,
-                                minFontSize: 8,
-                                maxFontSize: 10,
-                              ),
-                              onTap: () {
-                                controller.launchGoogleMaps(gym.lat, gym.lng);
-                              });
+                                title: AutoSizeText(
+                                  '${gym.name}',
+                                  maxLines: 1,
+                                  maxFontSize: 14,
+                                ),
+                                subtitle: AutoSizeText(
+                                  '${gym.address}',
+                                  maxLines: 1,
+                                  minFontSize: 8,
+                                  maxFontSize: 10,
+                                ),
+                                onTap: () {
+                                  controller.launchGoogleMaps(gym.lat, gym.lng);
+                                });
                           }),
             ),
           ],

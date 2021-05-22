@@ -1,6 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:bfit_tracker/utils.dart';
-import 'package:get/get.dart';
 import 'package:bfit_tracker/views/onboarding/widgets/onboarding_animated_title.dart';
 import 'package:flutter/material.dart';
 
