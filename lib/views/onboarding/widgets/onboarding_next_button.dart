@@ -19,13 +19,16 @@ class OnboardingNextButton extends StatelessWidget {
           {
             if (transformerPageController.page.toInt() == 2)
               {Get.offAllNamed(Routes.ONBOARDING_HEIGHT)}
-            else {
-              transformerPageController.nextPage(
-                duration: Duration(milliseconds: 400),
-                curve: Curves.easeInOut,
-              )
-            }
-          } else {
+            else
+              {
+                transformerPageController.nextPage(
+                  duration: Duration(milliseconds: 400),
+                  curve: Curves.easeInOut,
+                )
+              }
+          }
+        else
+          {
             // We can safely assume we are in the Height Screen,
             // therefore go to the Weight Screen
             Get.offAllNamed(Routes.ONBOARDING_WEIGHT)

@@ -1,7 +1,8 @@
 import 'package:bfit_tracker/controllers/bindings/auth_binding.dart';
+import 'package:bfit_tracker/controllers/bindings/main_binding.dart';
 import 'package:bfit_tracker/routes.dart';
 import 'package:bfit_tracker/theme.dart';
-import 'package:bfit_tracker/views/home/home_screen.dart';
+import 'package:bfit_tracker/views/main/main.dart';
 import 'package:bfit_tracker/views/onboarding/height_screen/onboarding_height_screen.dart';
 import 'package:bfit_tracker/views/onboarding/onboarding_screen.dart';
 import 'package:bfit_tracker/views/onboarding/weight_screen/onboarding_weight_screen.dart';
@@ -40,9 +41,10 @@ class _AppState extends State<App> {
         initialRoute: '/',
         getPages: [
           GetPage(
-              name: Routes.INITIAL,
-              page: () => SplashScreenLoading(),
-              binding: AuthBinding()),
+            name: Routes.INITIAL,
+            page: () => SplashScreenLoading(),
+            binding: AuthBinding(),
+          ),
           GetPage(name: Routes.ONBOARDING, page: () => OnboardingScreen()),
           GetPage(
               name: Routes.ONBOARDING_HEIGHT,
@@ -50,7 +52,11 @@ class _AppState extends State<App> {
           GetPage(
               name: Routes.ONBOARDING_WEIGHT,
               page: () => OnboardingWeightScreen()),
-          GetPage(name: Routes.HOME, page: () => HomeScreen()),
+          GetPage(
+            name: Routes.HOME,
+            page: () => MainScreen(),
+            binding: MainBinding(),
+          ),
         ],
       ),
     );

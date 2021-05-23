@@ -44,7 +44,7 @@ class AuthController extends GetxController {
     );
 
     await _auth.signInWithCredential(credential);
-    this._loadCovalUser();
+    await this._loadCovalUser();
 
     UserController userController = Get.find<UserController>();
     if (userController?.user?.userInfo == null) {
@@ -106,8 +106,11 @@ class AuthController extends GetxController {
 
     Get.find<UserController>().clear();
 
-    FirebaseCrashlytics.instance.setUserIdentifier(null);
-    FirebaseAnalytics().setUserId(null);
+    FirebaseCrashlytics.instance.setUserIdentifier('');
+    FirebaseAnalytics().setUserId('');
+
+    Get.offAllNamed(Routes.INITIAL);
+    this.onInit();
 
     return;
   }
