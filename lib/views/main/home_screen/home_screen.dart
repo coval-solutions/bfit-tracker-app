@@ -10,22 +10,25 @@ class HomeScreen extends GetView<HomeController> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          WelcomeCard(),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8),
-            child: Obx(() =>
-                controller.articles == null || controller.articles.isEmpty
-                    ? CircularProgressIndicator()
-                    : ArticleList()),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8),
-            child: GymsNearMeList(),
-          ),
-        ],
+    return RefreshIndicator(
+      onRefresh: controller.onInit,
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            WelcomeCard(),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8),
+              child: Obx(() =>
+                  controller.articles == null || controller.articles.isEmpty
+                      ? CircularProgressIndicator()
+                      : ArticleList()),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8),
+              child: GymsNearMeList(),
+            ),
+          ],
+        ),
       ),
     );
   }

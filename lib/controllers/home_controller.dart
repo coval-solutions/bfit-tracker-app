@@ -30,6 +30,7 @@ class HomeController extends GetxController {
   }
 
   Future<void> getArticles() async {
+    print("getArticles() called.");
     Stream<List<Article>> articlesStream = _articleRepository.retrieveAll();
     if (articlesStream != null) {
       this.articles = await articlesStream.first;
@@ -39,6 +40,7 @@ class HomeController extends GetxController {
   }
 
   Future<void> getGymsNearMe() async {
+    print("getGymsNearMe() called.");
     Position position = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.high);
     this.gymsNearMe = await _gymRepository.retrieve(position);
@@ -54,6 +56,11 @@ class HomeController extends GetxController {
       throw 'Could not launch $url';
     }
 
+    return;
+  }
+
+  Future<void> refresh() async {
+    this.onInit();
     return;
   }
 }
