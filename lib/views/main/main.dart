@@ -2,11 +2,14 @@ import 'dart:math';
 
 import 'package:bfit_tracker/controllers/home_controller.dart';
 import 'package:bfit_tracker/controllers/navigation_controller.dart';
+import 'package:bfit_tracker/controllers/nutrients_controller.dart';
 import 'package:bfit_tracker/theme.dart';
 import 'package:bfit_tracker/views/main/home_screen/home_screen.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+import 'nutrients_screen/nutrients_screen.dart';
 
 class MainScreen extends GetView<NavigationController> {
   const MainScreen({Key key}) : super(key: key);
@@ -37,7 +40,8 @@ Widget mainScreenChosen(int index) {
       Get.lazyPut(() => HomeController());
       return HomeScreen();
     case 1:
-      return Text('Nutrients');
+      Get.lazyPut(() => NutrientsController());
+      return NutrientsScreen();
     case 2:
       return Text('Gym');
     case 3:
