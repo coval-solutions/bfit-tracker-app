@@ -17,7 +17,7 @@ class NutrientsTitle extends StatelessWidget {
           fontWeight: FontWeight.bold,
           color: CustomColor.DIM_GRAY,
         ),
-      )
+      ),
     );
   }
 }

@@ -2,6 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:bfit_tracker/enums/nutrients.dart';
 import 'package:bfit_tracker/models/nutrient_stat.dart';
 import 'package:bfit_tracker/utils/coval_math.dart';
+import 'package:bfit_tracker/views/main/nutrients_screen/widgets/nutrient_dialog.dart';
 import 'package:flutter/material.dart';
 
 class NutrientsCard extends StatelessWidget {
@@ -14,13 +15,13 @@ class NutrientsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      // onTap: () {
-      //   showDialog(
-      //     context: context,
-      //     builder: (BuildContext context) =>
-      //         NutrientDialog(nutrientsEnum: this.nutritionEnum),
-      //   );
-      // },
+      onTap: () {
+        showDialog(
+          context: context,
+          builder: (BuildContext context) =>
+              NutrientDialog(nutrientsEnum: this.nutrientStat.type),
+        );
+      },
       child: Card(
         elevation: 2,
         shape: RoundedRectangleBorder(
