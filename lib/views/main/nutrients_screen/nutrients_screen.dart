@@ -1,5 +1,7 @@
 import 'package:bfit_tracker/controllers/nutrients_controller.dart';
-import 'package:bfit_tracker/views/main/home_screen/widgets/welcome_card.dart';
+import 'package:bfit_tracker/views/main/nutrients_screen/widgets/nutrients_list.dart';
+import 'package:bfit_tracker/views/main/nutrients_screen/widgets/nutrients_subtitle.dart';
+import 'package:bfit_tracker/views/main/nutrients_screen/widgets/nutrients_title.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -13,18 +15,15 @@ class NutrientsScreen extends GetView<NutrientsController> {
       child: SingleChildScrollView(
         child: Column(
           children: [
-            WelcomeCard(),
-            // Padding(
-            //   padding: const EdgeInsets.symmetric(vertical: 8),
-            //   child: Obx(() =>
-            //       controller.nutrients == null || controller.nutrients.isEmpty
-            //           ? CircularProgressIndicator()
-            //           : ArticleList()),
-            // ),
-            // Padding(
-            //   padding: const EdgeInsets.symmetric(vertical: 8),
-            //   child: GymsNearMeList(),
-            // ),
+            NutrientsTitle(),
+            NutrientsSubtitle(),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8),
+              child: Obx(() =>
+                  controller.nutrients == null || controller.nutrients.isEmpty
+                      ? CircularProgressIndicator()
+                      : NutrientsList()),
+            ),
           ],
         ),
       ),
