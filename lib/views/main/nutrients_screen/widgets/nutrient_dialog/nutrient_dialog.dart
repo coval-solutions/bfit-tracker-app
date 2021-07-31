@@ -1,13 +1,19 @@
+import 'package:auto_size_text/auto_size_text.dart';
+import 'package:bfit_tracker/enums/nutrients.dart';
+import 'package:bfit_tracker/theme.dart';
+import 'package:bfit_tracker/views/main/nutrients_screen/widgets/nutrient_dialog/nutrient_dialog_heading.dart';
+import 'package:bfit_tracker/views/main/nutrients_screen/widgets/nutrient_dialog/nutrient_dialog_input.dart';
+import 'package:bfit_tracker/views/main/nutrients_screen/widgets/nutrient_dialog/nutrient_dialog_submit.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nutrition/nutrition_enum.dart';
 
 class NutrientDialog extends StatelessWidget {
   final NutritionEnum nutrientsEnum;
+  final TextEditingController textEditingController =
+      new TextEditingController();
 
-  NutrientDialog({
-    @required this.nutrientsEnum,
-  });
+  NutrientDialog(this.nutrientsEnum);
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +23,48 @@ class NutrientDialog extends StatelessWidget {
       ),
       elevation: 0,
       backgroundColor: Colors.transparent,
-      child: Text('Test'),
+      child: Container(
+        decoration: new BoxDecoration(
+          color: Colors.white,
+          shape: BoxShape.rectangle,
+          borderRadius: BorderRadius.circular(10.0),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black26,
+              blurRadius: 12.0,
+              offset: const Offset(0.0, 12.0),
+            ),
+          ],
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                NutrientDialogHeading(this.nutrientsEnum),
+                SizedBox(height: 28),
+                AutoSizeText(
+                  nutrientsEnum.description,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: CustomColor.DIM_GRAY,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  maxFontSize: 14,
+                ),
+                SizedBox(height: 28),
+                NutrientDialogInput(nutrientsEnum.units),
+                SizedBox(height: 28),
+                Align(
+                  alignment: Alignment.bottomCenter,
+                  child: NutrientDialogSubmit(nutrientsEnum),
+                ),
+                SizedBox(height: 28),
+              ],
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

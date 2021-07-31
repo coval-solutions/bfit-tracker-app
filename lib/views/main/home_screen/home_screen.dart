@@ -16,13 +16,14 @@ class HomeScreen extends GetView<HomeController> {
         child: Column(
           children: [
             WelcomeCard(),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8),
-              child: Obx(() =>
-                  controller.articles == null || controller.articles.isEmpty
-                      ? CircularProgressIndicator()
-                      : ArticleList()),
-            ),
+            // TODO: upon release of the BFit website, re-do articles section
+            // Padding(
+            //   padding: const EdgeInsets.symmetric(vertical: 8),
+            //   child: Obx(() =>
+            //       controller.articles == null || controller.articles.isEmpty
+            //           ? CircularProgressIndicator()
+            //           : ArticleList()),
+            // ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 8),
               child: GymsNearMeList(),

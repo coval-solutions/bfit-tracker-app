@@ -13,10 +13,14 @@ class BackArrow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SvgPicture.asset(
-      'assets/images/left-pointing-arrow.svg',
-      color: this.color,
-      fit: this.fit,
+    return GestureDetector(
+      onTap: () => Navigator.of(context).pop(),
+      child: SvgPicture.asset(
+        'assets/images/left-pointing-arrow.svg',
+        color: this.color,
+        fit: this.fit,
+        semanticsLabel: 'Left pointing arrow (back arrow)',
+      ),
     );
   }
 }
