@@ -45,7 +45,8 @@ dependencies:
   jiffy: ^4.0.0
   kt_dart: ^0.8.0
   meta: ^1.1.8
-  nutrition: ^1.0.0
+  nutrition:
+    path: ../nutrition
   openfoodfacts: ^1.0.1-beta
   percent_indicator: ^2.1.7+4
   recase: ^3.0.0

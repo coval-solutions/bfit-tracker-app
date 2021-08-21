@@ -603,9 +603,9 @@ packages:
   nutrition:
     dependency: "direct main"
     description:
-      name: nutrition
-      url: "https://pub.dartlang.org"
-    source: hosted
+      path: "../nutrition"
+      relative: true
+    source: path
     version: "1.0.0"
   octo_image:
     dependency: transitive
